@@ -585,7 +585,7 @@
 
   .curtainPanelLeft,
   .curtainPanelRight {
-    width: calc(50% + 5px);
+    width: 50%;
   }
 
   .curtainTextureLeft,
@@ -593,15 +593,15 @@
     inset: 0;
     width: 200%;
     height: 100%;
-    background-size: cover;
+    background-size: 200% 100%;
   }
 
   .curtainTextureLeft {
-    background-position: center top;
+    background-position: left top;
   }
 
   .curtainTextureRight {
-    background-position: center top;
+    background-position: right top;
   }
 
   .copy {
@@ -693,12 +693,12 @@
 @media (max-width: 480px) {
   .curtainPanelLeft,
   .curtainPanelRight {
-    width: calc(50% + 6px);
+    width: 50%;
   }
 
   .curtainTextureLeft,
   .curtainTextureRight {
-    width: 202%;
+    width: 200%;
   }
 
   .copy {
