@@ -491,6 +491,18 @@
     min-height: 100vh;
   }
 
+  .curtainShell {
+    width: 100vw;
+    height: 100svh;
+    left: 0;
+    transform: none;
+  }
+
+  .curtainPanelLeft,
+  .curtainPanelRight {
+    width: calc(50% + 2px);
+  }
+
   .copy {
     width: min(100% - 1.25rem, 1180px);
     padding-top: 15vh;
@@ -542,15 +554,32 @@
   }
 
   .hero {
-    min-height: 112vh;
+    min-height: 100svh;
   }
 
   .heroAtmosphere {
     background: rgba(0, 0, 0, 0.05);
   }
 
+  .heroAtmosphere::before {
+    background:
+      linear-gradient(90deg, #0a0a0a 0%, rgba(10, 10, 10, 0) 5%, rgba(10, 10, 10, 0) 95%, #0a0a0a 100%),
+      linear-gradient(180deg, rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 0.06) 84%, #0a0a0a 100%);
+  }
+
   .scrollVeil {
-    opacity: 0.24;
+    opacity: 0.38;
+  }
+
+  .curtainShell {
+    width: 100vw;
+    height: 100svh;
+    top: 0;
+  }
+
+  .curtainPanelLeft,
+  .curtainPanelRight {
+    width: calc(50% + 3px);
   }
 
   .curtainTextureLeft,
@@ -579,7 +608,7 @@
 
   .sections {
     width: calc(100% - 1rem);
-    margin-top: -4vh;
+    margin-top: 0;
     padding-bottom: 4rem;
   }
 
@@ -645,6 +674,11 @@
 }
 
 @media (max-width: 480px) {
+  .curtainPanelLeft,
+  .curtainPanelRight {
+    width: calc(50% + 4px);
+  }
+
   .copy {
     width: calc(100% - 1rem);
     padding-top: 11vh;
