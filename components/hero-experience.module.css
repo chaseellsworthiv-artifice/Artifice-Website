@@ -51,7 +51,11 @@
 
 .curtainShell {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 50%;
+  width: min(100vw, calc(100svh * 1.5));
+  height: min(100svh, calc(100vw / 1.5));
+  transform: translateX(-50%);
   z-index: 4;
   pointer-events: none;
   overflow: hidden;
@@ -81,22 +85,18 @@
   inset: 0;
   background-image: url("/assets/curtain/final-curtain.png");
   background-repeat: no-repeat;
-  width: 200.4%;
-  height: 100%;
-  background-size: cover;
+  background-size: 200% 100%;
   filter: none;
 }
 
 .curtainTextureLeft {
-  left: 0;
-  background-position: center top;
+  background-position: left center;
   transform: translate3d(calc(var(--curtain-shift-x) * -0.35), calc(var(--curtain-shift-y) * -0.16), 0);
   transition: transform 180ms linear;
 }
 
 .curtainTextureRight {
-  right: 0;
-  background-position: center top;
+  background-position: right center;
   transform: translate3d(calc(var(--curtain-shift-x) * 0.35), calc(var(--curtain-shift-y) * -0.16), 0);
   transition: transform 180ms linear;
 }
