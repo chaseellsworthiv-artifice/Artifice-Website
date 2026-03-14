@@ -81,8 +81,6 @@
   background: transparent;
   --curtain-left-shift: 0px;
   --curtain-right-shift: 0px;
-  --curtain-compress: 0;
-  --curtain-shadow-alpha: 0.12;
 }
 
 .curtainClipDefs {
@@ -117,44 +115,40 @@
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 18%, rgba(248, 218, 188, 0.07), transparent 20%),
-    linear-gradient(90deg, rgba(10, 10, 10, 0.34) 0%, rgba(10, 10, 10, 0.06) 11%, rgba(10, 10, 10, 0.06) 89%, rgba(10, 10, 10, 0.34) 100%),
-    linear-gradient(180deg, rgba(248, 218, 188, 0.05) 0%, rgba(10, 10, 10, 0) 18%, rgba(10, 10, 10, 0.16) 70%, rgba(10, 10, 10, 0.42) 100%);
+    linear-gradient(90deg, rgba(10, 10, 10, 0.22) 0%, rgba(10, 10, 10, 0) 9%, rgba(10, 10, 10, 0) 91%, rgba(10, 10, 10, 0.22) 100%),
+    linear-gradient(180deg, rgba(248, 218, 188, 0.04) 0%, rgba(10, 10, 10, 0) 16%, rgba(10, 10, 10, 0.12) 72%, rgba(10, 10, 10, 0.34) 100%);
+}
+
+.curtainSlice {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-image: url("/assets/curtain/final-curtain.png");
+  background-repeat: no-repeat;
+  background-size: var(--curtain-bg-size);
+  background-position-y: 0;
+  will-change: transform, filter;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
 }
 
 .curtainGroup {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background-image: url("/assets/curtain/final-curtain.png");
-  background-repeat: no-repeat;
-  background-size: var(--curtain-bg-size);
-  background-position: var(--curtain-bg-position) 0;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 100%);
-}
-
-.curtainShell > .curtainGroup::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(255, 240, 219, 0.02) 0%, rgba(255, 240, 219, 0) 18%, rgba(0, 0, 0, 0.08) 78%, rgba(0, 0, 0, 0.16) 100%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0) 82%, rgba(0, 0, 0, 0.08) 100%);
-  mix-blend-mode: multiply;
 }
 
 .curtainGroupLeft {
-  transform: translate3d(var(--curtain-left-shift), 0, 0) scaleX(calc(1 - var(--curtain-compress))) skewY(0.9deg);
+  transform: translate3d(var(--curtain-left-shift), 0, 0);
   transform-origin: left top;
-  filter: drop-shadow(8px 0 22px rgba(0, 0, 0, var(--curtain-shadow-alpha)));
 }
 
 .curtainGroupRight {
-  transform: translate3d(var(--curtain-right-shift), 0, 0) scaleX(calc(1 - var(--curtain-compress))) skewY(-0.9deg);
+  transform: translate3d(var(--curtain-right-shift), 0, 0);
   transform-origin: right top;
-  filter: drop-shadow(-8px 0 22px rgba(0, 0, 0, var(--curtain-shadow-alpha)));
 }
 
 .heroAtmosphere {
