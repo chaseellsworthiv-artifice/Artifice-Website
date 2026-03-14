@@ -13,6 +13,7 @@
   overflow: clip;
   --curtain-glow-x: 50%;
   --curtain-glow-y: 18%;
+  --curtain-rise-y: 0px;
 }
 
 .sceneShell {
@@ -53,7 +54,7 @@
   left: 50%;
   width: max(104vw, calc(104svh * 1.5));
   height: max(104svh, calc(104vw / 1.5));
-  transform: translateX(-50%);
+  transform: translate3d(-50%, var(--curtain-rise-y), 0);
   z-index: 4;
   pointer-events: none;
   overflow: hidden;
@@ -474,7 +475,7 @@
     width: 100vw;
     height: 100svh;
     left: 0;
-    transform: none;
+    transform: translate3d(0, var(--curtain-rise-y), 0);
   }
 
   .copy {
@@ -554,7 +555,7 @@
     width: 100vw;
     height: 100svh;
     left: 0;
-    transform: none;
+    transform: translate3d(0, var(--curtain-rise-y), 0);
     perspective: 1200px;
   }
 

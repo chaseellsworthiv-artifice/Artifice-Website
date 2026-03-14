@@ -158,6 +158,9 @@ export default function HeroExperience() {
       hero.style.setProperty("--curtain-glow-x", `${(50 + state.x * 9).toFixed(2)}%`);
       hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 6).toFixed(2)}%`);
       hero.style.setProperty("--curtain-open-progress", `${state.open.toFixed(4)}`);
+      const shellHeight = shellMetricsRef.current.height || hero.getBoundingClientRect().height;
+      const riseAmount = -shellHeight * state.open * (isTouch ? 0.12 : isReduced ? 0.14 : 0.18);
+      hero.style.setProperty("--curtain-rise-y", `${riseAmount.toFixed(3)}px`);
 
       const pointerCenter = target.x;
       const pointerDepth = target.y;
