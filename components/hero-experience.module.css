@@ -47,18 +47,32 @@
 
 .curtainShell {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  width: min(100vw, calc(100svh * 1.5));
+  height: min(100svh, calc(100vw / 1.5));
+  transform: translate(-50%, -50%);
   z-index: 4;
   pointer-events: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
 }
 
 .curtainPanelLeft,
 .curtainPanelRight {
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
   overflow: hidden;
   height: 100%;
+  width: calc(50% + 1px);
+}
+
+.curtainPanelLeft {
+  left: 0;
+}
+
+.curtainPanelRight {
+  right: 0;
 }
 
 .curtainTextureLeft,
@@ -73,12 +87,12 @@
 
 .curtainTextureLeft {
   background-position: left center;
-  transform: translateX(0.55%);
+  transform: none;
 }
 
 .curtainTextureRight {
   background-position: right center;
-  transform: translateX(-0.55%);
+  transform: none;
 }
 
 .curtainPanelLeft::after,
@@ -525,12 +539,10 @@
     inset: 0;
   }
 
-  .curtainTextureLeft {
-    transform: translateX(0.45%);
-  }
-
-  .curtainTextureRight {
-    transform: translateX(-0.45%);
+  .curtainShell {
+    width: 100vw;
+    height: auto;
+    aspect-ratio: 1152 / 768;
   }
 
   .copy {
