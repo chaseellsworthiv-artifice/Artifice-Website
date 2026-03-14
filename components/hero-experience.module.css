@@ -581,27 +581,15 @@
     height: 100svh;
     left: 0;
     transform: none;
+    background-image: url("/assets/curtain/final-curtain.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
   }
 
   .curtainPanelLeft,
   .curtainPanelRight {
-    width: 50%;
-  }
-
-  .curtainTextureLeft,
-  .curtainTextureRight {
-    inset: 0;
-    width: 200%;
-    height: 100%;
-    background-size: 200% 100%;
-  }
-
-  .curtainTextureLeft {
-    background-position: left top;
-  }
-
-  .curtainTextureRight {
-    background-position: right top;
+    display: none;
   }
 
   .copy {
@@ -691,15 +679,6 @@
 }
 
 @media (max-width: 480px) {
-  .curtainPanelLeft,
-  .curtainPanelRight {
-    width: 50%;
-  }
-
-  .curtainTextureLeft,
-  .curtainTextureRight {
-    width: 200%;
-  }
 
   .copy {
     width: calc(100% - 1rem);
