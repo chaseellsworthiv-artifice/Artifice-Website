@@ -149,35 +149,35 @@ export default function HeroExperience() {
         const center = ((index + 0.5) / sliceCount - 0.5) * 2;
         const delta = center - hotspotCenter;
         const distance = Math.abs(delta);
-        const primaryRadius = isReduced ? 0.115 : 0.068;
-        const secondaryRadius = isReduced ? 0.19 : 0.12;
+        const primaryRadius = isReduced ? 0.082 : 0.045;
+        const secondaryRadius = isReduced ? 0.14 : 0.08;
         const primaryInfluence = Math.exp(-Math.pow(distance / primaryRadius, 2));
         const secondaryInfluence = Math.exp(-Math.pow(distance / secondaryRadius, 2));
-        const dragX = state.x * primaryInfluence * (isReduced ? 0.92 : 1.32);
+        const dragX = state.x * primaryInfluence * (isReduced ? 0.84 : 1.16);
         const depthY =
-          state.y * primaryInfluence * (isReduced ? 0.38 : 0.64) +
-          pointerDepth * secondaryInfluence * (isReduced ? 0.12 : 0.18);
-        const desiredX = dragX + state.x * secondaryInfluence * (isReduced ? 0.08 : 0.12);
+          state.y * primaryInfluence * (isReduced ? 0.34 : 0.56) +
+          pointerDepth * secondaryInfluence * (isReduced ? 0.08 : 0.13);
+        const desiredX = dragX + state.x * secondaryInfluence * (isReduced ? 0.04 : 0.07);
         const desiredY = depthY;
-        const desiredGlow = secondaryInfluence * (isReduced ? 0.07 : 0.12);
+        const desiredGlow = secondaryInfluence * (isReduced ? 0.06 : 0.1);
         const sliceState = sliceStates[index];
 
         sliceState.x += (desiredX - sliceState.x) * 0.17;
         sliceState.y += (desiredY - sliceState.y) * 0.16;
         sliceState.glow += (desiredGlow - sliceState.glow) * 0.12;
 
-        const rotate = sliceState.x * 1.18;
-        const skew = sliceState.x * 0.16;
-        const scaleX = 1.01 + secondaryInfluence * 0.02;
-        const scaleY = 1 + secondaryInfluence * 0.014;
-        const lift = secondaryInfluence * (isReduced ? 4 : 9);
+        const rotate = sliceState.x * 1.12;
+        const skew = sliceState.x * 0.14;
+        const scaleX = 1.008 + secondaryInfluence * 0.016;
+        const scaleY = 1 + secondaryInfluence * 0.011;
+        const lift = secondaryInfluence * (isReduced ? 3 : 7);
         const brightness = 1 + sliceState.glow * 1.08;
         const contrast = 1 + sliceState.glow * 0.42;
         const saturate = 1 + sliceState.glow * 0.14;
         const shadowX = (-sliceState.x * 0.42).toFixed(3);
-        const shadowY = (1.5 + secondaryInfluence * 5).toFixed(3);
-        const shadowBlur = (4 + secondaryInfluence * 12).toFixed(3);
-        const shadowAlpha = (0.1 + secondaryInfluence * 0.16).toFixed(3);
+        const shadowY = (1.2 + secondaryInfluence * 4).toFixed(3);
+        const shadowBlur = (3 + secondaryInfluence * 9).toFixed(3);
+        const shadowAlpha = (0.08 + secondaryInfluence * 0.12).toFixed(3);
         const zIndex = 20 + Math.round(secondaryInfluence * 40);
 
         slice.style.zIndex = String(zIndex);
