@@ -31,25 +31,36 @@
 
     <main id="top">
       <section class="hero">
-        <div class="hero-media">
-          <div class="hero-curtain" aria-hidden="true"></div>
-          <div class="hero-card card-a parallax" data-speed="0.08"></div>
-          <div class="hero-card card-b parallax" data-speed="0.13"></div>
-          <div class="hero-card card-c parallax" data-speed="0.1"></div>
-          <div class="hero-particles" aria-hidden="true"></div>
-          <div class="hero-light parallax" data-speed="0.05"></div>
+        <div class="hero-media" aria-hidden="true">
+          <video
+            class="hero-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="./assets/images/chase-headshot.jpg"
+          >
+            <source src="./assets/video/hero-loop.mov" type="video/quicktime" />
+          </video>
+          <div class="hero-veil"></div>
+          <div class="hero-light parallax" data-speed="0.04"></div>
+          <div class="hero-particles"></div>
+          <div class="hero-card hero-card-main parallax" data-speed="0.08">
+            <div class="hero-card-face">
+              <span class="pip top-left">A</span>
+              <span class="pip bottom-right">A</span>
+              <span class="hero-card-center"></span>
+            </div>
+          </div>
         </div>
 
-        <div class="hero-copy parallax" data-speed="0.03">
+        <div class="hero-copy hero-copy-fade parallax" data-speed="0.02">
           <p class="eyebrow">Chattanooga, Tennessee</p>
           <h1>A darker room. Familiar objects. Impossible outcomes.</h1>
           <p class="lead">
-            Sleight of hand for refined private events, presented as a private world rather than a performance website.
+            Sleight of hand for refined private events, presented as an invitation into a private world.
           </p>
-          <div class="hero-note">
-            <span class="hero-note-label">Study No. 01</span>
-            <p>Dark academia atmosphere. Museum card language. Quiet motion. No novelty cues.</p>
-          </div>
           <div class="hero-actions">
             <a class="button" href="#booking">Begin Inquiry</a>
             <a class="text-link" href="#experience">Enter the Room</a>
@@ -67,15 +78,13 @@
       <section class="section section-split">
         <div class="section-copy">
           <p class="eyebrow">Experience</p>
-          <h2>Not entertainment copy. A controlled atmosphere.</h2>
+          <h2>Wonder carried with restraint.</h2>
           <p>
-            The experience is built around restraint. Everything should feel discovered, not announced. Motion stays
-            slow. Language stays precise. The site should suggest craft without explaining it.
+            The work happens at close range, in real light, with objects guests already understand. The atmosphere is
+            calm, adult, and quietly disarming. Nothing is rushed. Nothing is explained away.
           </p>
         </div>
-        <div class="object-card study-card">
-          <span class="object-label">Archive Drawer</span>
-        </div>
+        <div class="object-card study-card"></div>
       </section>
 
       <section id="events" class="section">
@@ -84,29 +93,30 @@
         <div class="card-grid">
           <article class="content-card">
             <h3>Private Events</h3>
-            <p>For intimate dinners, homes, and carefully curated guest lists.</p>
+            <p>For intimate dinners, homes, and evenings built around conversation, detail, and atmosphere.</p>
           </article>
           <article class="content-card">
             <h3>Corporate Receptions</h3>
-            <p>Work that reads as elegant and adult, never novelty entertainment.</p>
+            <p>Performance that feels polished and adult, designed to elevate a room without turning it into a show.</p>
           </article>
           <article class="content-card">
             <h3>Luxury Hospitality</h3>
-            <p>Atmosphere-first performance for hotels, lounges, and premium venues.</p>
+            <p>Close-up work shaped for hotels, lounges, and venues where the standard is already high.</p>
           </article>
         </div>
       </section>
 
       <section id="about" class="section section-split reverse">
-        <div class="object-card portrait-card">
-          <span class="object-label">Portrait Plate</span>
+        <div class="portrait-frame">
+          <img src="./assets/images/chase-headshot.jpg" alt="Portrait of Chase Ellsworth" />
         </div>
         <div class="section-copy">
           <p class="eyebrow">About</p>
-          <h2>An artist statement, not a list of credentials.</h2>
+          <h2>Built on years of quiet repetition.</h2>
           <p>
-            The eventual portrait section should read like a monograph caption: minimal, composed, and specific about
-            discipline, objects, and years of work without slipping into self-promotion.
+            Chase Ellsworth performs close-up sleight of hand without gimmicks, staged helpers, or disposable props.
+            The material is organic, technically exacting, and meant to leave guests with a real sense that something
+            impossible happened in their own hands.
           </p>
         </div>
       </section>
@@ -114,10 +124,7 @@
       <section id="booking" class="section booking">
         <p class="eyebrow">Book</p>
         <h2>Bring Artifice into the room.</h2>
-        <p class="booking-intro">
-          The inquiry flow should feel private and direct. No clutter. No sales language. Just enough detail to begin
-          the conversation.
-        </p>
+        <p class="booking-intro">Create an evening your guests will never forget.</p>
         <form class="booking-form">
           <label>
             Name
@@ -132,12 +139,12 @@
             <input type="text" name="event_type" />
           </label>
           <label>
-            Location
-            <input type="text" name="location" />
-          </label>
-          <label>
             Date
             <input type="text" name="date" />
+          </label>
+          <label>
+            Location
+            <input type="text" name="location" />
           </label>
           <label class="full">
             Message
