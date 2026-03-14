@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -11,6 +11,7 @@ import styles from "./hero-experience.module.css";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroExperience() {
+  const [isMobileSeam, setIsMobileSeam] = useState(false);
   const heroRef = useRef(null);
   const introRef = useRef(null);
   const veilRef = useRef(null);
@@ -31,6 +32,22 @@ export default function HeroExperience() {
       })),
     [sliceCount]
   );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    const update = () => setIsMobileSeam(mediaQuery.matches);
+    update();
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", update);
+      return () => mediaQuery.removeEventListener("change", update);
+    }
+
+    mediaQuery.addListener(update);
+    return () => mediaQuery.removeListener(update);
+  }, []);
 
   useEffect(() => {
     const isReduced =
@@ -356,6 +373,12 @@ export default function HeroExperience() {
             <clipPath id="curtain-swells-cap" clipPathUnits="objectBoundingBox">
               <path d="M 0 0 L 1 0 L 1 0.134 C 0.958 0.17, 0.898 0.212, 0.81 0.204 C 0.742 0.195, 0.682 0.141, 0.65 0.086 C 0.595 0.154, 0.55 0.202, 0.5 0.214 C 0.45 0.202, 0.405 0.154, 0.35 0.086 C 0.318 0.141, 0.258 0.195, 0.19 0.204 C 0.102 0.212, 0.042 0.17, 0 0.134 Z" />
             </clipPath>
+            <clipPath id="curtain-body-handoff-mobile" clipPathUnits="objectBoundingBox">
+              <path d="M 0 0.134 C 0.038 0.16, 0.09 0.19, 0.16 0.184 C 0.218 0.176, 0.278 0.128, 0.316 0.094 C 0.392 0.162, 0.444 0.258, 0.5 0.268 C 0.556 0.258, 0.608 0.162, 0.684 0.094 C 0.722 0.128, 0.782 0.176, 0.84 0.184 C 0.91 0.19, 0.962 0.16, 1 0.134 L 1 1 L 0 1 Z" />
+            </clipPath>
+            <clipPath id="curtain-swells-cap-mobile" clipPathUnits="objectBoundingBox">
+              <path d="M 0 0 L 1 0 L 1 0.134 C 0.962 0.16, 0.91 0.19, 0.84 0.184 C 0.782 0.176, 0.722 0.128, 0.684 0.094 C 0.608 0.162, 0.556 0.258, 0.5 0.268 C 0.444 0.258, 0.392 0.162, 0.316 0.094 C 0.278 0.128, 0.218 0.176, 0.16 0.184 C 0.09 0.19, 0.038 0.16, 0 0.134 Z" />
+            </clipPath>
             <clipPath id="curtain-left-clip" clipPathUnits="objectBoundingBox">
               <path ref={leftClipPathRef} d="M 0 0 L 0.5 0 L 0.5 0.245 C 0.5 0.305, 0.5 0.395, 0.5 0.52 C 0.5 0.64, 0.5 0.79, 0.5 1 L 0 1 Z" />
             </clipPath>
@@ -368,8 +391,14 @@ export default function HeroExperience() {
           <HeroScene />
         </div>
         <div ref={curtainShellRef} className={styles.curtainShell} aria-hidden="true">
-          <div className={styles.curtainSwells} style={{ clipPath: "url(#curtain-swells-cap)" }} />
-          <div className={styles.curtainBodyMask} style={{ clipPath: "url(#curtain-body-handoff)" }}>
+          <div
+            className={styles.curtainSwells}
+            style={{ clipPath: `url(#${isMobileSeam ? "curtain-swells-cap-mobile" : "curtain-swells-cap"})` }}
+          />
+          <div
+            className={styles.curtainBodyMask}
+            style={{ clipPath: `url(#${isMobileSeam ? "curtain-body-handoff-mobile" : "curtain-body-handoff"})` }}
+          >
             <div
               className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}
               style={{ clipPath: "url(#curtain-left-clip)" }}
