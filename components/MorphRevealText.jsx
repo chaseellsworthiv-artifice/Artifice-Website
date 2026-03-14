@@ -14,9 +14,7 @@ export default function MorphRevealText({
   className = "",
   lineClassName = "",
   triggerRef,
-  start = "top bottom-=6%",
-  end = "top 64%",
-  scrub = 0.7,
+  start = "top 76%",
 }) {
   const rootRef = useRef(null);
   const baseRefs = useRef([]);
@@ -28,35 +26,26 @@ export default function MorphRevealText({
     const trigger = triggerRef?.current || rootRef.current;
 
     const context = gsap.context(() => {
-      gsap.set(baseRefs.current, {
-        autoAlpha: 0.08,
-        xPercent: -3.4,
-        yPercent: 7,
-        clipPath: "inset(0 100% 0 0)",
-        filter: "blur(12px)",
-      });
-
-      gsap.set(washRefs.current, {
-        autoAlpha: 0.85,
-        xPercent: -140,
-        yPercent: 0,
-        filter: "blur(18px)",
-      });
-
       const timeline = gsap.timeline({ paused: true });
 
       baseRefs.current.forEach((line, index) => {
-        const baseDuration = 0.72 + index * 0.04;
-        const washDuration = 0.86 + index * 0.06;
-        const lineOffset = index * 0.12;
+        const baseDuration = 0.98 + index * 0.04;
+        const lineOffset = index * 0.16;
         const washRef = washRefs.current[index];
 
-        timeline.to(
+        timeline.fromTo(
           line,
           {
+            autoAlpha: 0,
+            x: -18,
+            y: 10,
+            clipPath: "inset(0 100% 0 0)",
+            filter: "blur(10px)",
+          },
+          {
             autoAlpha: 1,
-            xPercent: 0,
-            yPercent: 0,
+            x: 0,
+            y: 0,
             clipPath: "inset(0 0% 0 0)",
             filter: "blur(0px)",
             duration: baseDuration,
@@ -65,35 +54,34 @@ export default function MorphRevealText({
           lineOffset
         );
 
-        timeline.to(
+        timeline.fromTo(
           washRef,
           {
+            autoAlpha: 0.88,
+            xPercent: -62,
+            filter: "blur(14px)",
+          },
+          {
             autoAlpha: 0,
-            xPercent: 120 + index * 12,
-            yPercent: 0,
-            filter: "blur(8px)",
-            duration: washDuration,
+            xPercent: 84,
+            filter: "blur(6px)",
+            duration: 0.92 + index * 0.05,
             ease: "power2.out",
           },
-          lineOffset
+          lineOffset + 0.02
         );
       });
-
-      timeline.pause(0);
 
       ScrollTrigger.create({
         trigger,
         start,
-        end,
-        scrub,
-        onUpdate: (self) => {
-          timeline.progress(self.progress);
-        },
+        once: true,
+        onEnter: () => timeline.play(0),
       });
     }, rootRef);
 
     return () => context.revert();
-  }, [end, lines, scrub, start, triggerRef]);
+  }, [lines, start, triggerRef]);
 
   const rootClassName = className ? `${styles.root} ${className}` : styles.root;
 
