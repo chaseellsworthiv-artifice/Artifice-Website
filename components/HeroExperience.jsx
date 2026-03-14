@@ -66,6 +66,68 @@ export default function HeroExperience() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!heroRef.current) return undefined;
+
+    const hero = heroRef.current;
+    const isReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 900px), (hover: none), (pointer: coarse)").matches;
+
+    let rafId = 0;
+    const state = { x: 0, y: 0 };
+    const target = { x: 0, y: 0 };
+
+    function render() {
+      state.x += (target.x - state.x) * 0.08;
+      state.y += (target.y - state.y) * 0.08;
+
+      hero.style.setProperty("--curtain-shift-x", `${state.x.toFixed(3)}px`);
+      hero.style.setProperty("--curtain-shift-y", `${state.y.toFixed(3)}px`);
+      hero.style.setProperty("--curtain-glow-x", `${(50 + state.x * 0.8).toFixed(2)}%`);
+      hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 0.4).toFixed(2)}%`);
+
+      const moving = Math.abs(target.x - state.x) > 0.05 || Math.abs(target.y - state.y) > 0.05;
+      if (moving) {
+        rafId = window.requestAnimationFrame(render);
+      } else {
+        rafId = 0;
+      }
+    }
+
+    function requestRender() {
+      if (!rafId) rafId = window.requestAnimationFrame(render);
+    }
+
+    function updateTarget(clientX, clientY) {
+      const rect = hero.getBoundingClientRect();
+      const x = (clientX - rect.left) / rect.width - 0.5;
+      const y = (clientY - rect.top) / rect.height - 0.5;
+      target.x = x * (isReduced ? 4 : 8);
+      target.y = y * (isReduced ? 2 : 4);
+      requestRender();
+    }
+
+    function onPointerMove(event) {
+      updateTarget(event.clientX, event.clientY);
+    }
+
+    function onPointerLeave() {
+      target.x = 0;
+      target.y = 0;
+      requestRender();
+    }
+
+    hero.addEventListener("pointermove", onPointerMove, { passive: true });
+    hero.addEventListener("pointerleave", onPointerLeave, { passive: true });
+
+    return () => {
+      hero.removeEventListener("pointermove", onPointerMove);
+      hero.removeEventListener("pointerleave", onPointerLeave);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   return (
     <main className={styles.page}>
       <section ref={heroRef} className={styles.hero}>

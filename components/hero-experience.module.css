@@ -11,6 +11,10 @@
   position: relative;
   min-height: 100vh;
   overflow: clip;
+  --curtain-shift-x: 0px;
+  --curtain-shift-y: 0px;
+  --curtain-glow-x: 50%;
+  --curtain-glow-y: 18%;
 }
 
 .sceneShell {
@@ -87,12 +91,14 @@
 
 .curtainTextureLeft {
   background-position: left center;
-  transform: none;
+  transform: translate3d(calc(var(--curtain-shift-x) * -0.35), calc(var(--curtain-shift-y) * -0.16), 0);
+  transition: transform 180ms linear;
 }
 
 .curtainTextureRight {
   background-position: right center;
-  transform: none;
+  transform: translate3d(calc(var(--curtain-shift-x) * 0.35), calc(var(--curtain-shift-y) * -0.16), 0);
+  transition: transform 180ms linear;
 }
 
 .curtainPanelLeft::after,
@@ -107,8 +113,11 @@
 .heroAtmosphere {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.04);
+  background:
+    radial-gradient(circle at var(--curtain-glow-x) var(--curtain-glow-y), rgba(214, 172, 109, 0.06), transparent 16%),
+    rgba(0, 0, 0, 0.04);
   pointer-events: none;
+  transition: background-position 180ms linear;
 }
 
 .scrollVeil {
@@ -537,12 +546,6 @@
   .curtainTextureLeft,
   .curtainTextureRight {
     inset: 0;
-  }
-
-  .curtainShell {
-    width: 100vw;
-    height: auto;
-    aspect-ratio: 1152 / 768;
   }
 
   .copy {
