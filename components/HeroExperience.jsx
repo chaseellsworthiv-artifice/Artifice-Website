@@ -23,7 +23,7 @@ export default function HeroExperience() {
   const shellMetricsRef = useRef({ width: 0, height: 0 });
   const openTargetRef = useRef(0);
   const requestRenderRef = useRef(() => {});
-  const sliceCount = 96;
+  const sliceCount = 64;
   const sliceItems = useMemo(
     () =>
       Array.from({ length: sliceCount }, (_, index) => ({
@@ -120,6 +120,7 @@ export default function HeroExperience() {
     const isTouch =
       typeof window !== "undefined" &&
       window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    const useDesktopPerformanceMode = !isReduced && !isTouch;
 
     let rafId = 0;
     let resizeRaf = 0;
@@ -218,7 +219,9 @@ export default function HeroExperience() {
         const desiredX =
           dragX + state.x * interactionWeight * activeSecondary * (isTouch ? 0.05 : isReduced ? 0.04 : 0.07);
         const desiredY = depthY;
-        const desiredGlow = interactionWeight * activeSecondary * (isTouch ? 0.09 : isReduced ? 0.06 : 0.1);
+        const desiredGlow = useDesktopPerformanceMode
+          ? 0
+          : interactionWeight * activeSecondary * (isTouch ? 0.09 : isReduced ? 0.06 : 0.1);
         const sliceState = sliceStates[index];
 
         sliceState.x += (desiredX - sliceState.x) * (isTouch ? 0.13 : 0.15);
@@ -237,9 +240,10 @@ export default function HeroExperience() {
         const skew = sliceState.x * (isTouch ? 0.16 : 0.14) + side * openWeight * bottomBias * 0.22;
         const scaleX = (1.01 + activeSecondary * (isTouch ? 0.017 : 0.016)) * gatherScale;
         const scaleY = 1 + activeSecondary * (isTouch ? 0.006 : 0.011);
-        const lift =
-          activeSecondary * (isTouch ? 3.0 : isReduced ? 3 : 7) +
-          hotspotBoost * (isTouch ? 1.35 : isReduced ? 1.4 : 2.8);
+        const lift = useDesktopPerformanceMode
+          ? 0
+          : activeSecondary * (isTouch ? 3.0 : isReduced ? 3 : 7) +
+            hotspotBoost * (isTouch ? 1.35 : isReduced ? 1.4 : 2.8);
         const brightness = 1 + sliceState.glow * (isTouch ? 1.12 : 1.08) + hotspotBoost * 0.05;
         const contrast = 1 + sliceState.glow * (isTouch ? 0.46 : 0.42) + hotspotBoost * 0.05;
         const saturate = 1 + sliceState.glow * 0.14;
@@ -253,7 +257,7 @@ export default function HeroExperience() {
         )}px, ${lift.toFixed(3)}px) rotateY(${rotate.toFixed(3)}deg) skewY(${skew.toFixed(3)}deg) scaleX(${scaleX.toFixed(
           4
         )}) scaleY(${scaleY.toFixed(4)})`;
-        const needsFilter = pointerPresence > 0.003 || sliceState.glow > 0.003;
+        const needsFilter = !useDesktopPerformanceMode && (pointerPresence > 0.003 || sliceState.glow > 0.003);
 
         if (sliceState.lastZIndex !== zIndex) {
           slice.style.zIndex = String(zIndex);
