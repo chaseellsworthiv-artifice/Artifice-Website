@@ -193,9 +193,11 @@ export default function HeroExperience() {
     }
 
     function updateTarget(clientX, clientY) {
-      const rect = hero.getBoundingClientRect();
-      const x = (clientX - rect.left) / rect.width - 0.5;
-      const y = (clientY - rect.top) / rect.height - 0.5;
+      const rect = (shell ?? hero).getBoundingClientRect();
+      const normalizedX = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+      const normalizedY = Math.min(Math.max((clientY - rect.top) / rect.height, 0), 1);
+      const x = normalizedX - 0.5;
+      const y = normalizedY - 0.5;
       target.x = x * (isReduced ? 4 : 8);
       target.y = y * (isReduced ? 2 : 4);
       requestRender();
