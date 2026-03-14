@@ -449,7 +449,7 @@ export default function HeroExperience() {
         <div ref={veilRef} className={styles.scrollVeil} />
 
         <header ref={introRef} className={styles.copy}>
-          <p className={styles.eyebrow}>ARTIFICE</p>
+          <p className={`${styles.eyebrow} ${styles.wordmark}`}>ARTIFICE</p>
           <h1>A darker room. Familiar objects. Impossible outcomes.</h1>
           <p className={styles.lead}>
             Sleight of hand by Chase Ellsworth, framed as an atmosphere rather than a performance website.
