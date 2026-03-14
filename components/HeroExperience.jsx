@@ -351,10 +351,10 @@ export default function HeroExperience() {
         <svg className={styles.curtainClipDefs} aria-hidden="true" width="0" height="0" focusable="false">
           <defs>
             <clipPath id="curtain-body-handoff" clipPathUnits="objectBoundingBox">
-              <path d="M 0 0.138 Q 0.08 0.2, 0.18 0.186 Q 0.255 0.176, 0.33 0.144 Q 0.415 0.128, 0.5 0.202 Q 0.585 0.128, 0.67 0.144 Q 0.745 0.176, 0.82 0.186 Q 0.92 0.2, 1 0.138 L 1 1 L 0 1 Z" />
+              <path d="M 0 0.138 Q 0.08 0.2, 0.18 0.186 Q 0.255 0.176, 0.33 0.144 C 0.41 0.132, 0.46 0.188, 0.5 0.188 C 0.54 0.188, 0.59 0.132, 0.67 0.144 Q 0.745 0.176, 0.82 0.186 Q 0.92 0.2, 1 0.138 L 1 1 L 0 1 Z" />
             </clipPath>
             <clipPath id="curtain-swells-cap" clipPathUnits="objectBoundingBox">
-              <path d="M 0 0 L 1 0 L 1 0.138 Q 0.92 0.2, 0.82 0.186 Q 0.745 0.176, 0.67 0.144 Q 0.585 0.128, 0.5 0.202 Q 0.415 0.128, 0.33 0.144 Q 0.255 0.176, 0.18 0.186 Q 0.08 0.2, 0 0.138 Z" />
+              <path d="M 0 0 L 1 0 L 1 0.138 Q 0.92 0.2, 0.82 0.186 Q 0.745 0.176, 0.67 0.144 C 0.59 0.132, 0.54 0.188, 0.5 0.188 C 0.46 0.188, 0.41 0.132, 0.33 0.144 Q 0.255 0.176, 0.18 0.186 Q 0.08 0.2, 0 0.138 Z" />
             </clipPath>
             <clipPath id="curtain-left-clip" clipPathUnits="objectBoundingBox">
               <path ref={leftClipPathRef} d="M 0 0 L 0.5 0 L 0.5 0.245 C 0.5 0.305, 0.5 0.395, 0.5 0.52 C 0.5 0.64, 0.5 0.79, 0.5 1 L 0 1 Z" />
