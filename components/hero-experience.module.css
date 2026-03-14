@@ -27,18 +27,13 @@
 .stageBackdrop {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 50% 14%, rgba(212, 171, 113, 0.08), transparent 16%),
-    linear-gradient(180deg, rgba(15, 8, 9, 0.82) 0%, rgba(10, 7, 8, 0.92) 44%, rgba(7, 6, 6, 1) 100%);
+  background: #090708;
 }
 
 .stageGlow {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 18% 12%, rgba(214, 173, 111, 0.08), transparent 14%),
-    radial-gradient(circle at 82% 12%, rgba(214, 173, 111, 0.08), transparent 14%),
-    radial-gradient(circle at 50% 26%, rgba(74, 15, 23, 0.16), transparent 24%);
+  background: transparent;
 }
 
 .stageFloor {
@@ -46,10 +41,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 22%;
-  background:
-    linear-gradient(180deg, rgba(10, 7, 8, 0), rgba(10, 7, 8, 0.9)),
-    linear-gradient(90deg, rgba(34, 20, 18, 0.6), rgba(18, 12, 11, 0.92));
+  height: 0;
+  background: none;
 }
 
 .curtainShell {
@@ -66,155 +59,41 @@
   position: relative;
   overflow: hidden;
   height: 100%;
-  filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.38));
 }
 
 .curtainTextureLeft,
 .curtainTextureRight {
   position: absolute;
-  inset: -2% -4%;
-  background-image:
-    linear-gradient(180deg, rgba(14, 7, 8, 0.08), rgba(14, 7, 8, 0.22)),
-    url("/assets/curtain/curtain-velvet.webp");
+  inset: 0;
+  background-image: url("/assets/curtain/final-curtain.png");
   background-repeat: no-repeat;
-  background-size:
-    cover,
-    cover;
-  filter: saturate(0.88) brightness(0.72) contrast(1.04);
+  background-size: 200% 100%;
+  filter: none;
 }
 
 .curtainTextureLeft {
-  background-position:
-    center,
-    22% center;
-  transform: perspective(1400px) rotateY(3.2deg) scale(1.06);
+  background-position: left center;
+  transform: translateX(2.4%);
 }
 
 .curtainTextureRight {
-  background-position:
-    center,
-    78% center;
-  transform: perspective(1400px) rotateY(-3.2deg) scale(1.06);
-}
-
-.curtainTextureLeft::before,
-.curtainTextureRight::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(180deg, rgba(82, 18, 29, 0.12), rgba(37, 8, 13, 0.18)),
-    url("/assets/curtain/curtain-style.webp");
-  background-repeat: no-repeat;
-  background-size:
-    cover,
-    200% 100%;
-  background-position:
-    center,
-    left top;
-  mix-blend-mode: soft-light;
-  opacity: 0.32;
-}
-
-.curtainTextureLeft::after,
-.curtainTextureRight::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 30% 18%, rgba(215, 176, 117, 0.14), transparent 18%),
-    linear-gradient(180deg, rgba(255, 234, 199, 0.04), transparent 14%, rgba(0, 0, 0, 0.18) 100%),
-    url("/assets/curtain/curtain-style.webp");
-  background-repeat: no-repeat;
-  background-size:
-    cover,
-    cover,
-    200% 100%;
-  opacity: 0.24;
-  mix-blend-mode: multiply;
-}
-
-.curtainTextureLeft::after {
-  background-position:
-    center,
-    center,
-    left top;
-}
-
-.curtainTextureRight::after {
-  background-position:
-    center,
-    center,
-    right top;
+  background-position: right center;
+  transform: translateX(-2.4%);
 }
 
 .curtainPanelLeft::after,
 .curtainPanelRight::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 16%;
-  pointer-events: none;
-}
-
-.curtainPanelLeft::after {
-  right: -6%;
-  width: 28%;
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(8, 4, 5, 0.16) 28%, rgba(7, 3, 5, 0.84) 100%),
-    url("/assets/curtain/curtain-velvet.webp");
-  background-repeat: no-repeat;
-  background-size:
-    cover,
-    180% 100%;
-  background-position:
-    center,
-    100% center;
-}
-
-.curtainPanelRight::after {
-  left: -6%;
-  width: 28%;
-  background:
-    linear-gradient(90deg, rgba(7, 3, 5, 0.84) 0%, rgba(8, 4, 5, 0.16) 72%, rgba(0, 0, 0, 0) 100%),
-    url("/assets/curtain/curtain-velvet.webp");
-  background-repeat: no-repeat;
-  background-size:
-    cover,
-    180% 100%;
-  background-position:
-    center,
-    0% center;
+  display: none;
 }
 
 .curtainTopMask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 23%;
-  background:
-    linear-gradient(180deg, rgba(24, 7, 10, 0.78), rgba(24, 7, 10, 0.24) 74%, rgba(24, 7, 10, 0)),
-    url("/assets/curtain/curtain-style.webp");
-  background-repeat: no-repeat;
-  background-size:
-    cover,
-    cover;
-  background-position:
-    center,
-    top center;
-  opacity: 0.86;
+  display: none;
 }
 
 .heroAtmosphere {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 18% 14%, rgba(214, 172, 109, 0.08), transparent 14%),
-    radial-gradient(circle at 82% 14%, rgba(214, 172, 109, 0.08), transparent 14%),
-    linear-gradient(to right, rgba(8, 8, 8, 0.22) 0%, rgba(8, 8, 8, 0) 22%, rgba(8, 8, 8, 0) 78%, rgba(8, 8, 8, 0.22) 100%),
-    linear-gradient(to bottom, rgba(8, 8, 8, 0.04) 0%, rgba(8, 8, 8, 0.08) 42%, rgba(8, 8, 8, 0.26) 100%);
+  background: rgba(0, 0, 0, 0.04);
   pointer-events: none;
 }
 
@@ -634,10 +513,7 @@
   }
 
   .heroAtmosphere {
-    background:
-      radial-gradient(circle at 50% 16%, rgba(201, 168, 106, 0.08), transparent 16%),
-      linear-gradient(to right, rgba(8, 8, 8, 0.54) 0%, rgba(8, 8, 8, 0.08) 32%, rgba(8, 8, 8, 0.08) 68%, rgba(8, 8, 8, 0.54) 100%),
-      linear-gradient(to bottom, rgba(8, 8, 8, 0.08) 0%, rgba(8, 8, 8, 0.32) 62%, rgba(8, 8, 8, 0.82) 100%);
+    background: rgba(0, 0, 0, 0.05);
   }
 
   .scrollVeil {
@@ -646,18 +522,15 @@
 
   .curtainTextureLeft,
   .curtainTextureRight {
-    inset: -1% -4%;
-    background-size:
-      cover,
-      cover;
+    inset: 0;
   }
 
   .curtainTextureLeft {
-    transform: perspective(1000px) rotateY(2deg) scale(1.04);
+    transform: translateX(2.2%);
   }
 
   .curtainTextureRight {
-    transform: perspective(1000px) rotateY(-2deg) scale(1.04);
+    transform: translateX(-2.2%);
   }
 
   .copy {
