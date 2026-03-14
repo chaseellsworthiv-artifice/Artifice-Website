@@ -166,19 +166,20 @@ export default function HeroExperience() {
         sliceState.y += (desiredY - sliceState.y) * 0.14;
         sliceState.glow += (desiredGlow - sliceState.glow) * 0.1;
 
+        const hotspotBoost = Math.pow(primaryInfluence, 0.72);
         const rotate = sliceState.x * 1.12;
         const skew = sliceState.x * 0.14;
         const scaleX = 1.008 + secondaryInfluence * 0.016;
         const scaleY = 1 + secondaryInfluence * 0.011;
-        const lift = secondaryInfluence * (isReduced ? 3 : 7);
-        const brightness = 1 + sliceState.glow * 1.08;
-        const contrast = 1 + sliceState.glow * 0.42;
+        const lift = secondaryInfluence * (isReduced ? 3 : 7) + hotspotBoost * (isReduced ? 1.4 : 2.8);
+        const brightness = 1 + sliceState.glow * 1.08 + hotspotBoost * 0.035;
+        const contrast = 1 + sliceState.glow * 0.42 + hotspotBoost * 0.04;
         const saturate = 1 + sliceState.glow * 0.14;
         const shadowX = (-sliceState.x * 0.42).toFixed(3);
-        const shadowY = (1.2 + secondaryInfluence * 4).toFixed(3);
-        const shadowBlur = (3 + secondaryInfluence * 9).toFixed(3);
-        const shadowAlpha = (0.08 + secondaryInfluence * 0.12).toFixed(3);
-        const zIndex = 20 + Math.round(secondaryInfluence * 40);
+        const shadowY = (1.2 + secondaryInfluence * 4 + hotspotBoost * 1.6).toFixed(3);
+        const shadowBlur = (3 + secondaryInfluence * 9 + hotspotBoost * 3.5).toFixed(3);
+        const shadowAlpha = (0.08 + secondaryInfluence * 0.12 + hotspotBoost * 0.05).toFixed(3);
+        const zIndex = 20 + Math.round(secondaryInfluence * 40 + hotspotBoost * 14);
 
         slice.style.zIndex = String(zIndex);
         slice.style.transform = `translate3d(${sliceState.x.toFixed(3)}px, ${sliceState.y.toFixed(
