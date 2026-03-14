@@ -159,8 +159,19 @@ export default function HeroExperience() {
       hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 6).toFixed(2)}%`);
       hero.style.setProperty("--curtain-open-progress", `${state.open.toFixed(4)}`);
       const shellHeight = shellMetricsRef.current.height || hero.getBoundingClientRect().height;
+      const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
       const riseAmount = -shellHeight * state.open * (isTouch ? 0.12 : isReduced ? 0.14 : 0.18);
       hero.style.setProperty("--curtain-rise-y", `${riseAmount.toFixed(3)}px`);
+      const wedgeBottomGap = shellWidth * Math.pow(state.open, 1.02) * (isTouch ? 0.28 : 0.32);
+      const wedgeMidGap = shellWidth * Math.pow(state.open, 1.22) * (isTouch ? 0.18 : 0.22);
+      const wedgeTopGap = shellWidth * Math.pow(Math.max(state.open - 0.18, 0), 1.45) * (isTouch ? 0.055 : 0.075);
+      const wedgeMidY = shellHeight * (1 - Math.pow(state.open, 1.08) * (isTouch ? 0.34 : 0.4));
+      const wedgeTopY = shellHeight * (1 - Math.pow(state.open, 1.3) * (isTouch ? 0.6 : 0.7));
+      hero.style.setProperty("--wedge-bottom-gap", `${wedgeBottomGap.toFixed(3)}px`);
+      hero.style.setProperty("--wedge-mid-gap", `${wedgeMidGap.toFixed(3)}px`);
+      hero.style.setProperty("--wedge-top-gap", `${wedgeTopGap.toFixed(3)}px`);
+      hero.style.setProperty("--wedge-mid-y", `${wedgeMidY.toFixed(3)}px`);
+      hero.style.setProperty("--wedge-top-y", `${wedgeTopY.toFixed(3)}px`);
 
       const pointerCenter = target.x;
       const pointerDepth = target.y;
@@ -198,7 +209,6 @@ export default function HeroExperience() {
         sliceState.glow += (desiredGlow - sliceState.glow) * (isTouch ? 0.1 : 0.1);
 
         const hotspotBoost = Math.pow(primaryInfluence, 0.72);
-        const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
         const bottomBias = 0.26 + Math.pow(halfT, 0.82) * 0.74;
         const openingTravel = side * openWeight * bottomBias * shellWidth * (0.16 + halfT * 0.24);
         const gatheredTravel = side * openWeight * bottomBias * shellWidth * (0.022 + halfT * 0.035);
@@ -320,6 +330,8 @@ export default function HeroExperience() {
           <HeroScene />
         </div>
         <div ref={curtainShellRef} className={styles.curtainShell} aria-hidden="true">
+          <div className={styles.curtainCoverLeft} />
+          <div className={styles.curtainCoverRight} />
           {sliceItems.map(({ index, ratio }) => (
             <div
               key={index}
