@@ -161,9 +161,9 @@ export default function HeroExperience() {
         const desiredGlow = primaryInfluence * (isReduced ? 0.08 : 0.14);
         const sliceState = sliceStates[index];
 
-        sliceState.x += (desiredX - sliceState.x) * 0.18;
-        sliceState.y += (desiredY - sliceState.y) * 0.16;
-        sliceState.glow += (desiredGlow - sliceState.glow) * 0.14;
+        sliceState.x += (desiredX - sliceState.x) * 0.14;
+        sliceState.y += (desiredY - sliceState.y) * 0.13;
+        sliceState.glow += (desiredGlow - sliceState.glow) * 0.12;
 
         const rotate = sliceState.x * 0.9;
         const skew = sliceState.x * 0.16;
