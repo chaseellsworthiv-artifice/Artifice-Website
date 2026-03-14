@@ -16,6 +16,8 @@ export default function HeroExperience() {
   const veilRef = useRef(null);
   const sectionsRef = useRef(null);
   const curtainShellRef = useRef(null);
+  const leftClipPathRef = useRef(null);
+  const rightClipPathRef = useRef(null);
   const sliceRefs = useRef([]);
   const imageMetricsRef = useRef({ ready: false, width: 0, height: 0 });
   const shellMetricsRef = useRef({ width: 0, height: 0 });
@@ -227,21 +229,39 @@ export default function HeroExperience() {
         const ribProgress = Math.pow(Math.max(0, (state.open - 0.42) / 0.58), isTouch ? 1.45 : 1.6);
         const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.62) / 0.38), isTouch ? 2.0 : 2.25);
         const topProgress = Math.pow(Math.max(0, (state.open - 0.8) / 0.2), isTouch ? 2.6 : 3.0);
-        const topGap = (isTouch ? 1.6 : isReduced ? 1.3 : 1.15) * topProgress;
-        const shoulderGap = (isTouch ? 3.2 : isReduced ? 2.8 : 2.4) * shoulderProgress;
-        const ribGap = (isTouch ? 7.8 : isReduced ? 6.8 : 6.1) * ribProgress;
-        const waistGap = (isTouch ? 17.5 : isReduced ? 15.2 : 13.5) * waistProgress;
-        const bottomGap = (isTouch ? 36.5 : isReduced ? 33.4 : 30.2) * bottomProgress;
+        const topGap = (isTouch ? 0.012 : isReduced ? 0.01 : 0.009) * topProgress;
+        const shoulderGap = (isTouch ? 0.028 : isReduced ? 0.024 : 0.021) * shoulderProgress;
+        const ribGap = (isTouch ? 0.08 : isReduced ? 0.07 : 0.062) * ribProgress;
+        const waistGap = (isTouch ? 0.18 : isReduced ? 0.16 : 0.145) * waistProgress;
+        const bottomGap = (isTouch ? 0.38 : isReduced ? 0.35 : 0.32) * bottomProgress;
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
         const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.48) / 0.52), isTouch ? 1.3 : 1.45);
         const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.022 : isReduced ? 0.028 : 0.034);
-        shell.style.setProperty("--wedge-top-gap", `${topGap.toFixed(3)}%`);
-        shell.style.setProperty("--wedge-shoulder-gap", `${shoulderGap.toFixed(3)}%`);
-        shell.style.setProperty("--wedge-rib-gap", `${ribGap.toFixed(3)}%`);
-        shell.style.setProperty("--wedge-waist-gap", `${waistGap.toFixed(3)}%`);
-        shell.style.setProperty("--wedge-bottom-gap", `${bottomGap.toFixed(3)}%`);
         shell.style.setProperty("--curtain-left-shift", `${(-groupShift).toFixed(3)}px`);
         shell.style.setProperty("--curtain-right-shift", `${groupShift.toFixed(3)}px`);
+
+        const leftPath = [
+          "M 0 0",
+          "L 0.5 0",
+          "L 0.5 0.245",
+          `C ${0.5 - topGap} 0.305, ${0.5 - shoulderGap} 0.395, ${0.5 - ribGap} 0.52`,
+          `C ${0.5 - (ribGap * 1.05)} 0.64, ${0.5 - waistGap} 0.79, ${0.5 - bottomGap} 1`,
+          "L 0 1",
+          "Z",
+        ].join(" ");
+
+        const rightPath = [
+          "M 0.5 0",
+          "L 1 0",
+          "L 1 1",
+          `L ${0.5 + bottomGap} 1`,
+          `C ${0.5 + waistGap} 0.79, ${0.5 + (ribGap * 1.05)} 0.64, ${0.5 + ribGap} 0.52`,
+          `C ${0.5 + shoulderGap} 0.395, ${0.5 + topGap} 0.305, 0.5 0.245`,
+          "Z",
+        ].join(" ");
+
+        leftClipPathRef.current?.setAttribute("d", leftPath);
+        rightClipPathRef.current?.setAttribute("d", rightPath);
       }
 
       const moving =
@@ -328,11 +348,24 @@ export default function HeroExperience() {
   return (
     <main className={styles.page}>
       <section ref={heroRef} className={styles.hero}>
+        <svg className={styles.curtainClipDefs} aria-hidden="true" width="0" height="0" focusable="false">
+          <defs>
+            <clipPath id="curtain-left-clip" clipPathUnits="objectBoundingBox">
+              <path ref={leftClipPathRef} d="M 0 0 L 0.5 0 L 0.5 0.245 C 0.5 0.305, 0.5 0.395, 0.5 0.52 C 0.5 0.64, 0.5 0.79, 0.5 1 L 0 1 Z" />
+            </clipPath>
+            <clipPath id="curtain-right-clip" clipPathUnits="objectBoundingBox">
+              <path ref={rightClipPathRef} d="M 0.5 0 L 1 0 L 1 1 L 0.5 1 C 0.5 0.79, 0.5 0.64, 0.5 0.52 C 0.5 0.395, 0.5 0.305, 0.5 0.245 Z" />
+            </clipPath>
+          </defs>
+        </svg>
         <div className={styles.sceneShell}>
           <HeroScene />
         </div>
         <div ref={curtainShellRef} className={styles.curtainShell} aria-hidden="true">
-          <div className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}>
+          <div
+            className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}
+            style={{ clipPath: "url(#curtain-left-clip)" }}
+          >
             {sliceItems
               .filter(({ ratio }) => ratio < 0.5)
               .map(({ index, ratio }) => (
@@ -346,7 +379,10 @@ export default function HeroExperience() {
                 />
               ))}
           </div>
-          <div className={`${styles.curtainGroup} ${styles.curtainGroupRight}`}>
+          <div
+            className={`${styles.curtainGroup} ${styles.curtainGroupRight}`}
+            style={{ clipPath: "url(#curtain-right-clip)" }}
+          >
             {sliceItems
               .filter(({ ratio }) => ratio >= 0.5)
               .map(({ index, ratio }) => (
