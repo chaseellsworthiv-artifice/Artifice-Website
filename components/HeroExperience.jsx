@@ -20,14 +20,16 @@ export default function HeroExperience() {
   const imageMetricsRef = useRef({ ready: false, width: 0, height: 0 });
   const shellMetricsRef = useRef({ width: 0, height: 0 });
   const openTargetRef = useRef(0);
-  const sliceCount = 96;
-  const sliceItems = useMemo(
+  const columnCount = 72;
+  const rowCount = 8;
+  const tileItems = useMemo(
     () =>
-      Array.from({ length: sliceCount }, (_, index) => ({
+      Array.from({ length: columnCount * rowCount }, (_, index) => ({
         index,
-        ratio: index / sliceCount,
+        column: index % columnCount,
+        row: Math.floor(index / columnCount),
       })),
-    [sliceCount]
+    [columnCount, rowCount]
   );
 
   useEffect(() => {
@@ -110,7 +112,7 @@ export default function HeroExperience() {
     let isTouchActive = false;
     const state = { x: 0, y: 0, open: 0 };
     const target = { x: 0, y: 0 };
-    const sliceStates = sliceRefs.current.map(() => ({ x: 0, y: 0, glow: 0 }));
+    const tileStates = sliceRefs.current.map(() => ({ x: 0, y: 0, glow: 0 }));
 
     function applySliceLayout() {
       if (!shell || !sliceRefs.current.length || !imageMetricsRef.current.ready) return;
@@ -123,19 +125,25 @@ export default function HeroExperience() {
       const backgroundHeight = imgHeight * scale;
       const offsetX = (rect.width - backgroundWidth) / 2;
       const offsetY = 0;
-      const sliceWidth = rect.width / sliceCount;
+      const tileWidth = rect.width / columnCount;
+      const tileHeight = rect.height / rowCount;
       shellMetricsRef.current = { width: rect.width, height: rect.height };
 
       shell.style.setProperty("--curtain-bg-size", `${backgroundWidth}px ${backgroundHeight}px`);
       shell.style.setProperty("--curtain-bg-position", `${offsetX}px ${offsetY}px`);
 
-      sliceRefs.current.forEach((slice, index) => {
-        if (!slice) return;
-        const left = index * sliceWidth;
-        slice.style.left = `${left - 1}px`;
-        slice.style.width = `${sliceWidth + 2}px`;
-        slice.style.backgroundSize = `${backgroundWidth}px ${backgroundHeight}px`;
-        slice.style.backgroundPosition = `${offsetX - left}px ${offsetY}px`;
+      sliceRefs.current.forEach((tile, index) => {
+        if (!tile) return;
+        const column = index % columnCount;
+        const row = Math.floor(index / columnCount);
+        const left = column * tileWidth;
+        const top = row * tileHeight;
+        tile.style.left = `${left - 0.75}px`;
+        tile.style.top = `${top - 0.75}px`;
+        tile.style.width = `${tileWidth + 1.5}px`;
+        tile.style.height = `${tileHeight + 1.5}px`;
+        tile.style.backgroundSize = `${backgroundWidth}px ${backgroundHeight}px`;
+        tile.style.backgroundPosition = `${offsetX - left}px ${offsetY - top}px`;
       });
     }
 
@@ -164,24 +172,37 @@ export default function HeroExperience() {
 
       const pointerCenter = target.x;
       const pointerDepth = target.y;
-      const nearestIndex = Math.max(0, Math.min(sliceCount - 1, Math.round(((pointerCenter + 1) * 0.5) * (sliceCount - 1))));
-      const nearestCenter = ((nearestIndex + 0.5) / sliceCount - 0.5) * 2;
+      const nearestIndex = Math.max(
+        0,
+        Math.min(columnCount - 1, Math.round(((pointerCenter + 1) * 0.5) * (columnCount - 1)))
+      );
+      const nearestCenter = ((nearestIndex + 0.5) / columnCount - 0.5) * 2;
       const hotspotCenter = nearestCenter * 0.25 + pointerCenter * 0.75;
 
-      sliceRefs.current.forEach((slice, index) => {
-        if (!slice) return;
+      sliceRefs.current.forEach((tile, index) => {
+        if (!tile) return;
 
-        const center = ((index + 0.5) / sliceCount - 0.5) * 2;
-        const side = center < 0 ? -1 : 1;
-        const halfT = side < 0 ? center + 1 : 1 - center;
+        const column = index % columnCount;
+        const row = Math.floor(index / columnCount);
+        const centerX = ((column + 0.5) / columnCount - 0.5) * 2;
+        const centerY = ((row + 0.5) / rowCount - 0.5) * 2;
+        const side = centerX < 0 ? -1 : 1;
+        const halfT = side < 0 ? centerX + 1 : 1 - centerX;
+        const rowBottomBias = Math.pow((row + 0.5) / rowCount, 1.18);
         const openWeight = state.open;
         const interactionWeight = 1 - openWeight * 0.62;
-        const delta = center - hotspotCenter;
-        const distance = Math.abs(delta);
-        const primaryRadius = isTouch ? 0.1 : isReduced ? 0.072 : 0.038;
-        const secondaryRadius = isTouch ? 0.17 : isReduced ? 0.12 : 0.068;
-        const primaryInfluence = Math.exp(-Math.pow(distance / primaryRadius, 2));
-        const secondaryInfluence = Math.exp(-Math.pow(distance / secondaryRadius, 2));
+        const deltaX = centerX - hotspotCenter;
+        const deltaY = centerY - pointerDepth;
+        const primaryRadiusX = isTouch ? 0.11 : isReduced ? 0.082 : 0.045;
+        const primaryRadiusY = isTouch ? 0.24 : isReduced ? 0.2 : 0.14;
+        const secondaryRadiusX = isTouch ? 0.18 : isReduced ? 0.13 : 0.075;
+        const secondaryRadiusY = isTouch ? 0.34 : isReduced ? 0.28 : 0.2;
+        const primaryInfluence = Math.exp(
+          -(Math.pow(deltaX / primaryRadiusX, 2) + Math.pow(deltaY / primaryRadiusY, 2))
+        );
+        const secondaryInfluence = Math.exp(
+          -(Math.pow(deltaX / secondaryRadiusX, 2) + Math.pow(deltaY / secondaryRadiusY, 2))
+        );
         const dragX =
           state.x * interactionWeight * primaryInfluence * (isTouch ? 1.12 : isReduced ? 0.84 : 1.16);
         const depthY =
@@ -191,43 +212,43 @@ export default function HeroExperience() {
           dragX + state.x * interactionWeight * secondaryInfluence * (isTouch ? 0.05 : isReduced ? 0.04 : 0.07);
         const desiredY = depthY;
         const desiredGlow = interactionWeight * secondaryInfluence * (isTouch ? 0.09 : isReduced ? 0.06 : 0.1);
-        const sliceState = sliceStates[index];
+        const tileState = tileStates[index];
 
-        sliceState.x += (desiredX - sliceState.x) * (isTouch ? 0.13 : 0.15);
-        sliceState.y += (desiredY - sliceState.y) * (isTouch ? 0.12 : 0.14);
-        sliceState.glow += (desiredGlow - sliceState.glow) * (isTouch ? 0.1 : 0.1);
+        tileState.x += (desiredX - tileState.x) * (isTouch ? 0.13 : 0.15);
+        tileState.y += (desiredY - tileState.y) * (isTouch ? 0.12 : 0.14);
+        tileState.glow += (desiredGlow - tileState.glow) * (isTouch ? 0.1 : 0.1);
 
         const hotspotBoost = Math.pow(primaryInfluence, 0.72);
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-        const bottomBias = 0.26 + Math.pow(halfT, 0.82) * 0.74;
-        const openingTravel = side * openWeight * bottomBias * shellWidth * (0.16 + halfT * 0.24);
-        const gatheredTravel = side * openWeight * bottomBias * shellWidth * (0.022 + halfT * 0.035);
+        const openingBias = rowBottomBias;
+        const openingTravel = side * openWeight * openingBias * shellWidth * (0.16 + halfT * 0.24);
+        const gatheredTravel = side * openWeight * openingBias * shellWidth * (0.022 + halfT * 0.035);
         const openOffsetX = openingTravel + gatheredTravel;
-        const gatherScale = 1 - openWeight * bottomBias * (0.06 + (1 - halfT) * 0.08);
-        const openRotate = side * openWeight * bottomBias * (1.8 + halfT * 2.4);
-        const rotate = sliceState.x * (isTouch ? 1.34 : 1.12) + openRotate;
-        const skew = sliceState.x * (isTouch ? 0.16 : 0.14) + side * openWeight * bottomBias * 0.22;
+        const gatherScale = 1 - openWeight * openingBias * (0.06 + (1 - halfT) * 0.08);
+        const openRotate = side * openWeight * openingBias * (1.8 + halfT * 2.4);
+        const rotate = tileState.x * (isTouch ? 1.34 : 1.12) + openRotate;
+        const skew = tileState.x * (isTouch ? 0.16 : 0.14) + side * openWeight * openingBias * 0.22;
         const scaleX = (1.01 + secondaryInfluence * (isTouch ? 0.017 : 0.016)) * gatherScale;
         const scaleY = 1 + secondaryInfluence * (isTouch ? 0.006 : 0.011);
         const lift =
           secondaryInfluence * (isTouch ? 3.0 : isReduced ? 3 : 7) +
           hotspotBoost * (isTouch ? 1.35 : isReduced ? 1.4 : 2.8);
-        const brightness = 1 + sliceState.glow * (isTouch ? 1.12 : 1.08) + hotspotBoost * 0.05;
-        const contrast = 1 + sliceState.glow * (isTouch ? 0.46 : 0.42) + hotspotBoost * 0.05;
-        const saturate = 1 + sliceState.glow * 0.14;
-        const shadowX = (-sliceState.x * 0.42).toFixed(3);
+        const brightness = 1 + tileState.glow * (isTouch ? 1.12 : 1.08) + hotspotBoost * 0.05;
+        const contrast = 1 + tileState.glow * (isTouch ? 0.46 : 0.42) + hotspotBoost * 0.05;
+        const saturate = 1 + tileState.glow * 0.14;
+        const shadowX = (-tileState.x * 0.42).toFixed(3);
         const shadowY = (1 + secondaryInfluence * (isTouch ? 2.8 : 4) + hotspotBoost * 1.5).toFixed(3);
         const shadowBlur = (2.8 + secondaryInfluence * (isTouch ? 7.4 : 9) + hotspotBoost * 3.8).toFixed(3);
         const shadowAlpha = (0.075 + secondaryInfluence * (isTouch ? 0.1 : 0.12) + hotspotBoost * 0.06).toFixed(3);
         const zIndex = 20 + Math.round(secondaryInfluence * 40 + hotspotBoost * 14);
 
-        slice.style.zIndex = String(zIndex);
-        slice.style.transform = `translate3d(${(sliceState.x + openOffsetX).toFixed(3)}px, ${sliceState.y.toFixed(
+        tile.style.zIndex = String(zIndex);
+        tile.style.transform = `translate3d(${(tileState.x + openOffsetX).toFixed(3)}px, ${tileState.y.toFixed(
           3
         )}px, ${lift.toFixed(3)}px) rotateY(${rotate.toFixed(3)}deg) skewY(${skew.toFixed(3)}deg) scaleX(${scaleX.toFixed(
           4
         )}) scaleY(${scaleY.toFixed(4)})`;
-        slice.style.filter = `brightness(${brightness.toFixed(3)}) contrast(${contrast.toFixed(3)}) saturate(${saturate.toFixed(
+        tile.style.filter = `brightness(${brightness.toFixed(3)}) contrast(${contrast.toFixed(3)}) saturate(${saturate.toFixed(
           3
         )}) drop-shadow(${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0, 0, 0, ${shadowAlpha}))`;
       });
@@ -320,16 +341,18 @@ export default function HeroExperience() {
           <HeroScene />
         </div>
         <div ref={curtainShellRef} className={styles.curtainShell} aria-hidden="true">
-          {sliceItems.map(({ index, ratio }) => (
+          <div className={styles.curtainDynamicLayer}>
+          {tileItems.map(({ index, column, row }) => (
             <div
               key={index}
               ref={(node) => {
                 sliceRefs.current[index] = node;
               }}
               className={styles.curtainSlice}
-              style={{ "--slice-index": index, "--slice-ratio": ratio }}
+              style={{ "--slice-index": index, "--slice-column": column, "--slice-row": row }}
             />
           ))}
+          </div>
         </div>
         <div className={styles.heroAtmosphere} />
         <div ref={veilRef} className={styles.scrollVeil} />
