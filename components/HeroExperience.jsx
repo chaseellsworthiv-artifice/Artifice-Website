@@ -222,18 +222,19 @@ export default function HeroExperience() {
       });
 
       if (shell) {
-        const bottomProgress = Math.pow(state.open, isTouch ? 0.86 : 0.8);
-        const waistProgress = Math.pow(Math.max(0, (state.open - 0.08) / 0.92), isTouch ? 0.95 : 0.9);
-        const ribProgress = Math.pow(Math.max(0, (state.open - 0.22) / 0.78), isTouch ? 1.12 : 1.18);
-        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.36) / 0.64), isTouch ? 1.35 : 1.45);
-        const topProgress = Math.pow(Math.max(0, (state.open - 0.56) / 0.44), isTouch ? 1.7 : 1.9);
+        const bottomProgress = Math.pow(state.open, isTouch ? 0.8 : 0.74);
+        const waistProgress = Math.pow(Math.max(0, (state.open - 0.16) / 0.84), isTouch ? 1.05 : 1.12);
+        const ribProgress = Math.pow(Math.max(0, (state.open - 0.42) / 0.58), isTouch ? 1.45 : 1.6);
+        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.62) / 0.38), isTouch ? 2.0 : 2.25);
+        const topProgress = Math.pow(Math.max(0, (state.open - 0.8) / 0.2), isTouch ? 2.6 : 3.0);
         const topGap = (isTouch ? 1.6 : isReduced ? 1.3 : 1.15) * topProgress;
-        const shoulderGap = (isTouch ? 4.4 : isReduced ? 3.8 : 3.4) * shoulderProgress;
-        const ribGap = (isTouch ? 10.8 : isReduced ? 9.4 : 8.2) * ribProgress;
-        const waistGap = (isTouch ? 18.8 : isReduced ? 16.6 : 14.8) * waistProgress;
-        const bottomGap = (isTouch ? 33.5 : isReduced ? 30.6 : 27.8) * bottomProgress;
+        const shoulderGap = (isTouch ? 3.2 : isReduced ? 2.8 : 2.4) * shoulderProgress;
+        const ribGap = (isTouch ? 7.8 : isReduced ? 6.8 : 6.1) * ribProgress;
+        const waistGap = (isTouch ? 17.5 : isReduced ? 15.2 : 13.5) * waistProgress;
+        const bottomGap = (isTouch ? 36.5 : isReduced ? 33.4 : 30.2) * bottomProgress;
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-        const groupShift = shellWidth * Math.pow(state.open, 0.9) * (isTouch ? 0.028 : isReduced ? 0.035 : 0.042);
+        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.48) / 0.52), isTouch ? 1.3 : 1.45);
+        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.022 : isReduced ? 0.028 : 0.034);
         shell.style.setProperty("--wedge-top-gap", `${topGap.toFixed(3)}%`);
         shell.style.setProperty("--wedge-shoulder-gap", `${shoulderGap.toFixed(3)}%`);
         shell.style.setProperty("--wedge-rib-gap", `${ribGap.toFixed(3)}%`);
