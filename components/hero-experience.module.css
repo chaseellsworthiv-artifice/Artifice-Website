@@ -212,7 +212,7 @@
 
 .copyTitle {
   margin: 0;
-  max-width: 9ch;
+  max-width: 10.6ch;
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(3rem, 7.2vw, 6rem);
   line-height: 0.98;
@@ -566,6 +566,7 @@
   }
 
   .copyTitle {
+    max-width: 10.1ch;
     font-size: clamp(2.6rem, 10.4vw, 4.4rem);
   }
 
@@ -744,7 +745,7 @@
   }
 
   .copyTitle {
-    max-width: 8.5ch;
+    max-width: 10.2ch;
     font-size: clamp(2.1rem, 11vw, 3.15rem);
   }
 
