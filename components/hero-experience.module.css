@@ -24,6 +24,34 @@
   inset: 0;
 }
 
+.stageBackdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 14%, rgba(212, 171, 113, 0.08), transparent 16%),
+    linear-gradient(180deg, rgba(15, 8, 9, 0.82) 0%, rgba(10, 7, 8, 0.92) 44%, rgba(7, 6, 6, 1) 100%);
+}
+
+.stageGlow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(214, 173, 111, 0.08), transparent 14%),
+    radial-gradient(circle at 82% 12%, rgba(214, 173, 111, 0.08), transparent 14%),
+    radial-gradient(circle at 50% 26%, rgba(74, 15, 23, 0.16), transparent 24%);
+}
+
+.stageFloor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 22%;
+  background:
+    linear-gradient(180deg, rgba(10, 7, 8, 0), rgba(10, 7, 8, 0.9)),
+    linear-gradient(90deg, rgba(34, 20, 18, 0.6), rgba(18, 12, 11, 0.92));
+}
+
 .curtainShell {
   position: absolute;
   inset: 0;
