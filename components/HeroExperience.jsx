@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -101,7 +101,6 @@ export default function HeroExperience() {
       const backgroundHeight = imgHeight * scale;
       const offsetX = (rect.width - backgroundWidth) / 2;
       const offsetY = 0;
-      const sliceWidth = rect.width / sliceCount;
       shellMetricsRef.current = { width: rect.width, height: rect.height };
 
       shell.style.setProperty("--curtain-bg-size", `${backgroundWidth}px ${backgroundHeight}px`);
@@ -136,16 +135,16 @@ export default function HeroExperience() {
         const ribProgress = Math.pow(Math.max(0, (state.open - 0.42) / 0.58), isTouch ? 1.75 : 1.95);
         const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.7) / 0.3), isTouch ? 2.5 : 2.9);
         const topProgress = Math.pow(Math.max(0, (state.open - 0.9) / 0.1), isTouch ? 3.6 : 4.2);
-        const topGap = (isTouch ? 0.01 : isReduced ? 0.008 : 0.006) * topProgress;
-        const shoulderGap = (isTouch ? 0.03 : isReduced ? 0.026 : 0.022) * shoulderProgress;
-        const ribGap = (isTouch ? 0.085 : isReduced ? 0.075 : 0.066) * ribProgress;
-        const waistGap = (isTouch ? 0.2 : isReduced ? 0.182 : 0.166) * waistProgress;
-        const bottomGap = (isTouch ? 0.36 : isReduced ? 0.33 : 0.3) * bottomProgress;
+        const topGap = (isTouch ? 0.006 : isReduced ? 0.005 : 0.004) * topProgress;
+        const shoulderGap = (isTouch ? 0.02 : isReduced ? 0.017 : 0.014) * shoulderProgress;
+        const ribGap = (isTouch ? 0.052 : isReduced ? 0.046 : 0.04) * ribProgress;
+        const waistGap = (isTouch ? 0.13 : isReduced ? 0.118 : 0.106) * waistProgress;
+        const bottomGap = (isTouch ? 0.19 : isReduced ? 0.172 : 0.154) * bottomProgress;
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
         const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.08) / 0.92), isTouch ? 0.88 : 0.94);
-        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.014 : isReduced ? 0.018 : 0.022);
-        const compress = Math.pow(Math.max(0, (state.open - 0.12) / 0.88), 1.05) * (isTouch ? 0.09 : isReduced ? 0.11 : 0.13);
-        const shadow = 0.12 + waistProgress * 0.1 + bottomProgress * 0.08;
+        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.028 : isReduced ? 0.034 : 0.04);
+        const compress = Math.pow(Math.max(0, (state.open - 0.08) / 0.92), 1.08) * (isTouch ? 0.11 : isReduced ? 0.14 : 0.17);
+        const shadow = 0.12 + waistProgress * 0.14 + bottomProgress * 0.12;
         shell.style.setProperty("--curtain-left-shift", `${(-groupShift).toFixed(3)}px`);
         shell.style.setProperty("--curtain-right-shift", `${groupShift.toFixed(3)}px`);
         shell.style.setProperty("--curtain-compress", `${compress.toFixed(4)}`);
@@ -155,8 +154,8 @@ export default function HeroExperience() {
           "M 0 0",
           "L 0.5 0",
           "L 0.5 0.245",
-          `C ${0.5 - topGap} 0.305, ${0.5 - shoulderGap} 0.37, ${0.5 - ribGap} 0.5`,
-          `C ${0.5 - (waistGap * 0.8)} 0.66, ${0.5 - (waistGap * 1.02)} 0.84, ${0.5 - bottomGap} 1`,
+          `C ${0.5 - topGap} 0.31, ${0.5 - shoulderGap} 0.375, ${0.5 - ribGap} 0.495`,
+          `C ${0.5 - (waistGap * 0.72)} 0.655, ${0.5 - (waistGap * 0.94)} 0.84, ${0.5 - bottomGap} 1`,
           "L 0 1",
           "Z",
         ].join(" ");
@@ -166,8 +165,8 @@ export default function HeroExperience() {
           "L 1 0",
           "L 1 1",
           `L ${0.5 + bottomGap} 1`,
-          `C ${0.5 + (waistGap * 1.02)} 0.84, ${0.5 + (waistGap * 0.8)} 0.66, ${0.5 + ribGap} 0.5`,
-          `C ${0.5 + shoulderGap} 0.37, ${0.5 + topGap} 0.305, 0.5 0.245`,
+          `C ${0.5 + (waistGap * 0.94)} 0.84, ${0.5 + (waistGap * 0.72)} 0.655, ${0.5 + ribGap} 0.495`,
+          `C ${0.5 + shoulderGap} 0.375, ${0.5 + topGap} 0.31, 0.5 0.245`,
           "Z",
         ].join(" ");
 

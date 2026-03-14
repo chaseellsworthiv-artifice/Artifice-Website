@@ -146,15 +146,15 @@
 }
 
 .curtainGroupLeft {
-  transform: translate3d(var(--curtain-left-shift), 0, 0) scaleX(calc(1 - var(--curtain-compress)));
+  transform: translate3d(var(--curtain-left-shift), 0, 0) scaleX(calc(1 - var(--curtain-compress))) skewY(0.9deg);
   transform-origin: left top;
-  filter: drop-shadow(6px 0 18px rgba(0, 0, 0, var(--curtain-shadow-alpha)));
+  filter: drop-shadow(8px 0 22px rgba(0, 0, 0, var(--curtain-shadow-alpha)));
 }
 
 .curtainGroupRight {
-  transform: translate3d(var(--curtain-right-shift), 0, 0) scaleX(calc(1 - var(--curtain-compress)));
+  transform: translate3d(var(--curtain-right-shift), 0, 0) scaleX(calc(1 - var(--curtain-compress))) skewY(-0.9deg);
   transform-origin: right top;
-  filter: drop-shadow(-6px 0 18px rgba(0, 0, 0, var(--curtain-shadow-alpha)));
+  filter: drop-shadow(-8px 0 22px rgba(0, 0, 0, var(--curtain-shadow-alpha)));
 }
 
 .heroAtmosphere {
