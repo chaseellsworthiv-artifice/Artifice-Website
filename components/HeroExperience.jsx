@@ -209,31 +209,6 @@ export default function HeroExperience() {
         const shadowBlur = (2.8 + secondaryInfluence * (isTouch ? 7.4 : 9) + hotspotBoost * 3.8).toFixed(3);
         const shadowAlpha = (0.075 + secondaryInfluence * (isTouch ? 0.1 : 0.12) + hotspotBoost * 0.06).toFixed(3);
         const zIndex = 20 + Math.round(secondaryInfluence * 40 + hotspotBoost * 14);
-        const baseWedgeTop = isTouch ? 10 : isReduced ? 8 : 6.5;
-        const baseWedgeBottom = isTouch ? 40 : isReduced ? 36 : 31;
-        const wedgeRise = openWeight * (isTouch ? 0.78 : isReduced ? 0.82 : 0.9);
-        const edgeFalloff = Math.pow(halfT, 0.82);
-        const topInset = Math.max(
-          0,
-          Math.min(
-            48,
-            (1 - edgeFalloff) * baseWedgeTop * wedgeRise
-          )
-        );
-        const bottomInset = Math.max(
-          0,
-          Math.min(
-            49,
-            (1 - edgeFalloff) * baseWedgeBottom * wedgeRise
-          )
-        );
-        const clipPath =
-          side < 0
-            ? `polygon(0 0, 100% 0, ${Math.max(0, 100 - topInset).toFixed(2)}% 24.5%, ${Math.max(
-                0,
-                100 - bottomInset
-              ).toFixed(2)}% 100%, 0 100%)`
-            : `polygon(${topInset.toFixed(2)}% 24.5%, 0 0, 100% 0, 100% 100%, ${bottomInset.toFixed(2)}% 100%)`;
 
         slice.style.zIndex = String(zIndex);
         slice.style.transform = `translate3d(${(sliceState.x + openOffsetX).toFixed(3)}px, ${sliceState.y.toFixed(
@@ -244,8 +219,17 @@ export default function HeroExperience() {
         slice.style.filter = `brightness(${brightness.toFixed(3)}) contrast(${contrast.toFixed(3)}) saturate(${saturate.toFixed(
           3
         )}) drop-shadow(${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0, 0, 0, ${shadowAlpha}))`;
-        slice.style.clipPath = clipPath;
       });
+
+      if (shell) {
+        const wedgeProgress = Math.pow(state.open, isTouch ? 0.95 : 0.9);
+        const topGap = (isTouch ? 5.5 : isReduced ? 4.8 : 4.1) * wedgeProgress;
+        const midGap = (isTouch ? 13.5 : isReduced ? 12.2 : 10.8) * wedgeProgress;
+        const bottomGap = (isTouch ? 26 : isReduced ? 24 : 21.5) * wedgeProgress;
+        shell.style.setProperty("--wedge-top-gap", `${topGap.toFixed(3)}%`);
+        shell.style.setProperty("--wedge-mid-gap", `${midGap.toFixed(3)}%`);
+        shell.style.setProperty("--wedge-bottom-gap", `${bottomGap.toFixed(3)}%`);
+      }
 
       const moving =
         Math.abs(target.x - state.x) > 0.05 ||
@@ -335,16 +319,34 @@ export default function HeroExperience() {
           <HeroScene />
         </div>
         <div ref={curtainShellRef} className={styles.curtainShell} aria-hidden="true">
-          {sliceItems.map(({ index, ratio }) => (
-            <div
-              key={index}
-              ref={(node) => {
-                sliceRefs.current[index] = node;
-              }}
-              className={styles.curtainSlice}
-              style={{ "--slice-index": index, "--slice-ratio": ratio }}
-            />
-          ))}
+          <div className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}>
+            {sliceItems
+              .filter(({ ratio }) => ratio < 0.5)
+              .map(({ index, ratio }) => (
+                <div
+                  key={index}
+                  ref={(node) => {
+                    sliceRefs.current[index] = node;
+                  }}
+                  className={styles.curtainSlice}
+                  style={{ "--slice-index": index, "--slice-ratio": ratio }}
+                />
+              ))}
+          </div>
+          <div className={`${styles.curtainGroup} ${styles.curtainGroupRight}`}>
+            {sliceItems
+              .filter(({ ratio }) => ratio >= 0.5)
+              .map(({ index, ratio }) => (
+                <div
+                  key={index}
+                  ref={(node) => {
+                    sliceRefs.current[index] = node;
+                  }}
+                  className={styles.curtainSlice}
+                  style={{ "--slice-index": index, "--slice-ratio": ratio }}
+                />
+              ))}
+          </div>
         </div>
         <div className={styles.heroAtmosphere} />
         <div ref={veilRef} className={styles.scrollVeil} />

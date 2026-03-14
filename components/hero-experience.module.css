@@ -79,6 +79,9 @@
   perspective: 1600px;
   transform-style: preserve-3d;
   background: transparent;
+  --wedge-top-gap: 0%;
+  --wedge-mid-gap: 0%;
+  --wedge-bottom-gap: 0%;
 }
 
 .curtainShell::before {
@@ -123,6 +126,34 @@
   backface-visibility: hidden;
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
   mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
+}
+
+.curtainGroup {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.curtainGroupLeft {
+  clip-path: polygon(
+    0 0,
+    50% 0,
+    calc(50% - var(--wedge-top-gap)) 24.5%,
+    calc(50% - var(--wedge-mid-gap)) 58%,
+    calc(50% - var(--wedge-bottom-gap)) 100%,
+    0 100%
+  );
+}
+
+.curtainGroupRight {
+  clip-path: polygon(
+    50% 0,
+    100% 0,
+    100% 100%,
+    calc(50% + var(--wedge-bottom-gap)) 100%,
+    calc(50% + var(--wedge-mid-gap)) 58%,
+    calc(50% + var(--wedge-top-gap)) 24.5%
+  );
 }
 
 .heroAtmosphere {
