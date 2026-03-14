@@ -14,7 +14,9 @@ export default function MorphRevealText({
   className = "",
   lineClassName = "",
   triggerRef,
-  start = "top 82%",
+  start = "top bottom-=6%",
+  end = "top 64%",
+  scrub = 0.7,
 }) {
   const rootRef = useRef(null);
   const baseRefs = useRef([]);
@@ -27,27 +29,26 @@ export default function MorphRevealText({
 
     const context = gsap.context(() => {
       gsap.set(baseRefs.current, {
-        autoAlpha: 0.12,
-        xPercent: -4,
-        yPercent: 10,
-        scaleX: 0.988,
-        filter: "blur(18px)",
+        autoAlpha: 0.08,
+        xPercent: -3.4,
+        yPercent: 7,
+        clipPath: "inset(0 100% 0 0)",
+        filter: "blur(12px)",
       });
 
       gsap.set(washRefs.current, {
-        autoAlpha: 0.92,
-        xPercent: -14,
-        yPercent: 2,
-        filter: "blur(16px)",
-        clipPath: "inset(0 100% 0 0)",
+        autoAlpha: 0.85,
+        xPercent: -140,
+        yPercent: 0,
+        filter: "blur(18px)",
       });
 
       const timeline = gsap.timeline({ paused: true });
 
       baseRefs.current.forEach((line, index) => {
-        const baseDuration = 1.22 + index * 0.06;
-        const washDuration = 1.1 + index * 0.08;
-        const lineOffset = index * 0.17;
+        const baseDuration = 0.72 + index * 0.04;
+        const washDuration = 0.86 + index * 0.06;
+        const lineOffset = index * 0.12;
         const washRef = washRefs.current[index];
 
         timeline.to(
@@ -56,7 +57,7 @@ export default function MorphRevealText({
             autoAlpha: 1,
             xPercent: 0,
             yPercent: 0,
-            scaleX: 1,
+            clipPath: "inset(0 0% 0 0)",
             filter: "blur(0px)",
             duration: baseDuration,
             ease: "power3.out",
@@ -68,27 +69,31 @@ export default function MorphRevealText({
           washRef,
           {
             autoAlpha: 0,
-            xPercent: 9 + index * 1.4,
+            xPercent: 120 + index * 12,
             yPercent: 0,
-            filter: "blur(6px)",
-            clipPath: "inset(0 -18% 0 0)",
+            filter: "blur(8px)",
             duration: washDuration,
             ease: "power2.out",
           },
-          lineOffset + 0.02
+          lineOffset
         );
       });
+
+      timeline.pause(0);
 
       ScrollTrigger.create({
         trigger,
         start,
-        once: true,
-        onEnter: () => timeline.play(0),
+        end,
+        scrub,
+        onUpdate: (self) => {
+          timeline.progress(self.progress);
+        },
       });
     }, rootRef);
 
     return () => context.revert();
-  }, [lines, start, triggerRef]);
+  }, [end, lines, scrub, start, triggerRef]);
 
   const rootClassName = className ? `${styles.root} ${className}` : styles.root;
 
@@ -102,9 +107,7 @@ export default function MorphRevealText({
             }}
             className={styles.lineWash}
             aria-hidden="true"
-          >
-            {line}
-          </span>
+          />
           <span
             ref={(node) => {
               baseRefs.current[index] = node;
