@@ -2,5 +2,3 @@ node_modules/
 .next/
 out/
 .DS_Store
-
-public/assets/video/artifice-content.m4v
