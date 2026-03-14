@@ -10,40 +10,26 @@ import styles from "./hero-experience.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CURTAIN_BANDS = [
-  { id: "top", start: 0.245, end: 0.42, delay: 0.66, curve: 0.18, drag: 0.16 },
-  { id: "upper", start: 0.42, end: 0.58, delay: 0.42, curve: 0.42, drag: 0.3 },
-  { id: "lower", start: 0.58, end: 0.78, delay: 0.16, curve: 0.72, drag: 0.56 },
-  { id: "bottom", start: 0.78, end: 1, delay: 0, curve: 1, drag: 0.9 },
-];
-
-const COLUMNS_PER_SIDE = 24;
-
 export default function HeroExperience() {
   const heroRef = useRef(null);
   const introRef = useRef(null);
   const veilRef = useRef(null);
   const sectionsRef = useRef(null);
   const curtainShellRef = useRef(null);
-  const segmentRefs = useRef([]);
+  const leftClipPathRef = useRef(null);
+  const rightClipPathRef = useRef(null);
+  const sliceRefs = useRef([]);
   const imageMetricsRef = useRef({ ready: false, width: 0, height: 0 });
   const shellMetricsRef = useRef({ width: 0, height: 0 });
   const openTargetRef = useRef(0);
-
-  const segmentItems = useMemo(
+  const sliceCount = 96;
+  const sliceItems = useMemo(
     () =>
-      CURTAIN_BANDS.flatMap((band, bandIndex) =>
-        ["left", "right"].flatMap((side) =>
-          Array.from({ length: COLUMNS_PER_SIDE }, (_, columnIndex) => ({
-            key: `${side}-${band.id}-${columnIndex}`,
-            side,
-            band,
-            bandIndex,
-            columnIndex,
-          }))
-        )
-      ),
-    []
+      Array.from({ length: sliceCount }, (_, index) => ({
+        index,
+        ratio: index / sliceCount,
+      })),
+    [sliceCount]
   );
 
   useEffect(() => {
@@ -81,10 +67,12 @@ export default function HeroExperience() {
         trigger: heroRef.current,
         start: "top top",
         end: isReduced ? "+=92%" : "+=84%",
-        scrub: 1,
+        scrub: isReduced ? 1.1 : 1.35,
         onUpdate: (self) => {
           openTargetRef.current = self.progress;
-          heroRef.current?.dispatchEvent(new CustomEvent("curtain-open-update"));
+          if (heroRef.current) {
+            heroRef.current.dispatchEvent(new CustomEvent("curtain-open-update"));
+          }
         },
       });
     }, heroRef);
@@ -110,9 +98,13 @@ export default function HeroExperience() {
 
     let rafId = 0;
     let resizeRaf = 0;
+    let isTouchActive = false;
+    const state = { x: 0, y: 0, open: 0 };
+    const target = { x: 0, y: 0 };
+    const sliceStates = sliceRefs.current.map(() => ({ x: 0, y: 0, glow: 0 }));
 
-    function applySegmentLayout() {
-      if (!shell || !segmentRefs.current.length || !imageMetricsRef.current.ready) return;
+    function applySliceLayout() {
+      if (!shell || !sliceRefs.current.length || !imageMetricsRef.current.ready) return;
 
       const rect = shell.getBoundingClientRect();
       const imgWidth = imageMetricsRef.current.width;
@@ -122,30 +114,19 @@ export default function HeroExperience() {
       const backgroundHeight = imgHeight * scale;
       const offsetX = (rect.width - backgroundWidth) / 2;
       const offsetY = 0;
-      const halfWidth = rect.width / 2;
-      const columnWidth = halfWidth / COLUMNS_PER_SIDE;
+      const sliceWidth = rect.width / sliceCount;
       shellMetricsRef.current = { width: rect.width, height: rect.height };
 
       shell.style.setProperty("--curtain-bg-size", `${backgroundWidth}px ${backgroundHeight}px`);
       shell.style.setProperty("--curtain-bg-position", `${offsetX}px ${offsetY}px`);
 
-      segmentRefs.current.forEach((segment, index) => {
-        if (!segment) return;
-        const item = segmentItems[index];
-        const { band, side, columnIndex } = item;
-        const left =
-          side === "left"
-            ? columnIndex * columnWidth
-            : rect.width - (columnIndex + 1) * columnWidth;
-        const top = rect.height * band.start;
-        const height = rect.height * (band.end - band.start);
-
-        segment.style.left = `${left - 1}px`;
-        segment.style.top = `${top - 1}px`;
-        segment.style.width = `${columnWidth + 2}px`;
-        segment.style.height = `${height + 2}px`;
-        segment.style.backgroundSize = `${backgroundWidth}px ${backgroundHeight}px`;
-        segment.style.backgroundPosition = `${offsetX - left}px ${offsetY - top}px`;
+      sliceRefs.current.forEach((slice, index) => {
+        if (!slice) return;
+        const left = index * sliceWidth;
+        slice.style.left = `${left - 1}px`;
+        slice.style.width = `${sliceWidth + 2}px`;
+        slice.style.backgroundSize = `${backgroundWidth}px ${backgroundHeight}px`;
+        slice.style.backgroundPosition = `${offsetX - left}px ${offsetY}px`;
       });
     }
 
@@ -157,101 +138,264 @@ export default function HeroExperience() {
         width: curtainImage.naturalWidth,
         height: curtainImage.naturalHeight,
       };
-      applySegmentLayout();
-      requestRender();
+      applySliceLayout();
     };
 
     function render() {
-      rafId = 0;
-      const open = openTargetRef.current;
-      hero.style.setProperty("--curtain-glow-x", "50%");
-      hero.style.setProperty("--curtain-glow-y", "18%");
-      hero.style.setProperty("--curtain-open-progress", `${open.toFixed(4)}`);
+      state.x += (target.x - state.x) * (isTouch ? 0.09 : 0.115);
+      state.y += (target.y - state.y) * (isTouch ? 0.09 : 0.115);
+      state.open += (openTargetRef.current - state.open) * (isReduced ? 0.16 : 0.14);
+
+      hero.style.setProperty("--curtain-glow-x", `${(50 + state.x * 9).toFixed(2)}%`);
+      hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 6).toFixed(2)}%`);
+      hero.style.setProperty("--curtain-open-progress", `${state.open.toFixed(4)}`);
       const shellHeight = shellMetricsRef.current.height || hero.getBoundingClientRect().height;
-      const riseAmount = -shellHeight * Math.pow(open, 0.98) * (isTouch ? 0.18 : isReduced ? 0.24 : 0.3);
+      const riseAmount = -shellHeight * Math.pow(state.open, 0.98) * (isTouch ? 0.24 : isReduced ? 0.32 : 0.4);
       hero.style.setProperty("--curtain-rise-y", `${riseAmount.toFixed(3)}px`);
 
-      const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-      const bandDrops = isTouch ? [0, 0.5, 1.4, 3] : isReduced ? [0, 0.8, 2.2, 4.8] : [0, 1.2, 3.4, 7.2];
+      const pointerCenter = target.x;
+      const pointerDepth = target.y;
+      const nearestIndex = Math.max(0, Math.min(sliceCount - 1, Math.round(((pointerCenter + 1) * 0.5) * (sliceCount - 1))));
+      const nearestCenter = ((nearestIndex + 0.5) / sliceCount - 0.5) * 2;
+      const hotspotCenter = nearestCenter * 0.25 + pointerCenter * 0.75;
 
-      segmentRefs.current.forEach((segment, index) => {
-        if (!segment) return;
-        const item = segmentItems[index];
-        const { band, bandIndex, side, columnIndex } = item;
-        const sideDir = side === "left" ? -1 : 1;
-        const innerness = columnIndex / (COLUMNS_PER_SIDE - 1);
-        const edgeWeight = 1 - innerness;
-        const bandProgress = Math.max(0, Math.min(1, (open - band.delay) / Math.max(0.0001, 1 - band.delay)));
-        const eased = 1 - Math.pow(1 - bandProgress, isTouch ? 1.08 : 1.18);
+      sliceRefs.current.forEach((slice, index) => {
+        if (!slice) return;
 
-        const baseTravel = shellWidth * eased * band.drag * (0.018 + innerness * (isTouch ? 0.12 : isReduced ? 0.145 : 0.17));
-        const bunchTravel = shellWidth * eased * edgeWeight * band.drag * (isTouch ? 0.008 : isReduced ? 0.01 : 0.012);
-        const x = sideDir * (baseTravel + bunchTravel);
-        const y = eased * bandDrops[bandIndex] * (0.34 + innerness * 0.66);
-        const rotate = sideDir * eased * (0.55 + band.curve * 1.35 + innerness * 1.25);
-        const skew = sideDir * eased * (0.05 + band.curve * 0.12);
-        const scaleX = 1 - eased * edgeWeight * (isTouch ? 0.028 : isReduced ? 0.034 : 0.04);
-        const shadowX = sideDir < 0 ? 7 : -7;
-        const shadowY = 1 + eased * (1.1 + band.curve * 1.8);
-        const shadowBlur = 8 + eased * (12 + band.curve * 10);
-        const shadowAlpha = 0.1 + eased * (0.03 + edgeWeight * 0.05);
-        const zIndex = 120 + bandIndex * 36 + (COLUMNS_PER_SIDE - columnIndex);
+        const center = ((index + 0.5) / sliceCount - 0.5) * 2;
+        const side = center < 0 ? -1 : 1;
+        const halfT = side < 0 ? center + 1 : 1 - center;
+        const openWeight = state.open;
+        const interactionWeight = 1 - openWeight * 0.62;
+        const delta = center - hotspotCenter;
+        const distance = Math.abs(delta);
+        const primaryRadius = isTouch ? 0.1 : isReduced ? 0.072 : 0.038;
+        const secondaryRadius = isTouch ? 0.17 : isReduced ? 0.12 : 0.068;
+        const primaryInfluence = Math.exp(-Math.pow(distance / primaryRadius, 2));
+        const secondaryInfluence = Math.exp(-Math.pow(distance / secondaryRadius, 2));
+        const dragX =
+          state.x * interactionWeight * primaryInfluence * (isTouch ? 1.12 : isReduced ? 0.84 : 1.16);
+        const depthY =
+          state.y * interactionWeight * primaryInfluence * (isTouch ? 0.2 : isReduced ? 0.34 : 0.56) +
+          pointerDepth * interactionWeight * secondaryInfluence * (isTouch ? 0.04 : isReduced ? 0.08 : 0.13);
+        const desiredX =
+          dragX + state.x * interactionWeight * secondaryInfluence * (isTouch ? 0.05 : isReduced ? 0.04 : 0.07);
+        const desiredY = depthY;
+        const desiredGlow = interactionWeight * secondaryInfluence * (isTouch ? 0.09 : isReduced ? 0.06 : 0.1);
+        const sliceState = sliceStates[index];
 
-        segment.style.zIndex = String(zIndex);
-        segment.style.transform = `translate3d(${x.toFixed(3)}px, ${y.toFixed(3)}px, 0) rotateY(${rotate.toFixed(
+        sliceState.x += (desiredX - sliceState.x) * (isTouch ? 0.13 : 0.15);
+        sliceState.y += (desiredY - sliceState.y) * (isTouch ? 0.12 : 0.14);
+        sliceState.glow += (desiredGlow - sliceState.glow) * (isTouch ? 0.1 : 0.1);
+
+        const hotspotBoost = Math.pow(primaryInfluence, 0.72);
+        const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
+        const bottomBias = 0.26 + Math.pow(halfT, 0.82) * 0.74;
+        const openingTravel = side * openWeight * bottomBias * shellWidth * (0.16 + halfT * 0.24);
+        const gatheredTravel = side * openWeight * bottomBias * shellWidth * (0.022 + halfT * 0.035);
+        const openOffsetX = openingTravel + gatheredTravel;
+        const gatherScale = 1 - openWeight * bottomBias * (0.06 + (1 - halfT) * 0.08);
+        const openRotate = side * openWeight * bottomBias * (1.8 + halfT * 2.4);
+        const rotate = sliceState.x * (isTouch ? 1.34 : 1.12) + openRotate;
+        const skew = sliceState.x * (isTouch ? 0.16 : 0.14) + side * openWeight * bottomBias * 0.22;
+        const scaleX = (1.01 + secondaryInfluence * (isTouch ? 0.017 : 0.016)) * gatherScale;
+        const scaleY = 1 + secondaryInfluence * (isTouch ? 0.006 : 0.011);
+        const lift =
+          secondaryInfluence * (isTouch ? 3.0 : isReduced ? 3 : 7) +
+          hotspotBoost * (isTouch ? 1.35 : isReduced ? 1.4 : 2.8);
+        const brightness = 1 + sliceState.glow * (isTouch ? 1.12 : 1.08) + hotspotBoost * 0.05;
+        const contrast = 1 + sliceState.glow * (isTouch ? 0.46 : 0.42) + hotspotBoost * 0.05;
+        const saturate = 1 + sliceState.glow * 0.14;
+        const shadowX = (-sliceState.x * 0.42).toFixed(3);
+        const shadowY = (1 + secondaryInfluence * (isTouch ? 2.8 : 4) + hotspotBoost * 1.5).toFixed(3);
+        const shadowBlur = (2.8 + secondaryInfluence * (isTouch ? 7.4 : 9) + hotspotBoost * 3.8).toFixed(3);
+        const shadowAlpha = (0.075 + secondaryInfluence * (isTouch ? 0.1 : 0.12) + hotspotBoost * 0.06).toFixed(3);
+        const zIndex = 20 + Math.round(secondaryInfluence * 40 + hotspotBoost * 14);
+
+        slice.style.zIndex = String(zIndex);
+        slice.style.transform = `translate3d(${(sliceState.x + openOffsetX).toFixed(3)}px, ${sliceState.y.toFixed(
           3
-        )}deg) skewY(${skew.toFixed(3)}deg) scaleX(${scaleX.toFixed(4)})`;
-        segment.style.filter = `drop-shadow(${shadowX}px ${shadowY.toFixed(3)}px ${shadowBlur.toFixed(
+        )}px, ${lift.toFixed(3)}px) rotateY(${rotate.toFixed(3)}deg) skewY(${skew.toFixed(3)}deg) scaleX(${scaleX.toFixed(
+          4
+        )}) scaleY(${scaleY.toFixed(4)})`;
+        slice.style.filter = `brightness(${brightness.toFixed(3)}) contrast(${contrast.toFixed(3)}) saturate(${saturate.toFixed(
           3
-        )}px rgba(0, 0, 0, ${shadowAlpha.toFixed(3)}))`;
+        )}) drop-shadow(${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0, 0, 0, ${shadowAlpha}))`;
       });
+
+      if (shell) {
+        const bottomProgress = Math.pow(state.open, isTouch ? 0.8 : 0.74);
+        const waistProgress = Math.pow(Math.max(0, (state.open - 0.16) / 0.84), isTouch ? 1.05 : 1.12);
+        const ribProgress = Math.pow(Math.max(0, (state.open - 0.42) / 0.58), isTouch ? 1.45 : 1.6);
+        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.62) / 0.38), isTouch ? 2.0 : 2.25);
+        const topProgress = Math.pow(Math.max(0, (state.open - 0.8) / 0.2), isTouch ? 2.6 : 3.0);
+        const topGap = (isTouch ? 0.012 : isReduced ? 0.01 : 0.009) * topProgress;
+        const shoulderGap = (isTouch ? 0.028 : isReduced ? 0.024 : 0.021) * shoulderProgress;
+        const ribGap = (isTouch ? 0.08 : isReduced ? 0.07 : 0.062) * ribProgress;
+        const waistGap = (isTouch ? 0.18 : isReduced ? 0.16 : 0.145) * waistProgress;
+        const bottomGap = (isTouch ? 0.38 : isReduced ? 0.35 : 0.32) * bottomProgress;
+        const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
+        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.48) / 0.52), isTouch ? 1.3 : 1.45);
+        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.022 : isReduced ? 0.028 : 0.034);
+        shell.style.setProperty("--curtain-left-shift", `${(-groupShift).toFixed(3)}px`);
+        shell.style.setProperty("--curtain-right-shift", `${groupShift.toFixed(3)}px`);
+
+        const leftPath = [
+          "M 0 0",
+          "L 0.5 0",
+          "L 0.5 0.245",
+          `C ${0.5 - topGap} 0.305, ${0.5 - shoulderGap} 0.395, ${0.5 - ribGap} 0.52`,
+          `C ${0.5 - (ribGap * 1.05)} 0.64, ${0.5 - waistGap} 0.79, ${0.5 - bottomGap} 1`,
+          "L 0 1",
+          "Z",
+        ].join(" ");
+
+        const rightPath = [
+          "M 0.5 0",
+          "L 1 0",
+          "L 1 1",
+          `L ${0.5 + bottomGap} 1`,
+          `C ${0.5 + waistGap} 0.79, ${0.5 + (ribGap * 1.05)} 0.64, ${0.5 + ribGap} 0.52`,
+          `C ${0.5 + shoulderGap} 0.395, ${0.5 + topGap} 0.305, 0.5 0.245`,
+          "Z",
+        ].join(" ");
+
+        leftClipPathRef.current?.setAttribute("d", leftPath);
+        rightClipPathRef.current?.setAttribute("d", rightPath);
+      }
+
+      const moving =
+        Math.abs(target.x - state.x) > 0.05 ||
+        Math.abs(target.y - state.y) > 0.05 ||
+        Math.abs(openTargetRef.current - state.open) > 0.002;
+      if (moving) {
+        rafId = window.requestAnimationFrame(render);
+      } else {
+        rafId = 0;
+      }
     }
 
     function requestRender() {
       if (!rafId) rafId = window.requestAnimationFrame(render);
     }
 
+    function updateTarget(clientX, clientY) {
+      const rect = (shell ?? hero).getBoundingClientRect();
+      const normalizedX = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+      const normalizedY = Math.min(Math.max((clientY - rect.top) / rect.height, 0), 1);
+      const x = normalizedX - 0.5;
+      const y = normalizedY - 0.5;
+      target.x = x * 2;
+      target.y = y * 2;
+      requestRender();
+    }
+
+    function onPointerMove(event) {
+      if (isTouch && !isTouchActive) return;
+      updateTarget(event.clientX, event.clientY);
+    }
+
+    function onPointerDown(event) {
+      if (event.pointerType === "touch" || isTouch) {
+        isTouchActive = true;
+      }
+      updateTarget(event.clientX, event.clientY);
+    }
+
+    function onPointerLeave() {
+      target.x = 0;
+      target.y = 0;
+      requestRender();
+    }
+
+    function onPointerUp() {
+      isTouchActive = false;
+      target.x = 0;
+      target.y = 0;
+      requestRender();
+    }
+
     function onResize() {
       if (resizeRaf) window.cancelAnimationFrame(resizeRaf);
-      resizeRaf = window.requestAnimationFrame(() => {
-        applySegmentLayout();
-        requestRender();
-      });
+      resizeRaf = window.requestAnimationFrame(applySliceLayout);
     }
 
     function onOpenUpdate() {
       requestRender();
     }
 
+    hero.addEventListener("pointerdown", onPointerDown, { passive: true });
+    hero.addEventListener("pointermove", onPointerMove, { passive: true });
+    hero.addEventListener("pointerleave", onPointerLeave, { passive: true });
+    hero.addEventListener("pointerup", onPointerUp, { passive: true });
+    hero.addEventListener("pointercancel", onPointerUp, { passive: true });
     hero.addEventListener("curtain-open-update", onOpenUpdate);
     window.addEventListener("resize", onResize, { passive: true });
 
     return () => {
+      hero.removeEventListener("pointerdown", onPointerDown);
+      hero.removeEventListener("pointermove", onPointerMove);
+      hero.removeEventListener("pointerleave", onPointerLeave);
+      hero.removeEventListener("pointerup", onPointerUp);
+      hero.removeEventListener("pointercancel", onPointerUp);
       hero.removeEventListener("curtain-open-update", onOpenUpdate);
       window.removeEventListener("resize", onResize);
       if (rafId) window.cancelAnimationFrame(rafId);
       if (resizeRaf) window.cancelAnimationFrame(resizeRaf);
     };
-  }, [segmentItems]);
+  }, []);
 
   return (
     <main className={styles.page}>
       <section ref={heroRef} className={styles.hero}>
+        <svg className={styles.curtainClipDefs} aria-hidden="true" width="0" height="0" focusable="false">
+          <defs>
+            <clipPath id="curtain-left-clip" clipPathUnits="objectBoundingBox">
+              <path ref={leftClipPathRef} d="M 0 0 L 0.5 0 L 0.5 0.245 C 0.5 0.305, 0.5 0.395, 0.5 0.52 C 0.5 0.64, 0.5 0.79, 0.5 1 L 0 1 Z" />
+            </clipPath>
+            <clipPath id="curtain-right-clip" clipPathUnits="objectBoundingBox">
+              <path ref={rightClipPathRef} d="M 0.5 0 L 1 0 L 1 1 L 0.5 1 C 0.5 0.79, 0.5 0.64, 0.5 0.52 C 0.5 0.395, 0.5 0.305, 0.5 0.245 Z" />
+            </clipPath>
+          </defs>
+        </svg>
         <div className={styles.sceneShell}>
           <HeroScene />
         </div>
         <div ref={curtainShellRef} className={styles.curtainShell} aria-hidden="true">
-          {segmentItems.map((item, index) => (
-            <div
-              key={item.key}
-              ref={(node) => {
-                segmentRefs.current[index] = node;
-              }}
-              className={`${styles.curtainSegment} ${
-                item.side === "left" ? styles.segmentLeft : styles.segmentRight
-              }`}
-            />
-          ))}
+          <div
+            className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}
+            style={{ clipPath: "url(#curtain-left-clip)" }}
+          >
+            {sliceItems
+              .filter(({ ratio }) => ratio < 0.5)
+              .map(({ index, ratio }) => (
+                <div
+                  key={index}
+                  ref={(node) => {
+                    sliceRefs.current[index] = node;
+                  }}
+                  className={styles.curtainSlice}
+                  style={{ "--slice-index": index, "--slice-ratio": ratio }}
+                />
+              ))}
+          </div>
+          <div
+            className={`${styles.curtainGroup} ${styles.curtainGroupRight}`}
+            style={{ clipPath: "url(#curtain-right-clip)" }}
+          >
+            {sliceItems
+              .filter(({ ratio }) => ratio >= 0.5)
+              .map(({ index, ratio }) => (
+                <div
+                  key={index}
+                  ref={(node) => {
+                    sliceRefs.current[index] = node;
+                  }}
+                  className={styles.curtainSlice}
+                  style={{ "--slice-index": index, "--slice-ratio": ratio }}
+                />
+              ))}
+          </div>
         </div>
         <div className={styles.heroAtmosphere} />
         <div ref={veilRef} className={styles.scrollVeil} />

@@ -79,6 +79,16 @@
   perspective: 1600px;
   transform-style: preserve-3d;
   background: transparent;
+  --curtain-left-shift: 0px;
+  --curtain-right-shift: 0px;
+}
+
+.curtainClipDefs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .curtainShell::before {
@@ -102,43 +112,43 @@
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 1;
   pointer-events: none;
   background:
     linear-gradient(90deg, rgba(10, 10, 10, 0.22) 0%, rgba(10, 10, 10, 0) 9%, rgba(10, 10, 10, 0) 91%, rgba(10, 10, 10, 0.22) 100%),
     linear-gradient(180deg, rgba(248, 218, 188, 0.04) 0%, rgba(10, 10, 10, 0) 16%, rgba(10, 10, 10, 0.12) 72%, rgba(10, 10, 10, 0.34) 100%);
 }
 
-.curtainSegment {
+.curtainSlice {
   position: absolute;
-  z-index: 1;
+  top: 0;
+  bottom: 0;
   background-image: url("/assets/curtain/final-curtain.png");
   background-repeat: no-repeat;
   background-size: var(--curtain-bg-size);
-  background-position: var(--curtain-bg-position) 0;
+  background-position-y: 0;
   will-change: transform, filter;
   transform-origin: center center;
   transform-style: preserve-3d;
   backface-visibility: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
 }
 
-.curtainSegment::after {
-  content: "";
+.curtainGroup {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 240, 219, 0.02) 0%, rgba(255, 240, 219, 0) 22%, rgba(0, 0, 0, 0.08) 80%, rgba(0, 0, 0, 0.16) 100%),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0) 82%, rgba(0, 0, 0, 0.08) 100%);
-  mix-blend-mode: multiply;
-  pointer-events: none;
+  overflow: hidden;
 }
 
-.segmentLeft {
-  transform-origin: left center;
+.curtainGroupLeft {
+  transform: translate3d(var(--curtain-left-shift), 0, 0);
+  transform-origin: left top;
 }
 
-.segmentRight {
-  transform-origin: right center;
+.curtainGroupRight {
+  transform: translate3d(var(--curtain-right-shift), 0, 0);
+  transform-origin: right top;
 }
 
 .heroAtmosphere {
