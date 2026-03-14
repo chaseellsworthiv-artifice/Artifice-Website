@@ -134,28 +134,46 @@ export default function HeroExperience() {
       hero.style.setProperty("--curtain-glow-x", `${(50 + state.x * 0.8).toFixed(2)}%`);
       hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 0.4).toFixed(2)}%`);
 
+      const pointerCenter = target.x / (isReduced ? 4 : 8);
+      const pointerDepth = target.y / (isReduced ? 2 : 4);
+
       sliceRefs.current.forEach((slice, index) => {
         if (!slice) return;
 
         const center = ((index + 0.5) / sliceCount - 0.5) * 2;
-        const distance = Math.abs(center - target.x / (isReduced ? 4 : 8));
-        const influence = Math.exp(-(distance * distance) / (isReduced ? 0.1 : 0.04));
-        const desiredX = state.x * influence * (isReduced ? 0.4 : 0.75);
-        const desiredY = state.y * influence * (isReduced ? 0.22 : 0.4);
-        const desiredGlow = influence * (isReduced ? 0.05 : 0.1);
+        const delta = center - pointerCenter;
+        const distance = Math.abs(delta);
+        const primaryRadius = isReduced ? 0.16 : 0.11;
+        const secondaryRadius = isReduced ? 0.32 : 0.24;
+        const primaryInfluence = Math.exp(-Math.pow(distance / primaryRadius, 2));
+        const secondaryInfluence = Math.exp(-Math.pow(distance / secondaryRadius, 2));
+        const direction = delta === 0 ? 0 : delta > 0 ? 1 : -1;
+        const dragX = state.x * primaryInfluence * (isReduced ? 1.4 : 2.2);
+        const pinchX = direction * primaryInfluence * Math.abs(state.x) * (isReduced ? 0.7 : 1.25);
+        const depthY =
+          state.y * primaryInfluence * (isReduced ? 0.45 : 0.8) +
+          pointerDepth * secondaryInfluence * (isReduced ? 0.18 : 0.32);
+        const desiredX = dragX - pinchX;
+        const desiredY = depthY;
+        const desiredGlow = primaryInfluence * (isReduced ? 0.08 : 0.14);
         const sliceState = sliceStates[index];
 
-        sliceState.x += (desiredX - sliceState.x) * 0.14;
-        sliceState.y += (desiredY - sliceState.y) * 0.14;
-        sliceState.glow += (desiredGlow - sliceState.glow) * 0.12;
+        sliceState.x += (desiredX - sliceState.x) * 0.18;
+        sliceState.y += (desiredY - sliceState.y) * 0.16;
+        sliceState.glow += (desiredGlow - sliceState.glow) * 0.14;
 
-        const rotate = sliceState.x * 0.45;
+        const rotate = sliceState.x * 0.9;
+        const skew = sliceState.x * 0.16;
+        const scaleX = 1.03 + primaryInfluence * 0.03;
+        const scaleY = 1 + primaryInfluence * 0.01;
         const brightness = 1 + sliceState.glow;
         const contrast = 1 + sliceState.glow * 0.3;
 
         slice.style.transform = `translate3d(${sliceState.x.toFixed(3)}px, ${sliceState.y.toFixed(
           3
-        )}px, 0) rotateY(${rotate.toFixed(3)}deg) scaleX(1.035)`;
+        )}px, 0) rotateY(${rotate.toFixed(3)}deg) skewY(${skew.toFixed(3)}deg) scaleX(${scaleX.toFixed(
+          4
+        )}) scaleY(${scaleY.toFixed(4)})`;
         slice.style.filter = `brightness(${brightness.toFixed(3)}) contrast(${contrast.toFixed(3)})`;
       });
 
