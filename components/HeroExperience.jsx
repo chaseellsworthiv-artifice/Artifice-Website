@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 
 import HeroScene from "./HeroScene";
+import MorphRevealText from "./MorphRevealText";
 import styles from "./hero-experience.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,6 +15,8 @@ export default function HeroExperience() {
   const [isMobileSeam, setIsMobileSeam] = useState(false);
   const heroRef = useRef(null);
   const introRef = useRef(null);
+  const wordmarkRef = useRef(null);
+  const copyBodyRef = useRef(null);
   const veilRef = useRef(null);
   const curtainShellRef = useRef(null);
   const leftClipPathRef = useRef(null);
@@ -65,19 +68,37 @@ export default function HeroExperience() {
     const context = gsap.context(() => {
       const curtainScrollDistance = isReduced ? "+=200%" : "+=180%";
 
-      gsap.set(introRef.current, { autoAlpha: 0, y: 28 });
+      gsap.set([wordmarkRef.current, copyBodyRef.current], { autoAlpha: 0, y: 22 });
 
-      gsap.to(introRef.current, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 1.4,
-        ease: "power3.out",
+      const copyReveal = gsap.timeline({
         scrollTrigger: {
           trigger: introRef.current,
           start: "top 82%",
-          toggleActions: "play none none reverse",
+          once: true,
         },
       });
+
+      copyReveal
+        .to(
+          wordmarkRef.current,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.95,
+            ease: "power3.out",
+          },
+          0.04
+        )
+        .to(
+          copyBodyRef.current,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.95,
+            ease: "power3.out",
+          },
+          0.44
+        );
 
       gsap.to(veilRef.current, {
         opacity: isReduced ? 0.78 : 0.92,
@@ -480,18 +501,28 @@ export default function HeroExperience() {
         <div ref={veilRef} className={styles.scrollVeil} />
 
         <header ref={introRef} className={styles.copy}>
-          <p className={`${styles.eyebrow} ${styles.wordmark}`}>ärtifice</p>
-          <h1>A darker room. Familiar objects. Impossible outcomes.</h1>
-          <p className={styles.lead}>
-            Sleight of hand by Chase Ellsworth, framed as an atmosphere rather than a performance website.
+          <p ref={wordmarkRef} className={`${styles.eyebrow} ${styles.wordmark}`}>
+            ärtifice
           </p>
-          <div className={styles.heroActions}>
-            <a href="#booking" className={styles.primaryLink}>
-              Begin Inquiry
-            </a>
-            <a href="#experience" className={styles.secondaryLink}>
-              Scroll Further
-            </a>
+          <MorphRevealText
+            as="h1"
+            lines={["A darker room.", "Familiar objects.", "Impossible outcomes."]}
+            className={styles.copyTitle}
+            lineClassName={styles.copyTitleLine}
+            triggerRef={introRef}
+          />
+          <div ref={copyBodyRef} className={styles.copyBody}>
+            <p className={styles.lead}>
+              Sleight of hand by Chase Ellsworth, framed as an atmosphere rather than a performance website.
+            </p>
+            <div className={styles.heroActions}>
+              <a href="#booking" className={styles.primaryLink}>
+                Begin Inquiry
+              </a>
+              <a href="#experience" className={styles.secondaryLink}>
+                Scroll Further
+              </a>
+            </div>
           </div>
         </header>
       </section>

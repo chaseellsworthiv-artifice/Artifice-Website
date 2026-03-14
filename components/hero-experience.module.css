@@ -210,13 +210,22 @@
   text-transform: lowercase;
 }
 
-.copy h1 {
+.copyTitle {
   margin: 0;
   max-width: 9ch;
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(3.3rem, 8vw, 6.8rem);
   line-height: 0.95;
   color: var(--aged-paper);
+}
+
+.copyTitleLine {
+  color: inherit;
+}
+
+.copyBody {
+  display: grid;
+  gap: 0;
 }
 
 .lead {
@@ -556,7 +565,7 @@
     padding-top: 15vh;
   }
 
-  .copy h1 {
+  .copyTitle {
     font-size: clamp(2.8rem, 11vw, 4.8rem);
   }
 
@@ -734,7 +743,7 @@
     padding-top: var(--hero-copy-offset);
   }
 
-  .copy h1 {
+  .copyTitle {
     max-width: 8.5ch;
     font-size: clamp(2.25rem, 12vw, 3.4rem);
   }

@@ -1,0 +1,30 @@
+.root {
+  display: block;
+}
+
+.lineMask {
+  position: relative;
+  display: block;
+  padding: 0.02em 0;
+  overflow: visible;
+}
+
+.lineBase,
+.lineWash {
+  display: block;
+  transform-origin: left center;
+  will-change: transform, opacity, filter, clip-path;
+  text-rendering: optimizeLegibility;
+}
+
+.lineBase {
+  position: relative;
+}
+
+.lineWash {
+  position: absolute;
+  inset: 0;
+  color: rgba(245, 239, 227, 0.78);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
