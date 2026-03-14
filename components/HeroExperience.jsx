@@ -30,6 +30,12 @@ export default function HeroExperience() {
     });
 
     const context = gsap.context(() => {
+      gsap.fromTo(
+        introRef.current,
+        { autoAlpha: 0, y: 28 },
+        { autoAlpha: 1, y: 0, duration: 1.6, ease: "power3.out", delay: 0.45 }
+      );
+
       gsap.to(heroRef.current, {
         yPercent: isReduced ? -8 : -18,
         ease: "none",

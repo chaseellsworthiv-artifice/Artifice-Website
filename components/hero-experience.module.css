@@ -142,12 +142,12 @@
 
 .copy {
   position: relative;
-  z-index: 3;
+  z-index: 6;
   width: min(100% - 2.5rem, 1180px);
   margin: 0 auto;
   padding-top: 12vh;
-  opacity: 0;
-  pointer-events: none;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .eyebrow {
