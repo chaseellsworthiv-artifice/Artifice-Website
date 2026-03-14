@@ -80,6 +80,7 @@
   transform-style: preserve-3d;
   background: transparent;
   --wedge-top-gap: 0%;
+  --wedge-upper-gap: 0%;
   --wedge-mid-gap: 0%;
   --wedge-bottom-gap: 0%;
 }
@@ -139,6 +140,7 @@
     0 0,
     50% 0,
     calc(50% - var(--wedge-top-gap)) 24.5%,
+    calc(50% - var(--wedge-upper-gap)) 38%,
     calc(50% - var(--wedge-mid-gap)) 58%,
     calc(50% - var(--wedge-bottom-gap)) 100%,
     0 100%
@@ -152,6 +154,7 @@
     100% 100%,
     calc(50% + var(--wedge-bottom-gap)) 100%,
     calc(50% + var(--wedge-mid-gap)) 58%,
+    calc(50% + var(--wedge-upper-gap)) 38%,
     calc(50% + var(--wedge-top-gap)) 24.5%
   );
 }

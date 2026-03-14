@@ -148,7 +148,7 @@ export default function HeroExperience() {
       hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 6).toFixed(2)}%`);
       hero.style.setProperty("--curtain-open-progress", `${state.open.toFixed(4)}`);
       const shellHeight = shellMetricsRef.current.height || hero.getBoundingClientRect().height;
-      const riseAmount = -shellHeight * state.open * (isTouch ? 0.12 : isReduced ? 0.14 : 0.18);
+      const riseAmount = -shellHeight * Math.pow(state.open, 1.02) * (isTouch ? 0.2 : isReduced ? 0.26 : 0.34);
       hero.style.setProperty("--curtain-rise-y", `${riseAmount.toFixed(3)}px`);
 
       const pointerCenter = target.x;
@@ -222,11 +222,16 @@ export default function HeroExperience() {
       });
 
       if (shell) {
-        const wedgeProgress = Math.pow(state.open, isTouch ? 0.95 : 0.9);
-        const topGap = (isTouch ? 5.5 : isReduced ? 4.8 : 4.1) * wedgeProgress;
-        const midGap = (isTouch ? 13.5 : isReduced ? 12.2 : 10.8) * wedgeProgress;
-        const bottomGap = (isTouch ? 26 : isReduced ? 24 : 21.5) * wedgeProgress;
+        const bottomProgress = Math.pow(state.open, isTouch ? 0.9 : 0.85);
+        const midProgress = Math.pow(Math.max(0, (state.open - 0.16) / 0.84), isTouch ? 1.05 : 1.15);
+        const topProgress = Math.pow(Math.max(0, (state.open - 0.42) / 0.58), isTouch ? 1.4 : 1.65);
+        const upperProgress = Math.pow(Math.max(0, (state.open - 0.28) / 0.72), isTouch ? 1.2 : 1.35);
+        const topGap = (isTouch ? 2.8 : isReduced ? 2.4 : 2.1) * topProgress;
+        const upperGap = (isTouch ? 8.2 : isReduced ? 7.2 : 6.2) * upperProgress;
+        const midGap = (isTouch ? 16.5 : isReduced ? 14.8 : 13.2) * midProgress;
+        const bottomGap = (isTouch ? 29.5 : isReduced ? 27.2 : 24.6) * bottomProgress;
         shell.style.setProperty("--wedge-top-gap", `${topGap.toFixed(3)}%`);
+        shell.style.setProperty("--wedge-upper-gap", `${upperGap.toFixed(3)}%`);
         shell.style.setProperty("--wedge-mid-gap", `${midGap.toFixed(3)}%`);
         shell.style.setProperty("--wedge-bottom-gap", `${bottomGap.toFixed(3)}%`);
       }
