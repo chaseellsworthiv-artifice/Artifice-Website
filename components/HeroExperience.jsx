@@ -148,7 +148,7 @@ export default function HeroExperience() {
       hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 6).toFixed(2)}%`);
       hero.style.setProperty("--curtain-open-progress", `${state.open.toFixed(4)}`);
       const shellHeight = shellMetricsRef.current.height || hero.getBoundingClientRect().height;
-      const riseAmount = -shellHeight * Math.pow(state.open, 1.02) * (isTouch ? 0.2 : isReduced ? 0.26 : 0.34);
+      const riseAmount = -shellHeight * Math.pow(state.open, 0.98) * (isTouch ? 0.24 : isReduced ? 0.32 : 0.4);
       hero.style.setProperty("--curtain-rise-y", `${riseAmount.toFixed(3)}px`);
 
       const pointerCenter = target.x;
@@ -222,18 +222,25 @@ export default function HeroExperience() {
       });
 
       if (shell) {
-        const bottomProgress = Math.pow(state.open, isTouch ? 0.9 : 0.85);
-        const midProgress = Math.pow(Math.max(0, (state.open - 0.16) / 0.84), isTouch ? 1.05 : 1.15);
-        const topProgress = Math.pow(Math.max(0, (state.open - 0.42) / 0.58), isTouch ? 1.4 : 1.65);
-        const upperProgress = Math.pow(Math.max(0, (state.open - 0.28) / 0.72), isTouch ? 1.2 : 1.35);
-        const topGap = (isTouch ? 2.8 : isReduced ? 2.4 : 2.1) * topProgress;
-        const upperGap = (isTouch ? 8.2 : isReduced ? 7.2 : 6.2) * upperProgress;
-        const midGap = (isTouch ? 16.5 : isReduced ? 14.8 : 13.2) * midProgress;
-        const bottomGap = (isTouch ? 29.5 : isReduced ? 27.2 : 24.6) * bottomProgress;
+        const bottomProgress = Math.pow(state.open, isTouch ? 0.86 : 0.8);
+        const waistProgress = Math.pow(Math.max(0, (state.open - 0.08) / 0.92), isTouch ? 0.95 : 0.9);
+        const ribProgress = Math.pow(Math.max(0, (state.open - 0.22) / 0.78), isTouch ? 1.12 : 1.18);
+        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.36) / 0.64), isTouch ? 1.35 : 1.45);
+        const topProgress = Math.pow(Math.max(0, (state.open - 0.56) / 0.44), isTouch ? 1.7 : 1.9);
+        const topGap = (isTouch ? 1.6 : isReduced ? 1.3 : 1.15) * topProgress;
+        const shoulderGap = (isTouch ? 4.4 : isReduced ? 3.8 : 3.4) * shoulderProgress;
+        const ribGap = (isTouch ? 10.8 : isReduced ? 9.4 : 8.2) * ribProgress;
+        const waistGap = (isTouch ? 18.8 : isReduced ? 16.6 : 14.8) * waistProgress;
+        const bottomGap = (isTouch ? 33.5 : isReduced ? 30.6 : 27.8) * bottomProgress;
+        const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
+        const groupShift = shellWidth * Math.pow(state.open, 0.9) * (isTouch ? 0.028 : isReduced ? 0.035 : 0.042);
         shell.style.setProperty("--wedge-top-gap", `${topGap.toFixed(3)}%`);
-        shell.style.setProperty("--wedge-upper-gap", `${upperGap.toFixed(3)}%`);
-        shell.style.setProperty("--wedge-mid-gap", `${midGap.toFixed(3)}%`);
+        shell.style.setProperty("--wedge-shoulder-gap", `${shoulderGap.toFixed(3)}%`);
+        shell.style.setProperty("--wedge-rib-gap", `${ribGap.toFixed(3)}%`);
+        shell.style.setProperty("--wedge-waist-gap", `${waistGap.toFixed(3)}%`);
         shell.style.setProperty("--wedge-bottom-gap", `${bottomGap.toFixed(3)}%`);
+        shell.style.setProperty("--curtain-left-shift", `${(-groupShift).toFixed(3)}px`);
+        shell.style.setProperty("--curtain-right-shift", `${groupShift.toFixed(3)}px`);
       }
 
       const moving =

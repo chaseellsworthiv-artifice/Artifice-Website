@@ -80,9 +80,12 @@
   transform-style: preserve-3d;
   background: transparent;
   --wedge-top-gap: 0%;
-  --wedge-upper-gap: 0%;
-  --wedge-mid-gap: 0%;
+  --wedge-shoulder-gap: 0%;
+  --wedge-rib-gap: 0%;
+  --wedge-waist-gap: 0%;
   --wedge-bottom-gap: 0%;
+  --curtain-left-shift: 0px;
+  --curtain-right-shift: 0px;
 }
 
 .curtainShell::before {
@@ -136,25 +139,31 @@
 }
 
 .curtainGroupLeft {
+  transform: translate3d(var(--curtain-left-shift), 0, 0);
+  transform-origin: left top;
   clip-path: polygon(
     0 0,
     50% 0,
     calc(50% - var(--wedge-top-gap)) 24.5%,
-    calc(50% - var(--wedge-upper-gap)) 38%,
-    calc(50% - var(--wedge-mid-gap)) 58%,
+    calc(50% - var(--wedge-shoulder-gap)) 35%,
+    calc(50% - var(--wedge-rib-gap)) 50%,
+    calc(50% - var(--wedge-waist-gap)) 72%,
     calc(50% - var(--wedge-bottom-gap)) 100%,
     0 100%
   );
 }
 
 .curtainGroupRight {
+  transform: translate3d(var(--curtain-right-shift), 0, 0);
+  transform-origin: right top;
   clip-path: polygon(
     50% 0,
     100% 0,
     100% 100%,
     calc(50% + var(--wedge-bottom-gap)) 100%,
-    calc(50% + var(--wedge-mid-gap)) 58%,
-    calc(50% + var(--wedge-upper-gap)) 38%,
+    calc(50% + var(--wedge-waist-gap)) 72%,
+    calc(50% + var(--wedge-rib-gap)) 50%,
+    calc(50% + var(--wedge-shoulder-gap)) 35%,
     calc(50% + var(--wedge-top-gap)) 24.5%
   );
 }
