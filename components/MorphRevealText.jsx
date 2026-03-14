@@ -29,27 +29,26 @@ export default function MorphRevealText({
       const timeline = gsap.timeline({ paused: true });
 
       baseRefs.current.forEach((line, index) => {
-        const baseDuration = 0.98 + index * 0.04;
-        const lineOffset = index * 0.16;
+        const baseDuration = 1.18 + index * 0.06;
+        const washDuration = 1.08 + index * 0.08;
+        const lineOffset = index * 0.18;
         const washRef = washRefs.current[index];
 
         timeline.fromTo(
           line,
           {
-            autoAlpha: 0,
-            x: -18,
-            y: 10,
+            x: -10,
+            y: 6,
             clipPath: "inset(0 100% 0 0)",
-            filter: "blur(10px)",
+            filter: "blur(2px)",
           },
           {
-            autoAlpha: 1,
             x: 0,
             y: 0,
             clipPath: "inset(0 0% 0 0)",
             filter: "blur(0px)",
             duration: baseDuration,
-            ease: "power3.out",
+            ease: "power2.out",
           },
           lineOffset
         );
@@ -57,15 +56,17 @@ export default function MorphRevealText({
         timeline.fromTo(
           washRef,
           {
-            autoAlpha: 0.88,
-            xPercent: -62,
-            filter: "blur(14px)",
+            autoAlpha: 0.94,
+            clipPath: "inset(0 72% 0 -8%)",
+            x: -6,
+            filter: "blur(8px)",
           },
           {
             autoAlpha: 0,
-            xPercent: 84,
-            filter: "blur(6px)",
-            duration: 0.92 + index * 0.05,
+            clipPath: "inset(0 -8% 0 72%)",
+            x: 8,
+            filter: "blur(4px)",
+            duration: washDuration,
             ease: "power2.out",
           },
           lineOffset + 0.02
@@ -95,7 +96,9 @@ export default function MorphRevealText({
             }}
             className={styles.lineWash}
             aria-hidden="true"
-          />
+          >
+            {line}
+          </span>
           <span
             ref={(node) => {
               baseRefs.current[index] = node;
