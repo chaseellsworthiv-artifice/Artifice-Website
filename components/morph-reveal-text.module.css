@@ -5,22 +5,23 @@
 .lineMask {
   position: relative;
   display: block;
-  padding: 0.05em 0 0.18em;
+  padding: 0.06em 0.14em 0.2em 0;
   overflow: hidden;
-  --reveal-front: -42%;
-  --reveal-x-1: -18%;
-  --reveal-y-1: 48%;
-  --reveal-x-2: -4%;
-  --reveal-y-2: 30%;
-  --reveal-x-3: 10%;
-  --reveal-y-3: 72%;
-  --reveal-x-4: 22%;
-  --reveal-y-4: 52%;
+  --reveal-fill: -36%;
+  --front-a: -42%;
+  --front-b: -36%;
+  --front-c: -34%;
+  --front-d: -30%;
+  --reveal-y-a: 48%;
+  --reveal-y-b: 32%;
+  --reveal-y-c: 70%;
+  --reveal-y-d: 52%;
 }
 
 .lineBase,
 .lineWash {
   display: block;
+  padding-right: 0.08em;
   text-rendering: optimizeLegibility;
   transform-origin: left center;
   will-change: mask-image, -webkit-mask-image;
@@ -33,59 +34,61 @@
     linear-gradient(
       90deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) calc(var(--reveal-front) - 18%),
-      rgba(0, 0, 0, 0.96) calc(var(--reveal-front) - 10%),
-      rgba(0, 0, 0, 0.78) calc(var(--reveal-front) - 3%),
-      rgba(0, 0, 0, 0) calc(var(--reveal-front) + 12%)
+      rgba(0, 0, 0, 1) calc(var(--reveal-fill) - 10%),
+      rgba(0, 0, 0, 0.92) calc(var(--reveal-fill) - 2%),
+      rgba(0, 0, 0, 0.68) calc(var(--reveal-fill) + 4%),
+      rgba(0, 0, 0, 0.14) calc(var(--reveal-fill) + 9%),
+      rgba(0, 0, 0, 0) calc(var(--reveal-fill) + 16%)
     ),
     radial-gradient(
-      52% 170% at calc(var(--reveal-front) + var(--reveal-x-1)) var(--reveal-y-1),
-      rgba(0, 0, 0, 1) 0 25%,
-      rgba(0, 0, 0, 0) 58%
+      38% 170% at var(--front-a) var(--reveal-y-a),
+      rgba(0, 0, 0, 1) 0 24%,
+      rgba(0, 0, 0, 0) 56%
     ),
     radial-gradient(
-      42% 150% at calc(var(--reveal-front) + var(--reveal-x-2)) var(--reveal-y-2),
-      rgba(0, 0, 0, 0.97) 0 21%,
-      rgba(0, 0, 0, 0) 54%
+      30% 145% at var(--front-b) var(--reveal-y-b),
+      rgba(0, 0, 0, 0.98) 0 20%,
+      rgba(0, 0, 0, 0) 50%
     ),
     radial-gradient(
-      44% 158% at calc(var(--reveal-front) + var(--reveal-x-3)) var(--reveal-y-3),
-      rgba(0, 0, 0, 0.96) 0 22%,
-      rgba(0, 0, 0, 0) 55%
+      32% 152% at var(--front-c) var(--reveal-y-c),
+      rgba(0, 0, 0, 0.97) 0 20%,
+      rgba(0, 0, 0, 0) 50%
     ),
     radial-gradient(
-      34% 142% at calc(var(--reveal-front) + var(--reveal-x-4)) var(--reveal-y-4),
-      rgba(0, 0, 0, 0.94) 0 16%,
-      rgba(0, 0, 0, 0) 42%
+      24% 138% at var(--front-d) var(--reveal-y-d),
+      rgba(0, 0, 0, 0.95) 0 14%,
+      rgba(0, 0, 0, 0) 38%
     );
   mask-image:
     linear-gradient(
       90deg,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) calc(var(--reveal-front) - 18%),
-      rgba(0, 0, 0, 0.96) calc(var(--reveal-front) - 10%),
-      rgba(0, 0, 0, 0.78) calc(var(--reveal-front) - 3%),
-      rgba(0, 0, 0, 0) calc(var(--reveal-front) + 12%)
+      rgba(0, 0, 0, 1) calc(var(--reveal-fill) - 10%),
+      rgba(0, 0, 0, 0.92) calc(var(--reveal-fill) - 2%),
+      rgba(0, 0, 0, 0.68) calc(var(--reveal-fill) + 4%),
+      rgba(0, 0, 0, 0.14) calc(var(--reveal-fill) + 9%),
+      rgba(0, 0, 0, 0) calc(var(--reveal-fill) + 16%)
     ),
     radial-gradient(
-      52% 170% at calc(var(--reveal-front) + var(--reveal-x-1)) var(--reveal-y-1),
-      rgba(0, 0, 0, 1) 0 25%,
-      rgba(0, 0, 0, 0) 58%
+      38% 170% at var(--front-a) var(--reveal-y-a),
+      rgba(0, 0, 0, 1) 0 24%,
+      rgba(0, 0, 0, 0) 56%
     ),
     radial-gradient(
-      42% 150% at calc(var(--reveal-front) + var(--reveal-x-2)) var(--reveal-y-2),
-      rgba(0, 0, 0, 0.97) 0 21%,
-      rgba(0, 0, 0, 0) 54%
+      30% 145% at var(--front-b) var(--reveal-y-b),
+      rgba(0, 0, 0, 0.98) 0 20%,
+      rgba(0, 0, 0, 0) 50%
     ),
     radial-gradient(
-      44% 158% at calc(var(--reveal-front) + var(--reveal-x-3)) var(--reveal-y-3),
-      rgba(0, 0, 0, 0.96) 0 22%,
-      rgba(0, 0, 0, 0) 55%
+      32% 152% at var(--front-c) var(--reveal-y-c),
+      rgba(0, 0, 0, 0.97) 0 20%,
+      rgba(0, 0, 0, 0) 50%
     ),
     radial-gradient(
-      34% 142% at calc(var(--reveal-front) + var(--reveal-x-4)) var(--reveal-y-4),
-      rgba(0, 0, 0, 0.94) 0 16%,
-      rgba(0, 0, 0, 0) 42%
+      24% 138% at var(--front-d) var(--reveal-y-d),
+      rgba(0, 0, 0, 0.95) 0 14%,
+      rgba(0, 0, 0, 0) 38%
     );
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
@@ -95,51 +98,51 @@
   position: absolute;
   inset: 0;
   color: rgba(255, 248, 240, 0.98);
-  opacity: 0.96;
+  opacity: 0.94;
   pointer-events: none;
   mix-blend-mode: screen;
-  filter: blur(8px) brightness(1.08);
+  filter: blur(7px) brightness(1.06);
   -webkit-mask-image:
     radial-gradient(
-      42% 170% at calc(var(--reveal-front) + var(--reveal-x-1)) var(--reveal-y-1),
-      rgba(0, 0, 0, 0.98) 0 22%,
-      rgba(0, 0, 0, 0) 54%
+      30% 154% at var(--front-a) var(--reveal-y-a),
+      rgba(0, 0, 0, 1) 0 18%,
+      rgba(0, 0, 0, 0) 44%
     ),
     radial-gradient(
-      34% 150% at calc(var(--reveal-front) + var(--reveal-x-2)) var(--reveal-y-2),
-      rgba(0, 0, 0, 0.95) 0 18%,
-      rgba(0, 0, 0, 0) 46%
+      24% 136% at var(--front-b) var(--reveal-y-b),
+      rgba(0, 0, 0, 0.98) 0 15%,
+      rgba(0, 0, 0, 0) 38%
     ),
     radial-gradient(
-      36% 156% at calc(var(--reveal-front) + var(--reveal-x-3)) var(--reveal-y-3),
-      rgba(0, 0, 0, 0.94) 0 18%,
-      rgba(0, 0, 0, 0) 46%
+      26% 142% at var(--front-c) var(--reveal-y-c),
+      rgba(0, 0, 0, 0.96) 0 15%,
+      rgba(0, 0, 0, 0) 38%
     ),
     radial-gradient(
-      24% 138% at calc(var(--reveal-front) + var(--reveal-x-4)) var(--reveal-y-4),
-      rgba(0, 0, 0, 0.9) 0 14%,
-      rgba(0, 0, 0, 0) 36%
+      18% 130% at var(--front-d) var(--reveal-y-d),
+      rgba(0, 0, 0, 0.92) 0 11%,
+      rgba(0, 0, 0, 0) 30%
     );
   mask-image:
     radial-gradient(
-      42% 170% at calc(var(--reveal-front) + var(--reveal-x-1)) var(--reveal-y-1),
-      rgba(0, 0, 0, 0.98) 0 22%,
-      rgba(0, 0, 0, 0) 54%
+      30% 154% at var(--front-a) var(--reveal-y-a),
+      rgba(0, 0, 0, 1) 0 18%,
+      rgba(0, 0, 0, 0) 44%
     ),
     radial-gradient(
-      34% 150% at calc(var(--reveal-front) + var(--reveal-x-2)) var(--reveal-y-2),
-      rgba(0, 0, 0, 0.95) 0 18%,
-      rgba(0, 0, 0, 0) 46%
+      24% 136% at var(--front-b) var(--reveal-y-b),
+      rgba(0, 0, 0, 0.98) 0 15%,
+      rgba(0, 0, 0, 0) 38%
     ),
     radial-gradient(
-      36% 156% at calc(var(--reveal-front) + var(--reveal-x-3)) var(--reveal-y-3),
-      rgba(0, 0, 0, 0.94) 0 18%,
-      rgba(0, 0, 0, 0) 46%
+      26% 142% at var(--front-c) var(--reveal-y-c),
+      rgba(0, 0, 0, 0.96) 0 15%,
+      rgba(0, 0, 0, 0) 38%
     ),
     radial-gradient(
-      24% 138% at calc(var(--reveal-front) + var(--reveal-x-4)) var(--reveal-y-4),
-      rgba(0, 0, 0, 0.9) 0 14%,
-      rgba(0, 0, 0, 0) 36%
+      18% 130% at var(--front-d) var(--reveal-y-d),
+      rgba(0, 0, 0, 0.92) 0 11%,
+      rgba(0, 0, 0, 0) 30%
     );
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;

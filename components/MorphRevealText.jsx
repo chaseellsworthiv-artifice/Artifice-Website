@@ -10,44 +10,28 @@ gsap.registerPlugin(ScrollTrigger);
 
 const lineProfiles = [
   {
-    x1: "-18%",
-    y1: "48%",
-    x2: "-4%",
-    y2: "30%",
-    x3: "10%",
-    y3: "72%",
-    x4: "22%",
-    y4: "52%",
+    aY: "48%",
+    bY: "32%",
+    cY: "70%",
+    dY: "52%",
   },
   {
-    x1: "-20%",
-    y1: "44%",
-    x2: "-2%",
-    y2: "66%",
-    x3: "12%",
-    y3: "34%",
-    x4: "24%",
-    y4: "58%",
+    aY: "44%",
+    bY: "66%",
+    cY: "36%",
+    dY: "58%",
   },
   {
-    x1: "-16%",
-    y1: "54%",
-    x2: "0%",
-    y2: "28%",
-    x3: "14%",
-    y3: "68%",
-    x4: "26%",
-    y4: "46%",
+    aY: "54%",
+    bY: "28%",
+    cY: "68%",
+    dY: "44%",
   },
   {
-    x1: "-18%",
-    y1: "42%",
-    x2: "2%",
-    y2: "70%",
-    x3: "14%",
-    y3: "32%",
-    x4: "28%",
-    y4: "56%",
+    aY: "42%",
+    bY: "70%",
+    cY: "34%",
+    dY: "56%",
   },
 ];
 
@@ -68,22 +52,67 @@ export default function MorphRevealText({
     const trigger = triggerRef?.current || rootRef.current;
 
     const context = gsap.context(() => {
-      gsap.set(lineRefs.current, { "--reveal-front": "-42%" });
+      gsap.set(lineRefs.current, {
+        "--reveal-fill": "-36%",
+        "--front-a": "-42%",
+        "--front-b": "-36%",
+        "--front-c": "-34%",
+        "--front-d": "-30%",
+      });
 
       const timeline = gsap.timeline({ paused: true });
 
       lineRefs.current.forEach((lineMask, index) => {
-        timeline.fromTo(
+        const lineOffset = index * 0.22;
+
+        timeline.to(
           lineMask,
           {
-            "--reveal-front": "-42%",
+            "--reveal-fill": "118%",
+            duration: 1.82,
+            ease: "power1.out",
           },
+          lineOffset
+        );
+
+        timeline.to(
+          lineMask,
           {
-            "--reveal-front": "124%",
-            duration: 1.58 + index * 0.06,
+            "--front-a": "106%",
+            duration: 1.18,
             ease: "power2.out",
           },
-          index * 0.16
+          lineOffset
+        );
+
+        timeline.to(
+          lineMask,
+          {
+            "--front-b": "116%",
+            duration: 1.32,
+            ease: "power2.out",
+          },
+          lineOffset + 0.06
+        );
+
+        timeline.to(
+          lineMask,
+          {
+            "--front-c": "124%",
+            duration: 1.42,
+            ease: "power2.out",
+          },
+          lineOffset + 0.12
+        );
+
+        timeline.to(
+          lineMask,
+          {
+            "--front-d": "132%",
+            duration: 1.5,
+            ease: "power2.out",
+          },
+          lineOffset + 0.18
         );
       });
 
@@ -113,14 +142,10 @@ export default function MorphRevealText({
             }}
             className={styles.lineMask}
             style={{
-              "--reveal-x-1": profile.x1,
-              "--reveal-y-1": profile.y1,
-              "--reveal-x-2": profile.x2,
-              "--reveal-y-2": profile.y2,
-              "--reveal-x-3": profile.x3,
-              "--reveal-y-3": profile.y3,
-              "--reveal-x-4": profile.x4,
-              "--reveal-y-4": profile.y4,
+              "--reveal-y-a": profile.aY,
+              "--reveal-y-b": profile.bY,
+              "--reveal-y-c": profile.cY,
+              "--reveal-y-d": profile.dY,
             }}
           >
             <span
