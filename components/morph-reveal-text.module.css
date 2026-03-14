@@ -5,7 +5,7 @@
 .lineMask {
   position: relative;
   display: block;
-  padding: 0.08em 0.34em 0.22em 0;
+  padding: 0.08em 0.48em 0.24em 0;
   overflow: hidden;
   --reveal-fill: -36%;
   --front-a: -42%;
@@ -21,7 +21,7 @@
 .lineBase,
 .lineWash {
   display: block;
-  padding-right: 0.22em;
+  padding-right: 0.34em;
   text-rendering: optimizeLegibility;
   transform-origin: left center;
   will-change: mask-image, -webkit-mask-image;

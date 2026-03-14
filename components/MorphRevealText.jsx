@@ -68,7 +68,7 @@ export default function MorphRevealText({
         timeline.to(
           lineMask,
           {
-            "--reveal-fill": "118%",
+            "--reveal-fill": "146%",
             duration: 1.82,
             ease: "power1.out",
           },
@@ -78,7 +78,7 @@ export default function MorphRevealText({
         timeline.to(
           lineMask,
           {
-            "--front-a": "106%",
+            "--front-a": "132%",
             duration: 1.18,
             ease: "power2.out",
           },
@@ -88,7 +88,7 @@ export default function MorphRevealText({
         timeline.to(
           lineMask,
           {
-            "--front-b": "116%",
+            "--front-b": "144%",
             duration: 1.32,
             ease: "power2.out",
           },
@@ -98,7 +98,7 @@ export default function MorphRevealText({
         timeline.to(
           lineMask,
           {
-            "--front-c": "124%",
+            "--front-c": "154%",
             duration: 1.42,
             ease: "power2.out",
           },
@@ -108,7 +108,7 @@ export default function MorphRevealText({
         timeline.to(
           lineMask,
           {
-            "--front-d": "132%",
+            "--front-d": "164%",
             duration: 1.5,
             ease: "power2.out",
           },
