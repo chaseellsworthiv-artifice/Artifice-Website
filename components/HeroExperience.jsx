@@ -131,21 +131,21 @@ export default function HeroExperience() {
       hero.style.setProperty("--curtain-rise-y", `${riseAmount.toFixed(3)}px`);
 
       if (shell) {
-        const topProgress = Math.pow(state.open, isTouch ? 0.9 : 0.84);
-        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.1) / 0.9), isTouch ? 1.02 : 1.06);
-        const ribProgress = Math.pow(Math.max(0, (state.open - 0.24) / 0.76), isTouch ? 1.18 : 1.24);
-        const waistProgress = Math.pow(Math.max(0, (state.open - 0.4) / 0.6), isTouch ? 1.45 : 1.55);
-        const bottomProgress = Math.pow(Math.max(0, (state.open - 0.56) / 0.44), isTouch ? 1.85 : 2.0);
-        const topGap = (isTouch ? 0.05 : isReduced ? 0.045 : 0.04) * topProgress;
-        const shoulderGap = (isTouch ? 0.1 : isReduced ? 0.09 : 0.082) * shoulderProgress;
-        const ribGap = (isTouch ? 0.165 : isReduced ? 0.15 : 0.136) * ribProgress;
-        const waistGap = (isTouch ? 0.245 : isReduced ? 0.225 : 0.205) * waistProgress;
-        const bottomGap = (isTouch ? 0.21 : isReduced ? 0.19 : 0.17) * bottomProgress;
+        const bottomProgress = Math.pow(state.open, isTouch ? 0.78 : 0.7);
+        const waistProgress = Math.pow(Math.max(0, (state.open - 0.18) / 0.82), isTouch ? 1.2 : 1.32);
+        const ribProgress = Math.pow(Math.max(0, (state.open - 0.42) / 0.58), isTouch ? 1.75 : 1.95);
+        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.7) / 0.3), isTouch ? 2.5 : 2.9);
+        const topProgress = Math.pow(Math.max(0, (state.open - 0.9) / 0.1), isTouch ? 3.6 : 4.2);
+        const topGap = (isTouch ? 0.01 : isReduced ? 0.008 : 0.006) * topProgress;
+        const shoulderGap = (isTouch ? 0.03 : isReduced ? 0.026 : 0.022) * shoulderProgress;
+        const ribGap = (isTouch ? 0.085 : isReduced ? 0.075 : 0.066) * ribProgress;
+        const waistGap = (isTouch ? 0.2 : isReduced ? 0.182 : 0.166) * waistProgress;
+        const bottomGap = (isTouch ? 0.36 : isReduced ? 0.33 : 0.3) * bottomProgress;
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.22) / 0.78), isTouch ? 0.95 : 1.02);
-        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.02 : isReduced ? 0.026 : 0.03);
-        const compress = Math.pow(state.open, 0.98) * (isTouch ? 0.08 : isReduced ? 0.1 : 0.12);
-        const shadow = 0.12 + state.open * 0.14;
+        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.08) / 0.92), isTouch ? 0.88 : 0.94);
+        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.014 : isReduced ? 0.018 : 0.022);
+        const compress = Math.pow(Math.max(0, (state.open - 0.12) / 0.88), 1.05) * (isTouch ? 0.09 : isReduced ? 0.11 : 0.13);
+        const shadow = 0.12 + waistProgress * 0.1 + bottomProgress * 0.08;
         shell.style.setProperty("--curtain-left-shift", `${(-groupShift).toFixed(3)}px`);
         shell.style.setProperty("--curtain-right-shift", `${groupShift.toFixed(3)}px`);
         shell.style.setProperty("--curtain-compress", `${compress.toFixed(4)}`);
@@ -155,8 +155,8 @@ export default function HeroExperience() {
           "M 0 0",
           "L 0.5 0",
           "L 0.5 0.245",
-          `C ${0.5 - topGap} 0.315, ${0.5 - shoulderGap} 0.405, ${0.5 - ribGap} 0.54`,
-          `C ${0.5 - (waistGap * 0.92)} 0.68, ${0.5 - (waistGap * 0.98)} 0.84, ${0.5 - bottomGap} 1`,
+          `C ${0.5 - topGap} 0.305, ${0.5 - shoulderGap} 0.37, ${0.5 - ribGap} 0.5`,
+          `C ${0.5 - (waistGap * 0.8)} 0.66, ${0.5 - (waistGap * 1.02)} 0.84, ${0.5 - bottomGap} 1`,
           "L 0 1",
           "Z",
         ].join(" ");
@@ -166,8 +166,8 @@ export default function HeroExperience() {
           "L 1 0",
           "L 1 1",
           `L ${0.5 + bottomGap} 1`,
-          `C ${0.5 + (waistGap * 0.98)} 0.84, ${0.5 + (waistGap * 0.92)} 0.68, ${0.5 + ribGap} 0.54`,
-          `C ${0.5 + shoulderGap} 0.405, ${0.5 + topGap} 0.315, 0.5 0.245`,
+          `C ${0.5 + (waistGap * 1.02)} 0.84, ${0.5 + (waistGap * 0.8)} 0.66, ${0.5 + ribGap} 0.5`,
+          `C ${0.5 + shoulderGap} 0.37, ${0.5 + topGap} 0.305, 0.5 0.245`,
           "Z",
         ].join(" ");
 
