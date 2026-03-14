@@ -73,9 +73,9 @@ export default function HeroExperience() {
       const copyReveal = gsap.timeline({
         scrollTrigger: {
           trigger: introRef.current,
-          start: "top bottom-=6%",
-          end: "top 72%",
-          scrub: 0.65,
+          start: "top 68%",
+          end: "top 46%",
+          scrub: 0.6,
         },
       });
 
@@ -511,9 +511,9 @@ export default function HeroExperience() {
             className={styles.copyTitle}
             lineClassName={styles.copyTitleLine}
             triggerRef={introRef}
-            start="top bottom-=6%"
-            end="top 64%"
-            scrub={0.72}
+            start="top 66%"
+            end="top 38%"
+            scrub={0.62}
           />
           <div ref={copyBodyRef} className={styles.copyBody}>
             <p className={styles.lead}>
