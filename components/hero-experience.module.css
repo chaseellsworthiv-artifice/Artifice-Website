@@ -57,6 +57,8 @@
   z-index: 4;
   pointer-events: none;
   overflow: hidden;
+  background-image: url("/assets/curtain/final-curtain.png");
+  background-repeat: no-repeat;
 }
 
 .curtainShell::after {

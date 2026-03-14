@@ -18,7 +18,7 @@ export default function HeroExperience() {
   const curtainShellRef = useRef(null);
   const sliceRefs = useRef([]);
   const imageMetricsRef = useRef({ ready: false, width: 0, height: 0 });
-  const sliceCount = 18;
+  const sliceCount = 40;
   const sliceItems = useMemo(
     () =>
       Array.from({ length: sliceCount }, (_, index) => ({
@@ -106,6 +106,9 @@ export default function HeroExperience() {
       const offsetY = 0;
       const sliceWidth = rect.width / sliceCount;
 
+      shell.style.backgroundSize = `${backgroundWidth}px ${backgroundHeight}px`;
+      shell.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
+
       sliceRefs.current.forEach((slice, index) => {
         if (!slice) return;
         const left = index * sliceWidth;
@@ -143,13 +146,13 @@ export default function HeroExperience() {
         const center = ((index + 0.5) / sliceCount - 0.5) * 2;
         const delta = center - pointerCenter;
         const distance = Math.abs(delta);
-        const primaryRadius = isReduced ? 0.16 : 0.11;
-        const secondaryRadius = isReduced ? 0.32 : 0.24;
+        const primaryRadius = isReduced ? 0.1 : 0.055;
+        const secondaryRadius = isReduced ? 0.2 : 0.12;
         const primaryInfluence = Math.exp(-Math.pow(distance / primaryRadius, 2));
         const secondaryInfluence = Math.exp(-Math.pow(distance / secondaryRadius, 2));
         const direction = delta === 0 ? 0 : delta > 0 ? 1 : -1;
-        const dragX = state.x * primaryInfluence * (isReduced ? 1.4 : 2.2);
-        const pinchX = direction * primaryInfluence * Math.abs(state.x) * (isReduced ? 0.7 : 1.25);
+        const dragX = state.x * primaryInfluence * (isReduced ? 1.1 : 1.85);
+        const pinchX = direction * primaryInfluence * Math.abs(state.x) * (isReduced ? 0.55 : 0.9);
         const depthY =
           state.y * primaryInfluence * (isReduced ? 0.45 : 0.8) +
           pointerDepth * secondaryInfluence * (isReduced ? 0.18 : 0.32);
@@ -164,7 +167,7 @@ export default function HeroExperience() {
 
         const rotate = sliceState.x * 0.9;
         const skew = sliceState.x * 0.16;
-        const scaleX = 1.03 + primaryInfluence * 0.03;
+        const scaleX = 1.02 + primaryInfluence * 0.02;
         const scaleY = 1 + primaryInfluence * 0.01;
         const brightness = 1 + sliceState.glow;
         const contrast = 1 + sliceState.glow * 0.3;
