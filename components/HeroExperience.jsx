@@ -18,19 +18,9 @@ export default function HeroExperience() {
   const curtainShellRef = useRef(null);
   const leftClipPathRef = useRef(null);
   const rightClipPathRef = useRef(null);
-  const sliceRefs = useRef([]);
   const imageMetricsRef = useRef({ ready: false, width: 0, height: 0 });
   const shellMetricsRef = useRef({ width: 0, height: 0 });
   const openTargetRef = useRef(0);
-  const sliceCount = 96;
-  const sliceItems = useMemo(
-    () =>
-      Array.from({ length: sliceCount }, (_, index) => ({
-        index,
-        ratio: index / sliceCount,
-      })),
-    [sliceCount]
-  );
 
   useEffect(() => {
     const isReduced =
@@ -99,10 +89,9 @@ export default function HeroExperience() {
     let rafId = 0;
     let resizeRaf = 0;
     const state = { open: 0 };
-    const sliceStates = sliceRefs.current.map(() => ({ x: 0, y: 0, glow: 0 }));
 
     function applySliceLayout() {
-      if (!shell || !sliceRefs.current.length || !imageMetricsRef.current.ready) return;
+      if (!shell || !imageMetricsRef.current.ready) return;
 
       const rect = shell.getBoundingClientRect();
       const imgWidth = imageMetricsRef.current.width;
@@ -117,15 +106,6 @@ export default function HeroExperience() {
 
       shell.style.setProperty("--curtain-bg-size", `${backgroundWidth}px ${backgroundHeight}px`);
       shell.style.setProperty("--curtain-bg-position", `${offsetX}px ${offsetY}px`);
-
-      sliceRefs.current.forEach((slice, index) => {
-        if (!slice) return;
-        const left = index * sliceWidth;
-        slice.style.left = `${left - 1}px`;
-        slice.style.width = `${sliceWidth + 2}px`;
-        slice.style.backgroundSize = `${backgroundWidth}px ${backgroundHeight}px`;
-        slice.style.backgroundPosition = `${offsetX - left}px ${offsetY}px`;
-      });
     }
 
     const curtainImage = new window.Image();
@@ -140,6 +120,7 @@ export default function HeroExperience() {
     };
 
     function render() {
+      rafId = 0;
       state.open = openTargetRef.current;
 
       hero.style.setProperty("--curtain-glow-x", "50%");
@@ -149,76 +130,33 @@ export default function HeroExperience() {
       const riseAmount = -shellHeight * Math.pow(state.open, 0.98) * (isTouch ? 0.24 : isReduced ? 0.32 : 0.4);
       hero.style.setProperty("--curtain-rise-y", `${riseAmount.toFixed(3)}px`);
 
-      sliceRefs.current.forEach((slice, index) => {
-        if (!slice) return;
-
-        const center = ((index + 0.5) / sliceCount - 0.5) * 2;
-        const side = center < 0 ? -1 : 1;
-        const halfT = side < 0 ? center + 1 : 1 - center;
-        const openWeight = state.open;
-        const desiredX = 0;
-        const desiredY = 0;
-        const desiredGlow = 0;
-        const sliceState = sliceStates[index];
-
-        sliceState.x += (desiredX - sliceState.x) * 0.22;
-        sliceState.y += (desiredY - sliceState.y) * 0.22;
-        sliceState.glow += (desiredGlow - sliceState.glow) * 0.22;
-        const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-        const bottomBias = 0.26 + Math.pow(halfT, 0.82) * 0.74;
-        const openingTravel = side * openWeight * bottomBias * shellWidth * (0.16 + halfT * 0.24);
-        const gatheredTravel = side * openWeight * bottomBias * shellWidth * (0.022 + halfT * 0.035);
-        const openOffsetX = openingTravel + gatheredTravel;
-        const gatherScale = 1 - openWeight * bottomBias * (0.06 + (1 - halfT) * 0.08);
-        const openRotate = side * openWeight * bottomBias * (1.8 + halfT * 2.4);
-        const rotate = openRotate;
-        const skew = side * openWeight * bottomBias * 0.22;
-        const scaleX = gatherScale;
-        const scaleY = 1;
-        const lift = 0;
-        const brightness = 1;
-        const contrast = 1.015;
-        const saturate = 1;
-        const shadowX = "0.000";
-        const shadowY = (1 + openWeight * 1.8).toFixed(3);
-        const shadowBlur = (2.8 + openWeight * 5.4).toFixed(3);
-        const shadowAlpha = (0.08 + openWeight * 0.05).toFixed(3);
-        const zIndex = 20 + Math.round(openWeight * 16 + halfT * 8);
-
-        slice.style.zIndex = String(zIndex);
-        slice.style.transform = `translate3d(${(sliceState.x + openOffsetX).toFixed(3)}px, ${sliceState.y.toFixed(
-          3
-        )}px, ${lift.toFixed(3)}px) rotateY(${rotate.toFixed(3)}deg) skewY(${skew.toFixed(3)}deg) scaleX(${scaleX.toFixed(
-          4
-        )}) scaleY(${scaleY.toFixed(4)})`;
-        slice.style.filter = `brightness(${brightness.toFixed(3)}) contrast(${contrast.toFixed(3)}) saturate(${saturate.toFixed(
-          3
-        )}) drop-shadow(${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0, 0, 0, ${shadowAlpha}))`;
-      });
-
       if (shell) {
-        const bottomProgress = Math.pow(state.open, isTouch ? 0.82 : 0.76);
-        const waistProgress = Math.pow(Math.max(0, (state.open - 0.24) / 0.76), isTouch ? 1.18 : 1.28);
-        const ribProgress = Math.pow(Math.max(0, (state.open - 0.5) / 0.5), isTouch ? 1.75 : 1.95);
-        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.72) / 0.28), isTouch ? 2.4 : 2.8);
-        const topProgress = Math.pow(Math.max(0, (state.open - 0.88) / 0.12), isTouch ? 3.2 : 3.8);
-        const topGap = (isTouch ? 0.004 : isReduced ? 0.0035 : 0.003) * topProgress;
-        const shoulderGap = (isTouch ? 0.014 : isReduced ? 0.012 : 0.01) * shoulderProgress;
-        const ribGap = (isTouch ? 0.052 : isReduced ? 0.046 : 0.04) * ribProgress;
-        const waistGap = (isTouch ? 0.16 : isReduced ? 0.145 : 0.13) * waistProgress;
-        const bottomGap = (isTouch ? 0.46 : isReduced ? 0.42 : 0.38) * bottomProgress;
+        const topProgress = Math.pow(state.open, isTouch ? 0.9 : 0.84);
+        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.1) / 0.9), isTouch ? 1.02 : 1.06);
+        const ribProgress = Math.pow(Math.max(0, (state.open - 0.24) / 0.76), isTouch ? 1.18 : 1.24);
+        const waistProgress = Math.pow(Math.max(0, (state.open - 0.4) / 0.6), isTouch ? 1.45 : 1.55);
+        const bottomProgress = Math.pow(Math.max(0, (state.open - 0.56) / 0.44), isTouch ? 1.85 : 2.0);
+        const topGap = (isTouch ? 0.05 : isReduced ? 0.045 : 0.04) * topProgress;
+        const shoulderGap = (isTouch ? 0.1 : isReduced ? 0.09 : 0.082) * shoulderProgress;
+        const ribGap = (isTouch ? 0.165 : isReduced ? 0.15 : 0.136) * ribProgress;
+        const waistGap = (isTouch ? 0.245 : isReduced ? 0.225 : 0.205) * waistProgress;
+        const bottomGap = (isTouch ? 0.21 : isReduced ? 0.19 : 0.17) * bottomProgress;
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.58) / 0.42), isTouch ? 1.5 : 1.7);
-        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.012 : isReduced ? 0.016 : 0.02);
+        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.22) / 0.78), isTouch ? 0.95 : 1.02);
+        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.02 : isReduced ? 0.026 : 0.03);
+        const compress = Math.pow(state.open, 0.98) * (isTouch ? 0.08 : isReduced ? 0.1 : 0.12);
+        const shadow = 0.12 + state.open * 0.14;
         shell.style.setProperty("--curtain-left-shift", `${(-groupShift).toFixed(3)}px`);
         shell.style.setProperty("--curtain-right-shift", `${groupShift.toFixed(3)}px`);
+        shell.style.setProperty("--curtain-compress", `${compress.toFixed(4)}`);
+        shell.style.setProperty("--curtain-shadow-alpha", `${shadow.toFixed(4)}`);
 
         const leftPath = [
           "M 0 0",
           "L 0.5 0",
           "L 0.5 0.245",
-          `C ${0.5 - topGap} 0.305, ${0.5 - shoulderGap} 0.395, ${0.5 - ribGap} 0.52`,
-          `C ${0.5 - (ribGap * 1.05)} 0.64, ${0.5 - waistGap} 0.79, ${0.5 - bottomGap} 1`,
+          `C ${0.5 - topGap} 0.315, ${0.5 - shoulderGap} 0.405, ${0.5 - ribGap} 0.54`,
+          `C ${0.5 - (waistGap * 0.92)} 0.68, ${0.5 - (waistGap * 0.98)} 0.84, ${0.5 - bottomGap} 1`,
           "L 0 1",
           "Z",
         ].join(" ");
@@ -228,8 +166,8 @@ export default function HeroExperience() {
           "L 1 0",
           "L 1 1",
           `L ${0.5 + bottomGap} 1`,
-          `C ${0.5 + waistGap} 0.79, ${0.5 + (ribGap * 1.05)} 0.64, ${0.5 + ribGap} 0.52`,
-          `C ${0.5 + shoulderGap} 0.395, ${0.5 + topGap} 0.305, 0.5 0.245`,
+          `C ${0.5 + (waistGap * 0.98)} 0.84, ${0.5 + (waistGap * 0.92)} 0.68, ${0.5 + ribGap} 0.54`,
+          `C ${0.5 + shoulderGap} 0.405, ${0.5 + topGap} 0.315, 0.5 0.245`,
           "Z",
         ].join(" ");
 
@@ -237,7 +175,6 @@ export default function HeroExperience() {
         rightClipPathRef.current?.setAttribute("d", rightPath);
       }
 
-      rafId = 0;
     }
 
     function requestRender() {
@@ -284,37 +221,11 @@ export default function HeroExperience() {
           <div
             className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}
             style={{ clipPath: "url(#curtain-left-clip)" }}
-          >
-            {sliceItems
-              .filter(({ ratio }) => ratio < 0.5)
-              .map(({ index, ratio }) => (
-                <div
-                  key={index}
-                  ref={(node) => {
-                    sliceRefs.current[index] = node;
-                  }}
-                  className={styles.curtainSlice}
-                  style={{ "--slice-index": index, "--slice-ratio": ratio }}
-                />
-              ))}
-          </div>
+          />
           <div
             className={`${styles.curtainGroup} ${styles.curtainGroupRight}`}
             style={{ clipPath: "url(#curtain-right-clip)" }}
-          >
-            {sliceItems
-              .filter(({ ratio }) => ratio >= 0.5)
-              .map(({ index, ratio }) => (
-                <div
-                  key={index}
-                  ref={(node) => {
-                    sliceRefs.current[index] = node;
-                  }}
-                  className={styles.curtainSlice}
-                  style={{ "--slice-index": index, "--slice-ratio": ratio }}
-                />
-              ))}
-          </div>
+          />
         </div>
         <div className={styles.heroAtmosphere} />
         <div ref={veilRef} className={styles.scrollVeil} />
