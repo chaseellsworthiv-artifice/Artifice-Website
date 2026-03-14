@@ -50,17 +50,6 @@ export default function HeroExperience() {
         { autoAlpha: 1, y: 0, duration: 1.6, ease: "power3.out", delay: 0.45 }
       );
 
-      gsap.to(heroRef.current, {
-        yPercent: isReduced ? -8 : -18,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: isReduced ? 0.8 : 1.2,
-        },
-      });
-
       gsap.to(veilRef.current, {
         opacity: isReduced ? 0.78 : 0.92,
         ease: "none",
@@ -220,6 +209,31 @@ export default function HeroExperience() {
         const shadowBlur = (2.8 + secondaryInfluence * (isTouch ? 7.4 : 9) + hotspotBoost * 3.8).toFixed(3);
         const shadowAlpha = (0.075 + secondaryInfluence * (isTouch ? 0.1 : 0.12) + hotspotBoost * 0.06).toFixed(3);
         const zIndex = 20 + Math.round(secondaryInfluence * 40 + hotspotBoost * 14);
+        const baseWedgeTop = isTouch ? 10 : isReduced ? 8 : 6.5;
+        const baseWedgeBottom = isTouch ? 40 : isReduced ? 36 : 31;
+        const wedgeRise = openWeight * (isTouch ? 0.78 : isReduced ? 0.82 : 0.9);
+        const edgeFalloff = Math.pow(halfT, 0.82);
+        const topInset = Math.max(
+          0,
+          Math.min(
+            48,
+            (1 - edgeFalloff) * baseWedgeTop * wedgeRise
+          )
+        );
+        const bottomInset = Math.max(
+          0,
+          Math.min(
+            49,
+            (1 - edgeFalloff) * baseWedgeBottom * wedgeRise
+          )
+        );
+        const clipPath =
+          side < 0
+            ? `polygon(0 0, 100% 0, ${Math.max(0, 100 - topInset).toFixed(2)}% 24.5%, ${Math.max(
+                0,
+                100 - bottomInset
+              ).toFixed(2)}% 100%, 0 100%)`
+            : `polygon(${topInset.toFixed(2)}% 24.5%, 0 0, 100% 0, 100% 100%, ${bottomInset.toFixed(2)}% 100%)`;
 
         slice.style.zIndex = String(zIndex);
         slice.style.transform = `translate3d(${(sliceState.x + openOffsetX).toFixed(3)}px, ${sliceState.y.toFixed(
@@ -230,6 +244,7 @@ export default function HeroExperience() {
         slice.style.filter = `brightness(${brightness.toFixed(3)}) contrast(${contrast.toFixed(3)}) saturate(${saturate.toFixed(
           3
         )}) drop-shadow(${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0, 0, 0, ${shadowAlpha}))`;
+        slice.style.clipPath = clipPath;
       });
 
       const moving =
