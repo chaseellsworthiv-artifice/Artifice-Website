@@ -18,7 +18,7 @@ export default function HeroExperience() {
   const curtainShellRef = useRef(null);
   const sliceRefs = useRef([]);
   const imageMetricsRef = useRef({ ready: false, width: 0, height: 0 });
-  const sliceCount = 72;
+  const sliceCount = 96;
   const sliceItems = useMemo(
     () =>
       Array.from({ length: sliceCount }, (_, index) => ({
@@ -131,42 +131,45 @@ export default function HeroExperience() {
     };
 
     function render() {
-      state.x += (target.x - state.x) * 0.08;
-      state.y += (target.y - state.y) * 0.08;
+      state.x += (target.x - state.x) * 0.16;
+      state.y += (target.y - state.y) * 0.16;
 
       hero.style.setProperty("--curtain-glow-x", `${(50 + state.x * 0.8).toFixed(2)}%`);
       hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 0.4).toFixed(2)}%`);
 
       const pointerCenter = target.x / (isReduced ? 4 : 8);
       const pointerDepth = target.y / (isReduced ? 2 : 4);
+      const nearestIndex = Math.max(0, Math.min(sliceCount - 1, Math.round(((pointerCenter + 1) * 0.5) * (sliceCount - 1))));
+      const nearestCenter = ((nearestIndex + 0.5) / sliceCount - 0.5) * 2;
+      const hotspotCenter = nearestCenter * 0.72 + pointerCenter * 0.28;
 
       sliceRefs.current.forEach((slice, index) => {
         if (!slice) return;
 
         const center = ((index + 0.5) / sliceCount - 0.5) * 2;
-        const delta = center - pointerCenter;
+        const delta = center - hotspotCenter;
         const distance = Math.abs(delta);
-        const primaryRadius = isReduced ? 0.07 : 0.03;
-        const secondaryRadius = isReduced ? 0.12 : 0.055;
+        const primaryRadius = isReduced ? 0.042 : 0.018;
+        const secondaryRadius = isReduced ? 0.085 : 0.038;
         const primaryInfluence = Math.exp(-Math.pow(distance / primaryRadius, 2));
         const secondaryInfluence = Math.exp(-Math.pow(distance / secondaryRadius, 2));
-        const dragX = state.x * primaryInfluence * (isReduced ? 0.95 : 1.45);
+        const dragX = state.x * primaryInfluence * (isReduced ? 1.1 : 1.7);
         const depthY =
-          state.y * primaryInfluence * (isReduced ? 0.4 : 0.72) +
-          pointerDepth * secondaryInfluence * (isReduced ? 0.14 : 0.22);
+          state.y * primaryInfluence * (isReduced ? 0.46 : 0.82) +
+          pointerDepth * secondaryInfluence * (isReduced ? 0.12 : 0.2);
         const desiredX = dragX;
         const desiredY = depthY;
-        const desiredGlow = primaryInfluence * (isReduced ? 0.08 : 0.14);
+        const desiredGlow = primaryInfluence * (isReduced ? 0.09 : 0.16);
         const sliceState = sliceStates[index];
 
-        sliceState.x += (desiredX - sliceState.x) * 0.14;
-        sliceState.y += (desiredY - sliceState.y) * 0.13;
-        sliceState.glow += (desiredGlow - sliceState.glow) * 0.12;
+        sliceState.x += (desiredX - sliceState.x) * 0.22;
+        sliceState.y += (desiredY - sliceState.y) * 0.2;
+        sliceState.glow += (desiredGlow - sliceState.glow) * 0.16;
 
-        const rotate = sliceState.x * 0.9;
-        const skew = sliceState.x * 0.16;
-        const scaleX = 1.01 + primaryInfluence * 0.015;
-        const scaleY = 1 + primaryInfluence * 0.01;
+        const rotate = sliceState.x * 1.02;
+        const skew = sliceState.x * 0.18;
+        const scaleX = 1.01 + primaryInfluence * 0.018;
+        const scaleY = 1 + primaryInfluence * 0.012;
         const brightness = 1 + sliceState.glow;
         const contrast = 1 + sliceState.glow * 0.3;
 
