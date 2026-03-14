@@ -14,7 +14,7 @@
   --curtain-glow-x: 50%;
   --curtain-glow-y: 18%;
   --curtain-rise-y: 0px;
-  --hero-copy-offset: 135vh;
+  --hero-copy-offset: 110vh;
 }
 
 .sceneShell {
@@ -541,7 +541,7 @@
 @media (max-width: 900px) {
   .hero {
     min-height: 250svh;
-    --hero-copy-offset: 150svh;
+    --hero-copy-offset: 120svh;
   }
 
   .curtainShell {
