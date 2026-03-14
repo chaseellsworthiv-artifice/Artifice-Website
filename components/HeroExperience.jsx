@@ -72,6 +72,15 @@ export default function HeroExperience() {
         <div className={styles.sceneShell}>
           <HeroScene />
         </div>
+        <div className={styles.curtainShell} aria-hidden="true">
+          <div className={styles.curtainPanelLeft}>
+            <div className={styles.curtainTextureLeft} />
+          </div>
+          <div className={styles.curtainPanelRight}>
+            <div className={styles.curtainTextureRight} />
+          </div>
+          <div className={styles.curtainTopMask} />
+        </div>
         <div className={styles.heroAtmosphere} />
         <div ref={veilRef} className={styles.scrollVeil} />
 
