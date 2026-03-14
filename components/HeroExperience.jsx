@@ -74,11 +74,6 @@ export default function HeroExperience() {
         </div>
         <div className={styles.heroAtmosphere} />
         <div ref={veilRef} className={styles.scrollVeil} />
-        <div className={styles.heroPetals} aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
 
         <header ref={introRef} className={styles.copy}>
           <p className={styles.eyebrow}>ARTIFICE</p>

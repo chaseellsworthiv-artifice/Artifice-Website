@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Environment, Float, RoundedBox } from "@react-three/drei";
+import { Environment, Plane, useTexture } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
@@ -21,118 +21,105 @@ function useReducedMode() {
   return reduced;
 }
 
-function FloatingCard({ reduced }) {
-  const cardRef = useRef(null);
-  const materialRef = useRef(null);
-  const pointerTarget = useRef({ x: 0, y: 0 });
-  const current = useRef({ x: 0, y: 0 });
-  const { viewport } = useThree();
+function CurtainHalf({ side = "left", reduced }) {
+  const meshRef = useRef(null);
+  const geometryRef = useRef(null);
+  const shadowTexture = useTexture("/assets/images/chase-headshot.jpg");
+  const foldCount = reduced ? 18 : 28;
+
+  const geometry = useMemo(() => {
+    return new THREE.PlaneGeometry(4.6, 8.4, foldCount, reduced ? 48 : 88);
+  }, [foldCount, reduced]);
 
   useEffect(() => {
-    if (reduced) return undefined;
+    const position = geometry.attributes.position;
+    const direction = side === "left" ? -1 : 1;
 
-    function onPointerMove(event) {
-      const x = (event.clientX / window.innerWidth) * 2 - 1;
-      const y = (event.clientY / window.innerHeight) * 2 - 1;
-      pointerTarget.current.x = x;
-      pointerTarget.current.y = y;
+    for (let i = 0; i < position.count; i += 1) {
+      const x = position.getX(i);
+      const y = position.getY(i);
+      const normalizedX = (x + 2.3) / 4.6;
+      const foldWave = Math.sin(normalizedX * Math.PI * (reduced ? 6 : 8));
+      const pinch = Math.pow(Math.abs(normalizedX - 0.5) * 2, 1.2);
+      const depth = foldWave * 0.18 - pinch * 0.1;
+      const sidePull = direction * (0.12 + pinch * 0.24);
+      const verticalGather = Math.sin((y + 4.2) * 0.45) * 0.04;
+
+      position.setZ(i, depth + verticalGather);
+      position.setX(i, x + sidePull * (0.4 - Math.abs(y) / 12));
     }
 
-    window.addEventListener("pointermove", onPointerMove);
-    return () => window.removeEventListener("pointermove", onPointerMove);
-  }, [reduced]);
+    position.needsUpdate = true;
+    geometry.computeVertexNormals();
+  }, [geometry, reduced, side]);
 
   useFrame((state) => {
-    if (!cardRef.current || !materialRef.current) return;
-
-    current.current.x = THREE.MathUtils.lerp(current.current.x, pointerTarget.current.x, reduced ? 0.02 : 0.05);
-    current.current.y = THREE.MathUtils.lerp(current.current.y, pointerTarget.current.y, reduced ? 0.02 : 0.05);
-
-    cardRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.38) * 0.18 + 0.08;
-    cardRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.16) * 0.12;
-    cardRef.current.rotation.x = THREE.MathUtils.lerp(
-      cardRef.current.rotation.x,
-      reduced ? 0.1 : -current.current.y * 0.18,
-      0.06
-    );
-    cardRef.current.rotation.y = THREE.MathUtils.lerp(
-      cardRef.current.rotation.y,
-      reduced ? -0.2 : current.current.x * 0.24,
-      0.06
-    );
-
-    materialRef.current.emissiveIntensity = THREE.MathUtils.lerp(
-      materialRef.current.emissiveIntensity,
-      reduced ? 0.08 : 0.12 + Math.abs(current.current.x) * 0.14,
-      0.04
-    );
-
-    cardRef.current.position.x = reduced ? viewport.width * 0.08 : current.current.x * 0.18;
+    if (!meshRef.current) return;
+    const sway = Math.sin(state.clock.elapsedTime * 0.2 + (side === "left" ? 0 : 0.7)) * (reduced ? 0.01 : 0.018);
+    meshRef.current.rotation.z = side === "left" ? -0.02 + sway : 0.02 - sway;
+    meshRef.current.position.x = side === "left" ? -2.24 : 2.24;
   });
 
   return (
-    <Float speed={0.5} rotationIntensity={0.15} floatIntensity={0.25}>
-      <group ref={cardRef} position={[0.55, 0.1, 0]}>
-        <RoundedBox args={[1.62, 2.3, 0.05]} radius={0.06} smoothness={6}>
-          <meshPhysicalMaterial
-            ref={materialRef}
-            color="#efe4cc"
-            roughness={0.55}
-            metalness={0.02}
-            clearcoat={0.5}
-            reflectivity={0.2}
-            emissive="#3b1116"
-            emissiveIntensity={0.08}
-          />
-        </RoundedBox>
-        <mesh position={[0, 0, 0.031]}>
-          <planeGeometry args={[1.42, 2.08]} />
-          <meshBasicMaterial color="#101012" transparent opacity={0.9} />
-        </mesh>
-        <mesh position={[0, 0, 0.032]}>
-          <ringGeometry args={[0.22, 0.4, 4]} />
-          <meshBasicMaterial color="#c9a86a" transparent opacity={0.7} side={THREE.DoubleSide} />
-        </mesh>
-        <mesh position={[-0.5, 0.78, 0.032]}>
-          <planeGeometry args={[0.14, 0.18]} />
-          <meshBasicMaterial color="#e6ddc6" transparent opacity={0.9} />
-        </mesh>
-        <mesh position={[0.5, -0.78, 0.032]} rotation={[0, 0, Math.PI]}>
-          <planeGeometry args={[0.14, 0.18]} />
-          <meshBasicMaterial color="#e6ddc6" transparent opacity={0.9} />
-        </mesh>
-      </group>
-    </Float>
+    <mesh ref={meshRef} geometry={geometry} position={[side === "left" ? -2.24 : 2.24, 0, 0.15]}>
+      <meshStandardMaterial
+        color={side === "left" ? "#58131d" : "#671722"}
+        roughness={0.92}
+        metalness={0.02}
+        emissive="#1f080c"
+        emissiveIntensity={0.16}
+        bumpMap={shadowTexture}
+        bumpScale={0.014}
+      />
+    </mesh>
   );
 }
 
-function DustField({ reduced }) {
-  const pointsRef = useRef(null);
-  const count = reduced ? 60 : 140;
+function Valance({ reduced }) {
+  const topGeometry = useMemo(() => new THREE.PlaneGeometry(9.8, reduced ? 1.1 : 1.35, reduced ? 24 : 42, 24), [reduced]);
 
-  const positions = useMemo(() => {
-    const array = new Float32Array(count * 3);
-    for (let i = 0; i < count; i += 1) {
-      array[i * 3] = (Math.random() - 0.5) * 8;
-      array[i * 3 + 1] = (Math.random() - 0.5) * 5;
-      array[i * 3 + 2] = (Math.random() - 0.5) * 6;
+  useEffect(() => {
+    const position = topGeometry.attributes.position;
+    for (let i = 0; i < position.count; i += 1) {
+      const x = position.getX(i);
+      const y = position.getY(i);
+      const swag = Math.cos((x / 4.9) * Math.PI * 2) * 0.24;
+      position.setZ(i, swag * 0.36 + Math.sin((y + 0.6) * 4) * 0.04);
+      position.setY(i, y - Math.abs(Math.sin((x / 4.9) * Math.PI * 2)) * 0.18);
     }
-    return array;
-  }, [count]);
+    position.needsUpdate = true;
+    topGeometry.computeVertexNormals();
+  }, [topGeometry]);
+
+  return (
+    <mesh geometry={topGeometry} position={[0, 3.3, 0.4]}>
+      <meshStandardMaterial color="#4d0f18" roughness={0.88} metalness={0.03} emissive="#190508" emissiveIntensity={0.12} />
+    </mesh>
+  );
+}
+
+function StageAtmosphere({ reduced }) {
+  const hazeRef = useRef(null);
+  const { viewport } = useThree();
 
   useFrame((state) => {
-    if (!pointsRef.current) return;
-    pointsRef.current.rotation.y = state.clock.elapsedTime * 0.015;
-    pointsRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.12) * 0.08;
+    if (!hazeRef.current) return;
+    hazeRef.current.material.opacity = 0.12 + Math.sin(state.clock.elapsedTime * 0.24) * 0.01;
+    hazeRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.08) * 0.08;
   });
 
   return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
-      </bufferGeometry>
-      <pointsMaterial color="#e6ddc6" size={reduced ? 0.018 : 0.025} transparent opacity={0.22} depthWrite={false} />
-    </points>
+    <>
+      <Plane args={[viewport.width * 1.8, viewport.height * 1.6]} position={[0, 0, -1.4]} ref={hazeRef}>
+        <meshBasicMaterial color="#1a090c" transparent opacity={0.12} />
+      </Plane>
+      {!reduced && (
+        <mesh position={[0, -4.6, -0.2]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[12, 5]} />
+          <meshStandardMaterial color="#120d0e" roughness={0.95} metalness={0.02} />
+        </mesh>
+      )}
+    </>
   );
 }
 
@@ -142,33 +129,23 @@ function SceneContent() {
   return (
     <>
       <color attach="background" args={["#0a0a0a"]} />
-      <fog attach="fog" args={["#0a0a0a", reduced ? 4.2 : 4.8, reduced ? 8.4 : 10]} />
+      <fog attach="fog" args={["#0a0a0a", reduced ? 5.8 : 6.6, reduced ? 11.8 : 13]} />
 
-      <ambientLight intensity={reduced ? 0.42 : 0.36} color="#c9a86a" />
-      <directionalLight position={[2.8, 2.4, 3]} intensity={reduced ? 0.9 : 1.1} color="#f3e6c8" />
-      <spotLight
-        position={[0.8, 2.8, 4]}
-        intensity={reduced ? 18 : 28}
-        angle={0.33}
-        penumbra={0.8}
-        color="#c9a86a"
-      />
-      {!reduced && <pointLight position={[-2, -0.6, 2]} intensity={3} distance={8} color="#4a0f17" />}
+      <ambientLight intensity={0.22} color="#5f232c" />
+      <spotLight position={[-3.6, 2.6, 4.8]} intensity={reduced ? 22 : 34} angle={0.42} penumbra={1} color="#d7b173" />
+      <spotLight position={[3.6, 2.8, 4.8]} intensity={reduced ? 18 : 28} angle={0.38} penumbra={1} color="#b67058" />
+      <directionalLight position={[0, 4.2, 3.5]} intensity={reduced ? 0.32 : 0.42} color="#f1dcc0" />
+      <pointLight position={[0, -1.8, 2.6]} intensity={reduced ? 0.8 : 1.2} distance={8} color="#421117" />
 
-      <FloatingCard reduced={reduced} />
-      <DustField reduced={reduced} />
-
-      {!reduced && (
-        <mesh position={[-1.7, -1.3, -1.7]} rotation={[-0.35, 0.2, 0.25]}>
-          <planeGeometry args={[0.45, 1.1]} />
-          <meshBasicMaterial color="#55161f" transparent opacity={0.18} />
-        </mesh>
-      )}
+      <StageAtmosphere reduced={reduced} />
+      <CurtainHalf side="left" reduced={reduced} />
+      <CurtainHalf side="right" reduced={reduced} />
+      <Valance reduced={reduced} />
 
       <Environment resolution={32}>
         <mesh position={[0, 0, -4]}>
-          <sphereGeometry args={[1, 16, 16]} />
-          <meshBasicMaterial color="#201517" />
+          <sphereGeometry args={[1, 24, 24]} />
+          <meshBasicMaterial color="#14090b" />
         </mesh>
       </Environment>
     </>
