@@ -572,19 +572,23 @@
   }
 
   .curtainShell {
-    width: 100vw;
-    height: 100svh;
+    top: 0;
+    left: 50%;
+    width: min(100vw, calc(100svh * 1.72));
+    height: min(100svh, calc(100vw / 1.72));
+    transform: translateX(-50%);
     top: 0;
   }
 
   .curtainPanelLeft,
   .curtainPanelRight {
-    width: calc(50% + 3px);
+    width: calc(50% + 5px);
   }
 
   .curtainTextureLeft,
   .curtainTextureRight {
     inset: 0;
+    background-size: 200% 100%;
   }
 
   .copy {
@@ -676,7 +680,7 @@
 @media (max-width: 480px) {
   .curtainPanelLeft,
   .curtainPanelRight {
-    width: calc(50% + 4px);
+    width: calc(50% + 6px);
   }
 
   .copy {
