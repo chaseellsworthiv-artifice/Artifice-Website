@@ -91,23 +91,20 @@
     linear-gradient(180deg, rgba(248, 218, 188, 0.04) 0%, rgba(10, 10, 10, 0) 16%, rgba(10, 10, 10, 0.12) 72%, rgba(10, 10, 10, 0.34) 100%);
 }
 
-.curtainDynamicLayer {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
-}
-
 .curtainSlice {
   position: absolute;
+  top: 0;
+  bottom: 0;
   background-image: url("/assets/curtain/final-curtain.png");
   background-repeat: no-repeat;
   background-size: var(--curtain-bg-size);
+  background-position-y: 0;
   will-change: transform, filter;
   transform-origin: center center;
   transform-style: preserve-3d;
   backface-visibility: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, rgba(0, 0, 0, 0.22) 20%, #000 24.5%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
 }
 
 .heroAtmosphere {
@@ -583,11 +580,6 @@
     height: 23.5%;
   }
 
-  .curtainDynamicLayer {
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 16%, rgba(0, 0, 0, 0.2) 20%, #000 23.5%, #000 88%, rgba(0, 0, 0, 0.22) 94%, transparent 100%);
-    mask-image: linear-gradient(180deg, transparent 0%, transparent 16%, rgba(0, 0, 0, 0.2) 20%, #000 23.5%, #000 88%, rgba(0, 0, 0, 0.22) 94%, transparent 100%);
-  }
-
   .curtainShell::after {
     background:
       linear-gradient(90deg, rgba(10, 10, 10, 0.18) 0%, rgba(10, 10, 10, 0) 7%, rgba(10, 10, 10, 0) 93%, rgba(10, 10, 10, 0.18) 100%),
@@ -681,13 +673,10 @@
 }
 
 @media (max-width: 480px) {
-  .curtainDynamicLayer {
+  .curtainSlice {
+    transform-origin: center top;
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 16%, rgba(0, 0, 0, 0.2) 20%, #000 23.5%, #000 88%, rgba(0, 0, 0, 0.22) 94%, transparent 100%);
     mask-image: linear-gradient(180deg, transparent 0%, transparent 16%, rgba(0, 0, 0, 0.2) 20%, #000 23.5%, #000 88%, rgba(0, 0, 0, 0.22) 94%, transparent 100%);
-  }
-
-  .curtainSlice {
-    transform-origin: center center;
   }
 
   .copy {
