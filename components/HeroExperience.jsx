@@ -351,7 +351,10 @@ export default function HeroExperience() {
         <svg className={styles.curtainClipDefs} aria-hidden="true" width="0" height="0" focusable="false">
           <defs>
             <clipPath id="curtain-body-handoff" clipPathUnits="objectBoundingBox">
-              <path d="M 0 0.255 C 0.08 0.275, 0.17 0.168, 0.33 0.14 C 0.42 0.125, 0.465 0.19, 0.5 0.205 C 0.535 0.19, 0.58 0.125, 0.67 0.14 C 0.83 0.168, 0.92 0.275, 1 0.255 L 1 1 L 0 1 Z" />
+              <path d="M 0 0.205 Q 0.08 0.195, 0.16 0.282 Q 0.24 0.33, 0.34 0.225 Q 0.42 0.165, 0.5 0.31 Q 0.58 0.165, 0.66 0.225 Q 0.76 0.33, 0.84 0.282 Q 0.92 0.195, 1 0.205 L 1 1 L 0 1 Z" />
+            </clipPath>
+            <clipPath id="curtain-swells-cap" clipPathUnits="objectBoundingBox">
+              <path d="M 0 0 L 1 0 L 1 0.205 Q 0.92 0.195, 0.84 0.282 Q 0.76 0.33, 0.66 0.225 Q 0.58 0.165, 0.5 0.31 Q 0.42 0.165, 0.34 0.225 Q 0.24 0.33, 0.16 0.282 Q 0.08 0.195, 0 0.205 Z" />
             </clipPath>
             <clipPath id="curtain-left-clip" clipPathUnits="objectBoundingBox">
               <path ref={leftClipPathRef} d="M 0 0 L 0.5 0 L 0.5 0.245 C 0.5 0.305, 0.5 0.395, 0.5 0.52 C 0.5 0.64, 0.5 0.79, 0.5 1 L 0 1 Z" />
@@ -365,6 +368,7 @@ export default function HeroExperience() {
           <HeroScene />
         </div>
         <div ref={curtainShellRef} className={styles.curtainShell} aria-hidden="true">
+          <div className={styles.curtainSwells} style={{ clipPath: "url(#curtain-swells-cap)" }} />
           <div className={styles.curtainBodyMask} style={{ clipPath: "url(#curtain-body-handoff)" }}>
             <div
               className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}
