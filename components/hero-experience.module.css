@@ -51,10 +51,10 @@
 
 .curtainShell {
   position: absolute;
-  top: 0;
+  top: -2svh;
   left: 50%;
-  width: min(100vw, calc(100svh * 1.5));
-  height: min(100svh, calc(100vw / 1.5));
+  width: max(104vw, calc(104svh * 1.5));
+  height: max(104svh, calc(104vw / 1.5));
   transform: translateX(-50%);
   z-index: 4;
   pointer-events: none;
