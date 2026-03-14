@@ -120,6 +120,16 @@
   transition: background-position 180ms linear;
 }
 
+.heroAtmosphere::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #0a0a0a 0%, rgba(10, 10, 10, 0) 8%, rgba(10, 10, 10, 0) 92%, #0a0a0a 100%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 0.08) 82%, #0a0a0a 100%);
+  pointer-events: none;
+}
+
 .scrollVeil {
   position: absolute;
   inset: 0;
