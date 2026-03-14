@@ -18,6 +18,8 @@ export default function HeroExperience() {
   const curtainShellRef = useRef(null);
   const sliceRefs = useRef([]);
   const imageMetricsRef = useRef({ ready: false, width: 0, height: 0 });
+  const shellMetricsRef = useRef({ width: 0, height: 0 });
+  const openTargetRef = useRef(0);
   const sliceCount = 96;
   const sliceItems = useMemo(
     () =>
@@ -69,6 +71,19 @@ export default function HeroExperience() {
           scrub: isReduced ? 0.8 : 1.2,
         },
       });
+
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: "top top",
+        end: isReduced ? "+=92%" : "+=84%",
+        scrub: isReduced ? 1.1 : 1.35,
+        onUpdate: (self) => {
+          openTargetRef.current = self.progress;
+          if (heroRef.current) {
+            heroRef.current.dispatchEvent(new CustomEvent("curtain-open-update"));
+          }
+        },
+      });
     }, heroRef);
 
     return () => {
@@ -93,7 +108,7 @@ export default function HeroExperience() {
     let rafId = 0;
     let resizeRaf = 0;
     let isTouchActive = false;
-    const state = { x: 0, y: 0 };
+    const state = { x: 0, y: 0, open: 0 };
     const target = { x: 0, y: 0 };
     const sliceStates = sliceRefs.current.map(() => ({ x: 0, y: 0, glow: 0 }));
 
@@ -109,6 +124,7 @@ export default function HeroExperience() {
       const offsetX = (rect.width - backgroundWidth) / 2;
       const offsetY = 0;
       const sliceWidth = rect.width / sliceCount;
+      shellMetricsRef.current = { width: rect.width, height: rect.height };
 
       shell.style.backgroundSize = `${backgroundWidth}px ${backgroundHeight}px`;
       shell.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
@@ -137,9 +153,11 @@ export default function HeroExperience() {
     function render() {
       state.x += (target.x - state.x) * (isTouch ? 0.09 : 0.115);
       state.y += (target.y - state.y) * (isTouch ? 0.09 : 0.115);
+      state.open += (openTargetRef.current - state.open) * (isReduced ? 0.16 : 0.14);
 
       hero.style.setProperty("--curtain-glow-x", `${(50 + state.x * 9).toFixed(2)}%`);
       hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 6).toFixed(2)}%`);
+      hero.style.setProperty("--curtain-open-progress", `${state.open.toFixed(4)}`);
 
       const pointerCenter = target.x;
       const pointerDepth = target.y;
@@ -151,20 +169,25 @@ export default function HeroExperience() {
         if (!slice) return;
 
         const center = ((index + 0.5) / sliceCount - 0.5) * 2;
+        const side = center < 0 ? -1 : 1;
+        const halfT = side < 0 ? center + 1 : 1 - center;
+        const openWeight = state.open;
+        const interactionWeight = 1 - openWeight * 0.62;
         const delta = center - hotspotCenter;
         const distance = Math.abs(delta);
         const primaryRadius = isTouch ? 0.1 : isReduced ? 0.072 : 0.038;
         const secondaryRadius = isTouch ? 0.17 : isReduced ? 0.12 : 0.068;
         const primaryInfluence = Math.exp(-Math.pow(distance / primaryRadius, 2));
         const secondaryInfluence = Math.exp(-Math.pow(distance / secondaryRadius, 2));
-        const dragX = state.x * primaryInfluence * (isTouch ? 1.12 : isReduced ? 0.84 : 1.16);
+        const dragX =
+          state.x * interactionWeight * primaryInfluence * (isTouch ? 1.12 : isReduced ? 0.84 : 1.16);
         const depthY =
-          state.y * primaryInfluence * (isTouch ? 0.2 : isReduced ? 0.34 : 0.56) +
-          pointerDepth * secondaryInfluence * (isTouch ? 0.04 : isReduced ? 0.08 : 0.13);
+          state.y * interactionWeight * primaryInfluence * (isTouch ? 0.2 : isReduced ? 0.34 : 0.56) +
+          pointerDepth * interactionWeight * secondaryInfluence * (isTouch ? 0.04 : isReduced ? 0.08 : 0.13);
         const desiredX =
-          dragX + state.x * secondaryInfluence * (isTouch ? 0.05 : isReduced ? 0.04 : 0.07);
+          dragX + state.x * interactionWeight * secondaryInfluence * (isTouch ? 0.05 : isReduced ? 0.04 : 0.07);
         const desiredY = depthY;
-        const desiredGlow = secondaryInfluence * (isTouch ? 0.09 : isReduced ? 0.06 : 0.1);
+        const desiredGlow = interactionWeight * secondaryInfluence * (isTouch ? 0.09 : isReduced ? 0.06 : 0.1);
         const sliceState = sliceStates[index];
 
         sliceState.x += (desiredX - sliceState.x) * (isTouch ? 0.13 : 0.15);
@@ -172,9 +195,15 @@ export default function HeroExperience() {
         sliceState.glow += (desiredGlow - sliceState.glow) * (isTouch ? 0.1 : 0.1);
 
         const hotspotBoost = Math.pow(primaryInfluence, 0.72);
-        const rotate = sliceState.x * (isTouch ? 1.34 : 1.12);
-        const skew = sliceState.x * (isTouch ? 0.16 : 0.14);
-        const scaleX = 1.01 + secondaryInfluence * (isTouch ? 0.017 : 0.016);
+        const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
+        const openingTravel = side * openWeight * shellWidth * (0.19 + halfT * 0.18);
+        const gatheredTravel = side * openWeight * shellWidth * (0.035 + halfT * 0.045);
+        const openOffsetX = openingTravel + gatheredTravel;
+        const gatherScale = 1 - openWeight * (0.08 + (1 - halfT) * 0.12);
+        const openRotate = side * openWeight * (2.5 + halfT * 3.2);
+        const rotate = sliceState.x * (isTouch ? 1.34 : 1.12) + openRotate;
+        const skew = sliceState.x * (isTouch ? 0.16 : 0.14) + side * openWeight * 0.35;
+        const scaleX = (1.01 + secondaryInfluence * (isTouch ? 0.017 : 0.016)) * gatherScale;
         const scaleY = 1 + secondaryInfluence * (isTouch ? 0.006 : 0.011);
         const lift =
           secondaryInfluence * (isTouch ? 3.0 : isReduced ? 3 : 7) +
@@ -189,7 +218,7 @@ export default function HeroExperience() {
         const zIndex = 20 + Math.round(secondaryInfluence * 40 + hotspotBoost * 14);
 
         slice.style.zIndex = String(zIndex);
-        slice.style.transform = `translate3d(${sliceState.x.toFixed(3)}px, ${sliceState.y.toFixed(
+        slice.style.transform = `translate3d(${(sliceState.x + openOffsetX).toFixed(3)}px, ${sliceState.y.toFixed(
           3
         )}px, ${lift.toFixed(3)}px) rotateY(${rotate.toFixed(3)}deg) skewY(${skew.toFixed(3)}deg) scaleX(${scaleX.toFixed(
           4
@@ -199,7 +228,10 @@ export default function HeroExperience() {
         )}) drop-shadow(${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0, 0, 0, ${shadowAlpha}))`;
       });
 
-      const moving = Math.abs(target.x - state.x) > 0.05 || Math.abs(target.y - state.y) > 0.05;
+      const moving =
+        Math.abs(target.x - state.x) > 0.05 ||
+        Math.abs(target.y - state.y) > 0.05 ||
+        Math.abs(openTargetRef.current - state.open) > 0.002;
       if (moving) {
         rafId = window.requestAnimationFrame(render);
       } else {
@@ -252,11 +284,16 @@ export default function HeroExperience() {
       resizeRaf = window.requestAnimationFrame(applySliceLayout);
     }
 
+    function onOpenUpdate() {
+      requestRender();
+    }
+
     hero.addEventListener("pointerdown", onPointerDown, { passive: true });
     hero.addEventListener("pointermove", onPointerMove, { passive: true });
     hero.addEventListener("pointerleave", onPointerLeave, { passive: true });
     hero.addEventListener("pointerup", onPointerUp, { passive: true });
     hero.addEventListener("pointercancel", onPointerUp, { passive: true });
+    hero.addEventListener("curtain-open-update", onOpenUpdate);
     window.addEventListener("resize", onResize, { passive: true });
 
     return () => {
@@ -265,6 +302,7 @@ export default function HeroExperience() {
       hero.removeEventListener("pointerleave", onPointerLeave);
       hero.removeEventListener("pointerup", onPointerUp);
       hero.removeEventListener("pointercancel", onPointerUp);
+      hero.removeEventListener("curtain-open-update", onOpenUpdate);
       window.removeEventListener("resize", onResize);
       if (rafId) window.cancelAnimationFrame(rafId);
       if (resizeRaf) window.cancelAnimationFrame(resizeRaf);
