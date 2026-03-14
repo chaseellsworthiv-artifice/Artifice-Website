@@ -190,14 +190,18 @@ export default function HeroExperience() {
 
         const hotspotBoost = Math.pow(primaryInfluence, 0.72);
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-        const bottomBias = 0.26 + Math.pow(halfT, 0.82) * 0.74;
-        const openingTravel = side * openWeight * bottomBias * shellWidth * (0.16 + halfT * 0.24);
-        const gatheredTravel = side * openWeight * bottomBias * shellWidth * (0.022 + halfT * 0.035);
-        const openOffsetX = openingTravel + gatheredTravel;
-        const gatherScale = 1 - openWeight * bottomBias * (0.06 + (1 - halfT) * 0.08);
-        const openRotate = side * openWeight * bottomBias * (1.8 + halfT * 2.4);
+        const travelerDelay = (1 - halfT) * (isTouch ? 0.1 : isReduced ? 0.12 : 0.14);
+        const travelerProgress = Math.max(0, Math.min(1, (openWeight - travelerDelay) / Math.max(0.0001, 1 - travelerDelay)));
+        const travelerEase = 1 - Math.pow(1 - travelerProgress, isTouch ? 1.45 : 1.7);
+        const edgeGather = Math.pow(1 - halfT, isTouch ? 1.2 : 1.35);
+        const openingTravel = side * travelerEase * shellWidth * (0.055 + halfT * 0.21);
+        const gatheredTravel = side * openWeight * edgeGather * shellWidth * (isTouch ? 0.018 : isReduced ? 0.024 : 0.03);
+        const stackTravel = side * Math.pow(travelerProgress, 1.18) * edgeGather * shellWidth * (isTouch ? 0.008 : isReduced ? 0.011 : 0.014);
+        const openOffsetX = openingTravel + gatheredTravel + stackTravel;
+        const gatherScale = 1 - travelerProgress * (0.03 + edgeGather * (isTouch ? 0.08 : isReduced ? 0.11 : 0.14));
+        const openRotate = side * travelerEase * (0.6 + halfT * 1.55);
         const rotate = sliceState.x * (isTouch ? 1.34 : 1.12) + openRotate;
-        const skew = sliceState.x * (isTouch ? 0.16 : 0.14) + side * openWeight * bottomBias * 0.22;
+        const skew = sliceState.x * (isTouch ? 0.16 : 0.14) + side * travelerEase * (0.07 + edgeGather * 0.12);
         const scaleX = (1.01 + secondaryInfluence * (isTouch ? 0.017 : 0.016)) * gatherScale;
         const scaleY = 1 + secondaryInfluence * (isTouch ? 0.006 : 0.011);
         const lift =
@@ -224,19 +228,19 @@ export default function HeroExperience() {
       });
 
       if (shell) {
-        const bottomProgress = Math.pow(state.open, isTouch ? 0.8 : 0.74);
-        const waistProgress = Math.pow(Math.max(0, (state.open - 0.16) / 0.84), isTouch ? 1.05 : 1.12);
-        const ribProgress = Math.pow(Math.max(0, (state.open - 0.42) / 0.58), isTouch ? 1.45 : 1.6);
-        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.62) / 0.38), isTouch ? 2.0 : 2.25);
-        const topProgress = Math.pow(Math.max(0, (state.open - 0.8) / 0.2), isTouch ? 2.6 : 3.0);
-        const topGap = (isTouch ? 0.012 : isReduced ? 0.01 : 0.009) * topProgress;
-        const shoulderGap = (isTouch ? 0.028 : isReduced ? 0.024 : 0.021) * shoulderProgress;
-        const ribGap = (isTouch ? 0.08 : isReduced ? 0.07 : 0.062) * ribProgress;
-        const waistGap = (isTouch ? 0.18 : isReduced ? 0.16 : 0.145) * waistProgress;
-        const bottomGap = (isTouch ? 0.38 : isReduced ? 0.35 : 0.32) * bottomProgress;
+        const topProgress = Math.pow(state.open, isTouch ? 0.82 : 0.74);
+        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.08) / 0.92), isTouch ? 0.95 : 0.9);
+        const ribProgress = Math.pow(Math.max(0, (state.open - 0.2) / 0.8), isTouch ? 1.08 : 1.15);
+        const waistProgress = Math.pow(Math.max(0, (state.open - 0.34) / 0.66), isTouch ? 1.22 : 1.35);
+        const bottomProgress = Math.pow(Math.max(0, (state.open - 0.46) / 0.54), isTouch ? 1.4 : 1.6);
+        const topGap = (isTouch ? 0.028 : isReduced ? 0.024 : 0.021) * topProgress;
+        const shoulderGap = (isTouch ? 0.065 : isReduced ? 0.058 : 0.052) * shoulderProgress;
+        const ribGap = (isTouch ? 0.12 : isReduced ? 0.108 : 0.096) * ribProgress;
+        const waistGap = (isTouch ? 0.155 : isReduced ? 0.142 : 0.13) * waistProgress;
+        const bottomGap = (isTouch ? 0.11 : isReduced ? 0.1 : 0.09) * bottomProgress;
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.48) / 0.52), isTouch ? 1.3 : 1.45);
-        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.022 : isReduced ? 0.028 : 0.034);
+        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.3) / 0.7), isTouch ? 1.05 : 1.1);
+        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.006 : isReduced ? 0.008 : 0.01);
         shell.style.setProperty("--curtain-left-shift", `${(-groupShift).toFixed(3)}px`);
         shell.style.setProperty("--curtain-right-shift", `${groupShift.toFixed(3)}px`);
 
@@ -244,8 +248,8 @@ export default function HeroExperience() {
           "M 0 0",
           "L 0.5 0",
           "L 0.5 0.245",
-          `C ${0.5 - topGap} 0.305, ${0.5 - shoulderGap} 0.395, ${0.5 - ribGap} 0.52`,
-          `C ${0.5 - (ribGap * 1.05)} 0.64, ${0.5 - waistGap} 0.79, ${0.5 - bottomGap} 1`,
+          `C ${0.5 - topGap} 0.305, ${0.5 - shoulderGap} 0.39, ${0.5 - ribGap} 0.5`,
+          `C ${0.5 - (ribGap * 0.92)} 0.63, ${0.5 - waistGap} 0.78, ${0.5 - bottomGap} 1`,
           "L 0 1",
           "Z",
         ].join(" ");
@@ -255,8 +259,8 @@ export default function HeroExperience() {
           "L 1 0",
           "L 1 1",
           `L ${0.5 + bottomGap} 1`,
-          `C ${0.5 + waistGap} 0.79, ${0.5 + (ribGap * 1.05)} 0.64, ${0.5 + ribGap} 0.52`,
-          `C ${0.5 + shoulderGap} 0.395, ${0.5 + topGap} 0.305, 0.5 0.245`,
+          `C ${0.5 + waistGap} 0.78, ${0.5 + (ribGap * 0.92)} 0.63, ${0.5 + ribGap} 0.5`,
+          `C ${0.5 + shoulderGap} 0.39, ${0.5 + topGap} 0.305, 0.5 0.245`,
           "Z",
         ].join(" ");
 
