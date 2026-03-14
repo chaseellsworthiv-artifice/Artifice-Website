@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Plane } from "@react-three/drei";
-import { useMemo, useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as THREE from "three";
 
 import styles from "./hero-experience.module.css";
@@ -71,45 +71,30 @@ function StageAtmosphere({ reduced }) {
 
 function SceneContent() {
   const reduced = useReducedMode();
-  const leftLight = useRef(null);
-  const rightLight = useRef(null);
+  const topLight = useRef(null);
 
   useFrame((state) => {
-    if (reduced) return;
-    if (leftLight.current) {
-      leftLight.current.position.x = THREE.MathUtils.lerp(leftLight.current.position.x, -3.8 + state.pointer.x * 0.45, 0.05);
-      leftLight.current.position.y = THREE.MathUtils.lerp(leftLight.current.position.y, 2.8 + state.pointer.y * 0.22, 0.05);
-    }
-    if (rightLight.current) {
-      rightLight.current.position.x = THREE.MathUtils.lerp(rightLight.current.position.x, 3.8 + state.pointer.x * 0.35, 0.05);
-      rightLight.current.position.y = THREE.MathUtils.lerp(rightLight.current.position.y, 2.9 + state.pointer.y * 0.18, 0.05);
-    }
+    if (!topLight.current || reduced) return;
+    topLight.current.position.x = THREE.MathUtils.lerp(topLight.current.position.x, state.pointer.x * 0.35, 0.04);
+    topLight.current.position.y = THREE.MathUtils.lerp(topLight.current.position.y, 3.4 + state.pointer.y * 0.18, 0.04);
   });
 
   return (
     <>
       <color attach="background" args={["#0a0a0a"]} />
-      <fog attach="fog" args={["#0a0a0a", reduced ? 5.6 : 6.4, reduced ? 11.2 : 12.6]} />
+      <fog attach="fog" args={["#090708", reduced ? 5.6 : 6.8, reduced ? 11.4 : 13.4]} />
 
-      <ambientLight intensity={0.16} color="#4f151d" />
+      <ambientLight intensity={0.12} color="#381116" />
       <spotLight
-        ref={leftLight}
-        position={[-3.9, 2.9, 5.1]}
-        intensity={reduced ? 12 : 18}
-        angle={0.42}
-        penumbra={1}
-        color="#d9b177"
-      />
-      <spotLight
-        ref={rightLight}
-        position={[3.85, 3, 5.1]}
+        ref={topLight}
+        position={[0, 3.4, 4.8]}
         intensity={reduced ? 10 : 14}
-        angle={0.4}
+        angle={0.52}
         penumbra={1}
-        color="#b45e4a"
+        color="#d4ab71"
       />
-      <directionalLight position={[0, 4.6, 4]} intensity={reduced ? 0.18 : 0.24} color="#f4debd" />
-      <pointLight position={[0, -1.7, 2.4]} intensity={reduced ? 0.35 : 0.55} distance={8} color="#391015" />
+      <directionalLight position={[0, 4.6, 4]} intensity={reduced ? 0.12 : 0.16} color="#f0dcc0" />
+      <pointLight position={[0, -1.9, 2.2]} intensity={reduced ? 0.22 : 0.35} distance={8} color="#2b0c11" />
 
       <StageAtmosphere reduced={reduced} />
       <Valance reduced={reduced} />
