@@ -59,8 +59,7 @@
   overflow: hidden;
   perspective: 1600px;
   transform-style: preserve-3d;
-  background-image: url("/assets/curtain/final-curtain.png");
-  background-repeat: no-repeat;
+  background: transparent;
 }
 
 .curtainShell::after {
@@ -80,6 +79,8 @@
   bottom: 0;
   background-image: url("/assets/curtain/final-curtain.png");
   background-repeat: no-repeat;
+  background-size: var(--curtain-bg-size);
+  background-position-y: 0;
   will-change: transform, filter;
   transform-origin: center center;
   transform-style: preserve-3d;

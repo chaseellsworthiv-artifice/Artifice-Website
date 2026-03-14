@@ -126,8 +126,8 @@ export default function HeroExperience() {
       const sliceWidth = rect.width / sliceCount;
       shellMetricsRef.current = { width: rect.width, height: rect.height };
 
-      shell.style.backgroundSize = `${backgroundWidth}px ${backgroundHeight}px`;
-      shell.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
+      shell.style.setProperty("--curtain-bg-size", `${backgroundWidth}px ${backgroundHeight}px`);
+      shell.style.setProperty("--curtain-bg-position", `${offsetX}px ${offsetY}px`);
 
       sliceRefs.current.forEach((slice, index) => {
         if (!slice) return;
@@ -196,13 +196,14 @@ export default function HeroExperience() {
 
         const hotspotBoost = Math.pow(primaryInfluence, 0.72);
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-        const openingTravel = side * openWeight * shellWidth * (0.19 + halfT * 0.18);
-        const gatheredTravel = side * openWeight * shellWidth * (0.035 + halfT * 0.045);
+        const bottomBias = 0.26 + Math.pow(halfT, 0.82) * 0.74;
+        const openingTravel = side * openWeight * bottomBias * shellWidth * (0.16 + halfT * 0.24);
+        const gatheredTravel = side * openWeight * bottomBias * shellWidth * (0.022 + halfT * 0.035);
         const openOffsetX = openingTravel + gatheredTravel;
-        const gatherScale = 1 - openWeight * (0.08 + (1 - halfT) * 0.12);
-        const openRotate = side * openWeight * (2.5 + halfT * 3.2);
+        const gatherScale = 1 - openWeight * bottomBias * (0.06 + (1 - halfT) * 0.08);
+        const openRotate = side * openWeight * bottomBias * (1.8 + halfT * 2.4);
         const rotate = sliceState.x * (isTouch ? 1.34 : 1.12) + openRotate;
-        const skew = sliceState.x * (isTouch ? 0.16 : 0.14) + side * openWeight * 0.35;
+        const skew = sliceState.x * (isTouch ? 0.16 : 0.14) + side * openWeight * bottomBias * 0.22;
         const scaleX = (1.01 + secondaryInfluence * (isTouch ? 0.017 : 0.016)) * gatherScale;
         const scaleY = 1 + secondaryInfluence * (isTouch ? 0.006 : 0.011);
         const lift =
