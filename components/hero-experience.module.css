@@ -9,11 +9,12 @@
 
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 470vh;
   overflow: clip;
   --curtain-glow-x: 50%;
   --curtain-glow-y: 18%;
   --curtain-rise-y: 0px;
+  --hero-copy-offset: 380vh;
 }
 
 .sceneShell {
@@ -187,7 +188,7 @@
   z-index: 6;
   width: min(100% - 2.5rem, 1180px);
   margin: 0 auto;
-  padding-top: 12vh;
+  padding-top: var(--hero-copy-offset);
   opacity: 1;
   pointer-events: auto;
 }
@@ -530,7 +531,8 @@
 
 @media (max-width: 900px) {
   .hero {
-    min-height: 100vh;
+    min-height: 500svh;
+    --hero-copy-offset: 400svh;
   }
 
   .curtainShell {
@@ -591,7 +593,7 @@
   }
 
   .hero {
-    min-height: 100svh;
+    min-height: 500svh;
   }
 
   .sceneShell {
@@ -628,7 +630,7 @@
   }
 
   .copy {
-    padding-top: 12vh;
+    padding-top: var(--hero-copy-offset);
   }
 
   .lead {
@@ -720,7 +722,7 @@
 
   .copy {
     width: calc(100% - 1rem);
-    padding-top: 13vh;
+    padding-top: var(--hero-copy-offset);
   }
 
   .copy h1 {

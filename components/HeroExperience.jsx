@@ -65,11 +65,19 @@ export default function HeroExperience() {
     const context = gsap.context(() => {
       const curtainScrollDistance = isReduced ? "+=200%" : "+=180%";
 
-      gsap.fromTo(
-        introRef.current,
-        { autoAlpha: 0, y: 28 },
-        { autoAlpha: 1, y: 0, duration: 1.6, ease: "power3.out", delay: 0.45 }
-      );
+      gsap.set(introRef.current, { autoAlpha: 0, y: 28 });
+
+      gsap.to(introRef.current, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1.4,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: introRef.current,
+          start: "top 82%",
+          toggleActions: "play none none reverse",
+        },
+      });
 
       gsap.to(veilRef.current, {
         opacity: isReduced ? 0.78 : 0.92,
