@@ -215,7 +215,7 @@
   max-width: 10.6ch;
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(3rem, 7.2vw, 6rem);
-  line-height: 0.98;
+  line-height: 1.04;
   color: var(--aged-paper);
 }
 
