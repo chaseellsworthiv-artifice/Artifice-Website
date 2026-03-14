@@ -1,0 +1,45 @@
+:root {
+  --ink-black: #0a0a0a;
+  --shadow-charcoal: #1b1b1b;
+  --mahogany: #2e1f1f;
+  --oxblood: #4a0f17;
+  --antique-gold: #c9a86a;
+  --aged-paper: #e6ddc6;
+  --muted-paper: rgba(230, 221, 198, 0.74);
+  --line: rgba(201, 168, 106, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  font-family: "Manrope", sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(74, 15, 23, 0.22), transparent 24%),
+    radial-gradient(circle at 80% 0%, rgba(201, 168, 106, 0.06), transparent 28%),
+    linear-gradient(180deg, #060607 0%, var(--ink-black) 100%);
+  color: var(--aged-paper);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.1;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.18) 0.45px, transparent 0.45px);
+  background-size: 3px 3px;
+}
+
+a {
+  color: inherit;
+}
