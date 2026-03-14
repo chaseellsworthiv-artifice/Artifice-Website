@@ -140,7 +140,7 @@ export default function HeroExperience() {
     };
 
     function render() {
-      state.open += (openTargetRef.current - state.open) * (isReduced ? 0.16 : 0.14);
+      state.open = openTargetRef.current;
 
       hero.style.setProperty("--curtain-glow-x", "50%");
       hero.style.setProperty("--curtain-glow-y", "18%");
@@ -197,19 +197,19 @@ export default function HeroExperience() {
       });
 
       if (shell) {
-        const bottomProgress = Math.pow(state.open, isTouch ? 0.8 : 0.74);
-        const waistProgress = Math.pow(Math.max(0, (state.open - 0.16) / 0.84), isTouch ? 1.05 : 1.12);
-        const ribProgress = Math.pow(Math.max(0, (state.open - 0.42) / 0.58), isTouch ? 1.45 : 1.6);
-        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.62) / 0.38), isTouch ? 2.0 : 2.25);
-        const topProgress = Math.pow(Math.max(0, (state.open - 0.8) / 0.2), isTouch ? 2.6 : 3.0);
-        const topGap = (isTouch ? 0.012 : isReduced ? 0.01 : 0.009) * topProgress;
-        const shoulderGap = (isTouch ? 0.028 : isReduced ? 0.024 : 0.021) * shoulderProgress;
-        const ribGap = (isTouch ? 0.08 : isReduced ? 0.07 : 0.062) * ribProgress;
-        const waistGap = (isTouch ? 0.18 : isReduced ? 0.16 : 0.145) * waistProgress;
-        const bottomGap = (isTouch ? 0.38 : isReduced ? 0.35 : 0.32) * bottomProgress;
+        const bottomProgress = Math.pow(state.open, isTouch ? 0.82 : 0.76);
+        const waistProgress = Math.pow(Math.max(0, (state.open - 0.24) / 0.76), isTouch ? 1.18 : 1.28);
+        const ribProgress = Math.pow(Math.max(0, (state.open - 0.5) / 0.5), isTouch ? 1.75 : 1.95);
+        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.72) / 0.28), isTouch ? 2.4 : 2.8);
+        const topProgress = Math.pow(Math.max(0, (state.open - 0.88) / 0.12), isTouch ? 3.2 : 3.8);
+        const topGap = (isTouch ? 0.004 : isReduced ? 0.0035 : 0.003) * topProgress;
+        const shoulderGap = (isTouch ? 0.014 : isReduced ? 0.012 : 0.01) * shoulderProgress;
+        const ribGap = (isTouch ? 0.052 : isReduced ? 0.046 : 0.04) * ribProgress;
+        const waistGap = (isTouch ? 0.16 : isReduced ? 0.145 : 0.13) * waistProgress;
+        const bottomGap = (isTouch ? 0.46 : isReduced ? 0.42 : 0.38) * bottomProgress;
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.48) / 0.52), isTouch ? 1.3 : 1.45);
-        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.022 : isReduced ? 0.028 : 0.034);
+        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.58) / 0.42), isTouch ? 1.5 : 1.7);
+        const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.012 : isReduced ? 0.016 : 0.02);
         shell.style.setProperty("--curtain-left-shift", `${(-groupShift).toFixed(3)}px`);
         shell.style.setProperty("--curtain-right-shift", `${groupShift.toFixed(3)}px`);
 
@@ -237,12 +237,7 @@ export default function HeroExperience() {
         rightClipPathRef.current?.setAttribute("d", rightPath);
       }
 
-      const moving = Math.abs(openTargetRef.current - state.open) > 0.002;
-      if (moving) {
-        rafId = window.requestAnimationFrame(render);
-      } else {
-        rafId = 0;
-      }
+      rafId = 0;
     }
 
     function requestRender() {
