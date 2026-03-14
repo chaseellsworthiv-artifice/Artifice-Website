@@ -8,6 +8,49 @@ import styles from "./morph-reveal-text.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const lineProfiles = [
+  {
+    x1: "-18%",
+    y1: "48%",
+    x2: "-4%",
+    y2: "30%",
+    x3: "10%",
+    y3: "72%",
+    x4: "22%",
+    y4: "52%",
+  },
+  {
+    x1: "-20%",
+    y1: "44%",
+    x2: "-2%",
+    y2: "66%",
+    x3: "12%",
+    y3: "34%",
+    x4: "24%",
+    y4: "58%",
+  },
+  {
+    x1: "-16%",
+    y1: "54%",
+    x2: "0%",
+    y2: "28%",
+    x3: "14%",
+    y3: "68%",
+    x4: "26%",
+    y4: "46%",
+  },
+  {
+    x1: "-18%",
+    y1: "42%",
+    x2: "2%",
+    y2: "70%",
+    x3: "14%",
+    y3: "32%",
+    x4: "28%",
+    y4: "56%",
+  },
+];
+
 export default function MorphRevealText({
   as: Tag = "h1",
   lines,
@@ -17,8 +60,7 @@ export default function MorphRevealText({
   start = "top 76%",
 }) {
   const rootRef = useRef(null);
-  const baseRefs = useRef([]);
-  const washRefs = useRef([]);
+  const lineRefs = useRef([]);
 
   useEffect(() => {
     if (!rootRef.current || !lines?.length) return undefined;
@@ -26,50 +68,22 @@ export default function MorphRevealText({
     const trigger = triggerRef?.current || rootRef.current;
 
     const context = gsap.context(() => {
+      gsap.set(lineRefs.current, { "--reveal-front": "-42%" });
+
       const timeline = gsap.timeline({ paused: true });
 
-      baseRefs.current.forEach((line, index) => {
-        const baseDuration = 1.18 + index * 0.06;
-        const washDuration = 1.08 + index * 0.08;
-        const lineOffset = index * 0.18;
-        const washRef = washRefs.current[index];
-
+      lineRefs.current.forEach((lineMask, index) => {
         timeline.fromTo(
-          line,
+          lineMask,
           {
-            x: -10,
-            y: 6,
-            clipPath: "inset(0 100% 0 0)",
-            filter: "blur(2px)",
+            "--reveal-front": "-42%",
           },
           {
-            x: 0,
-            y: 0,
-            clipPath: "inset(0 0% 0 0)",
-            filter: "blur(0px)",
-            duration: baseDuration,
+            "--reveal-front": "124%",
+            duration: 1.58 + index * 0.06,
             ease: "power2.out",
           },
-          lineOffset
-        );
-
-        timeline.fromTo(
-          washRef,
-          {
-            autoAlpha: 0.94,
-            clipPath: "inset(0 72% 0 -8%)",
-            x: -6,
-            filter: "blur(8px)",
-          },
-          {
-            autoAlpha: 0,
-            clipPath: "inset(0 -8% 0 72%)",
-            x: 8,
-            filter: "blur(4px)",
-            duration: washDuration,
-            ease: "power2.out",
-          },
-          lineOffset + 0.02
+          index * 0.16
         );
       });
 
@@ -88,27 +102,37 @@ export default function MorphRevealText({
 
   return (
     <Tag ref={rootRef} className={rootClassName}>
-      {lines.map((line, index) => (
-        <span key={`${line}-${index}`} className={styles.lineMask}>
+      {lines.map((line, index) => {
+        const profile = lineProfiles[index % lineProfiles.length];
+
+        return (
           <span
+            key={`${line}-${index}`}
             ref={(node) => {
-              washRefs.current[index] = node;
+              lineRefs.current[index] = node;
             }}
-            className={styles.lineWash}
-            aria-hidden="true"
-          >
-            {line}
-          </span>
-          <span
-            ref={(node) => {
-              baseRefs.current[index] = node;
+            className={styles.lineMask}
+            style={{
+              "--reveal-x-1": profile.x1,
+              "--reveal-y-1": profile.y1,
+              "--reveal-x-2": profile.x2,
+              "--reveal-y-2": profile.y2,
+              "--reveal-x-3": profile.x3,
+              "--reveal-y-3": profile.y3,
+              "--reveal-x-4": profile.x4,
+              "--reveal-y-4": profile.y4,
             }}
-            className={lineClassName ? `${styles.lineBase} ${lineClassName}` : styles.lineBase}
           >
-            {line}
+            <span
+              className={lineClassName ? `${styles.lineWash} ${lineClassName}` : styles.lineWash}
+              aria-hidden="true"
+            >
+              {line}
+            </span>
+            <span className={lineClassName ? `${styles.lineBase} ${lineClassName}` : styles.lineBase}>{line}</span>
           </span>
-        </span>
-      ))}
+        );
+      })}
     </Tag>
   );
 }
