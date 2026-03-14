@@ -153,39 +153,39 @@ export default function HeroExperience() {
         const center = ((index + 0.5) / sliceCount - 0.5) * 2;
         const delta = center - hotspotCenter;
         const distance = Math.abs(delta);
-        const primaryRadius = isTouch ? 0.078 : isReduced ? 0.072 : 0.038;
-        const secondaryRadius = isTouch ? 0.128 : isReduced ? 0.12 : 0.068;
+        const primaryRadius = isTouch ? 0.09 : isReduced ? 0.072 : 0.038;
+        const secondaryRadius = isTouch ? 0.15 : isReduced ? 0.12 : 0.068;
         const primaryInfluence = Math.exp(-Math.pow(distance / primaryRadius, 2));
         const secondaryInfluence = Math.exp(-Math.pow(distance / secondaryRadius, 2));
-        const dragX = state.x * primaryInfluence * (isTouch ? 0.66 : isReduced ? 0.84 : 1.16);
+        const dragX = state.x * primaryInfluence * (isTouch ? 0.95 : isReduced ? 0.84 : 1.16);
         const depthY =
-          state.y * primaryInfluence * (isTouch ? 0.12 : isReduced ? 0.34 : 0.56) +
-          pointerDepth * secondaryInfluence * (isTouch ? 0.02 : isReduced ? 0.08 : 0.13);
+          state.y * primaryInfluence * (isTouch ? 0.16 : isReduced ? 0.34 : 0.56) +
+          pointerDepth * secondaryInfluence * (isTouch ? 0.03 : isReduced ? 0.08 : 0.13);
         const desiredX =
-          dragX + state.x * secondaryInfluence * (isTouch ? 0.02 : isReduced ? 0.04 : 0.07);
+          dragX + state.x * secondaryInfluence * (isTouch ? 0.04 : isReduced ? 0.04 : 0.07);
         const desiredY = depthY;
-        const desiredGlow = secondaryInfluence * (isTouch ? 0.045 : isReduced ? 0.06 : 0.1);
+        const desiredGlow = secondaryInfluence * (isTouch ? 0.07 : isReduced ? 0.06 : 0.1);
         const sliceState = sliceStates[index];
 
-        sliceState.x += (desiredX - sliceState.x) * (isTouch ? 0.1 : 0.15);
-        sliceState.y += (desiredY - sliceState.y) * (isTouch ? 0.095 : 0.14);
-        sliceState.glow += (desiredGlow - sliceState.glow) * (isTouch ? 0.07 : 0.1);
+        sliceState.x += (desiredX - sliceState.x) * (isTouch ? 0.12 : 0.15);
+        sliceState.y += (desiredY - sliceState.y) * (isTouch ? 0.11 : 0.14);
+        sliceState.glow += (desiredGlow - sliceState.glow) * (isTouch ? 0.09 : 0.1);
 
         const hotspotBoost = Math.pow(primaryInfluence, 0.72);
-        const rotate = sliceState.x * (isTouch ? 0.92 : 1.12);
-        const skew = sliceState.x * (isTouch ? 0.11 : 0.14);
-        const scaleX = 1.006 + secondaryInfluence * (isTouch ? 0.009 : 0.016);
-        const scaleY = 1 + secondaryInfluence * (isTouch ? 0.003 : 0.011);
+        const rotate = sliceState.x * (isTouch ? 1.18 : 1.12);
+        const skew = sliceState.x * (isTouch ? 0.14 : 0.14);
+        const scaleX = 1.008 + secondaryInfluence * (isTouch ? 0.014 : 0.016);
+        const scaleY = 1 + secondaryInfluence * (isTouch ? 0.005 : 0.011);
         const lift =
-          secondaryInfluence * (isTouch ? 1.4 : isReduced ? 3 : 7) +
-          hotspotBoost * (isTouch ? 0.55 : isReduced ? 1.4 : 2.8);
-        const brightness = 1 + sliceState.glow * (isTouch ? 0.8 : 1.08) + hotspotBoost * 0.035;
-        const contrast = 1 + sliceState.glow * (isTouch ? 0.3 : 0.42) + hotspotBoost * 0.04;
+          secondaryInfluence * (isTouch ? 2.3 : isReduced ? 3 : 7) +
+          hotspotBoost * (isTouch ? 1.0 : isReduced ? 1.4 : 2.8);
+        const brightness = 1 + sliceState.glow * (isTouch ? 1.0 : 1.08) + hotspotBoost * 0.04;
+        const contrast = 1 + sliceState.glow * (isTouch ? 0.38 : 0.42) + hotspotBoost * 0.045;
         const saturate = 1 + sliceState.glow * 0.14;
         const shadowX = (-sliceState.x * 0.42).toFixed(3);
-        const shadowY = (0.7 + secondaryInfluence * (isTouch ? 1.2 : 4) + hotspotBoost * 1.0).toFixed(3);
-        const shadowBlur = (2 + secondaryInfluence * (isTouch ? 4.8 : 9) + hotspotBoost * 3).toFixed(3);
-        const shadowAlpha = (0.055 + secondaryInfluence * (isTouch ? 0.06 : 0.12) + hotspotBoost * 0.04).toFixed(3);
+        const shadowY = (0.9 + secondaryInfluence * (isTouch ? 2.1 : 4) + hotspotBoost * 1.3).toFixed(3);
+        const shadowBlur = (2.4 + secondaryInfluence * (isTouch ? 6.2 : 9) + hotspotBoost * 3.4).toFixed(3);
+        const shadowAlpha = (0.065 + secondaryInfluence * (isTouch ? 0.08 : 0.12) + hotspotBoost * 0.05).toFixed(3);
         const zIndex = 20 + Math.round(secondaryInfluence * 40 + hotspotBoost * 14);
 
         slice.style.zIndex = String(zIndex);
