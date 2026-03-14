@@ -72,7 +72,7 @@ export default function HeroExperience() {
 
       const copyReveal = gsap.timeline({
         scrollTrigger: {
-          trigger: introRef.current,
+          trigger: wordmarkRef.current,
           start: "top 76%",
           once: true,
         },
@@ -509,7 +509,6 @@ export default function HeroExperience() {
             lines={["A darker room.", "Familiar objects.", "Impossible outcomes."]}
             className={styles.copyTitle}
             lineClassName={styles.copyTitleLine}
-            triggerRef={introRef}
             start="top 76%"
           />
           <div ref={copyBodyRef} className={styles.copyBody}>
