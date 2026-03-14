@@ -9,7 +9,7 @@
 
 .hero {
   position: relative;
-  min-height: 140vh;
+  min-height: 100vh;
   overflow: clip;
 }
 
@@ -73,12 +73,12 @@
 
 .curtainTextureLeft {
   background-position: left center;
-  transform: translateX(2.4%);
+  transform: translateX(0.55%);
 }
 
 .curtainTextureRight {
   background-position: right center;
-  transform: translateX(-2.4%);
+  transform: translateX(-0.55%);
 }
 
 .curtainPanelLeft::after,
@@ -112,7 +112,7 @@
   z-index: 3;
   width: min(100% - 2.5rem, 1180px);
   margin: 0 auto;
-  padding-top: 18vh;
+  padding-top: 12vh;
   opacity: 0;
   pointer-events: none;
 }
@@ -179,7 +179,7 @@
   position: relative;
   z-index: 4;
   width: min(100% - 2.5rem, 1180px);
-  margin: -12vh auto 0;
+  margin: 0 auto 0;
   padding-bottom: 6rem;
 }
 
@@ -455,7 +455,7 @@
 
 @media (max-width: 900px) {
   .hero {
-    min-height: 125vh;
+    min-height: 100vh;
   }
 
   .copy {
@@ -469,7 +469,7 @@
 
   .sections {
     width: min(100% - 1.25rem, 1180px);
-    margin-top: -8vh;
+    margin-top: 0;
   }
 
   .splitSection,
@@ -526,15 +526,15 @@
   }
 
   .curtainTextureLeft {
-    transform: translateX(2.2%);
+    transform: translateX(0.45%);
   }
 
   .curtainTextureRight {
-    transform: translateX(-2.2%);
+    transform: translateX(-0.45%);
   }
 
   .copy {
-    padding-top: 12vh;
+    padding-top: 10vh;
   }
 
   .lead {
@@ -648,6 +648,6 @@
   }
 
   .sections {
-    margin-top: -2vh;
+    margin-top: 0;
   }
 }
