@@ -6,144 +6,32 @@
   position: relative;
   display: block;
   padding: 0.08em 0.48em 0.24em 0;
-  overflow: hidden;
-  --reveal-fill: -36%;
-  --front-a: -42%;
-  --front-b: -36%;
-  --front-c: -34%;
-  --front-d: -30%;
-  --reveal-y-a: 48%;
-  --reveal-y-b: 32%;
-  --reveal-y-c: 70%;
-  --reveal-y-d: 52%;
 }
 
-.lineBase,
-.lineWash {
+.lineMeasure {
   display: block;
   padding-right: 0.34em;
-  text-rendering: optimizeLegibility;
-  transform-origin: left center;
-  will-change: mask-image, -webkit-mask-image;
-}
-
-.lineBase {
-  position: relative;
-  color: inherit;
-  -webkit-mask-image:
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) calc(var(--reveal-fill) - 10%),
-      rgba(0, 0, 0, 0.92) calc(var(--reveal-fill) - 2%),
-      rgba(0, 0, 0, 0.68) calc(var(--reveal-fill) + 4%),
-      rgba(0, 0, 0, 0.14) calc(var(--reveal-fill) + 9%),
-      rgba(0, 0, 0, 0) calc(var(--reveal-fill) + 16%)
-    ),
-    radial-gradient(
-      38% 170% at var(--front-a) var(--reveal-y-a),
-      rgba(0, 0, 0, 1) 0 24%,
-      rgba(0, 0, 0, 0) 56%
-    ),
-    radial-gradient(
-      30% 145% at var(--front-b) var(--reveal-y-b),
-      rgba(0, 0, 0, 0.98) 0 20%,
-      rgba(0, 0, 0, 0) 50%
-    ),
-    radial-gradient(
-      32% 152% at var(--front-c) var(--reveal-y-c),
-      rgba(0, 0, 0, 0.97) 0 20%,
-      rgba(0, 0, 0, 0) 50%
-    ),
-    radial-gradient(
-      24% 138% at var(--front-d) var(--reveal-y-d),
-      rgba(0, 0, 0, 0.95) 0 14%,
-      rgba(0, 0, 0, 0) 38%
-    );
-  mask-image:
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) calc(var(--reveal-fill) - 10%),
-      rgba(0, 0, 0, 0.92) calc(var(--reveal-fill) - 2%),
-      rgba(0, 0, 0, 0.68) calc(var(--reveal-fill) + 4%),
-      rgba(0, 0, 0, 0.14) calc(var(--reveal-fill) + 9%),
-      rgba(0, 0, 0, 0) calc(var(--reveal-fill) + 16%)
-    ),
-    radial-gradient(
-      38% 170% at var(--front-a) var(--reveal-y-a),
-      rgba(0, 0, 0, 1) 0 24%,
-      rgba(0, 0, 0, 0) 56%
-    ),
-    radial-gradient(
-      30% 145% at var(--front-b) var(--reveal-y-b),
-      rgba(0, 0, 0, 0.98) 0 20%,
-      rgba(0, 0, 0, 0) 50%
-    ),
-    radial-gradient(
-      32% 152% at var(--front-c) var(--reveal-y-c),
-      rgba(0, 0, 0, 0.97) 0 20%,
-      rgba(0, 0, 0, 0) 50%
-    ),
-    radial-gradient(
-      24% 138% at var(--front-d) var(--reveal-y-d),
-      rgba(0, 0, 0, 0.95) 0 14%,
-      rgba(0, 0, 0, 0) 38%
-    );
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-}
-
-.lineWash {
-  position: absolute;
-  inset: 0;
-  color: rgba(255, 248, 240, 0.98);
-  opacity: 0.94;
+  color: transparent;
+  user-select: none;
   pointer-events: none;
-  mix-blend-mode: screen;
-  filter: blur(7px) brightness(1.06);
-  -webkit-mask-image:
-    radial-gradient(
-      30% 154% at var(--front-a) var(--reveal-y-a),
-      rgba(0, 0, 0, 1) 0 18%,
-      rgba(0, 0, 0, 0) 44%
-    ),
-    radial-gradient(
-      24% 136% at var(--front-b) var(--reveal-y-b),
-      rgba(0, 0, 0, 0.98) 0 15%,
-      rgba(0, 0, 0, 0) 38%
-    ),
-    radial-gradient(
-      26% 142% at var(--front-c) var(--reveal-y-c),
-      rgba(0, 0, 0, 0.96) 0 15%,
-      rgba(0, 0, 0, 0) 38%
-    ),
-    radial-gradient(
-      18% 130% at var(--front-d) var(--reveal-y-d),
-      rgba(0, 0, 0, 0.92) 0 11%,
-      rgba(0, 0, 0, 0) 30%
-    );
-  mask-image:
-    radial-gradient(
-      30% 154% at var(--front-a) var(--reveal-y-a),
-      rgba(0, 0, 0, 1) 0 18%,
-      rgba(0, 0, 0, 0) 44%
-    ),
-    radial-gradient(
-      24% 136% at var(--front-b) var(--reveal-y-b),
-      rgba(0, 0, 0, 0.98) 0 15%,
-      rgba(0, 0, 0, 0) 38%
-    ),
-    radial-gradient(
-      26% 142% at var(--front-c) var(--reveal-y-c),
-      rgba(0, 0, 0, 0.96) 0 15%,
-      rgba(0, 0, 0, 0) 38%
-    ),
-    radial-gradient(
-      18% 130% at var(--front-d) var(--reveal-y-d),
-      rgba(0, 0, 0, 0.92) 0 11%,
-      rgba(0, 0, 0, 0) 30%
-    );
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+}
+
+.lineSvg {
+  position: absolute;
+  inset: 0 auto auto 0;
+  overflow: visible;
+}
+
+.svgTextBase,
+.svgTextWash {
+  text-rendering: geometricPrecision;
+}
+
+.svgTextBase {
+  fill: currentColor;
+}
+
+.svgTextWash {
+  fill: rgba(255, 248, 240, 0.98);
+  opacity: 0.98;
 }
