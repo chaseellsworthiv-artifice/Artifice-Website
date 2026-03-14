@@ -350,6 +350,9 @@ export default function HeroExperience() {
       <section ref={heroRef} className={styles.hero}>
         <svg className={styles.curtainClipDefs} aria-hidden="true" width="0" height="0" focusable="false">
           <defs>
+            <clipPath id="curtain-body-handoff" clipPathUnits="objectBoundingBox">
+              <path d="M 0 0.255 C 0.08 0.275, 0.17 0.168, 0.33 0.14 C 0.42 0.125, 0.465 0.19, 0.5 0.205 C 0.535 0.19, 0.58 0.125, 0.67 0.14 C 0.83 0.168, 0.92 0.275, 1 0.255 L 1 1 L 0 1 Z" />
+            </clipPath>
             <clipPath id="curtain-left-clip" clipPathUnits="objectBoundingBox">
               <path ref={leftClipPathRef} d="M 0 0 L 0.5 0 L 0.5 0.245 C 0.5 0.305, 0.5 0.395, 0.5 0.52 C 0.5 0.64, 0.5 0.79, 0.5 1 L 0 1 Z" />
             </clipPath>
@@ -362,39 +365,41 @@ export default function HeroExperience() {
           <HeroScene />
         </div>
         <div ref={curtainShellRef} className={styles.curtainShell} aria-hidden="true">
-          <div
-            className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}
-            style={{ clipPath: "url(#curtain-left-clip)" }}
-          >
-            {sliceItems
-              .filter(({ ratio }) => ratio < 0.5)
-              .map(({ index, ratio }) => (
-                <div
-                  key={index}
-                  ref={(node) => {
-                    sliceRefs.current[index] = node;
-                  }}
-                  className={styles.curtainSlice}
-                  style={{ "--slice-index": index, "--slice-ratio": ratio }}
-                />
-              ))}
-          </div>
-          <div
-            className={`${styles.curtainGroup} ${styles.curtainGroupRight}`}
-            style={{ clipPath: "url(#curtain-right-clip)" }}
-          >
-            {sliceItems
-              .filter(({ ratio }) => ratio >= 0.5)
-              .map(({ index, ratio }) => (
-                <div
-                  key={index}
-                  ref={(node) => {
-                    sliceRefs.current[index] = node;
-                  }}
-                  className={styles.curtainSlice}
-                  style={{ "--slice-index": index, "--slice-ratio": ratio }}
-                />
-              ))}
+          <div className={styles.curtainBodyMask} style={{ clipPath: "url(#curtain-body-handoff)" }}>
+            <div
+              className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}
+              style={{ clipPath: "url(#curtain-left-clip)" }}
+            >
+              {sliceItems
+                .filter(({ ratio }) => ratio < 0.5)
+                .map(({ index, ratio }) => (
+                  <div
+                    key={index}
+                    ref={(node) => {
+                      sliceRefs.current[index] = node;
+                    }}
+                    className={styles.curtainSlice}
+                    style={{ "--slice-index": index, "--slice-ratio": ratio }}
+                  />
+                ))}
+            </div>
+            <div
+              className={`${styles.curtainGroup} ${styles.curtainGroupRight}`}
+              style={{ clipPath: "url(#curtain-right-clip)" }}
+            >
+              {sliceItems
+                .filter(({ ratio }) => ratio >= 0.5)
+                .map(({ index, ratio }) => (
+                  <div
+                    key={index}
+                    ref={(node) => {
+                      sliceRefs.current[index] = node;
+                    }}
+                    className={styles.curtainSlice}
+                    style={{ "--slice-index": index, "--slice-ratio": ratio }}
+                  />
+                ))}
+            </div>
           </div>
         </div>
         <div className={styles.heroAtmosphere} />

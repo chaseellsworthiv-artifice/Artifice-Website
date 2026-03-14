@@ -97,7 +97,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 24.5%;
+  height: 26.5%;
   z-index: 0;
   pointer-events: none;
   background-image: url("/assets/curtain/final-curtain.png");
@@ -117,6 +117,13 @@
   background:
     linear-gradient(90deg, rgba(10, 10, 10, 0.22) 0%, rgba(10, 10, 10, 0) 9%, rgba(10, 10, 10, 0) 91%, rgba(10, 10, 10, 0.22) 100%),
     linear-gradient(180deg, rgba(248, 218, 188, 0.04) 0%, rgba(10, 10, 10, 0) 16%, rgba(10, 10, 10, 0.12) 72%, rgba(10, 10, 10, 0.34) 100%);
+}
+
+.curtainBodyMask {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
 }
 
 .curtainSlice {
