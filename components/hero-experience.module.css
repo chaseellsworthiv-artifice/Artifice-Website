@@ -11,8 +11,6 @@
   position: relative;
   min-height: 100vh;
   overflow: clip;
-  --curtain-shift-x: 0px;
-  --curtain-shift-y: 0px;
   --curtain-glow-x: 50%;
   --curtain-glow-y: 18%;
 }
@@ -61,53 +59,26 @@
   overflow: hidden;
 }
 
-.curtainPanelLeft,
-.curtainPanelRight {
+.curtainShell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(10, 10, 10, 0.22) 0%, rgba(10, 10, 10, 0) 9%, rgba(10, 10, 10, 0) 91%, rgba(10, 10, 10, 0.22) 100%),
+    linear-gradient(180deg, rgba(248, 218, 188, 0.04) 0%, rgba(10, 10, 10, 0) 16%, rgba(10, 10, 10, 0.12) 72%, rgba(10, 10, 10, 0.34) 100%);
+}
+
+.curtainSlice {
   position: absolute;
   top: 0;
   bottom: 0;
-  overflow: hidden;
-  height: 100%;
-  width: calc(50% + 1px);
-}
-
-.curtainPanelLeft {
-  left: 0;
-}
-
-.curtainPanelRight {
-  right: 0;
-}
-
-.curtainTextureLeft,
-.curtainTextureRight {
-  position: absolute;
-  inset: 0;
   background-image: url("/assets/curtain/final-curtain.png");
   background-repeat: no-repeat;
-  background-size: 200% 100%;
-  filter: none;
-}
-
-.curtainTextureLeft {
-  background-position: left center;
-  transform: translate3d(calc(var(--curtain-shift-x) * -0.35), calc(var(--curtain-shift-y) * -0.16), 0);
-  transition: transform 180ms linear;
-}
-
-.curtainTextureRight {
-  background-position: right center;
-  transform: translate3d(calc(var(--curtain-shift-x) * 0.35), calc(var(--curtain-shift-y) * -0.16), 0);
-  transition: transform 180ms linear;
-}
-
-.curtainPanelLeft::after,
-.curtainPanelRight::after {
-  display: none;
-}
-
-.curtainTopMask {
-  display: none;
+  will-change: transform, filter;
+  transform-origin: center center;
+  backface-visibility: hidden;
 }
 
 .heroAtmosphere {
@@ -498,11 +469,6 @@
     transform: none;
   }
 
-  .curtainPanelLeft,
-  .curtainPanelRight {
-    width: calc(50% + 2px);
-  }
-
   .copy {
     width: min(100% - 1.25rem, 1180px);
     padding-top: 15vh;
@@ -581,15 +547,6 @@
     height: 100svh;
     left: 0;
     transform: none;
-    background-image: url("/assets/curtain/final-curtain.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center top;
-  }
-
-  .curtainPanelLeft,
-  .curtainPanelRight {
-    display: none;
   }
 
   .copy {
@@ -679,6 +636,9 @@
 }
 
 @media (max-width: 480px) {
+  .curtainSlice {
+    transform-origin: center top;
+  }
 
   .copy {
     width: calc(100% - 1rem);
