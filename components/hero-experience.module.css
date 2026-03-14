@@ -557,6 +557,10 @@
     min-height: 100svh;
   }
 
+  .sceneShell {
+    height: 100svh;
+  }
+
   .heroAtmosphere {
     background: rgba(0, 0, 0, 0.05);
   }
@@ -572,12 +576,11 @@
   }
 
   .curtainShell {
-    top: 0;
-    left: 50%;
-    width: min(100vw, calc(100svh * 1.72));
-    height: min(100svh, calc(100vw / 1.72));
-    transform: translateX(-50%);
-    top: 0;
+    inset: 0;
+    width: 100vw;
+    height: 100svh;
+    left: 0;
+    transform: none;
   }
 
   .curtainPanelLeft,
@@ -588,7 +591,17 @@
   .curtainTextureLeft,
   .curtainTextureRight {
     inset: 0;
-    background-size: 200% 100%;
+    width: 200%;
+    height: 100%;
+    background-size: cover;
+  }
+
+  .curtainTextureLeft {
+    background-position: center top;
+  }
+
+  .curtainTextureRight {
+    background-position: center top;
   }
 
   .copy {
@@ -681,6 +694,11 @@
   .curtainPanelLeft,
   .curtainPanelRight {
     width: calc(50% + 6px);
+  }
+
+  .curtainTextureLeft,
+  .curtainTextureRight {
+    width: 202%;
   }
 
   .copy {
