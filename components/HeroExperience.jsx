@@ -131,8 +131,8 @@ export default function HeroExperience() {
     };
 
     function render() {
-      state.x += (target.x - state.x) * 0.13;
-      state.y += (target.y - state.y) * 0.13;
+      state.x += (target.x - state.x) * 0.115;
+      state.y += (target.y - state.y) * 0.115;
 
       hero.style.setProperty("--curtain-glow-x", `${(50 + state.x * 9).toFixed(2)}%`);
       hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 6).toFixed(2)}%`);
@@ -149,8 +149,8 @@ export default function HeroExperience() {
         const center = ((index + 0.5) / sliceCount - 0.5) * 2;
         const delta = center - hotspotCenter;
         const distance = Math.abs(delta);
-        const primaryRadius = isReduced ? 0.082 : 0.045;
-        const secondaryRadius = isReduced ? 0.14 : 0.08;
+        const primaryRadius = isReduced ? 0.072 : 0.038;
+        const secondaryRadius = isReduced ? 0.12 : 0.068;
         const primaryInfluence = Math.exp(-Math.pow(distance / primaryRadius, 2));
         const secondaryInfluence = Math.exp(-Math.pow(distance / secondaryRadius, 2));
         const dragX = state.x * primaryInfluence * (isReduced ? 0.84 : 1.16);
@@ -162,9 +162,9 @@ export default function HeroExperience() {
         const desiredGlow = secondaryInfluence * (isReduced ? 0.06 : 0.1);
         const sliceState = sliceStates[index];
 
-        sliceState.x += (desiredX - sliceState.x) * 0.17;
-        sliceState.y += (desiredY - sliceState.y) * 0.16;
-        sliceState.glow += (desiredGlow - sliceState.glow) * 0.12;
+        sliceState.x += (desiredX - sliceState.x) * 0.15;
+        sliceState.y += (desiredY - sliceState.y) * 0.14;
+        sliceState.glow += (desiredGlow - sliceState.glow) * 0.1;
 
         const rotate = sliceState.x * 1.12;
         const skew = sliceState.x * 0.14;
