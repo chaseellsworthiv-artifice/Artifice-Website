@@ -166,19 +166,29 @@ export default function HeroExperience() {
         sliceState.y += (desiredY - sliceState.y) * 0.16;
         sliceState.glow += (desiredGlow - sliceState.glow) * 0.12;
 
-        const rotate = sliceState.x * 0.88;
-        const skew = sliceState.x * 0.12;
-        const scaleX = 1.008 + secondaryInfluence * 0.016;
-        const scaleY = 1 + secondaryInfluence * 0.011;
-        const brightness = 1 + sliceState.glow;
-        const contrast = 1 + sliceState.glow * 0.3;
+        const rotate = sliceState.x * 1.18;
+        const skew = sliceState.x * 0.16;
+        const scaleX = 1.01 + secondaryInfluence * 0.02;
+        const scaleY = 1 + secondaryInfluence * 0.014;
+        const lift = secondaryInfluence * (isReduced ? 4 : 9);
+        const brightness = 1 + sliceState.glow * 1.08;
+        const contrast = 1 + sliceState.glow * 0.42;
+        const saturate = 1 + sliceState.glow * 0.14;
+        const shadowX = (-sliceState.x * 0.42).toFixed(3);
+        const shadowY = (1.5 + secondaryInfluence * 5).toFixed(3);
+        const shadowBlur = (4 + secondaryInfluence * 12).toFixed(3);
+        const shadowAlpha = (0.1 + secondaryInfluence * 0.16).toFixed(3);
+        const zIndex = 20 + Math.round(secondaryInfluence * 40);
 
+        slice.style.zIndex = String(zIndex);
         slice.style.transform = `translate3d(${sliceState.x.toFixed(3)}px, ${sliceState.y.toFixed(
           3
-        )}px, 0) rotateY(${rotate.toFixed(3)}deg) skewY(${skew.toFixed(3)}deg) scaleX(${scaleX.toFixed(
+        )}px, ${lift.toFixed(3)}px) rotateY(${rotate.toFixed(3)}deg) skewY(${skew.toFixed(3)}deg) scaleX(${scaleX.toFixed(
           4
         )}) scaleY(${scaleY.toFixed(4)})`;
-        slice.style.filter = `brightness(${brightness.toFixed(3)}) contrast(${contrast.toFixed(3)})`;
+        slice.style.filter = `brightness(${brightness.toFixed(3)}) contrast(${contrast.toFixed(3)}) saturate(${saturate.toFixed(
+          3
+        )}) drop-shadow(${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0, 0, 0, ${shadowAlpha}))`;
       });
 
       const moving = Math.abs(target.x - state.x) > 0.05 || Math.abs(target.y - state.y) > 0.05;
