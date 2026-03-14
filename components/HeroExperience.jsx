@@ -98,9 +98,7 @@ export default function HeroExperience() {
 
     let rafId = 0;
     let resizeRaf = 0;
-    let isTouchActive = false;
-    const state = { x: 0, y: 0, open: 0 };
-    const target = { x: 0, y: 0 };
+    const state = { open: 0 };
     const sliceStates = sliceRefs.current.map(() => ({ x: 0, y: 0, glow: 0 }));
 
     function applySliceLayout() {
@@ -142,22 +140,14 @@ export default function HeroExperience() {
     };
 
     function render() {
-      state.x += (target.x - state.x) * (isTouch ? 0.09 : 0.115);
-      state.y += (target.y - state.y) * (isTouch ? 0.09 : 0.115);
       state.open += (openTargetRef.current - state.open) * (isReduced ? 0.16 : 0.14);
 
-      hero.style.setProperty("--curtain-glow-x", `${(50 + state.x * 9).toFixed(2)}%`);
-      hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 6).toFixed(2)}%`);
+      hero.style.setProperty("--curtain-glow-x", "50%");
+      hero.style.setProperty("--curtain-glow-y", "18%");
       hero.style.setProperty("--curtain-open-progress", `${state.open.toFixed(4)}`);
       const shellHeight = shellMetricsRef.current.height || hero.getBoundingClientRect().height;
       const riseAmount = -shellHeight * Math.pow(state.open, 0.98) * (isTouch ? 0.24 : isReduced ? 0.32 : 0.4);
       hero.style.setProperty("--curtain-rise-y", `${riseAmount.toFixed(3)}px`);
-
-      const pointerCenter = target.x;
-      const pointerDepth = target.y;
-      const nearestIndex = Math.max(0, Math.min(sliceCount - 1, Math.round(((pointerCenter + 1) * 0.5) * (sliceCount - 1))));
-      const nearestCenter = ((nearestIndex + 0.5) / sliceCount - 0.5) * 2;
-      const hotspotCenter = nearestCenter * 0.25 + pointerCenter * 0.75;
 
       sliceRefs.current.forEach((slice, index) => {
         if (!slice) return;
@@ -166,29 +156,14 @@ export default function HeroExperience() {
         const side = center < 0 ? -1 : 1;
         const halfT = side < 0 ? center + 1 : 1 - center;
         const openWeight = state.open;
-        const interactionWeight = 1 - openWeight * 0.62;
-        const delta = center - hotspotCenter;
-        const distance = Math.abs(delta);
-        const primaryRadius = isTouch ? 0.1 : isReduced ? 0.072 : 0.038;
-        const secondaryRadius = isTouch ? 0.17 : isReduced ? 0.12 : 0.068;
-        const primaryInfluence = Math.exp(-Math.pow(distance / primaryRadius, 2));
-        const secondaryInfluence = Math.exp(-Math.pow(distance / secondaryRadius, 2));
-        const dragX =
-          state.x * interactionWeight * primaryInfluence * (isTouch ? 1.12 : isReduced ? 0.84 : 1.16);
-        const depthY =
-          state.y * interactionWeight * primaryInfluence * (isTouch ? 0.2 : isReduced ? 0.34 : 0.56) +
-          pointerDepth * interactionWeight * secondaryInfluence * (isTouch ? 0.04 : isReduced ? 0.08 : 0.13);
-        const desiredX =
-          dragX + state.x * interactionWeight * secondaryInfluence * (isTouch ? 0.05 : isReduced ? 0.04 : 0.07);
-        const desiredY = depthY;
-        const desiredGlow = interactionWeight * secondaryInfluence * (isTouch ? 0.09 : isReduced ? 0.06 : 0.1);
+        const desiredX = 0;
+        const desiredY = 0;
+        const desiredGlow = 0;
         const sliceState = sliceStates[index];
 
-        sliceState.x += (desiredX - sliceState.x) * (isTouch ? 0.13 : 0.15);
-        sliceState.y += (desiredY - sliceState.y) * (isTouch ? 0.12 : 0.14);
-        sliceState.glow += (desiredGlow - sliceState.glow) * (isTouch ? 0.1 : 0.1);
-
-        const hotspotBoost = Math.pow(primaryInfluence, 0.72);
+        sliceState.x += (desiredX - sliceState.x) * 0.22;
+        sliceState.y += (desiredY - sliceState.y) * 0.22;
+        sliceState.glow += (desiredGlow - sliceState.glow) * 0.22;
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
         const bottomBias = 0.26 + Math.pow(halfT, 0.82) * 0.74;
         const openingTravel = side * openWeight * bottomBias * shellWidth * (0.16 + halfT * 0.24);
@@ -196,21 +171,19 @@ export default function HeroExperience() {
         const openOffsetX = openingTravel + gatheredTravel;
         const gatherScale = 1 - openWeight * bottomBias * (0.06 + (1 - halfT) * 0.08);
         const openRotate = side * openWeight * bottomBias * (1.8 + halfT * 2.4);
-        const rotate = sliceState.x * (isTouch ? 1.34 : 1.12) + openRotate;
-        const skew = sliceState.x * (isTouch ? 0.16 : 0.14) + side * openWeight * bottomBias * 0.22;
-        const scaleX = (1.01 + secondaryInfluence * (isTouch ? 0.017 : 0.016)) * gatherScale;
-        const scaleY = 1 + secondaryInfluence * (isTouch ? 0.006 : 0.011);
-        const lift =
-          secondaryInfluence * (isTouch ? 3.0 : isReduced ? 3 : 7) +
-          hotspotBoost * (isTouch ? 1.35 : isReduced ? 1.4 : 2.8);
-        const brightness = 1 + sliceState.glow * (isTouch ? 1.12 : 1.08) + hotspotBoost * 0.05;
-        const contrast = 1 + sliceState.glow * (isTouch ? 0.46 : 0.42) + hotspotBoost * 0.05;
-        const saturate = 1 + sliceState.glow * 0.14;
-        const shadowX = (-sliceState.x * 0.42).toFixed(3);
-        const shadowY = (1 + secondaryInfluence * (isTouch ? 2.8 : 4) + hotspotBoost * 1.5).toFixed(3);
-        const shadowBlur = (2.8 + secondaryInfluence * (isTouch ? 7.4 : 9) + hotspotBoost * 3.8).toFixed(3);
-        const shadowAlpha = (0.075 + secondaryInfluence * (isTouch ? 0.1 : 0.12) + hotspotBoost * 0.06).toFixed(3);
-        const zIndex = 20 + Math.round(secondaryInfluence * 40 + hotspotBoost * 14);
+        const rotate = openRotate;
+        const skew = side * openWeight * bottomBias * 0.22;
+        const scaleX = gatherScale;
+        const scaleY = 1;
+        const lift = 0;
+        const brightness = 1;
+        const contrast = 1.015;
+        const saturate = 1;
+        const shadowX = "0.000";
+        const shadowY = (1 + openWeight * 1.8).toFixed(3);
+        const shadowBlur = (2.8 + openWeight * 5.4).toFixed(3);
+        const shadowAlpha = (0.08 + openWeight * 0.05).toFixed(3);
+        const zIndex = 20 + Math.round(openWeight * 16 + halfT * 8);
 
         slice.style.zIndex = String(zIndex);
         slice.style.transform = `translate3d(${(sliceState.x + openOffsetX).toFixed(3)}px, ${sliceState.y.toFixed(
@@ -264,10 +237,7 @@ export default function HeroExperience() {
         rightClipPathRef.current?.setAttribute("d", rightPath);
       }
 
-      const moving =
-        Math.abs(target.x - state.x) > 0.05 ||
-        Math.abs(target.y - state.y) > 0.05 ||
-        Math.abs(openTargetRef.current - state.open) > 0.002;
+      const moving = Math.abs(openTargetRef.current - state.open) > 0.002;
       if (moving) {
         rafId = window.requestAnimationFrame(render);
       } else {
@@ -279,42 +249,6 @@ export default function HeroExperience() {
       if (!rafId) rafId = window.requestAnimationFrame(render);
     }
 
-    function updateTarget(clientX, clientY) {
-      const rect = (shell ?? hero).getBoundingClientRect();
-      const normalizedX = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
-      const normalizedY = Math.min(Math.max((clientY - rect.top) / rect.height, 0), 1);
-      const x = normalizedX - 0.5;
-      const y = normalizedY - 0.5;
-      target.x = x * 2;
-      target.y = y * 2;
-      requestRender();
-    }
-
-    function onPointerMove(event) {
-      if (isTouch && !isTouchActive) return;
-      updateTarget(event.clientX, event.clientY);
-    }
-
-    function onPointerDown(event) {
-      if (event.pointerType === "touch" || isTouch) {
-        isTouchActive = true;
-      }
-      updateTarget(event.clientX, event.clientY);
-    }
-
-    function onPointerLeave() {
-      target.x = 0;
-      target.y = 0;
-      requestRender();
-    }
-
-    function onPointerUp() {
-      isTouchActive = false;
-      target.x = 0;
-      target.y = 0;
-      requestRender();
-    }
-
     function onResize() {
       if (resizeRaf) window.cancelAnimationFrame(resizeRaf);
       resizeRaf = window.requestAnimationFrame(applySliceLayout);
@@ -324,20 +258,10 @@ export default function HeroExperience() {
       requestRender();
     }
 
-    hero.addEventListener("pointerdown", onPointerDown, { passive: true });
-    hero.addEventListener("pointermove", onPointerMove, { passive: true });
-    hero.addEventListener("pointerleave", onPointerLeave, { passive: true });
-    hero.addEventListener("pointerup", onPointerUp, { passive: true });
-    hero.addEventListener("pointercancel", onPointerUp, { passive: true });
     hero.addEventListener("curtain-open-update", onOpenUpdate);
     window.addEventListener("resize", onResize, { passive: true });
 
     return () => {
-      hero.removeEventListener("pointerdown", onPointerDown);
-      hero.removeEventListener("pointermove", onPointerMove);
-      hero.removeEventListener("pointerleave", onPointerLeave);
-      hero.removeEventListener("pointerup", onPointerUp);
-      hero.removeEventListener("pointercancel", onPointerUp);
       hero.removeEventListener("curtain-open-update", onOpenUpdate);
       window.removeEventListener("resize", onResize);
       if (rafId) window.cancelAnimationFrame(rafId);
