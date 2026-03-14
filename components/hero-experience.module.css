@@ -9,12 +9,12 @@
 
 .hero {
   position: relative;
-  min-height: 320vh;
+  min-height: 255vh;
   overflow: clip;
   --curtain-glow-x: 50%;
   --curtain-glow-y: 18%;
   --curtain-rise-y: 0px;
-  --hero-copy-offset: 235vh;
+  --hero-copy-offset: 165vh;
 }
 
 .sceneShell {
@@ -539,8 +539,8 @@
 
 @media (max-width: 900px) {
   .hero {
-    min-height: 350svh;
-    --hero-copy-offset: 255svh;
+    min-height: 285svh;
+    --hero-copy-offset: 190svh;
   }
 
   .curtainShell {
@@ -601,7 +601,7 @@
   }
 
   .hero {
-    min-height: 350svh;
+    min-height: 285svh;
   }
 
   .sceneShell {
