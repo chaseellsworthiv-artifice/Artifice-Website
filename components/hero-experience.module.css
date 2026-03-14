@@ -14,6 +14,8 @@
   --curtain-glow-x: 50%;
   --curtain-glow-y: 18%;
   --curtain-rise-y: 0px;
+  --swells-cap-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path fill='white' d='M0 0H100V18C96 18 92 17.6 88 17.2C82 16.6 76 16.3 70 16.8C63 17.4 58 20.8 54 25.8C51 29.5 49 30.8 46 27.4C42 22.8 37.5 18.8 31.5 17.4C24.6 15.8 18 16.1 11.4 17.2C7.8 17.8 4 18 0 18V0Z'/></svg>");
+  --swells-body-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path fill='white' d='M0 100H100V18C96 18 92 17.6 88 17.2C82 16.6 76 16.3 70 16.8C63 17.4 58 20.8 54 25.8C51 29.5 49 30.8 46 27.4C42 22.8 37.5 18.8 31.5 17.4C24.6 15.8 18 16.1 11.4 17.2C7.8 17.8 4 18 0 18V100Z'/></svg>");
 }
 
 .sceneShell {
@@ -69,15 +71,19 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 19%;
+  height: 30%;
   z-index: 0;
   pointer-events: none;
   background-image: url("/assets/curtain/final-curtain.png");
   background-repeat: no-repeat;
   background-size: var(--curtain-bg-size);
   background-position: var(--curtain-bg-position) 0;
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 82%, rgba(0, 0, 0, 0.58) 90%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, #000 82%, rgba(0, 0, 0, 0.58) 90%, transparent 100%);
+  -webkit-mask-image: var(--swells-cap-mask);
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: var(--swells-cap-mask);
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
 }
 
 .curtainShell::after {
@@ -103,8 +109,12 @@
   transform-origin: center center;
   transform-style: preserve-3d;
   backface-visibility: hidden;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 11%, rgba(0, 0, 0, 0.22) 15%, #000 19%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, transparent 11%, rgba(0, 0, 0, 0.22) 15%, #000 19%, #000 89%, rgba(0, 0, 0, 0.24) 94%, transparent 100%);
+  -webkit-mask-image: var(--swells-body-mask);
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: var(--swells-body-mask);
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
 }
 
 .heroAtmosphere {
@@ -547,6 +557,8 @@
 
   .hero {
     min-height: 100svh;
+    --swells-cap-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path fill='white' d='M0 0H100V15.5C91 15.5 83 16 75 17C66 18.1 60 21.5 56 26.5C52.8 30.5 49.8 30.8 46.4 26.8C42 21.6 36.2 17.8 28.8 16.5C19.6 14.8 10.3 15.4 0 17V0Z'/></svg>");
+    --swells-body-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path fill='white' d='M0 100H100V15.5C91 15.5 83 16 75 17C66 18.1 60 21.5 56 26.5C52.8 30.5 49.8 30.8 46.4 26.8C42 21.6 36.2 17.8 28.8 16.5C19.6 14.8 10.3 15.4 0 17V100Z'/></svg>");
   }
 
   .sceneShell {
@@ -577,7 +589,7 @@
   }
 
   .curtainShell::before {
-    height: 18%;
+    height: 26%;
   }
 
   .curtainShell::after {
@@ -673,14 +685,8 @@
 }
 
 @media (max-width: 480px) {
-  .curtainShell::before {
-    height: 24%;
-  }
-
   .curtainSlice {
     transform-origin: center top;
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.2) 15%, #000 18%, #000 88%, rgba(0, 0, 0, 0.22) 94%, transparent 100%);
-    mask-image: linear-gradient(180deg, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.2) 15%, #000 18%, #000 88%, rgba(0, 0, 0, 0.22) 94%, transparent 100%);
   }
 
   .copy {
