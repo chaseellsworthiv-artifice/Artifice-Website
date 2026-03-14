@@ -63,6 +63,8 @@ export default function HeroExperience() {
     });
 
     const context = gsap.context(() => {
+      const curtainScrollDistance = isReduced ? "+=200%" : "+=180%";
+
       gsap.fromTo(
         introRef.current,
         { autoAlpha: 0, y: 28 },
@@ -83,7 +85,7 @@ export default function HeroExperience() {
       ScrollTrigger.create({
         trigger: heroRef.current,
         start: "top top",
-        end: isReduced ? "+=92%" : "+=84%",
+        end: curtainScrollDistance,
         scrub: isReduced ? 1.1 : 1.35,
         onUpdate: (self) => {
           openTargetRef.current = self.progress;
