@@ -16,6 +16,8 @@
   --curtain-rise-y: 0px;
   --curtain-bubble-x: 50%;
   --curtain-bubble-y: 46%;
+  --curtain-bubble-dx: 0px;
+  --curtain-bubble-dy: 0px;
   --curtain-bubble-strength: 0;
   --hero-copy-offset: 82.5vh;
 }
@@ -124,44 +126,54 @@
   overflow: hidden;
 }
 
-.curtainBodyMask::before,
-.curtainBodyMask::after {
+.curtainBubble {
+  position: absolute;
+  left: var(--curtain-bubble-x);
+  top: var(--curtain-bubble-y);
+  width: clamp(148px, 11vw, 210px);
+  height: clamp(148px, 11vw, 210px);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: calc(var(--curtain-bubble-strength) * 1.35);
+  transform: translate3d(
+      calc(-50% + var(--curtain-bubble-dx) * 0.22),
+      calc(-50% + var(--curtain-bubble-dy) * 0.18),
+      0
+    )
+    scale(calc(0.88 + var(--curtain-bubble-strength) * 0.24));
+  backdrop-filter: blur(calc(1.4px + var(--curtain-bubble-strength) * 6px))
+    saturate(calc(1 + var(--curtain-bubble-strength) * 0.16))
+    brightness(calc(1 + var(--curtain-bubble-strength) * 0.1))
+    contrast(calc(1 + var(--curtain-bubble-strength) * 0.06));
+  -webkit-backdrop-filter: blur(calc(1.4px + var(--curtain-bubble-strength) * 6px))
+    saturate(calc(1 + var(--curtain-bubble-strength) * 0.16))
+    brightness(calc(1 + var(--curtain-bubble-strength) * 0.1))
+    contrast(calc(1 + var(--curtain-bubble-strength) * 0.06));
+  mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.98) 0 32%, rgba(0, 0, 0, 0.84) 46%, rgba(0, 0, 0, 0.4) 64%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.98) 0 32%, rgba(0, 0, 0, 0.84) 46%, rgba(0, 0, 0, 0.4) 64%, transparent 100%);
+}
+
+.curtainBubble::before,
+.curtainBubble::after {
   content: "";
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  opacity: calc(var(--curtain-bubble-strength) * 1);
+  border-radius: inherit;
 }
 
-.curtainBodyMask::before {
+.curtainBubble::before {
   background:
-    radial-gradient(
-      16% 26% at var(--curtain-bubble-x) var(--curtain-bubble-y),
-      rgba(255, 239, 212, 0.14) 0%,
-      rgba(255, 224, 176, 0.08) 20%,
-      rgba(255, 224, 176, 0.02) 36%,
-      transparent 56%
-    );
-  mix-blend-mode: screen;
-  filter: blur(12px);
-}
-
-.curtainBodyMask::after {
-  background:
-    radial-gradient(
-      20% 30% at calc(var(--curtain-bubble-x) + 1.4%) calc(var(--curtain-bubble-y) + 2.4%),
-      rgba(0, 0, 0, 0.18) 0%,
-      rgba(0, 0, 0, 0.1) 28%,
-      rgba(0, 0, 0, 0.03) 44%,
-      transparent 64%
-    ),
-    radial-gradient(
-      10% 18% at calc(var(--curtain-bubble-x) - 1.2%) calc(var(--curtain-bubble-y) - 2%),
-      rgba(255, 243, 221, 0.08) 0%,
-      rgba(255, 243, 221, 0.02) 42%,
-      transparent 70%
-    );
+    radial-gradient(circle at 34% 30%, rgba(255, 242, 214, 0.28) 0%, rgba(255, 230, 184, 0.12) 18%, rgba(255, 230, 184, 0.03) 42%, transparent 74%),
+    radial-gradient(circle at 72% 72%, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.08) 24%, transparent 58%);
   mix-blend-mode: soft-light;
+  filter: blur(18px);
+}
+
+.curtainBubble::after {
+  inset: 12%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 247, 231, 0.18) 0%, rgba(255, 247, 231, 0.05) 34%, transparent 68%);
+  mix-blend-mode: screen;
   filter: blur(14px);
 }
 
@@ -614,6 +626,11 @@
     padding-top: 15vh;
   }
 
+  .curtainBubble {
+    width: clamp(122px, 16vw, 164px);
+    height: clamp(122px, 16vw, 164px);
+  }
+
   .copyTitle {
     max-width: 10.1ch;
     font-size: clamp(2.6rem, 10.4vw, 4.4rem);
@@ -699,6 +716,11 @@
 
   .copy {
     padding-top: var(--hero-copy-offset);
+  }
+
+  .curtainBubble {
+    width: clamp(104px, 22vw, 142px);
+    height: clamp(104px, 22vw, 142px);
   }
 
   .lead {

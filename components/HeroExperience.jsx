@@ -196,6 +196,8 @@ export default function HeroExperience() {
       hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 6).toFixed(2)}%`);
       hero.style.setProperty("--curtain-bubble-x", `${(50 + state.x * 26).toFixed(2)}%`);
       hero.style.setProperty("--curtain-bubble-y", `${(46 + state.y * 18).toFixed(2)}%`);
+      hero.style.setProperty("--curtain-bubble-dx", `${(state.x * 18).toFixed(2)}px`);
+      hero.style.setProperty("--curtain-bubble-dy", `${(state.y * 12).toFixed(2)}px`);
       const shellHeight = shellMetricsRef.current.height || hero.getBoundingClientRect().height;
       const riseAmount = -shellHeight * Math.pow(state.open, 0.98) * (isTouch ? 0.24 : isReduced ? 0.32 : 0.4);
       hero.style.setProperty("--curtain-rise-y", `${riseAmount.toFixed(3)}px`);
@@ -382,14 +384,15 @@ export default function HeroExperience() {
             className={styles.curtainSwells}
             style={{ clipPath: `url(#${isMobileSeam ? "curtain-swells-cap-mobile" : "curtain-swells-cap"})` }}
           />
+        <div
+          className={styles.curtainBodyMask}
+          style={{ clipPath: `url(#${isMobileSeam ? "curtain-body-handoff-mobile" : "curtain-body-handoff"})` }}
+        >
+          <div className={styles.curtainBubble} aria-hidden="true" />
           <div
-            className={styles.curtainBodyMask}
-            style={{ clipPath: `url(#${isMobileSeam ? "curtain-body-handoff-mobile" : "curtain-body-handoff"})` }}
+            className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}
+            style={{ clipPath: "url(#curtain-left-clip)" }}
           >
-            <div
-              className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}
-              style={{ clipPath: "url(#curtain-left-clip)" }}
-            >
               {sliceItems
                 .filter(({ ratio }) => ratio < 0.5)
                 .map(({ index }) => (
