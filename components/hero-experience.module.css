@@ -14,6 +14,9 @@
   --curtain-glow-x: 50%;
   --curtain-glow-y: 18%;
   --curtain-rise-y: 0px;
+  --curtain-bubble-x: 50%;
+  --curtain-bubble-y: 46%;
+  --curtain-bubble-strength: 0;
   --hero-copy-offset: 110vh;
 }
 
@@ -121,6 +124,47 @@
   overflow: hidden;
 }
 
+.curtainBodyMask::before,
+.curtainBodyMask::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: calc(var(--curtain-bubble-strength) * 1);
+}
+
+.curtainBodyMask::before {
+  background:
+    radial-gradient(
+      16% 26% at var(--curtain-bubble-x) var(--curtain-bubble-y),
+      rgba(255, 239, 212, 0.14) 0%,
+      rgba(255, 224, 176, 0.08) 20%,
+      rgba(255, 224, 176, 0.02) 36%,
+      transparent 56%
+    );
+  mix-blend-mode: screen;
+  filter: blur(12px);
+}
+
+.curtainBodyMask::after {
+  background:
+    radial-gradient(
+      20% 30% at calc(var(--curtain-bubble-x) + 1.4%) calc(var(--curtain-bubble-y) + 2.4%),
+      rgba(0, 0, 0, 0.18) 0%,
+      rgba(0, 0, 0, 0.1) 28%,
+      rgba(0, 0, 0, 0.03) 44%,
+      transparent 64%
+    ),
+    radial-gradient(
+      10% 18% at calc(var(--curtain-bubble-x) - 1.2%) calc(var(--curtain-bubble-y) - 2%),
+      rgba(255, 243, 221, 0.08) 0%,
+      rgba(255, 243, 221, 0.02) 42%,
+      transparent 70%
+    );
+  mix-blend-mode: soft-light;
+  filter: blur(14px);
+}
+
 .curtainSlice {
   position: absolute;
   top: 0;
@@ -158,6 +202,11 @@
   inset: 0;
   background:
     radial-gradient(circle at var(--curtain-glow-x) var(--curtain-glow-y), rgba(214, 172, 109, 0.06), transparent 16%),
+    radial-gradient(
+      18% 28% at var(--curtain-bubble-x) var(--curtain-bubble-y),
+      rgba(214, 172, 109, calc(var(--curtain-bubble-strength) * 0.08)),
+      transparent 52%
+    ),
     rgba(0, 0, 0, 0.04);
   pointer-events: none;
   transition: background-position 180ms linear;
