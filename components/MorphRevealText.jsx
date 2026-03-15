@@ -47,8 +47,9 @@ function measureLine(node) {
   if (!node) return null;
   const rect = node.getBoundingClientRect();
   const computed = window.getComputedStyle(node);
+  const extraWidth = Math.max(28, Math.ceil(parseFloat(computed.fontSize) * 0.42));
   return {
-    width: Math.ceil(rect.width),
+    width: Math.ceil(rect.width) + extraWidth,
     height: Math.ceil(rect.height),
     fontFamily: computed.fontFamily,
     fontSize: parseFloat(computed.fontSize),
@@ -135,7 +136,7 @@ export default function MorphRevealText({
         timeline.to(
           entry.fillRect,
           {
-            attr: { width: width * 1.22 },
+            attr: { width: width * 1.28 },
             duration: 2.1,
             ease: "power1.out",
           },
