@@ -17,7 +17,7 @@
   --curtain-bubble-x: 50%;
   --curtain-bubble-y: 46%;
   --curtain-bubble-strength: 0;
-  --hero-copy-offset: 110vh;
+  --hero-copy-offset: 82.5vh;
 }
 
 .sceneShell {
@@ -599,7 +599,7 @@
 @media (max-width: 900px) {
   .hero {
     min-height: 250svh;
-    --hero-copy-offset: 120svh;
+    --hero-copy-offset: 90svh;
   }
 
   .curtainShell {

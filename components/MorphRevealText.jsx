@@ -47,12 +47,13 @@ function measureLine(node) {
   if (!node) return null;
   const rect = node.getBoundingClientRect();
   const computed = window.getComputedStyle(node);
-  const extraWidth = Math.max(28, Math.ceil(parseFloat(computed.fontSize) * 0.42));
+  const fontSize = parseFloat(computed.fontSize);
+  const extraWidth = Math.max(42, Math.ceil(fontSize * 0.68));
   return {
     width: Math.ceil(rect.width) + extraWidth,
     height: Math.ceil(rect.height),
     fontFamily: computed.fontFamily,
-    fontSize: parseFloat(computed.fontSize),
+    fontSize,
     fontWeight: computed.fontWeight,
     letterSpacing: computed.letterSpacing,
   };
@@ -120,7 +121,7 @@ export default function MorphRevealText({
           const width = metrics[index].width;
           const startX = width * profile.start[blobIndex];
           const radius = width * profile.radius[blobIndex];
-          gsap.set(blob, { attr: { cx: startX, rx: radius } });
+          gsap.set(blob, { attr: { cx: width * profile.end[blobIndex], rx: 0 } });
           gsap.set(entry.washBlobs[blobIndex], { attr: { cx: startX, rx: radius * 0.58 } });
         });
       });
@@ -136,11 +137,11 @@ export default function MorphRevealText({
         timeline.to(
           entry.fillRect,
           {
-            attr: { width: width * 1.26 },
-            duration: 1.24,
+            attr: { width: width * 1.36 },
+            duration: 1.18,
             ease: "power1.out",
           },
-          lineOffset + 0.96
+          lineOffset + 0.18
         );
 
         entry.blobs.forEach((blob, blobIndex) => {
@@ -151,8 +152,8 @@ export default function MorphRevealText({
             blob,
             {
               attr: {
-                cx: endX,
-                rx: radius * (1.18 - blobIndex * 0.04),
+                cx: endX + width * 0.04,
+                rx: radius * (1.34 - blobIndex * 0.045),
               },
               duration: profile.duration[blobIndex],
               ease: "power2.out",
@@ -164,8 +165,8 @@ export default function MorphRevealText({
             entry.washBlobs[blobIndex],
             {
               attr: {
-                cx: endX + width * 0.008,
-                rx: radius * (0.72 - blobIndex * 0.03),
+                cx: endX + width * 0.03,
+                rx: radius * (0.84 - blobIndex * 0.035),
               },
               duration: profile.duration[blobIndex] * 0.84,
               ease: "power2.out",
@@ -230,10 +231,10 @@ export default function MorphRevealText({
               >
                 <defs>
                   <filter id={blurId} x="-40%" y="-120%" width="180%" height="340%">
-                    <feGaussianBlur stdDeviation={metric.height * 0.1} />
+                    <feGaussianBlur stdDeviation={metric.height * 0.14} />
                   </filter>
                   <filter id={washBlurId} x="-40%" y="-120%" width="200%" height="360%">
-                    <feGaussianBlur stdDeviation={metric.height * 0.055} />
+                    <feGaussianBlur stdDeviation={metric.height * 0.085} />
                   </filter>
                   <mask id={maskId}>
                     <rect width={metric.width} height={metric.height} fill="black" />
@@ -257,7 +258,7 @@ export default function MorphRevealText({
                           cx="0"
                           cy={metric.height * value}
                           rx={metric.width * profile.radius[blobIndex]}
-                          ry={metric.height * (0.4 - blobIndex * 0.028)}
+                          ry={metric.height * (0.5 - blobIndex * 0.03)}
                           fill="white"
                         />
                       ))}
@@ -275,7 +276,7 @@ export default function MorphRevealText({
                           cx="0"
                           cy={metric.height * value}
                           rx={metric.width * profile.radius[blobIndex] * 0.58}
-                          ry={metric.height * (0.28 - blobIndex * 0.02)}
+                          ry={metric.height * (0.38 - blobIndex * 0.022)}
                           fill="white"
                         />
                       ))}

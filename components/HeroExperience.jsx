@@ -58,7 +58,7 @@ export default function HeroExperience() {
 
     const lenis = new Lenis({
       autoRaf: true,
-      duration: isReduced ? 0.9 : 1.2,
+      duration: isReduced ? 0.9 : 0.82,
       smoothWheel: !isReduced,
       syncTouch: false,
       touchMultiplier: 1,
@@ -114,7 +114,7 @@ export default function HeroExperience() {
         trigger: heroRef.current,
         start: "top top",
         end: curtainScrollDistance,
-        scrub: isReduced ? 1 : 0.9,
+        scrub: isReduced ? 1 : 0.45,
         onUpdate: (self) => {
           openTargetRef.current = self.progress;
           requestRenderRef.current();
