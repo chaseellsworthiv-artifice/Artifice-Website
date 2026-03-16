@@ -65,6 +65,8 @@ export default function HeroExperience() {
       touchMultiplier: 1,
     });
 
+    const localTriggers = [];
+
     const context = gsap.context(() => {
       const curtainScrollDistance = isReduced ? "+=200%" : "+=180%";
 
@@ -77,6 +79,7 @@ export default function HeroExperience() {
           once: true,
         },
       });
+      if (copyReveal.scrollTrigger) localTriggers.push(copyReveal.scrollTrigger);
 
       copyReveal
         .to(
@@ -100,7 +103,7 @@ export default function HeroExperience() {
           0.86
         );
 
-      gsap.to(veilRef.current, {
+      const veilTween = gsap.to(veilRef.current, {
         opacity: isReduced ? 0.78 : 0.92,
         ease: "none",
         scrollTrigger: {
@@ -110,8 +113,9 @@ export default function HeroExperience() {
           scrub: isReduced ? 0.8 : 1.2,
         },
       });
+      if (veilTween.scrollTrigger) localTriggers.push(veilTween.scrollTrigger);
 
-      ScrollTrigger.create({
+      localTriggers.push(ScrollTrigger.create({
         trigger: heroRef.current,
         start: "top top",
         end: curtainScrollDistance,
@@ -120,12 +124,12 @@ export default function HeroExperience() {
           openTargetRef.current = self.progress;
           requestRenderRef.current();
         },
-      });
+      }));
     }, heroRef);
 
     return () => {
       context.revert();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      localTriggers.forEach((trigger) => trigger?.kill());
       lenis.destroy();
     };
   }, []);

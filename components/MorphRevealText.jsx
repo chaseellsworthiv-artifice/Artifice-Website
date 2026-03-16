@@ -343,15 +343,30 @@ export default function MorphRevealText({
                     {line}
                   </text>
                 </svg>
-                <span
-                  ref={(node) => {
-                    ensureEntry(lineAnimRefs, index).finalText = node;
-                  }}
-                  className={lineClassName ? `${styles.finalText} ${lineClassName}` : styles.finalText}
+                <svg
+                  className={styles.lineSvg}
+                  viewBox={`0 0 ${metric.width} ${metric.height}`}
+                  width={metric.width}
+                  height={metric.height}
                   aria-hidden="true"
+                  preserveAspectRatio="xMinYMin meet"
                 >
-                  {line}
-                </span>
+                  <text
+                    ref={(node) => {
+                      ensureEntry(lineAnimRefs, index).finalText = node;
+                    }}
+                    className={styles.svgTextFinal}
+                    x="0"
+                    y={metric.fontSize * 0.08}
+                    dominantBaseline="hanging"
+                    fontFamily={metric.fontFamily}
+                    fontSize={metric.fontSize}
+                    fontWeight={metric.fontWeight}
+                    letterSpacing={metric.letterSpacing}
+                  >
+                    {line}
+                  </text>
+                </svg>
               </>
             ) : null}
           </span>
