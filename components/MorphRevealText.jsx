@@ -8,47 +8,52 @@ import styles from "./morph-reveal-text.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const lineProfiles = [
-  {
-    y: [0.52, 0.3, 0.72, 0.46, 0.62, 0.38, 0.58],
-    radius: [0.16, 0.1, 0.12, 0.09, 0.08, 0.07, 0.06],
-    start: [0.06, -0.14, 0.34, 0.18, 0.5, 0.26, 0.64],
-    end: [0.44, 0.52, 0.78, 0.72, 1.02, 0.9, 1.14],
-    duration: [1.06, 1.18, 1.2, 1.12, 1.3, 1.08, 1.22],
-    delay: [0, 0.05, 0.09, 0.12, 0.16, 0.2, 0.24],
-  },
-  {
-    y: [0.46, 0.66, 0.34, 0.58, 0.74, 0.42, 0.54],
-    radius: [0.15, 0.1, 0.11, 0.09, 0.07, 0.07, 0.06],
-    start: [0.02, 0.22, -0.12, 0.42, 0.58, 0.18, 0.7],
-    end: [0.46, 0.76, 0.54, 0.88, 1.1, 0.82, 1.18],
-    duration: [1.08, 1.2, 1.16, 1.24, 1.34, 1.1, 1.26],
-    delay: [0, 0.04, 0.1, 0.13, 0.17, 0.21, 0.26],
-  },
-  {
-    y: [0.56, 0.28, 0.68, 0.44, 0.78, 0.36, 0.6],
-    radius: [0.16, 0.1, 0.12, 0.09, 0.07, 0.07, 0.06],
-    start: [0.08, -0.08, 0.3, 0.14, 0.54, 0.24, 0.68],
-    end: [0.5, 0.56, 0.8, 0.72, 1.08, 0.88, 1.2],
-    duration: [1.1, 1.18, 1.22, 1.14, 1.34, 1.1, 1.28],
-    delay: [0, 0.05, 0.08, 0.12, 0.16, 0.21, 0.26],
-  },
-  {
-    y: [0.44, 0.72, 0.32, 0.56, 0.66, 0.4, 0.5],
-    radius: [0.15, 0.1, 0.11, 0.09, 0.08, 0.07, 0.06],
-    start: [0.04, 0.2, -0.1, 0.38, 0.52, 0.16, 0.66],
-    end: [0.46, 0.76, 0.56, 0.86, 1.04, 0.8, 1.16],
-    duration: [1.08, 1.2, 1.18, 1.24, 1.3, 1.1, 1.24],
-    delay: [0, 0.05, 0.1, 0.14, 0.18, 0.22, 0.26],
-  },
-];
+const BLOB_COUNT = 13;
+
+function seeded(seed) {
+  let value = seed >>> 0;
+  return () => {
+    value = (value * 1664525 + 1013904223) >>> 0;
+    return value / 4294967296;
+  };
+}
+
+function createProfile(lineIndex) {
+  const rand = seeded(9173 + lineIndex * 127);
+  const blobs = Array.from({ length: BLOB_COUNT }, (_, blobIndex) => {
+    const verticalBand = blobIndex % 3;
+    const yBase = verticalBand === 0 ? 0.34 : verticalBand === 1 ? 0.52 : 0.68;
+    const y = Math.min(0.82, Math.max(0.22, yBase + (rand() - 0.5) * 0.18));
+    const radius = 0.052 + rand() * 0.058;
+    const start = -0.1 + rand() * 1.2;
+    const settle = Math.min(1.14, Math.max(0.02, start + (rand() - 0.5) * 0.18));
+    const duration = 1.02 + rand() * 0.36;
+    const delay = blobIndex * 0.045 + rand() * 0.08;
+    const washLead = 0.01 + rand() * 0.05;
+    return {
+      y,
+      radius,
+      start,
+      settle,
+      duration,
+      delay,
+      washLead,
+    };
+  });
+
+  return {
+    blobs,
+    washFadeStart: 0.94 + lineIndex * 0.08,
+    lineOffset: lineIndex * 0.16,
+  };
+}
 
 function measureLine(node) {
   if (!node) return null;
   const rect = node.getBoundingClientRect();
   const computed = window.getComputedStyle(node);
   const fontSize = parseFloat(computed.fontSize);
-  const extraWidth = Math.max(42, Math.ceil(fontSize * 0.68));
+  const extraWidth = Math.max(88, Math.ceil(fontSize * 1.16));
   return {
     width: Math.ceil(rect.width) + extraWidth,
     height: Math.ceil(rect.height),
@@ -62,7 +67,7 @@ function measureLine(node) {
 function ensureEntry(entries, index) {
   const existing = entries.current[index];
   if (existing) return existing;
-  const created = { blobs: [], washBlobs: [], fillRect: null, washText: null };
+  const created = { blobs: [], washBlobs: [], washText: null };
   entries.current[index] = created;
   return created;
 }
@@ -110,68 +115,72 @@ export default function MorphRevealText({
 
     const context = gsap.context(() => {
       lineAnimRefs.current.forEach((entry, index) => {
-        if (!entry?.fillRect || !entry.washText) return;
+        if (!entry?.washText) return;
 
-        gsap.set(entry.fillRect, { attr: { width: 0 } });
-        gsap.set(entry.washText, { opacity: 0.9 });
+        gsap.set(entry.washText, { opacity: 0.72 });
 
-        const profile = lineProfiles[index % lineProfiles.length];
+        const profile = createProfile(index);
         entry.blobs.forEach((blob, blobIndex) => {
-          if (!blob || !entry.washBlobs[blobIndex]) return;
+          const descriptor = profile.blobs[blobIndex];
+          if (!blob || !descriptor) return;
           const width = metrics[index].width;
-          const startX = width * profile.start[blobIndex];
-          const radius = width * profile.radius[blobIndex];
-          gsap.set(blob, { attr: { cx: width * profile.end[blobIndex], rx: 0 } });
-          gsap.set(entry.washBlobs[blobIndex], { attr: { cx: startX, rx: radius * 0.58 } });
+          gsap.set(blob, {
+            attr: {
+              cx: width * descriptor.start,
+              rx: width * descriptor.radius * 0.2,
+            },
+          });
+        });
+
+        entry.washBlobs.forEach((blob, blobIndex) => {
+          const descriptor = profile.blobs[blobIndex];
+          if (!blob || !descriptor) return;
+          const width = metrics[index].width;
+          gsap.set(blob, {
+            attr: {
+              cx: width * (descriptor.start - descriptor.washLead),
+              rx: width * descriptor.radius * 0.34,
+            },
+          });
         });
       });
 
       const timeline = gsap.timeline({ paused: true });
 
       lineAnimRefs.current.forEach((entry, index) => {
-        if (!entry?.fillRect || !entry.washText) return;
+        if (!entry?.washText) return;
         const width = metrics[index].width;
-        const profile = lineProfiles[index % lineProfiles.length];
-        const lineOffset = index * 0.2;
+        const profile = createProfile(index);
 
-        timeline.to(
-          entry.fillRect,
-          {
-            attr: { width: width * 1.36 },
-            duration: 1.18,
-            ease: "power1.out",
-          },
-          lineOffset + 0.18
-        );
+        profile.blobs.forEach((descriptor, blobIndex) => {
+          const blob = entry.blobs[blobIndex];
+          const washBlob = entry.washBlobs[blobIndex];
+          if (!blob || !washBlob) return;
 
-        entry.blobs.forEach((blob, blobIndex) => {
-          if (!blob || !entry.washBlobs[blobIndex]) return;
-          const endX = width * profile.end[blobIndex];
-          const radius = width * profile.radius[blobIndex];
           timeline.to(
             blob,
             {
               attr: {
-                cx: endX + width * 0.04,
-                rx: radius * (1.34 - blobIndex * 0.045),
+                cx: width * descriptor.settle,
+                rx: width * descriptor.radius * 1.78,
               },
-              duration: profile.duration[blobIndex],
+              duration: descriptor.duration,
               ease: "power2.out",
             },
-            lineOffset + profile.delay[blobIndex]
+            profile.lineOffset + descriptor.delay
           );
 
           timeline.to(
-            entry.washBlobs[blobIndex],
+            washBlob,
             {
               attr: {
-                cx: endX + width * 0.03,
-                rx: radius * (0.84 - blobIndex * 0.035),
+                cx: width * (descriptor.settle + descriptor.washLead),
+                rx: width * descriptor.radius * 0.9,
               },
-              duration: profile.duration[blobIndex] * 0.84,
+              duration: descriptor.duration * 0.82,
               ease: "power2.out",
             },
-            lineOffset + profile.delay[blobIndex]
+            profile.lineOffset + descriptor.delay + 0.02
           );
         });
 
@@ -179,10 +188,10 @@ export default function MorphRevealText({
           entry.washText,
           {
             opacity: 0,
-            duration: 0.36,
+            duration: 0.34,
             ease: "power2.out",
           },
-          lineOffset + 1.04
+          profile.lineOffset + profile.washFadeStart
         );
       });
 
@@ -207,7 +216,7 @@ export default function MorphRevealText({
         const washMaskId = `${idPrefix}-wash-${index}`;
         const blurId = `${idPrefix}-blur-${index}`;
         const washBlurId = `${idPrefix}-wash-blur-${index}`;
-        const profile = lineProfiles[index % lineProfiles.length];
+        const profile = createProfile(index);
 
         return (
           <span key={`${line}-${index}`} className={styles.lineMask}>
@@ -230,35 +239,25 @@ export default function MorphRevealText({
                 preserveAspectRatio="xMinYMin meet"
               >
                 <defs>
-                  <filter id={blurId} x="-40%" y="-120%" width="180%" height="340%">
-                    <feGaussianBlur stdDeviation={metric.height * 0.14} />
+                  <filter id={blurId} x="-45%" y="-140%" width="220%" height="380%">
+                    <feGaussianBlur stdDeviation={metric.height * 0.17} />
                   </filter>
-                  <filter id={washBlurId} x="-40%" y="-120%" width="200%" height="360%">
-                    <feGaussianBlur stdDeviation={metric.height * 0.085} />
+                  <filter id={washBlurId} x="-45%" y="-140%" width="220%" height="380%">
+                    <feGaussianBlur stdDeviation={metric.height * 0.12} />
                   </filter>
                   <mask id={maskId}>
                     <rect width={metric.width} height={metric.height} fill="black" />
-                    <rect
-                      ref={(node) => {
-                        ensureEntry(lineAnimRefs, index).fillRect = node;
-                      }}
-                      x="0"
-                      y="0"
-                      width="0"
-                      height={metric.height}
-                      fill="white"
-                    />
                     <g filter={`url(#${blurId})`}>
-                      {profile.y.map((value, blobIndex) => (
+                      {profile.blobs.map((descriptor, blobIndex) => (
                         <ellipse
                           key={`blob-${blobIndex}`}
                           ref={(node) => {
                             ensureEntry(lineAnimRefs, index).blobs[blobIndex] = node;
                           }}
                           cx="0"
-                          cy={metric.height * value}
-                          rx={metric.width * profile.radius[blobIndex]}
-                          ry={metric.height * (0.5 - blobIndex * 0.03)}
+                          cy={metric.height * descriptor.y}
+                          rx={metric.width * descriptor.radius * 0.2}
+                          ry={metric.height * (0.34 + (blobIndex % 3) * 0.04)}
                           fill="white"
                         />
                       ))}
@@ -267,16 +266,16 @@ export default function MorphRevealText({
                   <mask id={washMaskId}>
                     <rect width={metric.width} height={metric.height} fill="black" />
                     <g filter={`url(#${washBlurId})`}>
-                      {profile.y.map((value, blobIndex) => (
+                      {profile.blobs.map((descriptor, blobIndex) => (
                         <ellipse
                           key={`wash-blob-${blobIndex}`}
                           ref={(node) => {
                             ensureEntry(lineAnimRefs, index).washBlobs[blobIndex] = node;
                           }}
                           cx="0"
-                          cy={metric.height * value}
-                          rx={metric.width * profile.radius[blobIndex] * 0.58}
-                          ry={metric.height * (0.38 - blobIndex * 0.022)}
+                          cy={metric.height * descriptor.y}
+                          rx={metric.width * descriptor.radius * 0.34}
+                          ry={metric.height * (0.26 + (blobIndex % 3) * 0.03)}
                           fill="white"
                         />
                       ))}
