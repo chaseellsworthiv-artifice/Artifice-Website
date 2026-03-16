@@ -189,8 +189,8 @@ export default function HeroExperience() {
     };
 
     function render() {
-      state.x += (target.x - state.x) * (isTouch ? 0.09 : 0.115);
-      state.y += (target.y - state.y) * (isTouch ? 0.09 : 0.115);
+      state.x += (target.x - state.x) * (isTouch ? 0.14 : 0.22);
+      state.y += (target.y - state.y) * (isTouch ? 0.14 : 0.22);
       state.open = openTargetRef.current;
 
       hero.style.setProperty("--curtain-glow-x", `${(50 + state.x * 9).toFixed(2)}%`);
@@ -230,11 +230,11 @@ export default function HeroExperience() {
         const tactileInfluence = pointerPresence * (1 - state.open * 0.84) * pointerField * (0.42 + verticalFocus * 0.58);
         const pointerLagX = target.x - state.x;
         const pointerLagY = target.y - state.y;
-        const tactileShiftX = -pointerDx * tactileInfluence * shellWidth * (isTouch ? 0.012 : 0.009);
-        const tactileShiftY = (pointerLagY * tactileInfluence * (isTouch ? 4.8 : 3.8)) + ((pointerYNorm - 0.5) * tactileInfluence * 1.6);
-        const tactileRotate = -pointerDx * tactileInfluence * (isTouch ? 5.5 : 7.25);
-        const tactileSkew = pointerLagX * tactileInfluence * 0.55;
-        const scaleX = gatherScale * (1 - tactileInfluence * (isTouch ? 0.018 : 0.026));
+        const tactileShiftX = -pointerDx * tactileInfluence * shellWidth * (isTouch ? 0.018 : 0.015);
+        const tactileShiftY = (pointerLagY * tactileInfluence * (isTouch ? 2.8 : 2.2)) + ((pointerYNorm - 0.5) * tactileInfluence * 0.8);
+        const tactileRotate = -pointerDx * tactileInfluence * (isTouch ? 8.5 : 11.5);
+        const tactileSkew = pointerLagX * tactileInfluence * 0.8;
+        const scaleX = gatherScale * (1 - tactileInfluence * (isTouch ? 0.03 : 0.042));
         const transform = `translate3d(${(openOffsetX + tactileShiftX).toFixed(3)}px, ${tactileShiftY.toFixed(3)}px, 0px) rotateY(${(openRotate + tactileRotate).toFixed(
           3
         )}deg) skewY(${(skew + tactileSkew).toFixed(3)}deg) scaleX(${scaleX.toFixed(4)}) scaleY(1)`;
