@@ -13,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroExperience() {
   const [isMobileSeam, setIsMobileSeam] = useState(false);
+  const [curtainReady, setCurtainReady] = useState(false);
   const heroRef = useRef(null);
   const wordmarkRef = useRef(null);
   const copyBodyRef = useRef(null);
@@ -133,6 +134,7 @@ export default function HeroExperience() {
     if (!heroRef.current) return undefined;
 
     const hero = heroRef.current;
+    setCurtainReady(false);
     const shell = curtainShellRef.current;
     const isReduced =
       typeof window !== "undefined" &&
@@ -186,6 +188,7 @@ export default function HeroExperience() {
         height: curtainImage.naturalHeight,
       };
       applySliceLayout();
+      setCurtainReady(true);
     };
 
     function render() {
@@ -406,7 +409,7 @@ export default function HeroExperience() {
             </clipPath>
           </defs>
         </svg>
-        <div className={styles.sceneShell}>
+        <div className={`${styles.sceneShell} ${curtainReady ? styles.sceneShellReady : ""}`}>
           <HeroScene />
         </div>
         <div ref={curtainShellRef} className={styles.curtainShell} aria-hidden="true">
