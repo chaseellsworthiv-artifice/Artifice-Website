@@ -16,8 +16,6 @@
   --curtain-rise-y: 0px;
   --curtain-bubble-x: 50%;
   --curtain-bubble-y: 46%;
-  --curtain-bubble-dx: 0px;
-  --curtain-bubble-dy: 0px;
   --curtain-bubble-strength: 0;
   --hero-copy-offset: 82.5vh;
 }
@@ -126,57 +124,6 @@
   overflow: hidden;
 }
 
-.curtainBubble {
-  position: absolute;
-  left: var(--curtain-bubble-x);
-  top: var(--curtain-bubble-y);
-  width: clamp(148px, 11vw, 210px);
-  height: clamp(148px, 11vw, 210px);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 2;
-  opacity: calc(var(--curtain-bubble-strength) * 1.35);
-  transform: translate3d(
-      calc(-50% + var(--curtain-bubble-dx) * 0.22),
-      calc(-50% + var(--curtain-bubble-dy) * 0.18),
-      0
-    )
-    scale(calc(0.88 + var(--curtain-bubble-strength) * 0.24));
-  backdrop-filter: blur(calc(1.4px + var(--curtain-bubble-strength) * 6px))
-    saturate(calc(1 + var(--curtain-bubble-strength) * 0.16))
-    brightness(calc(1 + var(--curtain-bubble-strength) * 0.1))
-    contrast(calc(1 + var(--curtain-bubble-strength) * 0.06));
-  -webkit-backdrop-filter: blur(calc(1.4px + var(--curtain-bubble-strength) * 6px))
-    saturate(calc(1 + var(--curtain-bubble-strength) * 0.16))
-    brightness(calc(1 + var(--curtain-bubble-strength) * 0.1))
-    contrast(calc(1 + var(--curtain-bubble-strength) * 0.06));
-  mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.98) 0 32%, rgba(0, 0, 0, 0.84) 46%, rgba(0, 0, 0, 0.4) 64%, transparent 100%);
-  -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.98) 0 32%, rgba(0, 0, 0, 0.84) 46%, rgba(0, 0, 0, 0.4) 64%, transparent 100%);
-}
-
-.curtainBubble::before,
-.curtainBubble::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-}
-
-.curtainBubble::before {
-  background:
-    radial-gradient(circle at 34% 30%, rgba(255, 242, 214, 0.28) 0%, rgba(255, 230, 184, 0.12) 18%, rgba(255, 230, 184, 0.03) 42%, transparent 74%),
-    radial-gradient(circle at 72% 72%, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.08) 24%, transparent 58%);
-  mix-blend-mode: soft-light;
-  filter: blur(18px);
-}
-
-.curtainBubble::after {
-  inset: 12%;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 247, 231, 0.18) 0%, rgba(255, 247, 231, 0.05) 34%, transparent 68%);
-  mix-blend-mode: screen;
-  filter: blur(14px);
-}
-
 .curtainSlice {
   position: absolute;
   top: 0;
@@ -215,9 +162,9 @@
   background:
     radial-gradient(circle at var(--curtain-glow-x) var(--curtain-glow-y), rgba(214, 172, 109, 0.06), transparent 16%),
     radial-gradient(
-      18% 28% at var(--curtain-bubble-x) var(--curtain-bubble-y),
-      rgba(214, 172, 109, calc(var(--curtain-bubble-strength) * 0.08)),
-      transparent 52%
+      11% 14% at var(--curtain-bubble-x) var(--curtain-bubble-y),
+      rgba(214, 172, 109, calc(var(--curtain-bubble-strength) * 0.035)),
+      transparent 76%
     ),
     rgba(0, 0, 0, 0.04);
   pointer-events: none;
@@ -626,10 +573,6 @@
     padding-top: 15vh;
   }
 
-  .curtainBubble {
-    width: clamp(122px, 16vw, 164px);
-    height: clamp(122px, 16vw, 164px);
-  }
 
   .copyTitle {
     max-width: 10.1ch;
@@ -718,10 +661,6 @@
     padding-top: var(--hero-copy-offset);
   }
 
-  .curtainBubble {
-    width: clamp(104px, 22vw, 142px);
-    height: clamp(104px, 22vw, 142px);
-  }
 
   .lead {
     max-width: 28ch;

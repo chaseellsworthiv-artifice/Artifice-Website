@@ -143,6 +143,7 @@ export default function HeroExperience() {
     let rafId = 0;
     let resizeRaf = 0;
     let isTouchActive = false;
+    let isPointerInside = false;
     const state = { x: 0, y: 0, open: 0 };
     const target = { x: 0, y: 0 };
     const sliceStates = sliceRefs.current.map(() => ({
@@ -194,14 +195,14 @@ export default function HeroExperience() {
 
       hero.style.setProperty("--curtain-glow-x", `${(50 + state.x * 9).toFixed(2)}%`);
       hero.style.setProperty("--curtain-glow-y", `${(18 + state.y * 6).toFixed(2)}%`);
-      hero.style.setProperty("--curtain-bubble-x", `${(50 + state.x * 26).toFixed(2)}%`);
-      hero.style.setProperty("--curtain-bubble-y", `${(46 + state.y * 18).toFixed(2)}%`);
-      hero.style.setProperty("--curtain-bubble-dx", `${(state.x * 18).toFixed(2)}px`);
-      hero.style.setProperty("--curtain-bubble-dy", `${(state.y * 12).toFixed(2)}px`);
+      const pointerXNorm = state.x * 0.5 + 0.5;
+      const pointerYNorm = state.y * 0.5 + 0.5;
+      hero.style.setProperty("--curtain-bubble-x", `${(pointerXNorm * 100).toFixed(2)}%`);
+      hero.style.setProperty("--curtain-bubble-y", `${(pointerYNorm * 100).toFixed(2)}%`);
       const shellHeight = shellMetricsRef.current.height || hero.getBoundingClientRect().height;
       const riseAmount = -shellHeight * Math.pow(state.open, 0.98) * (isTouch ? 0.24 : isReduced ? 0.32 : 0.4);
       hero.style.setProperty("--curtain-rise-y", `${riseAmount.toFixed(3)}px`);
-      const pointerPresence = isTouch ? (isTouchActive ? 1 : 0) : Math.min(1, Math.hypot(state.x, state.y) * 1.4);
+      const pointerPresence = isTouch ? (isTouchActive ? 1 : 0) : isPointerInside ? 1 : 0;
       const bubbleStrength = (1 - state.open * 0.78) * pointerPresence;
       hero.style.setProperty("--curtain-bubble-strength", `${bubbleStrength.toFixed(4)}`);
 
@@ -221,10 +222,22 @@ export default function HeroExperience() {
         const gatherScale = 1 - openWeight * bottomBias * (0.06 + (1 - halfT) * 0.08);
         const openRotate = side * openWeight * bottomBias * (1.8 + halfT * 2.4);
         const skew = side * openWeight * bottomBias * 0.22;
-        const scaleX = gatherScale;
-        const transform = `translate3d(${openOffsetX.toFixed(3)}px, 0px, 0px) rotateY(${openRotate.toFixed(
+        const sliceCenterNorm = (index + 0.5) / sliceCount;
+        const pointerDx = sliceCenterNorm - pointerXNorm;
+        const influenceRadius = isTouch ? 0.1 : isReduced ? 0.078 : 0.068;
+        const pointerField = Math.exp(-(pointerDx * pointerDx) / (2 * influenceRadius * influenceRadius));
+        const verticalFocus = 1 - Math.min(1, Math.abs(pointerYNorm - 0.48) * 1.45);
+        const tactileInfluence = pointerPresence * (1 - state.open * 0.84) * pointerField * (0.42 + verticalFocus * 0.58);
+        const pointerLagX = target.x - state.x;
+        const pointerLagY = target.y - state.y;
+        const tactileShiftX = -pointerDx * tactileInfluence * shellWidth * (isTouch ? 0.012 : 0.009);
+        const tactileShiftY = (pointerLagY * tactileInfluence * (isTouch ? 4.8 : 3.8)) + ((pointerYNorm - 0.5) * tactileInfluence * 1.6);
+        const tactileRotate = -pointerDx * tactileInfluence * (isTouch ? 5.5 : 7.25);
+        const tactileSkew = pointerLagX * tactileInfluence * 0.55;
+        const scaleX = gatherScale * (1 - tactileInfluence * (isTouch ? 0.018 : 0.026));
+        const transform = `translate3d(${(openOffsetX + tactileShiftX).toFixed(3)}px, ${tactileShiftY.toFixed(3)}px, 0px) rotateY(${(openRotate + tactileRotate).toFixed(
           3
-        )}deg) skewY(${skew.toFixed(3)}deg) scaleX(${scaleX.toFixed(4)}) scaleY(1)`;
+        )}deg) skewY(${(skew + tactileSkew).toFixed(3)}deg) scaleX(${scaleX.toFixed(4)}) scaleY(1)`;
 
         if (sliceState.lastTransform !== transform) {
           slice.style.transform = transform;
@@ -301,29 +314,44 @@ export default function HeroExperience() {
       requestRender();
     }
 
+    function onPointerEnter(event) {
+      if (event.pointerType !== "touch") {
+        isPointerInside = true;
+      }
+      updateTarget(event.clientX, event.clientY);
+    }
+
     function onPointerMove(event) {
       if (isTouch && !isTouchActive) return;
+      if (event.pointerType !== "touch") {
+        isPointerInside = true;
+      }
       updateTarget(event.clientX, event.clientY);
     }
 
     function onPointerDown(event) {
       if (event.pointerType === "touch" || isTouch) {
         isTouchActive = true;
+      } else {
+        isPointerInside = true;
       }
       updateTarget(event.clientX, event.clientY);
     }
 
     function onPointerLeave() {
+      isPointerInside = false;
       target.x = 0;
       target.y = 0;
       requestRender();
     }
 
-    function onPointerUp() {
-      isTouchActive = false;
-      target.x = 0;
-      target.y = 0;
-      requestRender();
+    function onPointerUp(event) {
+      if (event.pointerType === "touch" || isTouch) {
+        isTouchActive = false;
+        target.x = 0;
+        target.y = 0;
+        requestRender();
+      }
     }
 
     function onResize() {
@@ -331,6 +359,7 @@ export default function HeroExperience() {
       resizeRaf = window.requestAnimationFrame(applySliceLayout);
     }
 
+    hero.addEventListener("pointerenter", onPointerEnter, { passive: true });
     hero.addEventListener("pointerdown", onPointerDown, { passive: true });
     hero.addEventListener("pointermove", onPointerMove, { passive: true });
     hero.addEventListener("pointerleave", onPointerLeave, { passive: true });
@@ -339,6 +368,7 @@ export default function HeroExperience() {
     window.addEventListener("resize", onResize, { passive: true });
 
     return () => {
+      hero.removeEventListener("pointerenter", onPointerEnter);
       hero.removeEventListener("pointerdown", onPointerDown);
       hero.removeEventListener("pointermove", onPointerMove);
       hero.removeEventListener("pointerleave", onPointerLeave);
@@ -388,7 +418,6 @@ export default function HeroExperience() {
           className={styles.curtainBodyMask}
           style={{ clipPath: `url(#${isMobileSeam ? "curtain-body-handoff-mobile" : "curtain-body-handoff"})` }}
         >
-          <div className={styles.curtainBubble} aria-hidden="true" />
           <div
             className={`${styles.curtainGroup} ${styles.curtainGroupLeft}`}
             style={{ clipPath: "url(#curtain-left-clip)" }}
