@@ -127,7 +127,7 @@ export default function MorphRevealText({
           gsap.set(blob, {
             attr: {
               cx: width * descriptor.start,
-              rx: width * descriptor.radius * 0.2,
+              rx: width * descriptor.radius * 0.02,
             },
           });
         });
@@ -139,7 +139,7 @@ export default function MorphRevealText({
           gsap.set(blob, {
             attr: {
               cx: width * (descriptor.start - descriptor.washLead),
-              rx: width * descriptor.radius * 0.34,
+              rx: width * descriptor.radius * 0.04,
             },
           });
         });
@@ -162,7 +162,7 @@ export default function MorphRevealText({
             {
               attr: {
                 cx: width * descriptor.settle,
-                rx: width * descriptor.radius * 1.78,
+                rx: width * descriptor.radius * 2.75,
               },
               duration: descriptor.duration,
               ease: "power2.out",
@@ -175,7 +175,7 @@ export default function MorphRevealText({
             {
               attr: {
                 cx: width * (descriptor.settle + descriptor.washLead),
-                rx: width * descriptor.radius * 0.9,
+                rx: width * descriptor.radius * 1.12,
               },
               duration: descriptor.duration * 0.82,
               ease: "power2.out",
@@ -188,11 +188,13 @@ export default function MorphRevealText({
           entry.washText,
           {
             opacity: 0,
-            duration: 0.34,
+            duration: 0.32,
             ease: "power2.out",
           },
           profile.lineOffset + profile.washFadeStart
         );
+
+        timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.34);
       });
 
       ScrollTrigger.create({
