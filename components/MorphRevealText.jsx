@@ -257,106 +257,102 @@ export default function MorphRevealText({
               {line}
             </span>
             {metric ? (
-              <svg
-                ref={(node) => {
-                  ensureEntry(lineAnimRefs, index).svgRoot = node;
-                }}
-                className={styles.lineSvg}
-                viewBox={`0 0 ${metric.width} ${metric.height}`}
-                width={metric.width}
-                height={metric.height}
-                aria-hidden="true"
-                preserveAspectRatio="xMinYMin meet"
-              >
-                <defs>
-                  <filter id={blurId} x="-45%" y="-140%" width="220%" height="380%">
-                    <feGaussianBlur stdDeviation={metric.height * 0.17} />
-                  </filter>
-                  <filter id={washBlurId} x="-45%" y="-140%" width="220%" height="380%">
-                    <feGaussianBlur stdDeviation={metric.height * 0.12} />
-                  </filter>
-                  <mask id={maskId}>
-                    <rect width={metric.width} height={metric.height} fill="black" />
-                    <g filter={`url(#${blurId})`}>
-                      {profile.blobs.map((descriptor, blobIndex) => (
-                        <ellipse
-                          key={`blob-${blobIndex}`}
-                          ref={(node) => {
-                            ensureEntry(lineAnimRefs, index).blobs[blobIndex] = node;
-                          }}
-                          cx="0"
-                          cy={metric.height * descriptor.y}
-                          rx={metric.width * descriptor.radius * 0.2}
-                          ry={metric.height * (0.18 + (blobIndex % 5) * 0.024)}
-                          fill="white"
-                        />
-                      ))}
-                    </g>
-                  </mask>
-                  <mask id={washMaskId}>
-                    <rect width={metric.width} height={metric.height} fill="black" />
-                    <g filter={`url(#${washBlurId})`}>
-                      {profile.blobs.map((descriptor, blobIndex) => (
-                        <ellipse
-                          key={`wash-blob-${blobIndex}`}
-                          ref={(node) => {
-                            ensureEntry(lineAnimRefs, index).washBlobs[blobIndex] = node;
-                          }}
-                          cx="0"
-                          cy={metric.height * descriptor.y}
-                          rx={metric.width * descriptor.radius * 0.34}
-                          ry={metric.height * (0.14 + (blobIndex % 5) * 0.02)}
-                          fill="white"
-                        />
-                      ))}
-                    </g>
-                  </mask>
-                </defs>
-                <text
-                  className={styles.svgTextBase}
-                  x="0"
-                  y={metric.fontSize * 0.08}
-                  dominantBaseline="hanging"
-                  fontFamily={metric.fontFamily}
-                  fontSize={metric.fontSize}
-                  fontWeight={metric.fontWeight}
-                  letterSpacing={metric.letterSpacing}
-                  mask={`url(#${maskId})`}
-                >
-                  {line}
-                </text>
-                <text
+              <>
+                <svg
                   ref={(node) => {
-                    ensureEntry(lineAnimRefs, index).washText = node;
+                    ensureEntry(lineAnimRefs, index).svgRoot = node;
                   }}
-                  className={styles.svgTextWash}
-                  x="0"
-                  y={metric.fontSize * 0.08}
-                  dominantBaseline="hanging"
-                  fontFamily={metric.fontFamily}
-                  fontSize={metric.fontSize}
-                  fontWeight={metric.fontWeight}
-                  letterSpacing={metric.letterSpacing}
-                  mask={`url(#${washMaskId})`}
+                  className={styles.lineSvg}
+                  viewBox={`0 0 ${metric.width} ${metric.height}`}
+                  width={metric.width}
+                  height={metric.height}
+                  aria-hidden="true"
+                  preserveAspectRatio="xMinYMin meet"
                 >
-                  {line}
-                </text>
-                <text
+                  <defs>
+                    <filter id={blurId} x="-45%" y="-140%" width="220%" height="380%">
+                      <feGaussianBlur stdDeviation={metric.height * 0.17} />
+                    </filter>
+                    <filter id={washBlurId} x="-45%" y="-140%" width="220%" height="380%">
+                      <feGaussianBlur stdDeviation={metric.height * 0.12} />
+                    </filter>
+                    <mask id={maskId}>
+                      <rect width={metric.width} height={metric.height} fill="black" />
+                      <g filter={`url(#${blurId})`}>
+                        {profile.blobs.map((descriptor, blobIndex) => (
+                          <ellipse
+                            key={`blob-${blobIndex}`}
+                            ref={(node) => {
+                              ensureEntry(lineAnimRefs, index).blobs[blobIndex] = node;
+                            }}
+                            cx="0"
+                            cy={metric.height * descriptor.y}
+                            rx={metric.width * descriptor.radius * 0.2}
+                            ry={metric.height * (0.18 + (blobIndex % 5) * 0.024)}
+                            fill="white"
+                          />
+                        ))}
+                      </g>
+                    </mask>
+                    <mask id={washMaskId}>
+                      <rect width={metric.width} height={metric.height} fill="black" />
+                      <g filter={`url(#${washBlurId})`}>
+                        {profile.blobs.map((descriptor, blobIndex) => (
+                          <ellipse
+                            key={`wash-blob-${blobIndex}`}
+                            ref={(node) => {
+                              ensureEntry(lineAnimRefs, index).washBlobs[blobIndex] = node;
+                            }}
+                            cx="0"
+                            cy={metric.height * descriptor.y}
+                            rx={metric.width * descriptor.radius * 0.34}
+                            ry={metric.height * (0.14 + (blobIndex % 5) * 0.02)}
+                            fill="white"
+                          />
+                        ))}
+                      </g>
+                    </mask>
+                  </defs>
+                  <text
+                    className={styles.svgTextBase}
+                    x="0"
+                    y={metric.fontSize * 0.08}
+                    dominantBaseline="hanging"
+                    fontFamily={metric.fontFamily}
+                    fontSize={metric.fontSize}
+                    fontWeight={metric.fontWeight}
+                    letterSpacing={metric.letterSpacing}
+                    mask={`url(#${maskId})`}
+                  >
+                    {line}
+                  </text>
+                  <text
+                    ref={(node) => {
+                      ensureEntry(lineAnimRefs, index).washText = node;
+                    }}
+                    className={styles.svgTextWash}
+                    x="0"
+                    y={metric.fontSize * 0.08}
+                    dominantBaseline="hanging"
+                    fontFamily={metric.fontFamily}
+                    fontSize={metric.fontSize}
+                    fontWeight={metric.fontWeight}
+                    letterSpacing={metric.letterSpacing}
+                    mask={`url(#${washMaskId})`}
+                  >
+                    {line}
+                  </text>
+                </svg>
+                <span
                   ref={(node) => {
                     ensureEntry(lineAnimRefs, index).finalText = node;
                   }}
-                  className={styles.svgTextFinal}
-                  x="0"
-                  y={metric.fontSize * 0.08}
-                  dominantBaseline="hanging"
-                  fontFamily={metric.fontFamily}
-                  fontSize={metric.fontSize}
-                  fontWeight={metric.fontWeight}
-                  letterSpacing={metric.letterSpacing}
+                  className={lineClassName ? `${styles.finalText} ${lineClassName}` : styles.finalText}
+                  aria-hidden="true"
                 >
                   {line}
-                </text>
-              </svg>
+                </span>
+              </>
             ) : null}
           </span>
         );

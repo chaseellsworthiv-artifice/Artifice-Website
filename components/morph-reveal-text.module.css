@@ -23,8 +23,7 @@
 }
 
 .svgTextBase,
-.svgTextWash,
-.svgTextFinal {
+.svgTextWash {
   text-rendering: geometricPrecision;
 }
 
@@ -37,7 +36,11 @@
   opacity: 0.34;
 }
 
-.svgTextFinal {
-  fill: currentColor;
+.finalText {
+  position: absolute;
+  inset: 0 auto auto 0;
+  display: block;
+  color: currentColor;
   opacity: 0;
+  pointer-events: none;
 }
