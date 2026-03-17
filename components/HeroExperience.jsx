@@ -213,13 +213,16 @@ export default function HeroExperience() {
       const bubbleStrength = (1 - state.open * 0.78) * pointerPresence;
       hero.style.setProperty("--curtain-bubble-strength", `${bubbleStrength.toFixed(4)}`);
 
+      const tensionWindow = isTouch ? 0.075 : isReduced ? 0.082 : 0.088;
+      const tensionProgress = Math.min(1, state.open / tensionWindow);
+      const openWeight = state.open <= tensionWindow ? 0 : (state.open - tensionWindow) / (1 - tensionWindow);
+
       sliceRefs.current.forEach((slice, index) => {
         if (!slice) return;
 
         const center = ((index + 0.5) / sliceCount - 0.5) * 2;
         const side = center < 0 ? -1 : 1;
         const halfT = side < 0 ? center + 1 : 1 - center;
-        const openWeight = state.open;
         const sliceState = sliceStates[index];
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
         const bottomBias = 0.26 + Math.pow(halfT, 0.82) * 0.74;
@@ -241,10 +244,18 @@ export default function HeroExperience() {
         const tactileShiftY = (pointerLagY * tactileInfluence * (isTouch ? 2.8 : 2.2)) + ((pointerYNorm - 0.5) * tactileInfluence * 0.8);
         const tactileRotate = -pointerDx * tactileInfluence * (isTouch ? 8.5 : 11.5);
         const tactileSkew = pointerLagX * tactileInfluence * 0.8;
-        const scaleX = gatherScale * (1 - tactileInfluence * (isTouch ? 0.03 : 0.042));
-        const transform = `translate3d(${(openOffsetX + tactileShiftX).toFixed(3)}px, ${tactileShiftY.toFixed(3)}px, 0px) rotateY(${(openRotate + tactileRotate).toFixed(
+        const centerWeight = Math.pow(Math.max(0, 1 - Math.abs(center)), 1.85);
+        const upperBias = 1 - Math.min(1, halfT * 1.18);
+        const tensionEase = Math.sin(tensionProgress * Math.PI * 0.5);
+        const tensionCompress = centerWeight * tensionEase;
+        const tensionShiftX = -side * shellWidth * tensionCompress * (isTouch ? 0.004 : 0.0032);
+        const tensionShiftY = -tensionCompress * upperBias * (isTouch ? 4.5 : 3.6);
+        const tensionRotate = -side * tensionCompress * (isTouch ? 1.35 : 1.05);
+        const tensionSkew = -side * tensionCompress * upperBias * 0.085;
+        const scaleX = gatherScale * (1 - tactileInfluence * (isTouch ? 0.03 : 0.042)) * (1 - tensionCompress * (isTouch ? 0.016 : 0.012));
+        const transform = `translate3d(${(openOffsetX + tactileShiftX + tensionShiftX).toFixed(3)}px, ${(tactileShiftY + tensionShiftY).toFixed(3)}px, 0px) rotateY(${(openRotate + tactileRotate + tensionRotate).toFixed(
           3
-        )}deg) skewY(${(skew + tactileSkew).toFixed(3)}deg) scaleX(${scaleX.toFixed(4)}) scaleY(1)`;
+        )}deg) skewY(${(skew + tactileSkew + tensionSkew).toFixed(3)}deg) scaleX(${scaleX.toFixed(4)}) scaleY(1)`;
 
         if (sliceState.lastTransform !== transform) {
           slice.style.transform = transform;
@@ -253,18 +264,19 @@ export default function HeroExperience() {
       });
 
       if (shell) {
-        const bottomProgress = Math.pow(state.open, isTouch ? 0.8 : 0.74);
-        const waistProgress = Math.pow(Math.max(0, (state.open - 0.16) / 0.84), isTouch ? 1.05 : 1.12);
-        const ribProgress = Math.pow(Math.max(0, (state.open - 0.42) / 0.58), isTouch ? 1.45 : 1.6);
-        const shoulderProgress = Math.pow(Math.max(0, (state.open - 0.62) / 0.38), isTouch ? 2.0 : 2.25);
-        const topProgress = Math.pow(Math.max(0, (state.open - 0.8) / 0.2), isTouch ? 2.6 : 3.0);
-        const topGap = (isTouch ? 0.012 : isReduced ? 0.01 : 0.009) * topProgress;
-        const shoulderGap = (isTouch ? 0.028 : isReduced ? 0.024 : 0.021) * shoulderProgress;
-        const ribGap = (isTouch ? 0.08 : isReduced ? 0.07 : 0.062) * ribProgress;
-        const waistGap = (isTouch ? 0.18 : isReduced ? 0.16 : 0.145) * waistProgress;
-        const bottomGap = (isTouch ? 0.38 : isReduced ? 0.35 : 0.32) * bottomProgress;
+        const seamTension = Math.sin(tensionProgress * Math.PI * 0.5);
+        const bottomProgress = Math.pow(openWeight, isTouch ? 0.8 : 0.74);
+        const waistProgress = Math.pow(Math.max(0, (openWeight - 0.16) / 0.84), isTouch ? 1.05 : 1.12);
+        const ribProgress = Math.pow(Math.max(0, (openWeight - 0.42) / 0.58), isTouch ? 1.45 : 1.6);
+        const shoulderProgress = Math.pow(Math.max(0, (openWeight - 0.62) / 0.38), isTouch ? 2.0 : 2.25);
+        const topProgress = Math.pow(Math.max(0, (openWeight - 0.8) / 0.2), isTouch ? 2.6 : 3.0);
+        const topGap = Math.max(0, (isTouch ? 0.012 : isReduced ? 0.01 : 0.009) * topProgress - seamTension * 0.0022);
+        const shoulderGap = Math.max(0, (isTouch ? 0.028 : isReduced ? 0.024 : 0.021) * shoulderProgress - seamTension * 0.0032);
+        const ribGap = Math.max(0, (isTouch ? 0.08 : isReduced ? 0.07 : 0.062) * ribProgress - seamTension * 0.0042);
+        const waistGap = Math.max(0, (isTouch ? 0.18 : isReduced ? 0.16 : 0.145) * waistProgress - seamTension * 0.0022);
+        const bottomGap = Math.max(0, (isTouch ? 0.38 : isReduced ? 0.35 : 0.32) * bottomProgress - seamTension * 0.0006);
         const shellWidth = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
-        const groupShiftProgress = Math.pow(Math.max(0, (state.open - 0.48) / 0.52), isTouch ? 1.3 : 1.45);
+        const groupShiftProgress = Math.pow(Math.max(0, (openWeight - 0.48) / 0.52), isTouch ? 1.3 : 1.45);
         const groupShift = shellWidth * groupShiftProgress * (isTouch ? 0.022 : isReduced ? 0.028 : 0.034);
         shell.style.setProperty("--curtain-left-shift", `${(-groupShift).toFixed(3)}px`);
         shell.style.setProperty("--curtain-right-shift", `${groupShift.toFixed(3)}px`);
