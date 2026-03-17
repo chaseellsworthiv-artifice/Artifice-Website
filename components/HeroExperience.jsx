@@ -14,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function HeroExperience() {
   const [isMobileSeam, setIsMobileSeam] = useState(false);
   const [curtainReady, setCurtainReady] = useState(false);
+  const [invitationState, setInvitationState] = useState("idle");
   const heroRef = useRef(null);
   const wordmarkRef = useRef(null);
   const copyBodyRef = useRef(null);
@@ -21,6 +22,7 @@ export default function HeroExperience() {
   const curtainShellRef = useRef(null);
   const leftClipPathRef = useRef(null);
   const rightClipPathRef = useRef(null);
+  const sectionRefs = useRef([]);
   const sliceRefs = useRef([]);
   const imageMetricsRef = useRef({ ready: false, width: 0, height: 0 });
   const shellMetricsRef = useRef({ width: 0, height: 0 });
@@ -35,6 +37,19 @@ export default function HeroExperience() {
       })),
     [sliceCount]
   );
+
+  const handleInvitationActivate = () => {
+    if (invitationState !== "idle") return;
+    setInvitationState("opening");
+    window.setTimeout(() => setInvitationState("open"), 220);
+  };
+
+  const handleInvitationSubmit = (event) => {
+    event.preventDefault();
+    if (invitationState !== "open") return;
+    setInvitationState("submitting");
+    window.setTimeout(() => setInvitationState("submitted"), 560);
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -125,6 +140,27 @@ export default function HeroExperience() {
           requestRenderRef.current();
         },
       }));
+
+      sectionRefs.current.forEach((section) => {
+        if (!section) return;
+        const targets = section.querySelectorAll("[data-section-reveal]");
+        if (!targets.length) return;
+
+        gsap.set(targets, { autoAlpha: 0, y: 26 });
+        const revealTween = gsap.to(targets, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: section,
+            start: isReduced ? "top 84%" : "top 78%",
+            once: true,
+          },
+        });
+        if (revealTween.scrollTrigger) localTriggers.push(revealTween.scrollTrigger);
+      });
     }, heroRef);
 
     return () => {
@@ -487,7 +523,7 @@ export default function HeroExperience() {
           />
           <div ref={copyBodyRef} className={styles.copyBody}>
             <p className={styles.lead}>
-              Sleight of hand by Chase Ellsworth, framed as an atmosphere rather than a performance website.
+              Sleight of hand by Chase Ellsworth, staged as atmosphere rather than performance.
             </p>
             <div className={styles.heroActions}>
               <a href="#booking" className={styles.primaryLink}>
@@ -502,91 +538,103 @@ export default function HeroExperience() {
       </section>
 
       <div className={styles.sections}>
-        <section id="experience" className={`${styles.section} ${styles.splitSection}`}>
-          <div className={styles.sectionCopy}>
+        <section id="experience" ref={(node) => { sectionRefs.current[0] = node; }} className={`${styles.section} ${styles.splitSection}`}>
+          <div className={styles.sectionCopy} data-section-reveal>
             <p className={styles.sectionLabel}>Experience</p>
-            <h2>Close enough to feel impossible. Quiet enough to feel real.</h2>
+            <h2>Close enough to feel impossible. Quiet enough to feel inevitable.</h2>
             <p>
-              The work happens in the same air as the conversation, with ordinary objects and no visible machinery.
-              The effect is not spectacle. It is the sudden sense that the room has shifted.
+              The work happens inside the conversation, with ordinary objects and no visible machinery.
+              What remains is the feeling that the room itself has shifted.
             </p>
           </div>
-          <div className={styles.materialPanel}>
+          <div className={styles.materialPanel} data-section-reveal>
             <div className={styles.panelInset} />
           </div>
         </section>
 
-        <section id="events" className={styles.section}>
-          <div className={styles.sectionHeading}>
+        <section id="events" ref={(node) => { sectionRefs.current[1] = node; }} className={styles.section}>
+          <div className={styles.sectionHeading} data-section-reveal>
             <p className={styles.sectionLabel}>Events</p>
-            <h2>For rooms that are already expecting something exceptional.</h2>
+            <h2>For rooms where expectation is already set high.</h2>
           </div>
-          <div className={styles.eventGrid}>
+          <div className={styles.eventGrid} data-section-reveal>
             <article className={`${styles.eventCard} ${styles.cardPrivate}`}>
               <h3>Private Events</h3>
-              <p>Intimate dinners, private homes, and evenings where conversation matters as much as atmosphere.</p>
+              <p>Private dinners, homes, and evenings where conversation matters as much as atmosphere.</p>
             </article>
             <article className={`${styles.eventCard} ${styles.cardCorporate}`}>
               <h3>Corporate Receptions</h3>
-              <p>Work that elevates the room without pulling it into novelty or obvious performance cues.</p>
+              <p>Work that elevates the room without pulling it toward novelty or obvious performance.</p>
             </article>
             <article className={`${styles.eventCard} ${styles.cardHospitality}`}>
               <h3>Luxury Hospitality</h3>
-              <p>Designed for hotels, lounges, and premium venues where the standard is already set high.</p>
+              <p>For hotels, lounges, and venues where the standard is already high.</p>
             </article>
           </div>
         </section>
 
-        <section id="about" className={`${styles.section} ${styles.splitSection} ${styles.reverse}`}>
-          <div className={styles.portraitFrame}>
+        <section id="about" ref={(node) => { sectionRefs.current[2] = node; }} className={`${styles.section} ${styles.splitSection} ${styles.reverse}`}>
+          <div className={styles.portraitFrame} data-section-reveal>
             <img src="/assets/images/chase-headshot.jpg" alt="Chase Ellsworth" className={styles.portrait} />
           </div>
-          <div className={styles.sectionCopy}>
+          <div className={styles.sectionCopy} data-section-reveal>
             <p className={styles.sectionLabel}>About</p>
             <h2>Years of discipline, reduced to something that looks effortless.</h2>
             <p>
-              Chase Ellsworth performs close-up sleight of hand without gimmicks, staged helpers, or disposable props.
-              The material is tactile, exacting, and built to leave guests with the feeling that the impossible happened
-              in their own hands.
+              Chase Ellsworth performs close-up sleight of hand without gimmicks, stooges, or disposable props.
+              The material is tactile, exacting, and designed to leave the impossible in a guest’s own hands.
             </p>
           </div>
         </section>
 
-        <section id="booking" className={`${styles.section} ${styles.bookingSection}`}>
-          <div className={styles.sectionHeading}>
-            <p className={styles.sectionLabel}>Booking</p>
-            <h2>Bring Artifice into the room.</h2>
-            <p className={styles.bookingLead}>Create an evening your guests will remember long after it ends.</p>
+        <section
+          ref={(node) => { sectionRefs.current[3] = node; }}
+          id="booking"
+          className={`${styles.section} ${styles.bookingSection} ${styles[`bookingState${
+            invitationState.charAt(0).toUpperCase() + invitationState.slice(1)
+          }`]}`}
+        >
+          <div className={styles.invitationStage} data-section-reveal>
+            <div className={styles.invitationPrelude}>
+              <p className={styles.sectionLabel}>Private Invitation</p>
+              <p className={styles.invitationLine}>Private performances are limited.</p>
+              <button type="button" className={styles.invitationTrigger} onClick={handleInvitationActivate}>
+                Request an invitation
+              </button>
+            </div>
+
+            <form className={styles.invitationForm} onSubmit={handleInvitationSubmit}>
+              <label className={styles.invitationField}>
+                <span>Name</span>
+                <input type="text" name="name" autoComplete="name" />
+              </label>
+              <label className={styles.invitationField}>
+                <span>Email</span>
+                <input type="email" name="email" autoComplete="email" />
+              </label>
+              <label className={styles.invitationField}>
+                <span>Event Type</span>
+                <input type="text" name="eventType" />
+              </label>
+              <label className={styles.invitationField}>
+                <span>Date</span>
+                <input type="text" name="date" />
+              </label>
+              <label className={`${styles.invitationField} ${styles.fullWidth}`}>
+                <span>Location</span>
+                <input type="text" name="location" />
+              </label>
+              <label className={`${styles.invitationField} ${styles.fullWidth}`}>
+                <span>Message</span>
+                <textarea name="message" rows="5" />
+              </label>
+              <button type="submit" className={styles.invitationSubmit}>
+                Send invitation request
+              </button>
+            </form>
+
+            <p className={styles.invitationConfirmation}>We’ll be in touch.</p>
           </div>
-          <form className={styles.bookingForm}>
-            <label>
-              <span>Name</span>
-              <input type="text" name="name" />
-            </label>
-            <label>
-              <span>Email</span>
-              <input type="email" name="email" />
-            </label>
-            <label>
-              <span>Event Type</span>
-              <input type="text" name="eventType" />
-            </label>
-            <label>
-              <span>Date</span>
-              <input type="text" name="date" />
-            </label>
-            <label className={styles.fullWidth}>
-              <span>Location</span>
-              <input type="text" name="location" />
-            </label>
-            <label className={styles.fullWidth}>
-              <span>Message</span>
-              <textarea name="message" rows="5" />
-            </label>
-            <button type="submit" className={styles.formButton}>
-              Request Availability
-            </button>
-          </form>
         </section>
       </div>
     </main>
