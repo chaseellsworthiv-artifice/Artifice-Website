@@ -243,11 +243,13 @@
 }
 
 .lead {
-  margin: 1.4rem 0 0;
-  max-width: 32ch;
-  color: var(--muted-paper);
-  font-size: 1rem;
-  line-height: 1.55;
+  margin: 1.6rem 0 0;
+  max-width: 26ch;
+  color: rgba(230, 221, 198, 0.82);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+  line-height: 1.18;
+  letter-spacing: 0.01em;
 }
 
 .heroActions {
@@ -896,8 +898,9 @@
 
 
   .lead {
-    max-width: 28ch;
-    font-size: 0.95rem;
+    max-width: 24ch;
+    font-size: clamp(1.05rem, 5vw, 1.28rem);
+    line-height: 1.2;
   }
 
   .heroActions {
