@@ -12,7 +12,10 @@ import styles from "./hero-experience.module.css";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroExperience() {
-  const [isMobileSeam, setIsMobileSeam] = useState(false);
+  const [isMobileSeam, setIsMobileSeam] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(max-width: 640px)").matches;
+  });
   const [curtainReady, setCurtainReady] = useState(false);
   const [invitationState, setInvitationState] = useState("idle");
   const heroRef = useRef(null);
