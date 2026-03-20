@@ -39,17 +39,23 @@ export async function POST(request) {
 
     const storageResult = await storeInquiry(submission);
 
-    await notifyEvent("inquiry.created", {
-      submission,
-      inquiryId: storageResult.record?.id ?? null,
-      mode: storageResult.mode,
-    });
+    let notification = { delivered: false, mode: "skipped" };
+    try {
+      notification = await notifyEvent("inquiry.created", {
+        submission,
+        inquiryId: storageResult.record?.id ?? null,
+        mode: storageResult.mode,
+      });
+    } catch (notificationError) {
+      console.error("Inquiry notification failed", notificationError);
+    }
 
     return NextResponse.json({
       ok: true,
       stored: storageResult.stored,
       mode: storageResult.mode,
       id: storageResult.record?.id ?? null,
+      notification,
     });
   } catch (error) {
     console.error("Invitation route error", error);
