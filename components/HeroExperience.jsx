@@ -588,7 +588,7 @@ export default function HeroExperience() {
               What remains is the feeling that the room itself has shifted.
             </p>
           </div>
-          <div className={styles.materialPanel} data-section-reveal>
+          <div className={`${styles.materialPanel} ${styles.materialPanelImage}`} data-section-reveal>
             <div className={styles.panelInset}>
               <img
                 src="/assets/images/experience-performance.jpg"

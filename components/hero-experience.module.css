@@ -437,6 +437,11 @@
     );
 }
 
+.materialPanelImage::before {
+  background:
+    linear-gradient(180deg, rgba(6, 6, 7, 0.04) 0%, rgba(6, 6, 7, 0.12) 100%);
+}
+
 .panelInset {
   position: absolute;
   inset: 1rem;
@@ -453,6 +458,14 @@
   background:
     radial-gradient(circle at 50% 50%, rgba(201, 168, 106, 0.45), transparent 54%),
     linear-gradient(135deg, transparent 42%, rgba(201, 168, 106, 0.28) 50%, transparent 58%);
+}
+
+.materialPanelImage .panelInset::before {
+  inset: 0;
+  opacity: 0.38;
+  background:
+    radial-gradient(circle at 74% 22%, rgba(201, 168, 106, 0.08), transparent 22%),
+    linear-gradient(180deg, rgba(6, 6, 7, 0.08) 0%, rgba(6, 6, 7, 0) 24%, rgba(6, 6, 7, 0.24) 100%);
 }
 
 .panelImage {
