@@ -6,7 +6,57 @@ function getEmailConfig() {
   };
 }
 
+function formatTimestamp(value) {
+  if (!value) return "Unknown";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
 function buildEmailContent(eventType, payload) {
+  if (eventType === "inquiry.created") {
+    const submission = payload.submission ?? {};
+    return {
+      subject: "New Artifice Inquiry",
+      html: `
+        <div style="font-family: Georgia, serif; line-height: 1.55; color: #111; max-width: 700px;">
+          <h2 style="margin: 0 0 18px; font-weight: 500;">New Artifice Inquiry</h2>
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <tr><td style="padding: 8px 0; color: #6b5a38; width: 160px;">Name</td><td style="padding: 8px 0;">${submission.name || "Unknown"}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38;">Email</td><td style="padding: 8px 0;">${submission.email || "Unknown"}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38;">Event Type</td><td style="padding: 8px 0;">${submission.eventType || "Not specified"}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38;">Date</td><td style="padding: 8px 0;">${submission.date || "Not specified"}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38;">Location</td><td style="padding: 8px 0;">${submission.location || "Not specified"}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38;">Submitted</td><td style="padding: 8px 0;">${formatTimestamp(submission.submittedAt)}</td></tr>
+          </table>
+          <div style="margin-top: 18px; padding: 16px 18px; background: #f7f4ee; border-radius: 10px;">
+            <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6b5a38; margin-bottom: 8px;">Message</div>
+            <div>${submission.message || "No message provided."}</div>
+          </div>
+        </div>
+      `,
+      text: [
+        "New Artifice Inquiry",
+        "",
+        `Name: ${submission.name || "Unknown"}`,
+        `Email: ${submission.email || "Unknown"}`,
+        `Event Type: ${submission.eventType || "Not specified"}`,
+        `Date: ${submission.date || "Not specified"}`,
+        `Location: ${submission.location || "Not specified"}`,
+        `Submitted: ${formatTimestamp(submission.submittedAt)}`,
+        "",
+        "Message:",
+        submission.message || "No message provided.",
+      ].join("\n"),
+    };
+  }
+
   const prettyPayload = JSON.stringify(payload, null, 2);
   return {
     subject: `Artifice notification: ${eventType}`,
