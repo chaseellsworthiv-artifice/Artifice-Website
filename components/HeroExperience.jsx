@@ -589,7 +589,13 @@ export default function HeroExperience() {
             </p>
           </div>
           <div className={styles.materialPanel} data-section-reveal>
-            <div className={styles.panelInset} />
+            <div className={styles.panelInset}>
+              <img
+                src="/assets/images/experience-performance.jpg"
+                alt="Chase Ellsworth handling cards during a close-up performance"
+                className={styles.panelImage}
+              />
+            </div>
           </div>
         </section>
 
