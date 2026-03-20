@@ -44,7 +44,12 @@ Environment variables are documented in `.env.example`.
    - optional `INQUIRY_TABLE_NAME`
    - optional `BOOKING_TABLE_NAME`
 5. Optional: set `BOOKING_WEBHOOK_URL` to forward inquiries, bookings, and deposit requests
-6. Optional: set Google Calendar and Stripe env vars from [.env.example](/Users/Artifice/Desktop/Artifice%20Site%20v2/.env.example) to activate hosted availability and deposit flows
+6. Optional: set:
+   - `RESEND_API_KEY`
+   - `BOOKING_TO_EMAIL`
+   - `BOOKING_FROM_EMAIL`
+   to deliver inquiry and booking notifications by email
+7. Optional: set Google Calendar and Stripe env vars from [.env.example](/Users/Artifice/Desktop/Artifice%20Site%20v2/.env.example) to activate hosted availability and deposit flows
 
 ## Notes
 
