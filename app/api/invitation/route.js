@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { storeInquiry } from "./store";
+import { notifyEvent } from "../_lib/notify";
 
 function clean(value) {
   return String(value ?? "").trim();
@@ -35,27 +37,20 @@ export async function POST(request) {
       return NextResponse.json({ error: "Invalid email." }, { status: 400 });
     }
 
-    const webhookUrl = process.env.BOOKING_WEBHOOK_URL;
+    const storageResult = await storeInquiry(submission);
 
-    if (webhookUrl) {
-      const webhookResponse = await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(submission),
-        cache: "no-store",
-      });
+    await notifyEvent("inquiry.created", {
+      submission,
+      inquiryId: storageResult.record?.id ?? null,
+      mode: storageResult.mode,
+    });
 
-      if (!webhookResponse.ok) {
-        console.error("Invitation webhook failed", webhookResponse.status, webhookResponse.statusText);
-        return NextResponse.json({ error: "Notification failed." }, { status: 502 });
-      }
-    } else {
-      console.info("Artifice invitation request", submission);
-    }
-
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({
+      ok: true,
+      stored: storageResult.stored,
+      mode: storageResult.mode,
+      id: storageResult.record?.id ?? null,
+    });
   } catch (error) {
     console.error("Invitation route error", error);
     return NextResponse.json({ error: "Unexpected server error." }, { status: 500 });

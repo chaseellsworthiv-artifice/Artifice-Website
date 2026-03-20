@@ -291,7 +291,8 @@ export default function HeroExperience() {
 
       const tensionWindow = isTouch ? 0.075 : isReduced ? 0.082 : 0.088;
       const tensionProgress = Math.min(1, state.open / tensionWindow);
-      const openWeight = state.open <= tensionWindow ? 0 : (state.open - tensionWindow) / (1 - tensionWindow);
+      const openProgressRaw = state.open <= tensionWindow ? 0 : (state.open - tensionWindow) / (1 - tensionWindow);
+      const openWeight = Math.pow(openProgressRaw, isTouch ? 1.16 : isReduced ? 1.22 : 1.28);
 
       sliceRefs.current.forEach((slice, index) => {
         if (!slice) return;

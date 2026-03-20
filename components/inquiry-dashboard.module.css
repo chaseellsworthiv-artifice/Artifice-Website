@@ -1,0 +1,230 @@
+.page {
+  min-height: 100vh;
+  padding: 3rem 1.5rem 4rem;
+  background:
+    radial-gradient(circle at 16% 10%, rgba(74, 15, 23, 0.22), transparent 24%),
+    radial-gradient(circle at 82% 0%, rgba(201, 168, 106, 0.06), transparent 24%),
+    linear-gradient(180deg, #050506 0%, #09090b 100%);
+}
+
+.header {
+  width: min(100%, 1180px);
+  margin: 0 auto 2rem;
+}
+
+.kicker,
+.detailLabel {
+  margin: 0 0 0.5rem;
+  color: var(--antique-gold);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.header h1,
+.detail h2 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 0.96;
+  font-weight: 500;
+}
+
+.subtitle {
+  max-width: 36rem;
+  margin: 0.9rem 0 0;
+  color: var(--muted-paper);
+}
+
+.shell {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 20rem minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.list,
+.detail {
+  position: relative;
+  border: 1px solid rgba(201, 168, 106, 0.12);
+  background: linear-gradient(180deg, rgba(17, 17, 19, 0.88), rgba(9, 9, 10, 0.92));
+  box-shadow: inset 0 1px 0 rgba(230, 221, 198, 0.03);
+}
+
+.list {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  padding: 0.9rem;
+}
+
+.listItem {
+  appearance: none;
+  border: 1px solid rgba(201, 168, 106, 0.08);
+  background: rgba(230, 221, 198, 0.01);
+  color: var(--aged-paper);
+  text-align: left;
+  padding: 0.95rem 1rem;
+  cursor: pointer;
+}
+
+.listItemActive {
+  border-color: rgba(201, 168, 106, 0.28);
+  background: rgba(201, 168, 106, 0.05);
+}
+
+.listTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.95rem;
+}
+
+.status {
+  color: rgba(201, 168, 106, 0.8);
+  text-transform: capitalize;
+}
+
+.listItem p,
+.listItem small,
+.messageBlock p,
+.detailGrid dd,
+.detailGrid dt,
+.meta span,
+.empty,
+.error {
+  margin: 0;
+}
+
+.listItem p,
+.listItem small,
+.meta span,
+.detailGrid dd,
+.messageBlock p {
+  color: var(--muted-paper);
+}
+
+.inlineAction,
+.inlineActionWide {
+  appearance: none;
+  border: 1px solid rgba(201, 168, 106, 0.12);
+  background: rgba(201, 168, 106, 0.04);
+  color: var(--aged-paper);
+  font: inherit;
+  padding: 0.7rem 0.9rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.inlineAction {
+  margin-top: 0.75rem;
+}
+
+.inlineActionWide {
+  width: fit-content;
+}
+
+.detail {
+  padding: 1.4rem 1.4rem 1.6rem;
+}
+
+.detailHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1.4rem;
+}
+
+.meta {
+  display: grid;
+  gap: 0.3rem;
+  justify-items: end;
+  text-align: right;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.4rem;
+  margin: 0 0 1.4rem;
+}
+
+.detailGrid dt {
+  margin-bottom: 0.28rem;
+  color: rgba(230, 221, 198, 0.52);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.messageBlock {
+  margin-bottom: 1.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(201, 168, 106, 0.1);
+}
+
+.controls {
+  display: grid;
+  gap: 1rem;
+}
+
+.controlBlock {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.controlBlock span {
+  color: rgba(230, 221, 198, 0.52);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.controlBlock input,
+.controlBlock select,
+.controlBlock textarea {
+  border: 1px solid rgba(201, 168, 106, 0.12);
+  background: rgba(6, 6, 7, 0.52);
+  color: var(--aged-paper);
+  font: inherit;
+  padding: 0.85rem 0.95rem;
+  outline: none;
+}
+
+.controlBlock textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.error {
+  margin-top: 1rem;
+  color: rgba(201, 168, 106, 0.92);
+}
+
+.empty {
+  color: var(--muted-paper);
+}
+
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .detailHeader,
+  .meta {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .detailHeader {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .detailGrid {
+    grid-template-columns: 1fr;
+  }
+}
