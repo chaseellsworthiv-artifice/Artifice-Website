@@ -530,6 +530,10 @@
   min-height: 30rem;
   overflow: hidden;
   border-radius: 30px 30px 10px 10px;
+  background: linear-gradient(180deg, rgba(8, 8, 9, 0.84), rgba(5, 5, 6, 0.94));
+  box-shadow:
+    inset 0 1px 0 rgba(230, 221, 198, 0.03),
+    0 24px 60px rgba(0, 0, 0, 0.24);
 }
 
 .portraitFrame::after {
@@ -537,6 +541,7 @@
   position: absolute;
   inset: 1rem;
   border: 1px solid rgba(201, 168, 106, 0.14);
+  z-index: 2;
 }
 
 .portraitFrame::before {
@@ -544,10 +549,12 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  opacity: 0.22;
+  opacity: 0.46;
   background:
-    radial-gradient(circle at 78% 18%, rgba(201, 168, 106, 0.2), transparent 18%),
-    linear-gradient(180deg, rgba(74, 15, 23, 0.14), transparent 36%);
+    radial-gradient(circle at 74% 16%, rgba(201, 168, 106, 0.16), transparent 16%),
+    radial-gradient(circle at 24% 22%, rgba(255, 243, 221, 0.06), transparent 18%),
+    linear-gradient(180deg, rgba(9, 8, 8, 0.04) 0%, rgba(9, 8, 8, 0) 26%, rgba(9, 8, 8, 0.22) 100%),
+    linear-gradient(90deg, rgba(8, 7, 7, 0.24) 0%, rgba(8, 7, 7, 0) 26%, rgba(8, 7, 7, 0.18) 100%);
 }
 
 .portrait {
@@ -556,7 +563,9 @@
   height: 100%;
   min-height: 30rem;
   object-fit: cover;
-  filter: saturate(0.5) brightness(0.6) contrast(1.04) sepia(0.08);
+  object-position: center 28%;
+  transform: scale(1.02);
+  filter: saturate(0.76) brightness(0.72) contrast(1.12) sepia(0.04);
 }
 
 .bookingSection {
