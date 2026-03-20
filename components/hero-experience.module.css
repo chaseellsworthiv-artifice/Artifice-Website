@@ -417,7 +417,7 @@
   position: relative;
   min-height: 24rem;
   overflow: hidden;
-  border-radius: 28px 28px 6px 6px;
+  border-radius: 30px 30px 10px 10px;
 }
 
 .materialPanel::before {
@@ -439,7 +439,7 @@
 
 .materialPanelImage::before {
   background:
-    linear-gradient(180deg, rgba(6, 6, 7, 0.04) 0%, rgba(6, 6, 7, 0.12) 100%);
+    linear-gradient(180deg, rgba(6, 6, 7, 0.03) 0%, rgba(6, 6, 7, 0.14) 100%);
 }
 
 .panelInset {
@@ -462,10 +462,15 @@
 
 .materialPanelImage .panelInset::before {
   inset: 0;
-  opacity: 0.38;
+  opacity: 0.3;
   background:
-    radial-gradient(circle at 74% 22%, rgba(201, 168, 106, 0.08), transparent 22%),
-    linear-gradient(180deg, rgba(6, 6, 7, 0.08) 0%, rgba(6, 6, 7, 0) 24%, rgba(6, 6, 7, 0.24) 100%);
+    radial-gradient(circle at 74% 22%, rgba(201, 168, 106, 0.06), transparent 20%),
+    linear-gradient(180deg, rgba(6, 6, 7, 0.06) 0%, rgba(6, 6, 7, 0) 24%, rgba(6, 6, 7, 0.22) 100%);
+}
+
+.materialPanelImage .panelInset {
+  inset: 1rem;
+  border: 1px solid rgba(201, 168, 106, 0.14);
 }
 
 .panelImage {
