@@ -685,6 +685,27 @@
   resize: vertical;
 }
 
+.invitationTrap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.invitationError {
+  grid-column: 1 / -1;
+  margin: 0.15rem 0 0;
+  color: rgba(201, 168, 106, 0.88);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
 .invitationSubmit {
   justify-self: start;
   margin-top: 0.6rem;

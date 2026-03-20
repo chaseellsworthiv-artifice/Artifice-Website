@@ -15,6 +15,7 @@ export default function HeroExperience() {
   const [isMobileSeam, setIsMobileSeam] = useState(false);
   const [curtainReady, setCurtainReady] = useState(false);
   const [invitationState, setInvitationState] = useState("idle");
+  const [invitationError, setInvitationError] = useState("");
   const heroRef = useRef(null);
   const wordmarkRef = useRef(null);
   const copyBodyRef = useRef(null);
@@ -40,15 +41,54 @@ export default function HeroExperience() {
 
   const handleInvitationActivate = () => {
     if (invitationState !== "idle") return;
+    setInvitationError("");
     setInvitationState("opening");
     window.setTimeout(() => setInvitationState("open"), 220);
   };
 
-  const handleInvitationSubmit = (event) => {
+  const handleInvitationSubmit = async (event) => {
     event.preventDefault();
     if (invitationState !== "open") return;
+    setInvitationError("");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get("name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      eventType: String(formData.get("eventType") ?? "").trim(),
+      date: String(formData.get("date") ?? "").trim(),
+      location: String(formData.get("location") ?? "").trim(),
+      message: String(formData.get("message") ?? "").trim(),
+      website: String(formData.get("website") ?? "").trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.eventType || !payload.message) {
+      setInvitationError("Please complete the required fields.");
+      return;
+    }
+
     setInvitationState("submitting");
-    window.setTimeout(() => setInvitationState("submitted"), 560);
+    try {
+      const response = await fetch("/api/invitation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Submission failed");
+      }
+
+      form.reset();
+      window.setTimeout(() => setInvitationState("submitted"), 560);
+    } catch (error) {
+      console.error("Invitation submission failed", error);
+      setInvitationState("open");
+      setInvitationError("The request did not go through. Please try again.");
+    }
   };
 
   useEffect(() => {
@@ -606,15 +646,15 @@ export default function HeroExperience() {
             <form className={styles.invitationForm} onSubmit={handleInvitationSubmit}>
               <label className={styles.invitationField}>
                 <span>Name</span>
-                <input type="text" name="name" autoComplete="name" />
+                <input type="text" name="name" autoComplete="name" required />
               </label>
               <label className={styles.invitationField}>
                 <span>Email</span>
-                <input type="email" name="email" autoComplete="email" />
+                <input type="email" name="email" autoComplete="email" required />
               </label>
               <label className={styles.invitationField}>
                 <span>Event Type</span>
-                <input type="text" name="eventType" />
+                <input type="text" name="eventType" required />
               </label>
               <label className={styles.invitationField}>
                 <span>Date</span>
@@ -626,8 +666,17 @@ export default function HeroExperience() {
               </label>
               <label className={`${styles.invitationField} ${styles.fullWidth}`}>
                 <span>Message</span>
-                <textarea name="message" rows="5" />
+                <textarea name="message" rows="5" required />
               </label>
+              <input
+                type="text"
+                name="website"
+                tabIndex="-1"
+                autoComplete="off"
+                className={styles.invitationTrap}
+                aria-hidden="true"
+              />
+              {invitationError ? <p className={styles.invitationError}>{invitationError}</p> : null}
               <button type="submit" className={styles.invitationSubmit}>
                 Send invitation request
               </button>
