@@ -634,6 +634,7 @@
 }
 
 .invitationPrelude {
+  grid-area: 1 / 1;
   display: grid;
   gap: 1.45rem;
   place-items: center;
@@ -662,6 +663,7 @@
   font-size: 0.75rem;
   padding: 0;
   cursor: pointer;
+  transition: color 180ms ease, transform 220ms ease, text-shadow 220ms ease;
 }
 
 .invitationTrigger::after,
@@ -675,6 +677,7 @@
 }
 
 .invitationForm {
+  grid-area: 1 / 1;
   width: min(100%, 40rem);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -712,6 +715,11 @@
   font: inherit;
   padding: 0.22rem 0 0.66rem;
   outline: none;
+}
+
+.invitationField input::placeholder,
+.invitationField textarea::placeholder {
+  color: rgba(230, 221, 198, 0.34);
 }
 
 .invitationField input:focus,
@@ -761,10 +769,18 @@
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(2rem, 4.6vw, 3.6rem);
   line-height: 1;
-  color: var(--aged-paper);
+  color: rgba(230, 221, 198, 0.62);
   opacity: 0;
   pointer-events: none;
   transition: opacity 520ms ease, transform 620ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .invitationTrigger:hover {
+    color: rgba(230, 221, 198, 0.9);
+    transform: translate3d(0, -1px, 0) scale(1.03);
+    text-shadow: 0 0 18px rgba(201, 168, 106, 0.16);
+  }
 }
 
 .bookingStateOpening .invitationStage::before,
