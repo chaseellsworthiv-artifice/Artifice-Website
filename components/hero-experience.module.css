@@ -935,7 +935,8 @@
   }
 
   .hero {
-    min-height: 250svh;
+    min-height: 190svh;
+    --hero-copy-offset: clamp(21rem, 80vw, 30rem);
   }
 
   .sceneShell {
@@ -991,6 +992,9 @@
     padding-top: var(--hero-copy-offset);
   }
 
+  .copyTitle {
+    max-width: 9.6ch;
+  }
 
   .lead {
     max-width: 24ch;
