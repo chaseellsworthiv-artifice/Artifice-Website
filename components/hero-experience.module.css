@@ -932,11 +932,13 @@
 @media (max-width: 640px) {
   .page {
     min-height: 170vh;
+    width: 100%;
+    overflow-x: clip;
   }
 
   .hero {
-    min-height: 190svh;
-    --hero-copy-offset: clamp(21rem, 80vw, 30rem);
+    min-height: 168svh;
+    --hero-copy-offset: clamp(17.5rem, 66vw, 23rem);
   }
 
   .sceneShell {
@@ -989,11 +991,12 @@
   }
 
   .copy {
+    width: calc(100% - 1.25rem);
     padding-top: var(--hero-copy-offset);
   }
 
   .copyTitle {
-    max-width: 9.6ch;
+    max-width: 9.1ch;
   }
 
   .lead {
@@ -1023,6 +1026,11 @@
     padding-bottom: 4rem;
   }
 
+  .sections::before {
+    inset: -4rem 0 0;
+    opacity: 0.78;
+  }
+
   .section {
     padding: 4.2rem 0;
   }
@@ -1032,8 +1040,8 @@
   }
 
   .section::after {
-    inset: 0 -1rem;
-    opacity: 0.78;
+    inset: 0;
+    opacity: 0.72;
   }
 
   .sectionHeading h2,
