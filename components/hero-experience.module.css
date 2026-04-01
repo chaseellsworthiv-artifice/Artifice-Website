@@ -942,6 +942,10 @@
     height: 100svh;
   }
 
+  .heroVideo {
+    object-position: center 6%;
+  }
+
   .heroAtmosphere {
     background: rgba(0, 0, 0, 0.05);
   }
