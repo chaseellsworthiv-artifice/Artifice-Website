@@ -952,12 +952,12 @@
     height: auto;
     aspect-ratio: 16 / 9;
     object-position: center 30%;
-    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 72%, rgba(0, 0, 0, 0.92) 82%, rgba(0, 0, 0, 0.5) 92%, #000 100%);
-    mask-image: linear-gradient(180deg, #000 0%, #000 72%, rgba(0, 0, 0, 0.92) 82%, rgba(0, 0, 0, 0.5) 92%, #000 100%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.22) 8%, rgba(0, 0, 0, 0.72) 16%, #000 24%, #000 72%, rgba(0, 0, 0, 0.72) 84%, rgba(0, 0, 0, 0.22) 92%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.22) 8%, rgba(0, 0, 0, 0.72) 16%, #000 24%, #000 72%, rgba(0, 0, 0, 0.72) 84%, rgba(0, 0, 0, 0.22) 92%, transparent 100%);
   }
 
   .heroVideoScrim {
-    background: linear-gradient(180deg, #090708 0%, rgba(9, 7, 8, 0.38) 14%, rgba(9, 7, 8, 0.08) 30%, rgba(9, 7, 8, 0.05) 48%, rgba(9, 7, 8, 0.22) 62%, rgba(9, 7, 8, 0.58) 80%, #090708 100%);
+    background: linear-gradient(180deg, #090708 0%, rgba(9, 7, 8, 0.6) 12%, rgba(9, 7, 8, 0.14) 24%, rgba(9, 7, 8, 0.03) 36%, rgba(9, 7, 8, 0.03) 64%, rgba(9, 7, 8, 0.16) 76%, rgba(9, 7, 8, 0.62) 88%, #090708 100%);
   }
 
   .heroAtmosphere {

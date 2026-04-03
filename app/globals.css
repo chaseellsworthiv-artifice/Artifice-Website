@@ -45,3 +45,20 @@ body::before {
 a {
   color: inherit;
 }
+
+
+@media (max-width: 640px) {
+  html {
+    background: #090708;
+    overscroll-behavior: none;
+  }
+
+  body {
+    background: #090708;
+    overscroll-behavior: none;
+  }
+
+  body::before {
+    opacity: 0;
+  }
+}
