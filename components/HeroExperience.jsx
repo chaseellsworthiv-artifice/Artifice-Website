@@ -570,9 +570,6 @@ export default function HeroExperience() {
               <a href="#booking" className={styles.primaryLink}>
                 Begin Inquiry
               </a>
-              <a href="#experience" className={styles.secondaryLink}>
-                Scroll Further
-              </a>
             </div>
           </div>
         </header>
