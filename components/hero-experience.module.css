@@ -934,11 +934,12 @@
     min-height: 170vh;
     width: 100%;
     overflow-x: clip;
+    background: linear-gradient(180deg, #080708 0%, #090708 24%, #090708 100%);
   }
 
   .hero {
     min-height: 168svh;
-    --hero-copy-offset: clamp(23rem, 84vw, 31rem);
+    --hero-copy-offset: clamp(27rem, 98vw, 35rem);
   }
 
   .sceneShell {
@@ -946,29 +947,27 @@
   }
 
   .heroVideo {
-    inset: clamp(5.5rem, 18vw, 7.5rem) 0 auto;
+    inset: clamp(9rem, 28vw, 12rem) 0 auto;
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    object-position: center 18%;
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.12) 6%, rgba(0, 0, 0, 0.58) 14%, #000 24%, #000 74%, rgba(0, 0, 0, 0.8) 84%, rgba(0, 0, 0, 0.34) 92%, transparent 100%);
-    mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.12) 6%, rgba(0, 0, 0, 0.58) 14%, #000 24%, #000 74%, rgba(0, 0, 0, 0.8) 84%, rgba(0, 0, 0, 0.34) 92%, transparent 100%);
+    object-position: center 24%;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.08) 8%, rgba(0, 0, 0, 0.44) 16%, #000 28%, #000 74%, rgba(0, 0, 0, 0.8) 84%, rgba(0, 0, 0, 0.34) 92%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.08) 8%, rgba(0, 0, 0, 0.44) 16%, #000 28%, #000 74%, rgba(0, 0, 0, 0.8) 84%, rgba(0, 0, 0, 0.34) 92%, transparent 100%);
   }
 
   .heroVideoScrim {
-    background:
-      radial-gradient(circle at 50% 26%, rgba(214, 172, 109, 0.014), transparent 30%),
-      linear-gradient(180deg, rgba(9, 7, 8, 0.48) 0%, rgba(9, 7, 8, 0.16) 16%, rgba(9, 7, 8, 0.03) 30%, rgba(9, 7, 8, 0.02) 48%, rgba(9, 7, 8, 0.2) 62%, rgba(9, 7, 8, 0.56) 80%, rgba(9, 7, 8, 0.84) 100%);
+    background: linear-gradient(180deg, rgba(9, 7, 8, 0.68) 0%, rgba(9, 7, 8, 0.26) 14%, rgba(9, 7, 8, 0.06) 30%, rgba(9, 7, 8, 0.03) 48%, rgba(9, 7, 8, 0.22) 62%, rgba(9, 7, 8, 0.58) 80%, rgba(9, 7, 8, 0.84) 100%);
   }
 
   .heroAtmosphere {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.02);
   }
 
   .heroAtmosphere::before {
     background:
       linear-gradient(90deg, #0a0a0a 0%, rgba(10, 10, 10, 0) 5%, rgba(10, 10, 10, 0) 95%, #0a0a0a 100%),
-      linear-gradient(180deg, rgba(10, 10, 10, 0) 0%, rgba(10, 10, 10, 0.06) 84%, #0a0a0a 100%);
+      linear-gradient(180deg, rgba(10, 10, 10, 0.24) 0%, rgba(10, 10, 10, 0.06) 18%, rgba(10, 10, 10, 0) 34%, rgba(10, 10, 10, 0.06) 84%, #0a0a0a 100%);
   }
 
   .scrollVeil {
