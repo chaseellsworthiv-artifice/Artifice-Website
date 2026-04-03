@@ -13,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroExperience() {
   const [isMobileSeam, setIsMobileSeam] = useState(false);
+  const [seamResolved, setSeamResolved] = useState(false);
   const [curtainReady, setCurtainReady] = useState(false);
   const [invitationState, setInvitationState] = useState("idle");
   const [invitationError, setInvitationError] = useState("");
@@ -95,7 +96,10 @@ export default function HeroExperience() {
     if (typeof window === "undefined") return undefined;
 
     const mediaQuery = window.matchMedia("(max-width: 640px)");
-    const update = () => setIsMobileSeam(mediaQuery.matches);
+    const update = () => {
+      setIsMobileSeam(mediaQuery.matches);
+      setSeamResolved(true);
+    };
     update();
 
     if (mediaQuery.addEventListener) {
@@ -505,7 +509,11 @@ export default function HeroExperience() {
         <div className={`${styles.sceneShell} ${curtainReady ? styles.sceneShellReady : ""}`}>
           <HeroScene />
         </div>
-        <div ref={curtainShellRef} className={styles.curtainShell} aria-hidden="true">
+        <div
+          ref={curtainShellRef}
+          className={`${styles.curtainShell} ${curtainReady && seamResolved ? styles.curtainShellReady : ""}`}
+          aria-hidden="true"
+        >
           <div
             className={styles.curtainSwells}
             style={{ clipPath: `url(#${isMobileSeam ? "curtain-swells-cap-mobile" : "curtain-swells-cap"})` }}

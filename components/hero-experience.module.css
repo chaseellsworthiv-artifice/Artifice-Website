@@ -92,8 +92,14 @@
   perspective: 1600px;
   transform-style: preserve-3d;
   background: transparent;
+  opacity: 0;
+  transition: opacity 120ms ease-out;
   --curtain-left-shift: 0px;
   --curtain-right-shift: 0px;
+}
+
+.curtainShellReady {
+  opacity: 1;
 }
 
 .curtainClipDefs {
