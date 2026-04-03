@@ -934,12 +934,12 @@
     min-height: 170vh;
     width: 100%;
     overflow-x: clip;
-    background: linear-gradient(180deg, #080708 0%, #090708 24%, #090708 100%);
+    background: #090708;
   }
 
   .hero {
-    min-height: 168svh;
-    --hero-copy-offset: clamp(27rem, 98vw, 35rem);
+    min-height: 170svh;
+    --hero-copy-offset: clamp(31rem, 112vw, 39rem);
   }
 
   .sceneShell {
@@ -947,17 +947,17 @@
   }
 
   .heroVideo {
-    inset: clamp(9rem, 28vw, 12rem) 0 auto;
+    inset: clamp(13rem, 40vw, 16rem) 0 auto;
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    object-position: center 24%;
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.08) 8%, rgba(0, 0, 0, 0.44) 16%, #000 28%, #000 74%, rgba(0, 0, 0, 0.8) 84%, rgba(0, 0, 0, 0.34) 92%, transparent 100%);
-    mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.08) 8%, rgba(0, 0, 0, 0.44) 16%, #000 28%, #000 74%, rgba(0, 0, 0, 0.8) 84%, rgba(0, 0, 0, 0.34) 92%, transparent 100%);
+    object-position: center 30%;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 72%, rgba(0, 0, 0, 0.92) 82%, rgba(0, 0, 0, 0.5) 92%, #000 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 72%, rgba(0, 0, 0, 0.92) 82%, rgba(0, 0, 0, 0.5) 92%, #000 100%);
   }
 
   .heroVideoScrim {
-    background: linear-gradient(180deg, rgba(9, 7, 8, 0.68) 0%, rgba(9, 7, 8, 0.26) 14%, rgba(9, 7, 8, 0.06) 30%, rgba(9, 7, 8, 0.03) 48%, rgba(9, 7, 8, 0.22) 62%, rgba(9, 7, 8, 0.58) 80%, rgba(9, 7, 8, 0.84) 100%);
+    background: linear-gradient(180deg, #090708 0%, rgba(9, 7, 8, 0.38) 14%, rgba(9, 7, 8, 0.08) 30%, rgba(9, 7, 8, 0.05) 48%, rgba(9, 7, 8, 0.22) 62%, rgba(9, 7, 8, 0.58) 80%, #090708 100%);
   }
 
   .heroAtmosphere {
@@ -967,7 +967,7 @@
   .heroAtmosphere::before {
     background:
       linear-gradient(90deg, #0a0a0a 0%, rgba(10, 10, 10, 0) 5%, rgba(10, 10, 10, 0) 95%, #0a0a0a 100%),
-      linear-gradient(180deg, rgba(10, 10, 10, 0.24) 0%, rgba(10, 10, 10, 0.06) 18%, rgba(10, 10, 10, 0) 34%, rgba(10, 10, 10, 0.06) 84%, #0a0a0a 100%);
+      linear-gradient(180deg, #090708 0%, rgba(10, 10, 10, 0.08) 18%, rgba(10, 10, 10, 0) 34%, rgba(10, 10, 10, 0.06) 84%, #090708 100%);
   }
 
   .scrollVeil {
