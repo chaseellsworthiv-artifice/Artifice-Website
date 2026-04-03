@@ -938,7 +938,7 @@
 
   .hero {
     min-height: 168svh;
-    --hero-copy-offset: clamp(17.5rem, 66vw, 23rem);
+    --hero-copy-offset: clamp(23rem, 84vw, 31rem);
   }
 
   .sceneShell {
@@ -946,19 +946,19 @@
   }
 
   .heroVideo {
-    inset: 1.2rem 0 auto;
+    inset: clamp(5.5rem, 18vw, 7.5rem) 0 auto;
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    object-position: center 12%;
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.18) 4%, rgba(0, 0, 0, 0.68) 10%, #000 18%, #000 74%, rgba(0, 0, 0, 0.8) 84%, rgba(0, 0, 0, 0.34) 92%, transparent 100%);
-    mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.18) 4%, rgba(0, 0, 0, 0.68) 10%, #000 18%, #000 74%, rgba(0, 0, 0, 0.8) 84%, rgba(0, 0, 0, 0.34) 92%, transparent 100%);
+    object-position: center 18%;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.12) 6%, rgba(0, 0, 0, 0.58) 14%, #000 24%, #000 74%, rgba(0, 0, 0, 0.8) 84%, rgba(0, 0, 0, 0.34) 92%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.12) 6%, rgba(0, 0, 0, 0.58) 14%, #000 24%, #000 74%, rgba(0, 0, 0, 0.8) 84%, rgba(0, 0, 0, 0.34) 92%, transparent 100%);
   }
 
   .heroVideoScrim {
     background:
-      radial-gradient(circle at 50% 18%, rgba(214, 172, 109, 0.014), transparent 28%),
-      linear-gradient(180deg, rgba(9, 7, 8, 0.34) 0%, rgba(9, 7, 8, 0.08) 12%, rgba(9, 7, 8, 0.02) 24%, rgba(9, 7, 8, 0.02) 42%, rgba(9, 7, 8, 0.2) 58%, rgba(9, 7, 8, 0.56) 78%, rgba(9, 7, 8, 0.84) 100%);
+      radial-gradient(circle at 50% 26%, rgba(214, 172, 109, 0.014), transparent 30%),
+      linear-gradient(180deg, rgba(9, 7, 8, 0.48) 0%, rgba(9, 7, 8, 0.16) 16%, rgba(9, 7, 8, 0.03) 30%, rgba(9, 7, 8, 0.02) 48%, rgba(9, 7, 8, 0.2) 62%, rgba(9, 7, 8, 0.56) 80%, rgba(9, 7, 8, 0.84) 100%);
   }
 
   .heroAtmosphere {
