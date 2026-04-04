@@ -83,6 +83,7 @@ export default function MorphRevealText({
   const rootRef = useRef(null);
   const measureRefs = useRef([]);
   const lineAnimRefs = useRef([]);
+  const hasPlayedRef = useRef(false);
   const [metrics, setMetrics] = useState([]);
   const idPrefix = useId().replace(/:/g, "");
 
@@ -116,6 +117,13 @@ export default function MorphRevealText({
     const context = gsap.context(() => {
       lineAnimRefs.current.forEach((entry, index) => {
         if (!entry?.washText || !entry?.svgRoot || !entry?.finalText) return;
+
+        if (hasPlayedRef.current) {
+          gsap.set(entry.svgRoot, { opacity: 0 });
+          gsap.set(entry.washText, { opacity: 0 });
+          gsap.set(entry.finalText, { opacity: 1 });
+          return;
+        }
 
         gsap.set(entry.svgRoot, { opacity: 0 });
         gsap.set(entry.washText, { opacity: 0.38 });
@@ -226,7 +234,13 @@ export default function MorphRevealText({
         trigger,
         start,
         once: true,
-        onEnter: () => timeline.play(0),
+        onEnter: () => {
+          if (hasPlayedRef.current) return;
+          timeline.eventCallback("onComplete", () => {
+            hasPlayedRef.current = true;
+          });
+          timeline.play(0);
+        },
       });
     }, rootRef);
 
