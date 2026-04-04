@@ -217,20 +217,22 @@
 }
 
 .eyebrow {
-  margin: 0 0 0.9rem;
-  color: var(--antique-gold);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-size: 0.7rem;
+  margin: 0 0 1.1rem;
+  color: rgba(230, 221, 198, 0.9);
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-size: 0.86rem;
 }
 
 .wordmark {
+  display: inline-block;
   font-family: "UnifrakturCook", "Cormorant Garamond", serif;
-  font-size: clamp(1.9rem, 3vw, 2.5rem);
-  line-height: 1;
-  letter-spacing: 0.015em;
+  font-size: clamp(2.45rem, 4.3vw, 3.7rem);
+  line-height: 0.96;
+  letter-spacing: 0.01em;
   font-weight: 700;
   text-transform: lowercase;
+  text-shadow: 0 0 18px rgba(201, 168, 106, 0.1);
 }
 
 .copyTitle {
@@ -588,12 +590,12 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  opacity: 0.46;
+  opacity: 0.34;
   background:
-    radial-gradient(circle at 74% 16%, rgba(201, 168, 106, 0.16), transparent 16%),
-    radial-gradient(circle at 24% 22%, rgba(255, 243, 221, 0.06), transparent 18%),
-    linear-gradient(180deg, rgba(9, 8, 8, 0.04) 0%, rgba(9, 8, 8, 0) 26%, rgba(9, 8, 8, 0.22) 100%),
-    linear-gradient(90deg, rgba(8, 7, 7, 0.24) 0%, rgba(8, 7, 7, 0) 26%, rgba(8, 7, 7, 0.18) 100%);
+    radial-gradient(circle at 74% 16%, rgba(201, 168, 106, 0.1), transparent 18%),
+    radial-gradient(circle at 24% 22%, rgba(255, 243, 221, 0.035), transparent 20%),
+    linear-gradient(180deg, rgba(9, 8, 8, 0.14) 0%, rgba(9, 8, 8, 0.02) 22%, rgba(9, 8, 8, 0.2) 100%),
+    linear-gradient(90deg, rgba(8, 7, 7, 0.16) 0%, rgba(8, 7, 7, 0) 26%, rgba(8, 7, 7, 0.12) 100%);
 }
 
 .portrait {
@@ -602,9 +604,9 @@
   height: 100%;
   min-height: 30rem;
   object-fit: cover;
-  object-position: center 28%;
-  transform: scale(1.02);
-  filter: saturate(0.76) brightness(0.72) contrast(1.12) sepia(0.04);
+  object-position: center 24%;
+  transform: scale(1.025);
+  filter: saturate(0.64) brightness(0.66) contrast(1.18) sepia(0.02);
 }
 
 .bookingSection {
@@ -1083,7 +1085,7 @@
   }
 
   .portraitFrame::before {
-    opacity: 0.14;
+    opacity: 0.12;
   }
 
   .invitationStage {
