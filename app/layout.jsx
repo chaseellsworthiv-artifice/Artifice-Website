@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Artifice v2",
+  title: "Artifice",
   description: "A dark academic immersive website for Artifice.",
 };
 
