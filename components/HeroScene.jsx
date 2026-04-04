@@ -45,7 +45,6 @@ export default function HeroScene() {
         disablePictureInPicture
       >
         <source src="https://pub-7b17696b760543ecace3651030d99cd9.r2.dev/Artifice%20Website%20Hero%201080p.mp4" type="video/mp4" />
-        <source src="/assets/video/hero-loop.mov" type="video/quicktime" />
       </video>
       <div className={styles.heroVideoScrim} />
       <div className={styles.stageGlow} />
