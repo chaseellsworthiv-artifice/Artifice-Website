@@ -217,7 +217,7 @@
 }
 
 .eyebrow {
-  margin: 0 0 1.1rem;
+  margin: 0 0 1.9rem;
   color: var(--antique-gold);
   letter-spacing: 0.06em;
   text-transform: none;
@@ -227,8 +227,8 @@
 .wordmark {
   display: inline-block;
   font-family: "UnifrakturCook", "Cormorant Garamond", serif;
-  font-size: clamp(3.8rem, 7vw, 5.8rem);
-  line-height: 0.94;
+  font-size: clamp(4.8rem, 8.8vw, 7.25rem);
+  line-height: 0.9;
   letter-spacing: 0.01em;
   font-weight: 700;
   text-transform: lowercase;
@@ -238,8 +238,8 @@
   margin: 0;
   max-width: 10.6ch;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(3rem, 7.2vw, 6rem);
-  line-height: 1.04;
+  font-size: clamp(3rem, 6vw, 5.15rem);
+  line-height: 1.01;
   color: var(--aged-paper);
 }
 
@@ -1121,9 +1121,17 @@
     padding-top: var(--hero-copy-offset);
   }
 
+  .eyebrow {
+    margin-bottom: 1.4rem;
+  }
+
+  .wordmark {
+    font-size: clamp(4.2rem, 18vw, 6rem);
+  }
+
   .copyTitle {
     max-width: 10.2ch;
-    font-size: clamp(2.1rem, 11vw, 3.15rem);
+    font-size: clamp(2.1rem, 10vw, 3rem);
   }
 
   .lead {
