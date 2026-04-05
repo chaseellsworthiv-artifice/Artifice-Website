@@ -25,10 +25,12 @@ function createProfile(lineIndex) {
     const yBase = verticalBand === 0 ? 0.34 : verticalBand === 1 ? 0.52 : 0.68;
     const y = Math.min(0.82, Math.max(0.22, yBase + (rand() - 0.5) * 0.18));
     const radius = 0.024 + rand() * 0.034;
-    const start = -0.1 + rand() * 1.2;
-    const settle = Math.min(1.14, Math.max(0.02, start + (rand() - 0.5) * 0.18));
-    const duration = 0.78 + rand() * 0.62;
-    const delay = blobIndex * 0.016 + rand() * 0.22;
+    const fromLeft = blobIndex % 2 === 0;
+    const start = fromLeft ? (-0.18 - rand() * 0.22) : (1.18 + rand() * 0.22);
+    const settleBase = 0.08 + rand() * 0.84;
+    const settle = Math.min(1.08, Math.max(-0.08, settleBase + (fromLeft ? 1 : -1) * (rand() - 0.5) * 0.06));
+    const duration = 1.02 + rand() * 0.82;
+    const delay = blobIndex * 0.024 + rand() * 0.32;
     const washLead = 0.01 + rand() * 0.05;
     return {
       y,
@@ -43,8 +45,8 @@ function createProfile(lineIndex) {
 
   return {
     blobs,
-    washFadeStart: 0.82 + lineIndex * 0.06,
-    lineOffset: lineIndex * 0.12,
+    washFadeStart: 1.16 + lineIndex * 0.08,
+    lineOffset: lineIndex * 0.16,
   };
 }
 
@@ -91,6 +93,7 @@ export default function MorphRevealText({
     if (!lines?.length) return undefined;
 
     const updateMetrics = () => {
+      if (hasPlayedRef.current) return;
       setMetrics(measureRefs.current.map((node) => measureLine(node)).filter(Boolean));
     };
 
@@ -236,9 +239,7 @@ export default function MorphRevealText({
         once: true,
         onEnter: () => {
           if (hasPlayedRef.current) return;
-          timeline.eventCallback("onComplete", () => {
-            hasPlayedRef.current = true;
-          });
+          hasPlayedRef.current = true;
           timeline.play(0);
         },
       });
