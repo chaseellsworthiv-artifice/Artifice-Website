@@ -29,8 +29,8 @@ function createProfile(lineIndex) {
     const start = fromLeft ? (-0.18 - rand() * 0.22) : (1.18 + rand() * 0.22);
     const settleBase = 0.08 + rand() * 0.84;
     const settle = Math.min(1.08, Math.max(-0.08, settleBase + (fromLeft ? 1 : -1) * (rand() - 0.5) * 0.06));
-    const duration = 1.02 + rand() * 0.82;
-    const delay = blobIndex * 0.024 + rand() * 0.32;
+    const duration = 1.32 + rand() * 1.02;
+    const delay = blobIndex * 0.03 + rand() * 0.42;
     const washLead = 0.01 + rand() * 0.05;
     return {
       y,
@@ -45,8 +45,8 @@ function createProfile(lineIndex) {
 
   return {
     blobs,
-    washFadeStart: 1.16 + lineIndex * 0.08,
-    lineOffset: lineIndex * 0.16,
+    washFadeStart: 1.62 + lineIndex * 0.12,
+    lineOffset: lineIndex * 0.22,
   };
 }
 
@@ -200,37 +200,38 @@ export default function MorphRevealText({
         });
 
         timeline.to(
+          entry.finalText,
+          {
+            opacity: 1,
+            duration: 0.78,
+            ease: "sine.out",
+          },
+          profile.lineOffset + profile.washFadeStart - 0.42
+        );
+
+        timeline.to(
           entry.washText,
           {
             opacity: 0,
-            duration: 0.24,
+            duration: 0.38,
             ease: "sine.out",
           },
           profile.lineOffset + profile.washFadeStart
         );
 
         timeline.to(
-          entry.finalText,
-          {
-            opacity: 1,
-            duration: 0.5,
-            ease: "sine.out",
-          },
-          profile.lineOffset + profile.washFadeStart - 0.08
-        );
-
-        timeline.to(
           entry.svgRoot,
           {
             opacity: 0,
-            duration: 0.2,
+            duration: 0.28,
             ease: "sine.out",
           },
-          profile.lineOffset + profile.washFadeStart + 0.08
+          profile.lineOffset + profile.washFadeStart + 0.04
         );
 
-        timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.24);
-        timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.3);
+        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart - 0.02);
+        timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.38);
+        timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.42);
       });
 
       ScrollTrigger.create({
