@@ -29,8 +29,8 @@ function createProfile(lineIndex) {
     const start = fromLeft ? (-0.18 - rand() * 0.22) : (1.18 + rand() * 0.22);
     const settleBase = 0.08 + rand() * 0.84;
     const settle = Math.min(1.08, Math.max(-0.08, settleBase + (fromLeft ? 1 : -1) * (rand() - 0.5) * 0.06));
-    const duration = 1.32 + rand() * 1.02;
-    const delay = blobIndex * 0.03 + rand() * 0.42;
+    const duration = 1.95 + rand() * 1.45;
+    const delay = blobIndex * 0.05 + rand() * 0.6;
     const washLead = 0.01 + rand() * 0.05;
     return {
       y,
@@ -45,8 +45,8 @@ function createProfile(lineIndex) {
 
   return {
     blobs,
-    washFadeStart: 1.62 + lineIndex * 0.12,
-    lineOffset: lineIndex * 0.22,
+    washFadeStart: 2.35 + lineIndex * 0.18,
+    lineOffset: lineIndex * 0.3,
   };
 }
 
@@ -203,7 +203,7 @@ export default function MorphRevealText({
           entry.finalText,
           {
             opacity: 1,
-            duration: 0.78,
+            duration: 1.08,
             ease: "sine.out",
           },
           profile.lineOffset + profile.washFadeStart - 0.42
@@ -213,7 +213,7 @@ export default function MorphRevealText({
           entry.washText,
           {
             opacity: 0,
-            duration: 0.38,
+            duration: 0.52,
             ease: "sine.out",
           },
           profile.lineOffset + profile.washFadeStart
@@ -223,7 +223,7 @@ export default function MorphRevealText({
           entry.svgRoot,
           {
             opacity: 0,
-            duration: 0.28,
+            duration: 0.4,
             ease: "sine.out",
           },
           profile.lineOffset + profile.washFadeStart + 0.04
