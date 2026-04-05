@@ -27,9 +27,9 @@ function createProfile(lineIndex) {
     const radius = 0.024 + rand() * 0.034;
     const fromLeft = blobIndex % 2 === 0;
     const start = fromLeft ? (-0.18 - rand() * 0.22) : (1.18 + rand() * 0.22);
-    const settleBase = 0.08 + rand() * 0.84;
-    const settle = Math.min(1.08, Math.max(-0.08, settleBase + (fromLeft ? 1 : -1) * (rand() - 0.5) * 0.06));
-    const duration = 1.95 + rand() * 1.45;
+    const settleBase = lineIndex === 2 ? 0.04 + rand() * 0.92 : 0.08 + rand() * 0.84;
+    const settle = Math.min(lineIndex === 2 ? 1.12 : 1.08, Math.max(lineIndex === 2 ? -0.12 : -0.08, settleBase + (fromLeft ? 1 : -1) * (rand() - 0.5) * (lineIndex === 2 ? 0.08 : 0.06)));
+    const duration = (lineIndex === 2 ? 2.1 : 1.95) + rand() * (lineIndex === 2 ? 1.55 : 1.45);
     const delay = blobIndex * 0.05 + rand() * 0.6;
     const washLead = 0.01 + rand() * 0.05;
     return {
@@ -45,7 +45,7 @@ function createProfile(lineIndex) {
 
   return {
     blobs,
-    washFadeStart: 2.35 + lineIndex * 0.18,
+    washFadeStart: 2.35 + lineIndex * 0.18 + (lineIndex === 2 ? 0.14 : 0),
     lineOffset: lineIndex * 0.3,
   };
 }
@@ -203,10 +203,10 @@ export default function MorphRevealText({
           entry.finalText,
           {
             opacity: 1,
-            duration: 1.08,
+            duration: index === 2 ? 1.18 : 1.08,
             ease: "sine.out",
           },
-          profile.lineOffset + profile.washFadeStart - 0.42
+          profile.lineOffset + profile.washFadeStart - (index === 2 ? 0.62 : 0.42)
         );
 
         timeline.to(
@@ -229,7 +229,7 @@ export default function MorphRevealText({
           profile.lineOffset + profile.washFadeStart + 0.04
         );
 
-        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart - 0.02);
+        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart - (index === 2 ? 0.18 : 0.02));
         timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.38);
         timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.42);
       });
