@@ -216,6 +216,12 @@
   pointer-events: auto;
 }
 
+.brandLockup {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .eyebrow {
   margin: 0 0 2.55rem;
   color: var(--antique-gold);
@@ -226,12 +232,22 @@
 
 .wordmark {
   display: inline-block;
+  margin: 0;
   font-family: "UnifrakturCook", "Cormorant Garamond", serif;
   font-size: clamp(4.8rem, 8.8vw, 7.25rem);
   line-height: 0.9;
   letter-spacing: 0.01em;
   font-weight: 700;
   text-transform: lowercase;
+}
+
+.wordmarkByline {
+  margin: 0.45rem 0 0;
+  color: rgba(230, 221, 198, 0.72);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .copyTitle {
@@ -1127,6 +1143,12 @@
 
   .wordmark {
     font-size: clamp(4.2rem, 18vw, 6rem);
+  }
+
+  .wordmarkByline {
+    margin-top: 0.35rem;
+    font-size: 0.88rem;
+    letter-spacing: 0.07em;
   }
 
   .copyTitle {

@@ -560,9 +560,12 @@ export default function HeroExperience() {
         <div ref={veilRef} className={styles.scrollVeil} />
 
         <header className={styles.copy}>
-          <p ref={wordmarkRef} className={`${styles.eyebrow} ${styles.wordmark}`}>
-            ärtifice
-          </p>
+          <div ref={wordmarkRef} className={styles.brandLockup}>
+            <p className={`${styles.eyebrow} ${styles.wordmark}`}>
+              ärtifice
+            </p>
+            <p className={styles.wordmarkByline}>By Chase Ellsworth</p>
+          </div>
           <MorphRevealText
             as="h1"
             lines={["A darker room.", "Familiar objects.", "Impossible outcomes."]}
