@@ -596,14 +596,12 @@ export default function HeroExperience() {
               What remains is the feeling that the room itself has shifted.
             </p>
           </div>
-          <div className={`${styles.materialPanel} ${styles.materialPanelImage}`} data-section-reveal>
-            <div className={styles.panelInset}>
-              <img
-                src="/assets/images/experience-performance.jpg"
-                alt="Chase Ellsworth handling cards during a close-up performance"
-                className={styles.panelImage}
-              />
-            </div>
+          <div className={`${styles.portraitFrame} ${styles.experienceFrame}`} data-section-reveal>
+            <img
+              src="/assets/images/experience-performance.jpg"
+              alt="Chase Ellsworth handling cards during a close-up performance"
+              className={`${styles.portrait} ${styles.experiencePhoto}`}
+            />
           </div>
         </section>
 

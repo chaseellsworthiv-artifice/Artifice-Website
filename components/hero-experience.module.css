@@ -625,6 +625,18 @@
   filter: saturate(0.64) brightness(0.66) contrast(1.18) sepia(0.02);
 }
 
+
+.experienceFrame {
+  min-height: 24rem;
+}
+
+.experiencePhoto {
+  min-height: 24rem;
+  object-position: center 34%;
+  transform: scale(1.02);
+  filter: saturate(0.76) brightness(0.74) contrast(1.08) sepia(0.02);
+}
+
 .bookingSection {
   padding-bottom: 1rem;
   min-height: 42rem;
@@ -1098,6 +1110,11 @@
   .portraitFrame,
   .portrait {
     min-height: 20rem;
+  }
+
+  .experienceFrame,
+  .experiencePhoto {
+    min-height: 18rem;
   }
 
   .portraitFrame::before {
