@@ -45,8 +45,8 @@ function createProfile(lineIndex) {
 
   return {
     blobs,
-    washFadeStart: 2.35 + lineIndex * 0.18,
-    lineOffset: lineIndex * 0.3,
+    washFadeStart: 2.35,
+    lineOffset: 0,
   };
 }
 
