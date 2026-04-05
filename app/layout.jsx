@@ -1,9 +1,13 @@
 import "./globals.css";
 
+const siteDescription = "Close-up sleight of hand, designed as atmosphere for refined private events.";
+const previewImage = "/assets/images/experience-performance.jpg";
+
 export const metadata = {
+  metadataBase: new URL("https://artificefx.com"),
   title: "Artifice",
   applicationName: "Artifice",
-  description: "A dark academic immersive website for Artifice.",
+  description: siteDescription,
   appleWebApp: {
     title: "Artifice",
     capable: true,
@@ -12,11 +16,23 @@ export const metadata = {
   openGraph: {
     title: "Artifice",
     siteName: "Artifice",
-    description: "A dark academic immersive website for Artifice.",
+    description: siteDescription,
+    url: "https://artificefx.com",
+    type: "website",
+    images: [
+      {
+        url: previewImage,
+        width: 1200,
+        height: 630,
+        alt: "Artifice close-up performance preview",
+      },
+    ],
   },
   twitter: {
+    card: "summary_large_image",
     title: "Artifice",
-    description: "A dark academic immersive website for Artifice.",
+    description: siteDescription,
+    images: [previewImage],
   },
 };
 
