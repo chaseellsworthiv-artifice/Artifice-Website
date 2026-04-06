@@ -213,7 +213,7 @@
   margin: 0 auto;
   padding-top: var(--hero-copy-offset);
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .brandLockup {
@@ -285,6 +285,11 @@
   gap: 1rem;
   flex-wrap: wrap;
   margin-top: 1.9rem;
+}
+
+.heroActions,
+.primaryLink {
+  pointer-events: auto;
 }
 
 .primaryLink,
