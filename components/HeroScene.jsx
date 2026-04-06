@@ -12,6 +12,7 @@ export default function HeroScene() {
     if (!video) return undefined;
 
     let hasStarted = false;
+    const retryTimers = [];
 
     const tryPlay = () => {
       if (!video) return;
@@ -20,6 +21,13 @@ export default function HeroScene() {
       video.playsInline = true;
       video.autoplay = true;
       video.controls = false;
+      video.setAttribute("muted", "");
+      video.setAttribute("autoplay", "");
+      video.setAttribute("playsinline", "");
+      video.setAttribute("webkit-playsinline", "true");
+      video.setAttribute("controlsList", "nodownload nofullscreen noremoteplayback");
+      video.setAttribute("disablepictureinpicture", "true");
+      video.setAttribute("disableremoteplayback", "true");
 
       const playPromise = video.play();
       if (playPromise && typeof playPromise.then === "function") {
@@ -46,7 +54,13 @@ export default function HeroScene() {
       tryPlayIfNeeded();
     };
 
+    video.load();
     tryPlay();
+
+    [120, 320, 700, 1400, 2400].forEach((delay) => {
+      retryTimers.push(window.setTimeout(tryPlayIfNeeded, delay));
+    });
+
     video.addEventListener("loadedmetadata", tryPlayIfNeeded);
     video.addEventListener("loadeddata", tryPlayIfNeeded);
     video.addEventListener("canplay", tryPlayIfNeeded);
@@ -62,6 +76,7 @@ export default function HeroScene() {
     window.addEventListener("wheel", recoverOnInteraction, { passive: true });
 
     return () => {
+      retryTimers.forEach((timer) => window.clearTimeout(timer));
       video.removeEventListener("loadedmetadata", tryPlayIfNeeded);
       video.removeEventListener("loadeddata", tryPlayIfNeeded);
       video.removeEventListener("canplay", tryPlayIfNeeded);
@@ -88,6 +103,10 @@ export default function HeroScene() {
         playsInline
         preload="auto"
         disablePictureInPicture
+        disableRemotePlayback
+        controls={false}
+        controlsList="nodownload nofullscreen noremoteplayback"
+        x-webkit-airplay="deny"
       >
         <source src="https://pub-7b17696b760543ecace3651030d99cd9.r2.dev/Artifice%20Website%20Hero%201080p.mp4" type="video/mp4" />
       </video>
