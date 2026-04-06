@@ -11,22 +11,67 @@ export default function HeroScene() {
     const video = videoRef.current;
     if (!video) return undefined;
 
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
+    let hasStarted = false;
 
     const tryPlay = () => {
+      if (!video) return;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.autoplay = true;
+      video.controls = false;
+
       const playPromise = video.play();
-      if (playPromise && typeof playPromise.catch === "function") {
-        playPromise.catch(() => {});
+      if (playPromise && typeof playPromise.then === "function") {
+        playPromise
+          .then(() => {
+            hasStarted = true;
+          })
+          .catch(() => {});
       }
     };
 
+    const tryPlayIfNeeded = () => {
+      if (hasStarted && !video.paused) return;
+      tryPlay();
+    };
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        tryPlayIfNeeded();
+      }
+    };
+
+    const recoverOnInteraction = () => {
+      tryPlayIfNeeded();
+    };
+
     tryPlay();
-    video.addEventListener("canplay", tryPlay);
+    video.addEventListener("loadedmetadata", tryPlayIfNeeded);
+    video.addEventListener("loadeddata", tryPlayIfNeeded);
+    video.addEventListener("canplay", tryPlayIfNeeded);
+    video.addEventListener("canplaythrough", tryPlayIfNeeded);
+    video.addEventListener("playing", () => {
+      hasStarted = true;
+    });
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("focus", tryPlayIfNeeded);
+    window.addEventListener("pointerdown", recoverOnInteraction, { passive: true });
+    window.addEventListener("touchstart", recoverOnInteraction, { passive: true });
+    window.addEventListener("keydown", recoverOnInteraction);
+    window.addEventListener("wheel", recoverOnInteraction, { passive: true });
 
     return () => {
-      video.removeEventListener("canplay", tryPlay);
+      video.removeEventListener("loadedmetadata", tryPlayIfNeeded);
+      video.removeEventListener("loadeddata", tryPlayIfNeeded);
+      video.removeEventListener("canplay", tryPlayIfNeeded);
+      video.removeEventListener("canplaythrough", tryPlayIfNeeded);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("focus", tryPlayIfNeeded);
+      window.removeEventListener("pointerdown", recoverOnInteraction);
+      window.removeEventListener("touchstart", recoverOnInteraction);
+      window.removeEventListener("keydown", recoverOnInteraction);
+      window.removeEventListener("wheel", recoverOnInteraction);
     };
   }, []);
 
