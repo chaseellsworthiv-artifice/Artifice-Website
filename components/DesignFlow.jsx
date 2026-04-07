@@ -31,6 +31,29 @@ export default function DesignFlow() {
   const [result, setResult] = useState(null);
   const [lineIndex, setLineIndex] = useState(0);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    try {
+      const raw = window.sessionStorage.getItem("artifice-design-draft");
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      const restoredForm = {
+        date: draft.date || "",
+        guestCount: draft.guestCount || "",
+        eventType: draft.eventType || "",
+        details: draft.details || "",
+      };
+      setForm(restoredForm);
+      setSelectedType(draft.eventType || "");
+
+      if (draft.step === "recommendation") {
+        setResult(buildRecommendation(restoredForm));
+        setStep("recommendation");
+      }
+    } catch {}
+  }, []);
+
   const canContinue = Boolean(form.date.trim() && form.guestCount.trim());
 
   useEffect(() => {
@@ -41,6 +64,19 @@ export default function DesignFlow() {
       eventType: selectedType || form.eventType,
     });
 
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(
+        "artifice-design-draft",
+        JSON.stringify({
+          date: form.date,
+          guestCount: form.guestCount,
+          eventType: selectedType || form.eventType,
+          details: form.details,
+          step: "considering",
+        })
+      );
+    }
+
     const lineTimer = window.setInterval(() => {
       setLineIndex((current) => (current + 1) % interstitialLines.length);
     }, 650);
@@ -48,6 +84,18 @@ export default function DesignFlow() {
     const revealTimer = window.setTimeout(() => {
       setResult(recommendation);
       setStep("recommendation");
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(
+          "artifice-design-draft",
+          JSON.stringify({
+            date: form.date,
+            guestCount: form.guestCount,
+            eventType: selectedType || form.eventType,
+            details: form.details,
+            step: "recommendation",
+          })
+        );
+      }
     }, 1850);
 
     return () => {

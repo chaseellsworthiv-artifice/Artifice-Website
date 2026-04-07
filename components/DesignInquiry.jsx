@@ -157,7 +157,7 @@ export default function DesignInquiry({ initialValues }) {
                 Submit Inquiry
               </button>
               <Link href="/design" className={styles.secondaryAction}>
-                Back
+                Back to Recommendation
               </Link>
             </div>
           </form>
