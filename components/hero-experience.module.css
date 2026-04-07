@@ -287,6 +287,10 @@
   margin-top: 1.9rem;
 }
 
+.sectionActions {
+  margin-top: 1.5rem;
+}
+
 .heroActions,
 .primaryLink {
   pointer-events: auto;
@@ -398,6 +402,53 @@
   grid-template-columns: 1.05fr 0.95fr;
   gap: 2.6rem;
   align-items: center;
+}
+
+.consultationSection::after {
+  background:
+    radial-gradient(circle at 78% 18%, rgba(201, 168, 106, 0.05), transparent 18%),
+    linear-gradient(180deg, rgba(6, 6, 7, 0.28) 0%, rgba(5, 5, 6, 0.56) 48%, rgba(4, 4, 5, 0.78) 100%);
+}
+
+.consultationGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  align-items: center;
+}
+
+.consultationCard {
+  border: 1px solid rgba(201, 168, 106, 0.1);
+  border-radius: 30px 30px 12px 12px;
+  padding: 1.5rem;
+  background:
+    radial-gradient(circle at 78% 16%, rgba(201, 168, 106, 0.06), transparent 18%),
+    linear-gradient(180deg, rgba(18, 16, 17, 0.84), rgba(7, 7, 8, 0.96));
+  box-shadow:
+    inset 0 1px 0 rgba(230, 221, 198, 0.03),
+    0 24px 60px rgba(0, 0, 0, 0.2);
+}
+
+.consultationEyebrow {
+  margin: 0 0 0.9rem;
+  color: var(--antique-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+}
+
+.consultationCard h3 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  line-height: 1.03;
+  color: var(--aged-paper);
+}
+
+.consultationCard p:last-of-type {
+  margin-top: 0.95rem;
+  color: var(--muted-paper);
+  line-height: 1.6;
 }
 
 .reverse {

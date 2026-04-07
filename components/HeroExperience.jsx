@@ -578,7 +578,10 @@ export default function HeroExperience() {
               Sleight of hand by Chase Ellsworth, staged as atmosphere rather than performance.
             </p>
             <div className={styles.heroActions}>
-              <a href="#booking" className={styles.primaryLink}>
+              <a href="#guided-booking" className={styles.primaryLink}>
+                Design Your Experience
+              </a>
+              <a href="#booking" className={styles.secondaryLink}>
                 Begin Inquiry
               </a>
             </div>
@@ -595,6 +598,11 @@ export default function HeroExperience() {
               The work happens inside the conversation, with ordinary objects and no visible machinery.
               What remains is the feeling that the room itself has shifted.
             </p>
+            <div className={styles.sectionActions}>
+              <a href="#guided-booking" className={styles.secondaryLink}>
+                Explore Guided Booking
+              </a>
+            </div>
           </div>
           <div className={`${styles.portraitFrame} ${styles.experienceFrame}`} data-section-reveal>
             <img
@@ -637,6 +645,34 @@ export default function HeroExperience() {
               Chase Ellsworth performs close-up sleight of hand without gimmicks, stooges, or disposable props.
               The material is tactile, exacting, and designed to leave the impossible in a guest’s own hands.
             </p>
+          </div>
+        </section>
+
+        <section id="guided-booking" ref={(node) => { sectionRefs.current[4] = node; }} className={`${styles.section} ${styles.consultationSection}`}>
+          <div className={styles.consultationGrid}>
+            <div className={styles.sectionCopy} data-section-reveal>
+              <p className={styles.sectionLabel}>Guided Booking</p>
+              <h2>For events that fit a clear shape and deserve a precise recommendation.</h2>
+              <p>
+                The standard booking path begins with a guided recommendation, not a package grid. Share the shape of the
+                event, then step into the experience I would begin with.
+              </p>
+            </div>
+            <div className={styles.consultationCard} data-section-reveal>
+              <p className={styles.consultationEyebrow}>Standard Experiences</p>
+              <h3>Close-Up, Table, and Cabaret</h3>
+              <p>
+                Recommendation first. Pricing second. The right format appears before the transaction ever does.
+              </p>
+              <div className={styles.heroActions}>
+                <a href="/experience" className={styles.primaryLink}>
+                  Design Your Experience
+                </a>
+                <a href="#booking" className={styles.secondaryLink}>
+                  Need Something More Tailored?
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 

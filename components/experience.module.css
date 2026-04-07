@@ -1,0 +1,397 @@
+.page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(74, 15, 23, 0.24), transparent 22%),
+    radial-gradient(circle at 84% 0%, rgba(201, 168, 106, 0.06), transparent 28%),
+    linear-gradient(180deg, #070708 0%, #0a0a0a 100%);
+}
+
+.hero,
+.detailHero {
+  position: relative;
+  padding: 8rem 0 3rem;
+}
+
+.heroInner {
+  width: min(100% - 2.5rem, 1100px);
+  margin: 0 auto;
+}
+
+.eyebrow,
+.sectionLabel,
+.cardEyebrow {
+  margin: 0 0 1rem;
+  color: var(--antique-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.7rem;
+}
+
+.title {
+  margin: 0;
+  max-width: 11.5ch;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3rem, 7vw, 5.8rem);
+  line-height: 0.98;
+  color: var(--aged-paper);
+}
+
+.intro {
+  margin: 1.5rem 0 0;
+  max-width: 33ch;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.2rem, 1.9vw, 1.7rem);
+  line-height: 1.18;
+  color: rgba(230, 221, 198, 0.82);
+}
+
+.heroActions,
+.detailFooter {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.heroActions {
+  margin-top: 2rem;
+}
+
+.stage,
+.results,
+.detailStage {
+  width: min(100% - 2.5rem, 1100px);
+  margin: 0 auto;
+  padding-bottom: 6rem;
+}
+
+.intakeWrap,
+.detailGrid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 1.35rem;
+  align-items: start;
+}
+
+.intakeCopy,
+.resultsHeading,
+.detailCopy {
+  max-width: 44ch;
+}
+
+.intakeCopy h2,
+.resultsHeading h2,
+.detailCopy h2 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.15rem, 4.4vw, 3.4rem);
+  line-height: 1.02;
+  color: var(--aged-paper);
+}
+
+.intakeCopy p:last-child,
+.resultsHeading p:last-child,
+.detailCopy p,
+.detailNotes p,
+.cardSummary,
+.cardSummaryAlt,
+.designedCard p,
+.placeholderNote {
+  color: var(--muted-paper);
+  line-height: 1.62;
+}
+
+.intakeCard,
+.recommendationCard,
+.designedCard,
+.detailCard {
+  border: 1px solid rgba(201, 168, 106, 0.1);
+  background:
+    radial-gradient(circle at 84% 14%, rgba(201, 168, 106, 0.05), transparent 22%),
+    linear-gradient(180deg, rgba(16, 14, 15, 0.9), rgba(7, 7, 8, 0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(230, 221, 198, 0.03),
+    0 24px 60px rgba(0, 0, 0, 0.24);
+}
+
+.intakeCard,
+.detailCard {
+  padding: 1.3rem;
+  border-radius: 30px 30px 12px 12px;
+}
+
+.intakeCard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.95rem;
+  opacity: 0.82;
+  transform: translateY(8px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.intakeCardActive {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.field {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.field span {
+  color: rgba(230, 221, 198, 0.76);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.65rem;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  border: 1px solid rgba(201, 168, 106, 0.14);
+  background: rgba(8, 8, 9, 0.72);
+  color: var(--aged-paper);
+  padding: 0.9rem 0.95rem;
+  font: inherit;
+  outline: none;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(230, 221, 198, 0.34);
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: rgba(201, 168, 106, 0.34);
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.primaryAction,
+.secondaryAction,
+.cardAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.primaryAction,
+.cardAction {
+  color: var(--antique-gold);
+}
+
+.secondaryAction {
+  color: var(--aged-paper);
+}
+
+.primaryAction::after,
+.secondaryAction::after,
+.cardAction::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 0.45rem;
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.62), rgba(201, 168, 106, 0));
+}
+
+.results {
+  padding-top: 1rem;
+}
+
+.recommendationGrid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1rem;
+}
+
+.recommendationCard {
+  padding: 1.4rem;
+  border-radius: 28px 28px 10px 10px;
+}
+
+.primaryCard {
+  min-height: 100%;
+}
+
+.recommendationCard h3,
+.designedCard h3,
+.detailCard h3,
+.depthItem h3 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.8rem;
+  line-height: 1.02;
+  color: var(--aged-paper);
+}
+
+.cardBody {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cardBody p,
+.designedCard p {
+  margin: 0;
+}
+
+.cardBody strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: rgba(230, 221, 198, 0.88);
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+}
+
+.cardBody span {
+  color: var(--muted-paper);
+  line-height: 1.58;
+}
+
+.alternativeColumn {
+  display: grid;
+  gap: 1rem;
+}
+
+.cardSummary,
+.cardSummaryAlt {
+  margin: 0.85rem 0 0;
+}
+
+.cardSummaryAlt {
+  color: rgba(230, 221, 198, 0.58);
+}
+
+.designedCard {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  border-radius: 30px 30px 12px 12px;
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.detailNotes {
+  margin-top: 1.35rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.depthList {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.depthItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(201, 168, 106, 0.08);
+}
+
+.depthItem p {
+  margin: 0.45rem 0 0;
+  color: var(--muted-paper);
+  line-height: 1.55;
+}
+
+.depthMeta {
+  text-align: right;
+  min-width: 96px;
+}
+
+.depthMeta span {
+  display: block;
+  color: rgba(230, 221, 198, 0.58);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.depthMeta strong {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--aged-paper);
+  font-size: 1.05rem;
+}
+
+.placeholderNote {
+  margin: 1rem 0 0;
+  font-size: 0.92rem;
+}
+
+.detailFooter {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .intakeWrap,
+  .detailGrid,
+  .recommendationGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .designedCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero,
+  .detailHero {
+    padding-top: 6.5rem;
+  }
+
+  .heroInner,
+  .stage,
+  .results,
+  .detailStage {
+    width: min(100% - 1.4rem, 1100px);
+  }
+
+  .title {
+    max-width: 12ch;
+  }
+
+  .intakeCard {
+    grid-template-columns: 1fr;
+    border-radius: 24px 24px 10px 10px;
+  }
+
+  .recommendationCard,
+  .designedCard,
+  .detailCard {
+    border-radius: 24px 24px 10px 10px;
+  }
+
+  .heroActions,
+  .detailFooter {
+    gap: 0.75rem 1rem;
+  }
+
+  .depthItem {
+    flex-direction: column;
+  }
+
+  .depthMeta {
+    text-align: left;
+  }
+}
