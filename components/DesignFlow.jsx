@@ -61,6 +61,17 @@ export default function DesignFlow() {
     return result.primary.slug === "close-up" ? "Recommended For Your Event" : "Where I Would Begin";
   }, [result]);
 
+  const inquiryHref = useMemo(() => {
+    const params = new URLSearchParams({
+      date: form.date,
+      guestCount: form.guestCount,
+      eventType: selectedType || form.eventType,
+      details: form.details,
+    });
+
+    return `/design/custom-inquiry?${params.toString()}`;
+  }, [form, selectedType]);
+
   function handleChange(event) {
     const { name, value } = event.currentTarget;
     setForm((current) => ({ ...current, [name]: value }));
@@ -142,12 +153,10 @@ export default function DesignFlow() {
                 <button type="submit" className={styles.primaryAction} disabled={!canContinue}>
                   Continue
                 </button>
-                <Link href="/#booking" className={styles.secondaryAction}>
-                  Custom Inquiry
-                </Link>
               </div>
             </form>
           </div>
+
         </section>
       ) : null}
 
@@ -163,6 +172,7 @@ export default function DesignFlow() {
             <h2 className={styles.consideringTitle}>Considering your event</h2>
             <p className={styles.consideringLine}>{interstitialLines[lineIndex]}</p>
           </div>
+
         </section>
       ) : null}
 
@@ -215,6 +225,13 @@ export default function DesignFlow() {
                 Explore This Experience
               </Link>
             </article>
+          </div>
+
+          <div className={styles.customPrompt}>
+            <p className={styles.customPromptLabel}>Need something more tailored?</p>
+            <Link href={inquiryHref} className={styles.secondaryAction}>
+              Custom Inquiry
+            </Link>
           </div>
         </section>
       ) : null}

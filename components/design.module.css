@@ -272,6 +272,27 @@
   color: rgba(230, 221, 198, 0.7);
 }
 
+.customPrompt {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.customPromptLabel {
+  margin: 0;
+  color: rgba(230, 221, 198, 0.58);
+  letter-spacing: 0.04em;
+}
+
+.formError {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #d8a8a8;
+  line-height: 1.5;
+}
+
 @keyframes pulseLine {
   0%, 100% { transform: scaleX(0.82); opacity: 0.42; }
   50% { transform: scaleX(1); opacity: 0.92; }
@@ -303,7 +324,8 @@
   }
 
   .formActions,
-  .alternateStack {
+  .alternateStack,
+  .customPrompt {
     grid-template-columns: 1fr;
     flex-direction: column;
   }
