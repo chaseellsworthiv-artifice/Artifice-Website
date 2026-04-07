@@ -130,7 +130,7 @@ export default function ExperienceFlow() {
 
           <article className={styles.designedCard}>
             <div>
-              <p className={styles.cardEyebrow}>Elevated Path</p>
+              <p className={styles.cardEyebrow}>Custom Path</p>
               <h3>{result.designed.name}</h3>
               <p>{result.designed.summary}</p>
               <p>{result.designed.feeling}</p>

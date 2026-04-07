@@ -1022,6 +1022,23 @@
 }
 
 @media (max-width: 640px) {
+  .sectionActions {
+    margin-top: 1.2rem;
+  }
+
+  .consultationGrid {
+    gap: 1rem;
+  }
+
+  .consultationCard {
+    padding: 1.15rem;
+    border-radius: 24px 24px 10px 10px;
+  }
+
+  .consultationCard h3 {
+    font-size: 1.5rem;
+  }
+
   .page {
     min-height: 170vh;
     width: 100%;

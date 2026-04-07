@@ -43,7 +43,7 @@ export default function ExperienceDetail({ experience }) {
           <div className={styles.detailCard}>
             {isDesigned ? (
               <>
-                <p className={styles.cardEyebrow}>Inquiry Path</p>
+                <p className={styles.cardEyebrow}>Custom Inquiry</p>
                 <h3>Designed around the evening, not added onto it.</h3>
                 <p>
                   Rather than separate performance blocks, this path allows the experience to shape the rhythm of the

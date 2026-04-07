@@ -4,7 +4,7 @@ export const experienceContent = {
   "close-up": {
     slug: "close-up",
     name: "Close-Up",
-    eyebrow: "Standard Experience",
+    eyebrow: "Guided Experience",
     summary:
       "A close-up performance that moves with the event rather than interrupting it, creating moments of astonishment directly inside the room's natural rhythm.",
     why:
@@ -38,7 +38,7 @@ export const experienceContent = {
   table: {
     slug: "table",
     name: "Table",
-    eyebrow: "Standard Experience",
+    eyebrow: "Guided Experience",
     summary:
       "A dedicated performance table that becomes a destination inside the event, giving guests a more focused and memorable encounter with the work.",
     why:
@@ -72,7 +72,7 @@ export const experienceContent = {
   cabaret: {
     slug: "cabaret",
     name: "Cabaret",
-    eyebrow: "Standard Experience",
+    eyebrow: "Guided Experience",
     summary:
       "A shared, room-wide performance designed to bring everyone into the same moment at once without losing intimacy or control.",
     why:
@@ -94,7 +94,7 @@ export const experienceContent = {
   designed: {
     slug: "designed",
     name: "Designed Experience",
-    eyebrow: "Elevated Experience",
+    eyebrow: "Designed Path",
     summary:
       "A fully considered performance structure built around the rhythm of the evening rather than a single self-contained format.",
     why:

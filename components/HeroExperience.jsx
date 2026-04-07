@@ -654,22 +654,22 @@ export default function HeroExperience() {
               <p className={styles.sectionLabel}>Guided Booking</p>
               <h2>For events that fit a clear shape and deserve a precise recommendation.</h2>
               <p>
-                The standard booking path begins with a guided recommendation, not a package grid. Share the shape of the
+                The guided booking path begins with a tailored recommendation, not a package grid. Share the shape of the
                 event, then step into the experience I would begin with.
               </p>
             </div>
             <div className={styles.consultationCard} data-section-reveal>
-              <p className={styles.consultationEyebrow}>Standard Experiences</p>
+              <p className={styles.consultationEyebrow}>Guided Recommendation</p>
               <h3>Close-Up, Table, and Cabaret</h3>
               <p>
-                Recommendation first. Pricing second. The right format appears before the transaction ever does.
+                A tailored recommendation first. Pricing only after fit. The right format appears before any transaction does.
               </p>
               <div className={styles.heroActions}>
                 <a href="/experience" className={styles.primaryLink}>
                   Design Your Experience
                 </a>
                 <a href="#booking" className={styles.secondaryLink}>
-                  Need Something More Tailored?
+                  Custom Inquiry
                 </a>
               </div>
             </div>
