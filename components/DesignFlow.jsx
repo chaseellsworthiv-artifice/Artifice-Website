@@ -288,12 +288,6 @@ export default function DesignFlow() {
             </article>
           </div>
 
-          <div className={styles.customPrompt}>
-            <p className={styles.customPromptLabel}>Need something more tailored?</p>
-            <Link href={inquiryHref} className={styles.secondaryAction}>
-              Custom Inquiry
-            </Link>
-          </div>
         </section>
       ) : null}
     </main>
