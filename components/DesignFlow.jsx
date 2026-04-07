@@ -276,16 +276,6 @@ export default function DesignFlow() {
               ))}
             </div>
 
-            <article className={`${styles.card} ${styles.designedCard}`}>
-              <p className={styles.cardEyebrow}>Designed Experience</p>
-              <h3>Designed Experience</h3>
-              <p>{result.designed.summary}</p>
-              <p>{result.designed.feeling}</p>
-              <p className={styles.priceCue}>Typically from $2,500+</p>
-              <Link href="/design/designed-experience" className={styles.secondaryAction}>
-                Explore This Experience
-              </Link>
-            </article>
           </div>
 
         </section>
