@@ -102,9 +102,6 @@ export default function SecureDateFlow({ experience, selectedDepth, basePath = "
           <Link href={`${basePath}/${experience.slug === "designed" ? "designed-experience" : experience.slug}?depth=${selectedDepth.id}`} className={styles.secondaryAction}>
             Back to Experience
           </Link>
-          <Link href="/#booking" className={styles.secondaryAction}>
-            Custom Inquiry
-          </Link>
         </div>
       </section>
     </main>

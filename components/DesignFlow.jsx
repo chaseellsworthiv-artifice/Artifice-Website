@@ -80,6 +80,19 @@ export default function DesignFlow() {
   function handleSubmit(event) {
     event.preventDefault();
     if (!canContinue) return;
+
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(
+        "artifice-design-draft",
+        JSON.stringify({
+          date: form.date,
+          guestCount: form.guestCount,
+          eventType: selectedType || form.eventType,
+          details: form.details,
+        })
+      );
+    }
+
     setLineIndex(0);
     setStep("considering");
   }

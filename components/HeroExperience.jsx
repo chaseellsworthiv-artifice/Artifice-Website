@@ -668,9 +668,6 @@ export default function HeroExperience() {
                 <a href="/design" className={styles.primaryLink}>
                   Design Your Experience
                 </a>
-                <a href="#booking" className={styles.secondaryLink}>
-                  Custom Inquiry
-                </a>
               </div>
             </div>
           </div>

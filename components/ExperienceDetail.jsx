@@ -51,8 +51,8 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                   take place inside it.
                 </p>
                 <p className={styles.selectionNote}>{experience.depthIntro}</p>
-                <Link href="/#booking" className={styles.primaryAction}>
-                  {experience.ctaLabel}
+                <Link href="/design/custom-inquiry" className={styles.primaryAction}>
+                  Custom Inquiry
                 </Link>
               </>
             ) : (
@@ -103,9 +103,6 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
         <div className={styles.detailFooter}>
           <Link href={basePath} className={styles.secondaryAction}>
             Back to Recommendation Flow
-          </Link>
-          <Link href="/#booking" className={styles.secondaryAction}>
-            Custom Inquiry
           </Link>
         </div>
       </section>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./design.module.css";
 
@@ -18,6 +18,23 @@ export default function DesignInquiry({ initialValues }) {
   });
   const [state, setState] = useState("idle");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    try {
+      const raw = window.sessionStorage.getItem("artifice-design-draft");
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      setForm((current) => ({
+        ...current,
+        date: current.date || draft.date || "",
+        guestCount: current.guestCount || draft.guestCount || "",
+        eventType: current.eventType || draft.eventType || "",
+        details: current.details || draft.details || "",
+      }));
+    } catch {}
+  }, []);
 
   function handleChange(event) {
     const { name, value } = event.currentTarget;
