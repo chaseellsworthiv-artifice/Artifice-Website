@@ -31,6 +31,8 @@ export default function DesignFlow() {
   const [result, setResult] = useState(null);
   const [lineIndex, setLineIndex] = useState(0);
 
+  const canContinue = Boolean(form.date.trim() && form.guestCount.trim());
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -53,8 +55,6 @@ export default function DesignFlow() {
       }
     } catch {}
   }, []);
-
-  const canContinue = Boolean(form.date.trim() && form.guestCount.trim());
 
   useEffect(() => {
     if (step !== "considering") return undefined;
@@ -152,32 +152,17 @@ export default function DesignFlow() {
           <div className={styles.intakePanel}>
             <p className={styles.eyebrow}>Design Your Experience</p>
             <h1 className={styles.title}>Tell me about your event.</h1>
-            <p className={styles.subtext}>
-              A few details will help me recommend the right experience.
-            </p>
+            <p className={styles.subtext}>A few details will help me recommend the right experience.</p>
 
             <form className={styles.form} onSubmit={handleSubmit}>
               <label className={styles.field}>
                 <span>Event Date</span>
-                <input
-                  type="text"
-                  name="date"
-                  value={form.date}
-                  onChange={handleChange}
-                  placeholder="August 30, 2026"
-                />
+                <input type="text" name="date" value={form.date} onChange={handleChange} placeholder="August 30, 2026" />
               </label>
 
               <label className={styles.field}>
                 <span>Guest Count</span>
-                <input
-                  type="number"
-                  min="1"
-                  name="guestCount"
-                  value={form.guestCount}
-                  onChange={handleChange}
-                  placeholder="80"
-                />
+                <input type="number" min="1" name="guestCount" value={form.guestCount} onChange={handleChange} placeholder="80" />
               </label>
 
               <div className={`${styles.field} ${styles.fullWidth}`}>
@@ -217,7 +202,6 @@ export default function DesignFlow() {
               </div>
             </form>
           </div>
-
         </section>
       ) : null}
 
@@ -233,7 +217,6 @@ export default function DesignFlow() {
             <h2 className={styles.consideringTitle}>Considering your event</h2>
             <p className={styles.consideringLine}>{interstitialLines[lineIndex]}</p>
           </div>
-
         </section>
       ) : null}
 
@@ -275,9 +258,14 @@ export default function DesignFlow() {
                 </article>
               ))}
             </div>
-
           </div>
 
+          <div className={styles.customPrompt}>
+            <p className={styles.customPromptLabel}>Do not see the right fit?</p>
+            <Link href={inquiryHref} className={styles.secondaryAction}>
+              Custom Inquiry
+            </Link>
+          </div>
         </section>
       ) : null}
     </main>
