@@ -166,6 +166,12 @@
   border-color: rgba(201, 168, 106, 0.34);
 }
 
+.secureForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
 .fullWidth {
   grid-column: 1 / -1;
 }
@@ -292,6 +298,18 @@
   gap: 0.8rem;
 }
 
+.detailSupport {
+  margin-top: 1.4rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.detailSupport p {
+  margin: 0;
+  color: rgba(230, 221, 198, 0.68);
+  line-height: 1.6;
+}
+
 .depthList {
   display: grid;
   gap: 0.9rem;
@@ -302,14 +320,62 @@
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  padding-top: 0.85rem;
+  padding: 0.95rem 0 0;
   border-top: 1px solid rgba(201, 168, 106, 0.08);
+  text-decoration: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.depthItem:hover {
+  opacity: 0.92;
+}
+
+.depthItemActive {
+  transform: translateX(6px);
 }
 
 .depthItem p {
   margin: 0.45rem 0 0;
   color: var(--muted-paper);
   line-height: 1.55;
+}
+
+.selectionPanel {
+  margin-top: 1.15rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(201, 168, 106, 0.08);
+}
+
+.selectionLabel {
+  margin: 0 0 0.55rem;
+  color: var(--antique-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.66rem;
+}
+
+.selectionPanel h3 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.selectionPanel h3 span {
+  color: var(--aged-paper);
+  font-size: 1rem;
+}
+
+.selectionPanel p {
+  margin: 0.55rem 0 0;
+  color: var(--muted-paper);
+  line-height: 1.55;
+}
+
+.selectionNote {
+  margin: 0.9rem 0 0;
+  color: rgba(230, 221, 198, 0.7);
+  line-height: 1.58;
 }
 
 .depthMeta {
@@ -390,9 +456,13 @@
     gap: 1rem;
   }
 
-  .intakeCard {
+  .intakeCard,
+  .secureForm {
     grid-template-columns: 1fr;
     gap: 0.8rem;
+  }
+
+  .intakeCard {
     padding: 1rem;
     border-radius: 24px 24px 10px 10px;
   }

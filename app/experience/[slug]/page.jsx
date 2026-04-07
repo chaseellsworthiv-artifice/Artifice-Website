@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import ExperienceDetail from "../../../components/ExperienceDetail";
-import { experienceContent, getExperienceBySlug } from "../../../components/experience-data";
+import { experienceContent, getDepthById, getExperienceBySlug } from "../../../components/experience-data";
 
 export function generateStaticParams() {
   return Object.keys(experienceContent).map((slug) => ({ slug }));
@@ -20,12 +20,14 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function ExperienceDetailPage({ params }) {
+export default function ExperienceDetailPage({ params, searchParams }) {
   const experience = getExperienceBySlug(params.slug);
 
   if (!experience) {
     notFound();
   }
 
-  return <ExperienceDetail experience={experience} />;
+  const selectedDepth = getDepthById(experience, searchParams?.depth);
+
+  return <ExperienceDetail experience={experience} selectedDepth={selectedDepth} basePath="/experience" />;
 }

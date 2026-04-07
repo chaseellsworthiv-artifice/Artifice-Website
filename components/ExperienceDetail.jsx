@@ -1,8 +1,9 @@
 import Link from "next/link";
 
+import { durationSupportLine } from "./experience-data";
 import styles from "./experience.module.css";
 
-export default function ExperienceDetail({ experience }) {
+export default function ExperienceDetail({ experience, selectedDepth, basePath = "/experience" }) {
   const isDesigned = experience.slug === "designed";
 
   return (
@@ -18,24 +19,24 @@ export default function ExperienceDetail({ experience }) {
       <section className={styles.detailStage}>
         <div className={styles.detailGrid}>
           <div className={styles.detailCopy}>
-            <p className={styles.sectionLabel}>Why It Works</p>
-            <h2>{experience.why}</h2>
-            <p>{experience.feeling}</p>
+            <p className={styles.sectionLabel}>Experience</p>
+            <h2>{experience.opening}</h2>
+            <div className={styles.detailNotes}>
+              <p>{experience.why}</p>
+              <p>{experience.feeling}</p>
+            </div>
             {isDesigned ? (
-              <div className={styles.detailNotes}>
-                <p>
-                  This is not a standard performance selection. It is a considered structure for the evening — designed
-                  around timing, guest flow, and the moments that matter most.
-                </p>
+              <div className={styles.detailSupport}>
                 <p>{experience.depthIntro}</p>
+                <p>
+                  Standard experiences are self-contained performance formats. Designed Experience is event structure.
+                </p>
               </div>
             ) : (
-              <div className={styles.detailNotes}>
+              <div className={styles.detailSupport}>
                 <p>{experience.depthIntro}</p>
-                <p>
-                  Duration determines how deeply the experience can unfold — whether through shorter, high-impact moments
-                  across the room or longer, more personal interactions with each group.
-                </p>
+                <p>{durationSupportLine}</p>
+                {experience.audienceNote ? <p>{experience.audienceNote}</p> : null}
               </div>
             )}
           </div>
@@ -46,45 +47,65 @@ export default function ExperienceDetail({ experience }) {
                 <p className={styles.cardEyebrow}>Custom Inquiry</p>
                 <h3>Designed around the evening, not added onto it.</h3>
                 <p>
-                  Rather than separate performance blocks, this path allows the experience to shape the rhythm of the
-                  event itself.
+                  This path is for events where the experience should help shape the evening itself, rather than simply
+                  take place inside it.
                 </p>
+                <p className={styles.selectionNote}>{experience.depthIntro}</p>
                 <Link href="/#booking" className={styles.primaryAction}>
-                  Design Your Experience
+                  {experience.ctaLabel}
                 </Link>
               </>
             ) : (
               <>
-                <p className={styles.cardEyebrow}>Depth Options</p>
+                <p className={styles.cardEyebrow}>Depth & Pricing</p>
                 <div className={styles.depthList}>
-                  {experience.depths.map((depth) => (
-                    <article key={depth.name} className={styles.depthItem}>
-                      <div>
-                        <h3>{depth.name}</h3>
-                        <p>{depth.descriptor}</p>
-                      </div>
-                      <div className={styles.depthMeta}>
-                        <span>{depth.duration}</span>
-                        <strong>{depth.price}</strong>
-                      </div>
-                    </article>
-                  ))}
+                  {experience.depths.map((depth) => {
+                    const isActive = selectedDepth?.id === depth.id;
+                    return (
+                      <Link
+                        key={depth.id}
+                        href={`${basePath}/${experience.slug === "designed" ? "designed-experience" : experience.slug}?depth=${depth.id}`}
+                        className={`${styles.depthItem} ${isActive ? styles.depthItemActive : ""}`}
+                      >
+                        <div>
+                          <h3>{depth.name}</h3>
+                          <p>{depth.descriptor}</p>
+                        </div>
+                        <div className={styles.depthMeta}>
+                          <span>{depth.duration}</span>
+                          <strong>{depth.price}</strong>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
-                <button type="button" className={styles.primaryAction} disabled>
-                  Secure Your Date
-                </button>
-                <p className={styles.placeholderNote}>Phase 1 prototype. Booking unlocks in the next phase.</p>
+
+                {selectedDepth ? (
+                  <div className={styles.selectionPanel}>
+                    <p className={styles.selectionLabel}>Selected Depth</p>
+                    <h3>
+                      {selectedDepth.name} <span>{selectedDepth.price}</span>
+                    </h3>
+                    <p>{selectedDepth.note}</p>
+                    <p>{selectedDepth.duration}</p>
+                  </div>
+                ) : null}
+
+                <Link href={`${basePath}/${experience.slug === "designed" ? "designed-experience" : experience.slug}/secure?depth=${selectedDepth.id}`} className={styles.primaryAction}>
+                  {experience.ctaLabel}
+                </Link>
+                <p className={styles.placeholderNote}>The next step confirms the event details before deposit.</p>
               </>
             )}
           </div>
         </div>
 
         <div className={styles.detailFooter}>
-          <Link href="/experience" className={styles.secondaryAction}>
+          <Link href={basePath} className={styles.secondaryAction}>
             Back to Recommendation Flow
           </Link>
           <Link href="/#booking" className={styles.secondaryAction}>
-            Prefer a Custom Inquiry
+            Custom Inquiry
           </Link>
         </div>
       </section>

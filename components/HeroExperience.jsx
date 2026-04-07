@@ -578,7 +578,7 @@ export default function HeroExperience() {
               Sleight of hand by Chase Ellsworth, staged as atmosphere rather than performance.
             </p>
             <div className={styles.heroActions}>
-              <a href="#guided-booking" className={styles.primaryLink}>
+              <a href="/design" className={styles.primaryLink}>
                 Design Your Experience
               </a>
               <a href="#booking" className={styles.secondaryLink}>
@@ -599,7 +599,7 @@ export default function HeroExperience() {
               What remains is the feeling that the room itself has shifted.
             </p>
             <div className={styles.sectionActions}>
-              <a href="#guided-booking" className={styles.secondaryLink}>
+              <a href="/design" className={styles.secondaryLink}>
                 Explore Guided Booking
               </a>
             </div>
@@ -665,7 +665,7 @@ export default function HeroExperience() {
                 A tailored recommendation first. Pricing only after fit. The right format appears before any transaction does.
               </p>
               <div className={styles.heroActions}>
-                <a href="/experience" className={styles.primaryLink}>
+                <a href="/design" className={styles.primaryLink}>
                   Design Your Experience
                 </a>
                 <a href="#booking" className={styles.secondaryLink}>
