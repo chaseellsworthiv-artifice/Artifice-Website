@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import styles from "./experience.module.css";
 
@@ -15,18 +15,125 @@ const initialForm = {
   details: "",
 };
 
+function formatMoney(value) {
+  return `$${value.toFixed(2)}`;
+}
+
+function parsePriceToCents(price) {
+  const numeric = Number.parseFloat(String(price || "$0").replace(/[^0-9.]/g, ""));
+  if (!Number.isFinite(numeric)) return 0;
+  return Math.round(numeric * 100);
+}
+
 export default function SecureDateFlow({ experience, selectedDepth, basePath = "/experience" }) {
   const [form, setForm] = useState(initialForm);
+  const [state, setState] = useState("idle");
+  const [error, setError] = useState("");
 
-  const depositAmount = useMemo(() => {
-    const price = Number.parseFloat(String(selectedDepth?.price || "$0").replace(/[^0-9.]/g, ""));
-    if (!Number.isFinite(price)) return "$0.00";
-    return `$${(price / 2).toFixed(2)}`;
-  }, [selectedDepth]);
+  const totalAmountCents = useMemo(() => parsePriceToCents(selectedDepth?.price), [selectedDepth]);
+  const depositAmountCents = Math.round(totalAmountCents / 2);
+  const depositAmount = formatMoney(depositAmountCents / 100);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    try {
+      const raw = window.sessionStorage.getItem("artifice-design-draft");
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      setForm((current) => ({
+        ...current,
+        date: current.date || draft.date || "",
+        guestCount: current.guestCount || draft.guestCount || "",
+        eventType: current.eventType || draft.eventType || "",
+        details: current.details || draft.details || "",
+      }));
+    } catch {}
+  }, []);
 
   function handleChange(event) {
     const { name, value } = event.currentTarget;
     setForm((current) => ({ ...current, [name]: value }));
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setError("");
+
+    if (!form.name.trim() || !form.email.trim() || !form.date.trim() || !form.guestCount.trim()) {
+      setError("Please complete the required booking details.");
+      return;
+    }
+
+    setState("submitting");
+
+    try {
+      const bookingResponse = await fetch("/api/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contactName: form.name,
+          contactEmail: form.email,
+          eventType: form.eventType || experience.name,
+          eventDate: form.date,
+          location: form.location,
+          message: [
+            `Selected Experience: ${experience.name}`,
+            `Selected Depth: ${selectedDepth.name}`,
+            `Guest Count: ${form.guestCount}`,
+            form.details,
+          ]
+            .filter(Boolean)
+            .join("\n\n"),
+          selectedSlotStart: form.date,
+          selectedSlotEnd: form.date,
+          status: "pending",
+          notes: `${experience.name} / ${selectedDepth.name}`,
+          depositStatus: "not_requested",
+          depositAmount: depositAmountCents,
+        }),
+      });
+
+      if (!bookingResponse.ok) {
+        throw new Error("Booking creation failed");
+      }
+
+      const bookingPayload = await bookingResponse.json();
+      const booking = bookingPayload.booking;
+
+      const siteUrl = typeof window !== "undefined" ? window.location.origin : "";
+      const depositResponse = await fetch("/api/deposits", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          bookingId: booking.id,
+          email: form.email,
+          name: form.name,
+          amount: depositAmountCents,
+          successUrl: `${siteUrl}/booking/confirmed?booking=${booking.id}`,
+          cancelUrl: `${siteUrl}${basePath}/${experience.slug === "designed" ? "designed-experience" : experience.slug}/secure?depth=${selectedDepth.id}&cancelled=1`,
+        }),
+      });
+
+      if (!depositResponse.ok) {
+        throw new Error("Deposit session failed");
+      }
+
+      const depositPayload = await depositResponse.json();
+      if (!depositPayload.checkoutUrl) {
+        throw new Error("Missing checkout URL");
+      }
+
+      window.location.assign(depositPayload.checkoutUrl);
+    } catch (submitError) {
+      console.error("Secure date handoff failed", submitError);
+      setState("idle");
+      setError("Unable to continue to deposit. Please try again.");
+    }
   }
 
   return (
@@ -61,7 +168,7 @@ export default function SecureDateFlow({ experience, selectedDepth, basePath = "
 
           <div className={styles.detailCard}>
             <p className={styles.cardEyebrow}>Booking Details</p>
-            <form className={styles.secureForm}>
+            <form className={styles.secureForm} onSubmit={handleSubmit}>
               <label className={styles.field}>
                 <span>Name</span>
                 <input type="text" name="name" value={form.name} onChange={handleChange} autoComplete="name" />
@@ -90,10 +197,10 @@ export default function SecureDateFlow({ experience, selectedDepth, basePath = "
                 <span>Event Details</span>
                 <textarea name="details" rows="5" value={form.details} onChange={handleChange} />
               </label>
-              <button type="button" className={styles.primaryAction} disabled>
-                Continue to Deposit
+              {error ? <p className={styles.formError}>{error}</p> : null}
+              <button type="submit" className={styles.primaryAction} disabled={state === "submitting"}>
+                Continue to Payment
               </button>
-              <p className={styles.placeholderNote}>Phase 3 complete. Stripe deposit comes next.</p>
             </form>
           </div>
         </div>

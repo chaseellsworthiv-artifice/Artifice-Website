@@ -6,13 +6,15 @@ function clean(value) {
   return String(value ?? "").trim();
 }
 
-async function createStripeCheckout({ bookingId, amount, email, name }) {
+async function createStripeCheckout({ bookingId, amount, email, name, successUrl, cancelUrl }) {
   const secretKey = process.env.STRIPE_SECRET_KEY;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const resolvedSuccessUrl = successUrl || `${siteUrl}/studio/bookings?deposit=success&booking=${bookingId}`;
+  const resolvedCancelUrl = cancelUrl || `${siteUrl}/studio/bookings?deposit=cancelled&booking=${bookingId}`;
   if (!secretKey) {
     return {
       provider: "mock",
-      checkoutUrl: `${siteUrl}/studio/bookings?mockDeposit=${bookingId}`,
+      checkoutUrl: resolvedSuccessUrl,
       sessionId: `mock_${bookingId}`,
     };
   }
@@ -25,8 +27,8 @@ async function createStripeCheckout({ bookingId, amount, email, name }) {
     },
     body: new URLSearchParams({
       mode: "payment",
-      success_url: `${siteUrl}/studio/bookings?deposit=success&booking=${bookingId}`,
-      cancel_url: `${siteUrl}/studio/bookings?deposit=cancelled&booking=${bookingId}`,
+      success_url: resolvedSuccessUrl,
+      cancel_url: resolvedCancelUrl,
       customer_email: email,
       "line_items[0][price_data][currency]": "usd",
       "line_items[0][price_data][product_data][name]": `Artifice deposit for ${name}`,
@@ -57,12 +59,14 @@ export async function POST(request) {
     const email = clean(body.email);
     const name = clean(body.name);
     const amount = Number(body.amount ?? 0);
+    const successUrl = clean(body.successUrl);
+    const cancelUrl = clean(body.cancelUrl);
 
     if (!bookingId || !email || !name || !Number.isFinite(amount) || amount <= 0) {
       return NextResponse.json({ error: "Missing deposit details." }, { status: 400 });
     }
 
-    const session = await createStripeCheckout({ bookingId, amount, email, name });
+    const session = await createStripeCheckout({ bookingId, amount, email, name, successUrl, cancelUrl });
     await updateBooking(bookingId, {
       depositStatus: session.provider === "stripe" ? "requested" : "mock_requested",
       depositAmount: amount,
