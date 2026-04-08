@@ -7,8 +7,9 @@ export function generateStaticParams() {
   return Object.keys(experienceContent).map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }) {
-  const experience = getExperienceBySlug(params.slug);
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const experience = getExperienceBySlug(resolvedParams.slug);
 
   if (!experience) {
     return { title: "Artifice" };
@@ -20,14 +21,16 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function ExperienceDetailPage({ params, searchParams }) {
-  const experience = getExperienceBySlug(params.slug);
+export default async function ExperienceDetailPage({ params, searchParams }) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const experience = getExperienceBySlug(resolvedParams.slug);
 
   if (!experience) {
     notFound();
   }
 
-  const selectedDepth = getDepthById(experience, searchParams?.depth);
+  const selectedDepth = getDepthById(experience, resolvedSearchParams?.depth);
 
   return <ExperienceDetail experience={experience} selectedDepth={selectedDepth} basePath="/experience" />;
 }

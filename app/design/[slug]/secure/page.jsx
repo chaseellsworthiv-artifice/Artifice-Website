@@ -7,8 +7,9 @@ function mapIncomingSlug(slug) {
   return slug === "designed-experience" ? "designed" : slug;
 }
 
-export function generateMetadata({ params }) {
-  const experience = getExperienceBySlug(mapIncomingSlug(params.slug));
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const experience = getExperienceBySlug(mapIncomingSlug(resolvedParams.slug));
 
   if (!experience) {
     return { title: "Artifice" };
@@ -20,14 +21,16 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function DesignSecureDatePage({ params, searchParams }) {
-  const experience = getExperienceBySlug(mapIncomingSlug(params.slug));
+export default async function DesignSecureDatePage({ params, searchParams }) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const experience = getExperienceBySlug(mapIncomingSlug(resolvedParams.slug));
 
   if (!experience || experience.slug === "designed") {
     notFound();
   }
 
-  const selectedDepth = getDepthById(experience, searchParams?.depth);
+  const selectedDepth = getDepthById(experience, resolvedSearchParams?.depth);
 
   if (!selectedDepth) {
     notFound();

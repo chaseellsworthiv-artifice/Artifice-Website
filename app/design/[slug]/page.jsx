@@ -11,8 +11,9 @@ export function generateStaticParams() {
   return ["close-up", "table", "cabaret", "designed-experience"].map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }) {
-  const experience = getExperienceBySlug(mapIncomingSlug(params.slug));
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const experience = getExperienceBySlug(mapIncomingSlug(resolvedParams.slug));
 
   if (!experience) {
     return { title: "Artifice" };
@@ -24,14 +25,16 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function DesignDetailPage({ params, searchParams }) {
-  const experience = getExperienceBySlug(mapIncomingSlug(params.slug));
+export default async function DesignDetailPage({ params, searchParams }) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const experience = getExperienceBySlug(mapIncomingSlug(resolvedParams.slug));
 
   if (!experience) {
     notFound();
   }
 
-  const selectedDepth = getDepthById(experience, searchParams?.depth);
+  const selectedDepth = getDepthById(experience, resolvedSearchParams?.depth);
 
   return <ExperienceDetail experience={experience} selectedDepth={selectedDepth} basePath="/design" />;
 }

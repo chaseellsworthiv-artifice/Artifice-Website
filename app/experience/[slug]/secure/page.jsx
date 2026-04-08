@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import SecureDateFlow from "../../../../components/SecureDateFlow";
 import { getDepthById, getExperienceBySlug } from "../../../../components/experience-data";
 
-export function generateMetadata({ params }) {
-  const experience = getExperienceBySlug(params.slug);
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const experience = getExperienceBySlug(resolvedParams.slug);
 
   if (!experience) {
     return { title: "Artifice" };
@@ -16,14 +17,16 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function SecureDatePage({ params, searchParams }) {
-  const experience = getExperienceBySlug(params.slug);
+export default async function SecureDatePage({ params, searchParams }) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const experience = getExperienceBySlug(resolvedParams.slug);
 
   if (!experience || experience.slug === "designed") {
     notFound();
   }
 
-  const selectedDepth = getDepthById(experience, searchParams?.depth);
+  const selectedDepth = getDepthById(experience, resolvedSearchParams?.depth);
 
   if (!selectedDepth) {
     notFound();
