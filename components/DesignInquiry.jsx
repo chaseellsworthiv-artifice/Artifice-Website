@@ -6,6 +6,11 @@ import { useEffect, useState } from "react";
 import styles from "./design.module.css";
 
 export default function DesignInquiry({ initialValues }) {
+  const selectedExperience = initialValues.experience || "";
+  const selectedDepth = initialValues.depth || "";
+  const selectedDuration = initialValues.duration || "";
+  const selectedPrice = initialValues.price || "";
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -65,6 +70,10 @@ export default function DesignInquiry({ initialValues }) {
           date: form.date,
           location: form.venue,
           message: [
+            selectedExperience ? `Selected Experience: ${selectedExperience}` : "",
+            selectedDepth ? `Selected Depth: ${selectedDepth}` : "",
+            selectedDuration ? `Duration: ${selectedDuration}` : "",
+            selectedPrice ? `Listed Price: ${selectedPrice}` : "",
             form.details,
             form.atmosphere ? `Atmosphere: ${form.atmosphere}` : "",
             form.guestCount ? `Guest Count: ${form.guestCount}` : "",
@@ -117,6 +126,19 @@ export default function DesignInquiry({ initialValues }) {
           <p className={styles.subtext}>
             Tell me a bit more about what you’re planning, and I’ll structure something specifically for your event.
           </p>
+
+          {selectedExperience ? (
+            <div className={styles.selectionSummary}>
+              <p className={styles.cardEyebrow}>Selected Path</p>
+              <h2>
+                {selectedExperience}
+                {selectedDepth ? ` / ${selectedDepth}` : ""}
+              </h2>
+              <p>
+                {[selectedDuration, selectedPrice].filter(Boolean).join(" · ")}
+              </p>
+            </div>
+          ) : null}
 
           <form className={styles.form} onSubmit={handleSubmit}>
             <label className={styles.field}>

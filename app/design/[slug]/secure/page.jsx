@@ -1,6 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
-import SecureDateFlow from "../../../../components/SecureDateFlow";
 import { getDepthById, getExperienceBySlug } from "../../../../components/experience-data";
 
 function mapIncomingSlug(slug) {
@@ -36,5 +35,14 @@ export default async function DesignSecureDatePage({ params, searchParams }) {
     notFound();
   }
 
-  return <SecureDateFlow experience={experience} selectedDepth={selectedDepth} basePath="/design" />;
+  const paramsOut = new URLSearchParams({
+    experience: experience.name,
+    experienceSlug: experience.slug,
+    depth: selectedDepth.name,
+    depthId: selectedDepth.id,
+    duration: selectedDepth.duration,
+    price: selectedDepth.price,
+  });
+
+  redirect(`/design/custom-inquiry?${paramsOut.toString()}`);
 }

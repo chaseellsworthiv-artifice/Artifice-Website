@@ -77,6 +77,26 @@
   margin-top: 2rem;
 }
 
+.selectionSummary {
+  margin-top: 1.6rem;
+  padding: 1.15rem;
+  border: 1px solid rgba(201, 168, 106, 0.12);
+  background: rgba(8, 8, 9, 0.42);
+}
+
+.selectionSummary h2 {
+  margin: 0;
+  color: var(--aged-paper);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  line-height: 1;
+}
+
+.selectionSummary p:last-child {
+  margin: 0.7rem 0 0;
+  color: var(--muted-paper);
+}
+
 .field {
   display: grid;
   gap: 0.45rem;

@@ -5,13 +5,18 @@ export const metadata = {
   description: "Design a custom Artifice experience around your event.",
 };
 
-export default function DesignInquiryPage({ searchParams }) {
+export default async function DesignInquiryPage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
   const initialValues = {
-    date: searchParams?.date ?? "",
-    guestCount: searchParams?.guestCount ?? "",
-    eventType: searchParams?.eventType ?? "",
-    details: searchParams?.details ?? "",
-    venue: searchParams?.venue ?? "",
+    date: resolvedSearchParams?.date ?? "",
+    guestCount: resolvedSearchParams?.guestCount ?? "",
+    eventType: resolvedSearchParams?.eventType ?? "",
+    details: resolvedSearchParams?.details ?? "",
+    venue: resolvedSearchParams?.venue ?? "",
+    experience: resolvedSearchParams?.experience ?? "",
+    depth: resolvedSearchParams?.depth ?? "",
+    duration: resolvedSearchParams?.duration ?? "",
+    price: resolvedSearchParams?.price ?? "",
   };
 
   return <DesignInquiry initialValues={initialValues} />;

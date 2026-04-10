@@ -3,6 +3,22 @@ import Link from "next/link";
 import { durationSupportLine } from "./experience-data";
 import styles from "./experience.module.css";
 
+function inquiryHref({ experience, selectedDepth }) {
+  const params = new URLSearchParams({
+    experience: experience.name,
+    experienceSlug: experience.slug,
+  });
+
+  if (selectedDepth) {
+    params.set("depth", selectedDepth.name);
+    params.set("depthId", selectedDepth.id);
+    params.set("duration", selectedDepth.duration);
+    params.set("price", selectedDepth.price);
+  }
+
+  return `/design/custom-inquiry?${params.toString()}`;
+}
+
 export default function ExperienceDetail({ experience, selectedDepth, basePath = "/experience" }) {
   const isDesigned = experience.slug === "designed";
 
@@ -51,7 +67,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                   take place inside it.
                 </p>
                 <p className={styles.selectionNote}>{experience.depthIntro}</p>
-                <Link href="/design/custom-inquiry" className={styles.primaryAction}>
+                <Link href={inquiryHref({ experience })} className={styles.primaryAction}>
                   Custom Inquiry
                 </Link>
               </>
@@ -91,10 +107,12 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                   </div>
                 ) : null}
 
-                <Link href={`${basePath}/${experience.slug === "designed" ? "designed-experience" : experience.slug}/secure?depth=${selectedDepth.id}`} className={styles.primaryAction}>
-                  {experience.ctaLabel}
+                <Link href={inquiryHref({ experience, selectedDepth })} className={styles.primaryAction}>
+                  Request This Experience
                 </Link>
-                <p className={styles.placeholderNote}>The next step confirms the event details before deposit.</p>
+                <p className={styles.placeholderNote}>
+                  I’ll review the details first. If the date and fit are right, I’ll send the deposit link personally.
+                </p>
               </>
             )}
           </div>
