@@ -5,39 +5,45 @@
 .lineMask {
   position: relative;
   display: block;
-  padding: 0.03em 0.72em 0.08em 0;
-}
-
-.lineMeasure {
-  display: block;
-  padding-right: 0.5em;
-  color: transparent;
-  user-select: none;
-  pointer-events: none;
-}
-
-.lineSvg {
-  position: absolute;
-  inset: 0 auto auto 0;
   overflow: visible;
+  isolation: isolate;
 }
 
-.svgTextBase,
-.svgTextWash,
-.svgTextFinal {
-  text-rendering: geometricPrecision;
+.lineText {
+  position: relative;
+  z-index: 2;
+  display: block;
+  will-change: opacity, transform, filter, letter-spacing;
 }
 
-.svgTextBase {
-  fill: currentColor;
-}
-
-.svgTextWash {
-  fill: rgba(255, 248, 240, 0.42);
-  opacity: 0.34;
-}
-
-.svgTextFinal {
-  fill: currentColor;
+.lineShimmer {
+  position: absolute;
+  z-index: 1;
+  left: -8%;
+  right: -8%;
+  top: 13%;
+  bottom: 7%;
+  pointer-events: none;
   opacity: 0;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(ellipse at 18% 50%, rgba(230, 221, 198, 0.14), transparent 34%),
+    radial-gradient(ellipse at 82% 54%, rgba(201, 168, 106, 0.12), transparent 36%),
+    linear-gradient(90deg, transparent, rgba(230, 221, 198, 0.1), transparent);
+  filter: blur(12px);
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineText {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    letter-spacing: inherit !important;
+  }
+
+  .lineShimmer {
+    display: none;
+  }
 }
