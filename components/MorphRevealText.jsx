@@ -8,7 +8,7 @@ import styles from "./morph-reveal-text.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const BLOB_COUNT = 24;
+const BLOB_COUNT = 16;
 
 function seeded(seed) {
   let value = seed >>> 0;
@@ -24,13 +24,13 @@ function createProfile(lineIndex) {
     const verticalBand = blobIndex % 3;
     const yBase = verticalBand === 0 ? 0.34 : verticalBand === 1 ? 0.52 : 0.68;
     const y = Math.min(0.82, Math.max(0.22, yBase + (rand() - 0.5) * 0.18));
-    const radius = 0.024 + rand() * 0.034;
+    const radius = 0.03 + rand() * 0.04;
     const fromLeft = blobIndex % 2 === 0;
     const start = fromLeft ? (-0.18 - rand() * 0.22) : (1.18 + rand() * 0.22);
     const settleBase = 0.04 + rand() * 0.92;
     const settle = Math.min(1.12, Math.max(-0.12, settleBase + (fromLeft ? 1 : -1) * (rand() - 0.5) * 0.08));
-    const duration = 2.1 + rand() * 1.55;
-    const delay = blobIndex * 0.05 + rand() * 0.6;
+    const duration = 1.72 + rand() * 1.05;
+    const delay = blobIndex * 0.038 + rand() * 0.42;
     const washLead = 0.01 + rand() * 0.05;
     return {
       y,
@@ -45,7 +45,7 @@ function createProfile(lineIndex) {
 
   return {
     blobs,
-    washFadeStart: 2.35,
+    washFadeStart: 1.88,
     lineOffset: 0,
   };
 }
@@ -129,7 +129,7 @@ export default function MorphRevealText({
         }
 
         gsap.set(entry.svgRoot, { opacity: 0 });
-        gsap.set(entry.washText, { opacity: 0.38 });
+        gsap.set(entry.washText, { opacity: 0.22 });
         gsap.set(entry.finalText, { opacity: 0 });
 
         const profile = createProfile(index);
@@ -177,7 +177,7 @@ export default function MorphRevealText({
             {
               attr: {
                 cx: width * descriptor.settle,
-                rx: width * descriptor.radius * 3.4,
+                rx: width * descriptor.radius * 3.9,
               },
               duration: descriptor.duration,
               ease: blobIndex % 3 === 0 ? "power1.out" : blobIndex % 3 === 1 ? "power2.out" : "sine.out",
@@ -190,7 +190,7 @@ export default function MorphRevealText({
             {
               attr: {
                 cx: width * (descriptor.settle + descriptor.washLead),
-                rx: width * descriptor.radius * 0.84,
+                rx: width * descriptor.radius * 0.68,
               },
               duration: descriptor.duration * (0.58 + (blobIndex % 4) * 0.05),
               ease: blobIndex % 3 === 0 ? "power1.out" : blobIndex % 3 === 1 ? "power2.out" : "sine.out",
@@ -203,17 +203,17 @@ export default function MorphRevealText({
           entry.finalText,
           {
             opacity: 1,
-            duration: 1.18,
+            duration: 0.95,
             ease: "sine.out",
           },
-          profile.lineOffset + profile.washFadeStart - 0.62
+          profile.lineOffset + profile.washFadeStart - 0.78
         );
 
         timeline.to(
           entry.washText,
           {
             opacity: 0,
-            duration: 0.52,
+            duration: 0.42,
             ease: "sine.out",
           },
           profile.lineOffset + profile.washFadeStart
@@ -223,15 +223,15 @@ export default function MorphRevealText({
           entry.svgRoot,
           {
             opacity: 0,
-            duration: 0.4,
+            duration: 0.32,
             ease: "sine.out",
           },
           profile.lineOffset + profile.washFadeStart + 0.04
         );
 
-        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart - 0.18);
-        timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.38);
-        timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.42);
+        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart - 0.34);
+        timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.28);
+        timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.32);
       });
 
       ScrollTrigger.create({
