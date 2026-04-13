@@ -158,10 +158,10 @@ export default function HeroExperience() {
           {
             autoAlpha: 1,
             y: 0,
-            duration: 0.88,
+            duration: 1.05,
             ease: "power3.out",
           },
-          0.86
+          2.25
         );
 
       const veilTween = gsap.to(veilRef.current, {
@@ -573,7 +573,7 @@ export default function HeroExperience() {
             lines={["A darker room.", "Familiar objects.", "Impossible outcomes."]}
             className={styles.copyTitle}
             lineClassName={styles.copyTitleLine}
-            start="top 76%"
+            start="top 69%"
           />
           <div ref={copyBodyRef} className={styles.copyBody}>
             <p className={styles.lead}>
