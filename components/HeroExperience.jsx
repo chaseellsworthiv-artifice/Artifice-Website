@@ -129,6 +129,7 @@ export default function HeroExperience() {
     const context = gsap.context(() => {
       const curtainScrollDistance = isReduced ? "+=200%" : "+=180%";
 
+      gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 6 });
       gsap.set(copyBodyRef.current, { autoAlpha: 0, y: 22 });
 
       const copyReveal = gsap.timeline({
@@ -140,16 +141,27 @@ export default function HeroExperience() {
       });
       if (copyReveal.scrollTrigger) localTriggers.push(copyReveal.scrollTrigger);
 
-      copyReveal.to(
-        copyBodyRef.current,
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.88,
-          ease: "power3.out",
-        },
-        0.86
-      );
+      copyReveal
+        .to(
+          wordmarkRef.current,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 1.65,
+            ease: "power2.out",
+          },
+          0
+        )
+        .to(
+          copyBodyRef.current,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.88,
+            ease: "power3.out",
+          },
+          0.86
+        );
 
       const veilTween = gsap.to(veilRef.current, {
         opacity: isReduced ? 0.78 : 0.92,
