@@ -129,7 +129,7 @@ export default function HeroExperience() {
     const context = gsap.context(() => {
       const curtainScrollDistance = isReduced ? "+=200%" : "+=180%";
 
-      gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 6 });
+      gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 8, filter: "blur(7px)" });
       gsap.set(copyBodyRef.current, { autoAlpha: 0, y: 22 });
 
       const copyReveal = gsap.timeline({
@@ -147,8 +147,9 @@ export default function HeroExperience() {
           {
             autoAlpha: 1,
             y: 0,
-            duration: 1.65,
-            ease: "power2.out",
+            filter: "blur(0px)",
+            duration: 2.85,
+            ease: "sine.out",
           },
           0
         )

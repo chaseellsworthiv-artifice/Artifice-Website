@@ -222,7 +222,10 @@
   align-items: flex-start;
   gap: 0.55rem;
   margin: 0 0 2.75rem;
-  will-change: opacity, transform;
+  opacity: 0;
+  transform: translateY(8px);
+  filter: blur(7px);
+  will-change: opacity, transform, filter;
 }
 
 .eyebrow {
