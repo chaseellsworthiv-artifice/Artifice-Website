@@ -30,11 +30,12 @@
 
 .svgTextBase {
   fill: currentColor;
+  opacity: 0.64;
 }
 
 .svgTextWash {
-  fill: rgba(255, 248, 240, 0.28);
-  opacity: 0.22;
+  fill: rgba(255, 248, 240, 0.24);
+  opacity: 0.18;
 }
 
 .svgTextFinal {
