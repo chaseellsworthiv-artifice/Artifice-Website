@@ -206,16 +206,17 @@ export default function HeroExperience() {
         const targets = section.querySelectorAll("[data-section-reveal]");
         if (!targets.length) return;
 
-        gsap.set(targets, { autoAlpha: 0, y: 26 });
+        gsap.set(targets, { autoAlpha: 0, y: isReduced ? 16 : 22, filter: "blur(6px)" });
         const revealTween = gsap.to(targets, {
           autoAlpha: 1,
           y: 0,
-          duration: 1.1,
-          ease: "power3.out",
-          stagger: 0.1,
+          filter: "blur(0px)",
+          duration: isReduced ? 1.25 : 1.55,
+          ease: "power2.out",
+          stagger: isReduced ? 0.12 : 0.18,
           scrollTrigger: {
             trigger: section,
-            start: isReduced ? "top 84%" : "top 78%",
+            start: isReduced ? "top 86%" : "top 82%",
             once: true,
           },
         });
