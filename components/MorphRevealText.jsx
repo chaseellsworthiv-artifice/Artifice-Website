@@ -24,13 +24,13 @@ function createProfile(lineIndex) {
     const progress = blobIndex / Math.max(1, BLOB_COUNT - 1);
     const verticalBand = blobIndex % 3;
     const yBase = verticalBand === 0 ? 0.42 : verticalBand === 1 ? 0.53 : 0.62;
-    const y = Math.min(0.74, Math.max(0.28, yBase + (rand() - 0.5) * 0.08));
-    const radius = 0.052 + rand() * 0.032;
-    const start = -0.18 - rand() * 0.1;
-    const settle = Math.min(1.14, Math.max(-0.08, -0.02 + progress * 1.12 + (rand() - 0.5) * 0.035));
-    const duration = 1.28 + rand() * 0.46;
-    const delay = progress * 0.58 + verticalBand * 0.032 + rand() * 0.08;
-    const washLead = 0.035 + rand() * 0.04;
+    const y = Math.min(0.76, Math.max(0.28, yBase + (rand() - 0.5) * 0.08));
+    const radius = 0.052 + rand() * 0.034;
+    const start = -0.16 - rand() * 0.09;
+    const settle = Math.min(1.14, Math.max(-0.08, -0.02 + progress * 1.12 + (rand() - 0.5) * 0.03));
+    const duration = 1.48 + rand() * 0.52;
+    const delay = progress * 0.48 + verticalBand * 0.026 + rand() * 0.075;
+    const washLead = 0.028 + rand() * 0.034;
     return {
       y,
       radius,
@@ -44,7 +44,7 @@ function createProfile(lineIndex) {
 
   return {
     blobs,
-    washFadeStart: 1.58,
+    washFadeStart: 1.42,
     lineOffset: 0,
   };
 }
@@ -128,7 +128,7 @@ export default function MorphRevealText({
         }
 
         gsap.set(entry.svgRoot, { opacity: 0 });
-        gsap.set(entry.washText, { opacity: 0.16 });
+        gsap.set(entry.washText, { opacity: 0.1 });
         gsap.set(entry.finalText, { opacity: 0 });
 
         const profile = createProfile(index);
@@ -176,7 +176,7 @@ export default function MorphRevealText({
             {
               attr: {
                 cx: width * descriptor.settle,
-                rx: width * descriptor.radius * 4.25,
+                rx: width * descriptor.radius * 4.2,
               },
               duration: descriptor.duration,
               ease: blobIndex % 3 === 0 ? "power1.out" : blobIndex % 3 === 1 ? "power2.out" : "sine.out",
@@ -189,7 +189,7 @@ export default function MorphRevealText({
             {
               attr: {
                 cx: width * (descriptor.settle + descriptor.washLead),
-                rx: width * descriptor.radius * 0.54,
+                rx: width * descriptor.radius * 0.5,
               },
               duration: descriptor.duration * (0.58 + (blobIndex % 4) * 0.05),
               ease: blobIndex % 3 === 0 ? "power1.out" : blobIndex % 3 === 1 ? "power2.out" : "sine.out",
@@ -202,35 +202,35 @@ export default function MorphRevealText({
           entry.finalText,
           {
             opacity: 1,
-            duration: 0.82,
+            duration: 1.32,
             ease: "sine.out",
           },
-          profile.lineOffset + profile.washFadeStart - 0.86
+          profile.lineOffset + 0.2
         );
 
         timeline.to(
           entry.washText,
           {
             opacity: 0,
-            duration: 0.36,
+            duration: 0.7,
             ease: "sine.out",
           },
-          profile.lineOffset + profile.washFadeStart
+          profile.lineOffset + 0.88
         );
 
         timeline.to(
           entry.svgRoot,
           {
             opacity: 0,
-            duration: 0.26,
+            duration: 0.6,
             ease: "sine.out",
           },
-          profile.lineOffset + profile.washFadeStart + 0.04
+          profile.lineOffset + 1.02
         );
 
-        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart - 0.46);
-        timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.22);
-        timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.26);
+        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + 1.5);
+        timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + 1.58);
+        timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + 1.62);
       });
 
       ScrollTrigger.create({
