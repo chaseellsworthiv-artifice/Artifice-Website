@@ -129,7 +129,7 @@ export default function MorphRevealText({
         }
 
         gsap.set(entry.svgRoot, { opacity: 0 });
-        gsap.set(entry.washText, { opacity: 0.18 });
+        gsap.set(entry.washText, { opacity: 0.22 });
         gsap.set(entry.finalText, { opacity: 0 });
 
         const profile = createProfile(index);
@@ -177,7 +177,7 @@ export default function MorphRevealText({
             {
               attr: {
                 cx: width * descriptor.settle,
-                rx: width * descriptor.radius * 4.05,
+                rx: width * descriptor.radius * 3.9,
               },
               duration: descriptor.duration,
               ease: blobIndex % 3 === 0 ? "power1.out" : blobIndex % 3 === 1 ? "power2.out" : "sine.out",
@@ -190,7 +190,7 @@ export default function MorphRevealText({
             {
               attr: {
                 cx: width * (descriptor.settle + descriptor.washLead),
-                rx: width * descriptor.radius * 0.62,
+                rx: width * descriptor.radius * 0.68,
               },
               duration: descriptor.duration * (0.58 + (blobIndex % 4) * 0.05),
               ease: blobIndex % 3 === 0 ? "power1.out" : blobIndex % 3 === 1 ? "power2.out" : "sine.out",
@@ -203,10 +203,10 @@ export default function MorphRevealText({
           entry.finalText,
           {
             opacity: 1,
-            duration: 1.08,
+            duration: 0.95,
             ease: "sine.out",
           },
-          profile.lineOffset + profile.washFadeStart - 0.96
+          profile.lineOffset + profile.washFadeStart - 0.78
         );
 
         timeline.to(
@@ -223,13 +223,13 @@ export default function MorphRevealText({
           entry.svgRoot,
           {
             opacity: 0,
-            duration: 0.48,
+            duration: 0.32,
             ease: "sine.out",
           },
           profile.lineOffset + profile.washFadeStart + 0.04
         );
 
-        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart + 0.24);
+        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart - 0.34);
         timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.28);
         timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.32);
       });
