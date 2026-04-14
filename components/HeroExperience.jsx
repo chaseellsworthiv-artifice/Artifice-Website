@@ -150,7 +150,7 @@ export default function HeroExperience() {
             autoAlpha: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 1.55,
+            duration: 1.9,
             ease: "sine.out",
           },
           0
@@ -175,7 +175,7 @@ export default function HeroExperience() {
             ease: "power2.out",
             stagger: 0.18,
           },
-          2.85
+          3.35
         );
 
       const veilTween = gsap.to(veilRef.current, {
@@ -588,7 +588,7 @@ export default function HeroExperience() {
             className={styles.copyTitle}
             lineClassName={styles.copyTitleLine}
             start="top 69%"
-            revealDelay={0.28}
+            revealDelay={0.75}
           />
           <div ref={copyBodyRef} className={styles.copyBody}>
             <p className={styles.lead}>
