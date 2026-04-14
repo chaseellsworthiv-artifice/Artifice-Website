@@ -129,8 +129,10 @@ export default function HeroExperience() {
     const context = gsap.context(() => {
       const curtainScrollDistance = isReduced ? "+=200%" : "+=180%";
 
-      gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 8, filter: "blur(7px)" });
-      gsap.set(copyBodyRef.current, { autoAlpha: 0, y: 22 });
+      const copyBodyItems = copyBodyRef.current?.children ? Array.from(copyBodyRef.current.children) : [];
+
+      gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 6, filter: "blur(5px)" });
+      gsap.set(copyBodyItems, { autoAlpha: 0, y: 16, filter: "blur(3px)" });
 
       const copyReveal = gsap.timeline({
         scrollTrigger: {
@@ -148,20 +150,22 @@ export default function HeroExperience() {
             autoAlpha: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 2.85,
+            duration: 1.55,
             ease: "sine.out",
           },
           0
         )
         .to(
-          copyBodyRef.current,
+          copyBodyItems,
           {
             autoAlpha: 1,
             y: 0,
-            duration: 1.05,
-            ease: "power3.out",
+            filter: "blur(0px)",
+            duration: 1.15,
+            ease: "power2.out",
+            stagger: 0.18,
           },
-          2.25
+          3.05
         );
 
       const veilTween = gsap.to(veilRef.current, {
@@ -574,6 +578,7 @@ export default function HeroExperience() {
             className={styles.copyTitle}
             lineClassName={styles.copyTitleLine}
             start="top 69%"
+            revealDelay={0.28}
           />
           <div ref={copyBodyRef} className={styles.copyBody}>
             <p className={styles.lead}>

@@ -81,6 +81,7 @@ export default function MorphRevealText({
   lineClassName = "",
   triggerRef,
   start = "top 76%",
+  revealDelay = 0,
 }) {
   const rootRef = useRef(null);
   const measureRefs = useRef([]);
@@ -241,13 +242,13 @@ export default function MorphRevealText({
         onEnter: () => {
           if (hasPlayedRef.current) return;
           hasPlayedRef.current = true;
-          timeline.play(0);
+          timeline.delay(revealDelay).play(0);
         },
       });
     }, rootRef);
 
     return () => context.revert();
-  }, [lines, metrics, start, triggerRef]);
+  }, [lines, metrics, revealDelay, start, triggerRef]);
 
   const rootClassName = className ? `${styles.root} ${className}` : styles.root;
 
