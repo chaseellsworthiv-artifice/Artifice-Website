@@ -8,7 +8,7 @@ import styles from "./morph-reveal-text.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const BLOB_COUNT = 16;
+const BLOB_COUNT = 9;
 
 function seeded(seed) {
   let value = seed >>> 0;
@@ -22,16 +22,16 @@ function createProfile(lineIndex) {
   const rand = seeded(9173 + lineIndex * 127);
   const blobs = Array.from({ length: BLOB_COUNT }, (_, blobIndex) => {
     const verticalBand = blobIndex % 3;
-    const yBase = verticalBand === 0 ? 0.34 : verticalBand === 1 ? 0.52 : 0.68;
-    const y = Math.min(0.82, Math.max(0.22, yBase + (rand() - 0.5) * 0.18));
-    const radius = 0.038 + rand() * 0.05;
+    const yBase = verticalBand === 0 ? 0.3 : verticalBand === 1 ? 0.52 : 0.74;
+    const y = Math.min(0.86, Math.max(0.18, yBase + (rand() - 0.5) * 0.09));
+    const radius = 0.13 + rand() * 0.08;
     const fromLeft = blobIndex % 2 === 0;
-    const start = fromLeft ? (-0.18 - rand() * 0.22) : (1.18 + rand() * 0.22);
-    const settleBase = 0.04 + rand() * 0.92;
-    const settle = Math.min(1.12, Math.max(-0.12, settleBase + (fromLeft ? 1 : -1) * (rand() - 0.5) * 0.08));
-    const duration = 1.72 + rand() * 1.05;
-    const delay = blobIndex * 0.038 + rand() * 0.42;
-    const washLead = 0.01 + rand() * 0.05;
+    const start = fromLeft ? -0.36 - rand() * 0.16 : 1.36 + rand() * 0.16;
+    const settleBase = 0.06 + rand() * 0.88;
+    const settle = Math.min(1.16, Math.max(-0.16, settleBase + (fromLeft ? 1 : -1) * (rand() - 0.5) * 0.05));
+    const duration = 1.28 + rand() * 0.5;
+    const delay = blobIndex * 0.026 + rand() * 0.16;
+    const washLead = 0.03 + rand() * 0.08;
     return {
       y,
       radius,
@@ -45,7 +45,7 @@ function createProfile(lineIndex) {
 
   return {
     blobs,
-    washFadeStart: 1.88,
+    washFadeStart: 1.58,
     lineOffset: 0,
   };
 }
@@ -129,7 +129,7 @@ export default function MorphRevealText({
         }
 
         gsap.set(entry.svgRoot, { opacity: 0 });
-        gsap.set(entry.washText, { opacity: 0.18 });
+        gsap.set(entry.washText, { opacity: 0.2 });
         gsap.set(entry.finalText, { opacity: 0 });
 
         const profile = createProfile(index);
@@ -140,7 +140,7 @@ export default function MorphRevealText({
           gsap.set(blob, {
             attr: {
               cx: width * descriptor.start,
-              rx: width * descriptor.radius * 0.02,
+              rx: width * descriptor.radius * 0.16,
             },
           });
         });
@@ -152,7 +152,7 @@ export default function MorphRevealText({
           gsap.set(blob, {
             attr: {
               cx: width * (descriptor.start - descriptor.washLead),
-              rx: width * descriptor.radius * 0.04,
+              rx: width * descriptor.radius * 0.32,
             },
           });
         });
@@ -177,10 +177,10 @@ export default function MorphRevealText({
             {
               attr: {
                 cx: width * descriptor.settle,
-                rx: width * descriptor.radius * 4.35,
+                rx: width * descriptor.radius * 2.9,
               },
               duration: descriptor.duration,
-              ease: blobIndex % 3 === 0 ? "power1.out" : blobIndex % 3 === 1 ? "power2.out" : "sine.out",
+              ease: "sine.out",
             },
             profile.lineOffset + descriptor.delay
           );
@@ -190,12 +190,12 @@ export default function MorphRevealText({
             {
               attr: {
                 cx: width * (descriptor.settle + descriptor.washLead),
-                rx: width * descriptor.radius * 0.68,
+                rx: width * descriptor.radius * 1.42,
               },
-              duration: descriptor.duration * (0.58 + (blobIndex % 4) * 0.05),
-              ease: blobIndex % 3 === 0 ? "power1.out" : blobIndex % 3 === 1 ? "power2.out" : "sine.out",
+              duration: descriptor.duration * (0.88 + (blobIndex % 3) * 0.05),
+              ease: "sine.inOut",
             },
-            profile.lineOffset + descriptor.delay + 0.02
+            profile.lineOffset + descriptor.delay - 0.04
           );
         });
 
@@ -203,35 +203,35 @@ export default function MorphRevealText({
           entry.finalText,
           {
             opacity: 1,
-            duration: 1.28,
-            ease: "sine.out",
+            duration: 1.46,
+            ease: "power1.out",
           },
-          profile.lineOffset + profile.washFadeStart - 1.02
+          profile.lineOffset + profile.washFadeStart - 1.28
         );
 
         timeline.to(
           entry.washText,
           {
             opacity: 0,
-            duration: 0.42,
+            duration: 0.62,
             ease: "sine.out",
           },
-          profile.lineOffset + profile.washFadeStart
+          profile.lineOffset + profile.washFadeStart + 0.02
         );
 
         timeline.to(
           entry.svgRoot,
           {
             opacity: 0,
-            duration: 0.32,
+            duration: 0.56,
             ease: "sine.out",
           },
-          profile.lineOffset + profile.washFadeStart + 0.04
+          profile.lineOffset + profile.washFadeStart + 0.12
         );
 
-        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart + 0.48);
-        timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.28);
-        timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.32);
+        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart + 0.62);
+        timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.68);
+        timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.72);
       });
 
       ScrollTrigger.create({
@@ -286,11 +286,11 @@ export default function MorphRevealText({
                   preserveAspectRatio="xMinYMin meet"
                 >
                   <defs>
-                    <filter id={blurId} x="-45%" y="-140%" width="220%" height="380%">
-                      <feGaussianBlur stdDeviation={metric.height * 0.17} />
+                    <filter id={blurId} x="-55%" y="-170%" width="240%" height="440%">
+                      <feGaussianBlur stdDeviation={metric.height * 0.26} />
                     </filter>
-                    <filter id={washBlurId} x="-45%" y="-140%" width="220%" height="380%">
-                      <feGaussianBlur stdDeviation={metric.height * 0.12} />
+                    <filter id={washBlurId} x="-55%" y="-170%" width="240%" height="440%">
+                      <feGaussianBlur stdDeviation={metric.height * 0.19} />
                     </filter>
                     <mask id={maskId}>
                       <rect width={metric.width} height={metric.height} fill="black" />
@@ -303,8 +303,8 @@ export default function MorphRevealText({
                             }}
                             cx="0"
                             cy={metric.height * descriptor.y}
-                            rx={metric.width * descriptor.radius * 0.2}
-                            ry={metric.height * (0.18 + (blobIndex % 5) * 0.024)}
+                            rx={metric.width * descriptor.radius * 0.42}
+                            ry={metric.height * (0.31 + (blobIndex % 3) * 0.04)}
                             fill="white"
                           />
                         ))}
@@ -321,8 +321,8 @@ export default function MorphRevealText({
                             }}
                             cx="0"
                             cy={metric.height * descriptor.y}
-                            rx={metric.width * descriptor.radius * 0.34}
-                            ry={metric.height * (0.14 + (blobIndex % 5) * 0.02)}
+                            rx={metric.width * descriptor.radius * 0.62}
+                            ry={metric.height * (0.24 + (blobIndex % 3) * 0.035)}
                             fill="white"
                           />
                         ))}
