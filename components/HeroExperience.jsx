@@ -234,8 +234,10 @@ export default function HeroExperience() {
     let isPointerInside = false;
     const state = { x: 0, y: 0, open: 0 };
     const target = { x: 0, y: 0 };
+    const fabric = { x: 0, y: 0, phase: 0 };
     const sliceStates = sliceRefs.current.map(() => ({
       lastTransform: "",
+      lastBackgroundPosition: "",
     }));
 
     function applySliceLayout() {
@@ -254,6 +256,8 @@ export default function HeroExperience() {
 
       shell.style.setProperty("--curtain-bg-size", `${backgroundWidth}px ${backgroundHeight}px`);
       shell.style.setProperty("--curtain-bg-position", `${offsetX}px ${offsetY}px`);
+      shell.style.setProperty("--curtain-bg-position-x", `${offsetX}px`);
+      shell.style.setProperty("--curtain-bg-position-y", `${offsetY}px`);
 
       sliceRefs.current.forEach((slice, index) => {
         if (!slice) return;
@@ -295,6 +299,24 @@ export default function HeroExperience() {
       const bubbleStrength = (1 - state.open * 0.78) * pointerPresence;
       hero.style.setProperty("--curtain-bubble-strength", `${bubbleStrength.toFixed(4)}`);
 
+      const pointerLagX = target.x - state.x;
+      const pointerLagY = target.y - state.y;
+      const fabricTargetX = pointerPresence * (state.x * 0.62 + pointerLagX * 1.15);
+      const fabricTargetY = pointerPresence * (state.y * 0.38 + pointerLagY * 0.9);
+      fabric.x += (fabricTargetX - fabric.x) * (isTouch ? 0.045 : 0.065);
+      fabric.y += (fabricTargetY - fabric.y) * (isTouch ? 0.045 : 0.065);
+      fabric.phase += 0.012 + Math.abs(pointerLagX) * 0.018 + Math.abs(pointerLagY) * 0.012 + Math.abs(openTargetRef.current - state.open) * 0.05;
+
+      const fluidAvailability = Math.max(0, 1 - state.open * 0.9);
+      const fluidStrength = fluidAvailability * (0.24 + pointerPresence * 0.76);
+      const shellWidthForFluid = shellMetricsRef.current.width || hero.getBoundingClientRect().width;
+      const shellHeightForFluid = shellMetricsRef.current.height || hero.getBoundingClientRect().height;
+      const fluidShellX = fabric.x * shellWidthForFluid * (isTouch ? 0.0024 : 0.0038) * fluidStrength;
+      const fluidShellY = fabric.y * shellHeightForFluid * (isTouch ? 0.0014 : 0.0022) * fluidStrength;
+      shell?.style.setProperty("--curtain-fluid-x", `${fluidShellX.toFixed(3)}px`);
+      shell?.style.setProperty("--curtain-fluid-y", `${fluidShellY.toFixed(3)}px`);
+      shell?.style.setProperty("--curtain-fluid-opacity", `${(fluidStrength * 0.5).toFixed(4)}`);
+
       const tensionWindow = isTouch ? 0.075 : isReduced ? 0.082 : 0.088;
       const tensionProgress = Math.min(1, state.open / tensionWindow);
       const openProgressRaw = state.open <= tensionWindow ? 0 : (state.open - tensionWindow) / (1 - tensionWindow);
@@ -321,12 +343,15 @@ export default function HeroExperience() {
         const pointerField = Math.exp(-(pointerDx * pointerDx) / (2 * influenceRadius * influenceRadius));
         const verticalFocus = 1 - Math.min(1, Math.abs(pointerYNorm - 0.48) * 1.45);
         const tactileInfluence = pointerPresence * (1 - state.open * 0.84) * pointerField * (0.42 + verticalFocus * 0.58);
-        const pointerLagX = target.x - state.x;
-        const pointerLagY = target.y - state.y;
-        const tactileShiftX = -pointerDx * tactileInfluence * shellWidth * (isTouch ? 0.018 : 0.015);
-        const tactileShiftY = (pointerLagY * tactileInfluence * (isTouch ? 2.8 : 2.2)) + ((pointerYNorm - 0.5) * tactileInfluence * 0.8);
-        const tactileRotate = -pointerDx * tactileInfluence * (isTouch ? 8.5 : 11.5);
-        const tactileSkew = pointerLagX * tactileInfluence * 0.8;
+        const tactileShiftX = -pointerDx * tactileInfluence * shellWidth * (isTouch ? 0.013 : 0.011);
+        const tactileShiftY = (pointerLagY * tactileInfluence * (isTouch ? 2.2 : 1.7)) + ((pointerYNorm - 0.5) * tactileInfluence * 0.62);
+        const tactileRotate = -pointerDx * tactileInfluence * (isTouch ? 5.2 : 6.7);
+        const tactileSkew = pointerLagX * tactileInfluence * 0.46;
+        const waveFalloff = Math.pow(Math.max(0, 1 - Math.abs(center)), 0.7);
+        const fabricWave = Math.sin(fabric.phase + index * 0.23) * waveFalloff * fluidStrength;
+        const fabricFlowX = (fabric.x * shellWidth * (isTouch ? 0.0018 : 0.0028) + fabricWave * shellWidth * 0.0015) * fluidAvailability;
+        const fabricFlowY = (fabric.y * (isTouch ? 1.2 : 1.8) + Math.cos(fabric.phase * 0.86 + index * 0.19) * waveFalloff * fluidStrength * 1.6) * fluidAvailability;
+        const fabricSkew = (fabric.x * waveFalloff * fluidStrength * 0.12) + fabricWave * 0.18;
         const centerWeight = Math.pow(Math.max(0, 1 - Math.abs(center)), 1.85);
         const upperBias = 1 - Math.min(1, halfT * 1.18);
         const tensionEase = Math.sin(tensionProgress * Math.PI * 0.5);
@@ -336,13 +361,22 @@ export default function HeroExperience() {
         const tensionRotate = -side * tensionCompress * (isTouch ? 1.35 : 1.05);
         const tensionSkew = -side * tensionCompress * upperBias * 0.085;
         const scaleX = gatherScale * (1 - tactileInfluence * (isTouch ? 0.03 : 0.042)) * (1 - tensionCompress * (isTouch ? 0.016 : 0.012));
-        const transform = `translate3d(${(openOffsetX + tactileShiftX + tensionShiftX).toFixed(3)}px, ${(tactileShiftY + tensionShiftY).toFixed(3)}px, 0px) rotateY(${(openRotate + tactileRotate + tensionRotate).toFixed(
+        const transform = `translate3d(${(openOffsetX + tactileShiftX + tensionShiftX + fabricFlowX).toFixed(3)}px, ${(tactileShiftY + tensionShiftY + fabricFlowY).toFixed(3)}px, 0px) rotateY(${(openRotate + tactileRotate + tensionRotate).toFixed(
           3
-        )}deg) skewY(${(skew + tactileSkew + tensionSkew).toFixed(3)}deg) scaleX(${scaleX.toFixed(4)}) scaleY(1)`;
+        )}deg) skewY(${(skew + tactileSkew + tensionSkew + fabricSkew).toFixed(3)}deg) scaleX(${scaleX.toFixed(4)}) scaleY(1)`;
 
         if (sliceState.lastTransform !== transform) {
           slice.style.transform = transform;
           sliceState.lastTransform = transform;
+        }
+
+        const baseBackgroundX = Number.parseFloat(slice.style.left || "0") || 0;
+        const backgroundShiftX = fabricFlowX * 0.32 + fabricWave * shellWidth * 0.001;
+        const backgroundShiftY = fabricFlowY * 0.5;
+        const backgroundPosition = `calc(var(--curtain-bg-position-x, 0px) - ${baseBackgroundX.toFixed(3)}px + ${backgroundShiftX.toFixed(3)}px) ${backgroundShiftY.toFixed(3)}px`;
+        if (sliceState.lastBackgroundPosition !== backgroundPosition) {
+          slice.style.backgroundPosition = backgroundPosition;
+          sliceState.lastBackgroundPosition = backgroundPosition;
         }
       });
 
@@ -391,6 +425,8 @@ export default function HeroExperience() {
       const moving =
         Math.abs(target.x - state.x) > 0.05 ||
         Math.abs(target.y - state.y) > 0.05 ||
+        Math.abs(fabric.x - fabricTargetX) > 0.01 ||
+        Math.abs(fabric.y - fabricTargetY) > 0.01 ||
         Math.abs(openTargetRef.current - state.open) > 0.002;
       if (moving) {
         rafId = window.requestAnimationFrame(render);

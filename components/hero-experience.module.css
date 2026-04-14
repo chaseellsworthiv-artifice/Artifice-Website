@@ -96,6 +96,9 @@
   transition: opacity 120ms ease-out;
   --curtain-left-shift: 0px;
   --curtain-right-shift: 0px;
+  --curtain-fluid-x: 0px;
+  --curtain-fluid-y: 0px;
+  --curtain-fluid-opacity: 0;
 }
 
 .curtainShellReady {
@@ -119,6 +122,9 @@
   background-repeat: no-repeat;
   background-size: var(--curtain-bg-size);
   background-position: var(--curtain-bg-position) 0;
+  transform: translate3d(var(--curtain-fluid-x), var(--curtain-fluid-y), 0) scale(1.004);
+  transform-origin: center;
+  will-change: transform;
 }
 
 .curtainShell::after {
@@ -128,6 +134,7 @@
   z-index: 3;
   pointer-events: none;
   background:
+    radial-gradient(ellipse at calc(50% + var(--curtain-fluid-x)) calc(34% + var(--curtain-fluid-y)), rgba(248, 218, 188, calc(var(--curtain-fluid-opacity) * 0.055)), transparent 30%),
     linear-gradient(90deg, rgba(10, 10, 10, 0.22) 0%, rgba(10, 10, 10, 0) 9%, rgba(10, 10, 10, 0) 91%, rgba(10, 10, 10, 0.22) 100%),
     linear-gradient(180deg, rgba(248, 218, 188, 0.04) 0%, rgba(10, 10, 10, 0) 16%, rgba(10, 10, 10, 0.12) 72%, rgba(10, 10, 10, 0.34) 100%);
 }
