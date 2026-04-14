@@ -175,7 +175,7 @@ export default function HeroExperience() {
             ease: "power2.out",
             stagger: 0.18,
           },
-          3.35
+          3.05
         );
 
       const veilTween = gsap.to(veilRef.current, {
