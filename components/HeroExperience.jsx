@@ -154,8 +154,18 @@ export default function HeroExperience() {
             ease: "sine.out",
           },
           0
-        )
-        .to(
+        );
+
+      const bodyReveal = gsap.timeline({
+        scrollTrigger: {
+          trigger: wordmarkRef.current,
+          start: "top 69%",
+          once: true,
+        },
+      });
+      if (bodyReveal.scrollTrigger) localTriggers.push(bodyReveal.scrollTrigger);
+
+      bodyReveal.to(
           copyBodyItems,
           {
             autoAlpha: 1,
@@ -165,7 +175,7 @@ export default function HeroExperience() {
             ease: "power2.out",
             stagger: 0.18,
           },
-          3.05
+          2.85
         );
 
       const veilTween = gsap.to(veilRef.current, {
