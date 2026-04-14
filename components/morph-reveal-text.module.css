@@ -3,41 +3,100 @@
 }
 
 .lineMask {
+  --reveal-x: -20%;
+  --ghost-x: -12%;
+  --ghost-opacity: 0;
+  --final-opacity: 0;
+  --line-y: 4px;
   position: relative;
   display: block;
-  padding: 0.03em 0.72em 0.08em 0;
+  overflow: visible;
+  transform: translate3d(0, var(--line-y), 0);
+  will-change: transform;
 }
 
 .lineMeasure {
   display: block;
-  padding-right: 0.5em;
   color: transparent;
   user-select: none;
   pointer-events: none;
 }
 
-.lineSvg {
+.lineGhost,
+.lineReveal,
+.lineFinal {
   position: absolute;
   inset: 0 auto auto 0;
-  overflow: visible;
+  display: block;
+  pointer-events: none;
+  white-space: nowrap;
 }
 
-.svgTextBase,
-.svgTextWash,
-.svgTextFinal {
-  text-rendering: geometricPrecision;
+.lineGhost {
+  color: rgba(230, 221, 198, 0.54);
+  opacity: var(--ghost-opacity);
+  filter: blur(4.5px);
+  transform: translate3d(0, 0, 0);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent calc(var(--ghost-x) - 24%),
+    rgba(0, 0, 0, 0.1) calc(var(--ghost-x) - 15%),
+    #000 calc(var(--ghost-x) - 3%),
+    rgba(0, 0, 0, 0.14) calc(var(--ghost-x) + 14%),
+    transparent calc(var(--ghost-x) + 25%)
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent calc(var(--ghost-x) - 24%),
+    rgba(0, 0, 0, 0.1) calc(var(--ghost-x) - 15%),
+    #000 calc(var(--ghost-x) - 3%),
+    rgba(0, 0, 0, 0.14) calc(var(--ghost-x) + 14%),
+    transparent calc(var(--ghost-x) + 25%)
+  );
+  will-change: opacity, filter, mask-image;
 }
 
-.svgTextBase {
-  fill: currentColor;
+.lineReveal {
+  color: currentColor;
+  opacity: 0.88;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    #000 0%,
+    #000 calc(var(--reveal-x) - 18%),
+    rgba(0, 0, 0, 0.72) calc(var(--reveal-x) - 8%),
+    rgba(0, 0, 0, 0.16) calc(var(--reveal-x) + 5%),
+    transparent calc(var(--reveal-x) + 17%)
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000 0%,
+    #000 calc(var(--reveal-x) - 18%),
+    rgba(0, 0, 0, 0.72) calc(var(--reveal-x) - 8%),
+    rgba(0, 0, 0, 0.16) calc(var(--reveal-x) + 5%),
+    transparent calc(var(--reveal-x) + 17%)
+  );
+  will-change: mask-image;
 }
 
-.svgTextWash {
-  fill: rgba(255, 248, 240, 0.28);
-  opacity: 0.22;
+.lineFinal {
+  color: currentColor;
+  opacity: var(--final-opacity);
+  filter: none;
+  will-change: opacity;
 }
 
-.svgTextFinal {
-  fill: currentColor;
-  opacity: 0;
+@media (prefers-reduced-motion: reduce) {
+  .lineMask {
+    transform: none !important;
+  }
+
+  .lineMeasure {
+    color: currentColor;
+  }
+
+  .lineGhost,
+  .lineReveal,
+  .lineFinal {
+    display: none;
+  }
 }
