@@ -175,7 +175,7 @@ export default function HeroExperience() {
             ease: "power2.out",
             stagger: 0.18,
           },
-          3.05
+          2.8
         );
 
       const veilTween = gsap.to(veilRef.current, {
@@ -216,7 +216,7 @@ export default function HeroExperience() {
           stagger: isReduced ? 0.12 : 0.18,
           scrollTrigger: {
             trigger: section,
-            start: isReduced ? "top 86%" : "top 82%",
+            start: isReduced ? "top 78%" : "top 74%",
             once: true,
           },
         });
