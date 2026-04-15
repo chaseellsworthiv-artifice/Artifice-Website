@@ -271,7 +271,7 @@
 
 .copyBody {
   display: grid;
-  gap: 3rem;
+  gap: 1.45rem;
   margin-top: 1.45rem;
 }
 
@@ -1135,7 +1135,7 @@
   }
 
   .copyBody {
-    gap: 2.65rem;
+    gap: 1.25rem;
     margin-top: 1.25rem;
   }
 
@@ -1281,7 +1281,7 @@
   }
 
   .copyBody {
-    gap: 2.35rem;
+    gap: 1.25rem;
   }
 
   .lead {
