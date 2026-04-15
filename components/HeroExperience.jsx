@@ -628,10 +628,13 @@ export default function HeroExperience() {
         <section id="experience" ref={(node) => { sectionRefs.current[0] = node; }} className={`${styles.section} ${styles.splitSection}`}>
           <div className={styles.sectionCopy} data-section-reveal>
             <p className={styles.sectionLabel}>Experience</p>
-            <h2>Close enough to feel impossible. Quiet enough to feel inevitable.</h2>
+            <h2>What makes it different</h2>
             <p>
-              The work happens inside the conversation, with ordinary objects and no visible machinery.
-              What remains is the feeling that the room itself has shifted.
+              No props. No distance. No visible method.
+            </p>
+            <p>
+              Everything happens in the hands, in the moment, and inside the conversation.
+              What guests remember is not just what happened, but how the room felt while it was happening.
             </p>
             <div className={styles.sectionActions}>
               <a href="/design" className={styles.secondaryLink}>
