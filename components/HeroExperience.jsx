@@ -26,6 +26,12 @@ const clientLogos = [
   { name: "The Rio", src: "/assets/logos-clean/the-rio.png", scale: 0.92 },
 ];
 
+const clientNotes = [
+  "I knew people would enjoy it. I did not expect that many people to be talking about it for the rest of the night. It completely changed the energy in the room.",
+  "What I loved most was how natural it felt. Nothing was forced, nothing was overdone, and somehow that made it even more impossible. People were genuinely blown away.",
+  "This was one of the strongest parts of the entire event. Guests kept pulling other guests over to see it, and the reactions just kept building all night.",
+];
+
 export default function HeroExperience() {
   const [isMobileSeam, setIsMobileSeam] = useState(false);
   const [seamResolved, setSeamResolved] = useState(false);
@@ -737,6 +743,14 @@ export default function HeroExperience() {
               <figure className={styles.clientLogoTile} key={logo.name} style={{ "--logo-scale": logo.scale }}>
                 <img src={logo.src} alt={`${logo.name} logo`} loading="lazy" />
               </figure>
+            ))}
+          </div>
+
+          <div className={styles.clientNotes} data-section-reveal>
+            {clientNotes.map((note) => (
+              <blockquote className={styles.clientNote} key={note}>
+                <p>&ldquo;{note}&rdquo;</p>
+              </blockquote>
             ))}
           </div>
         </section>

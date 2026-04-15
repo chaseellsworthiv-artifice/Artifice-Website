@@ -564,6 +564,38 @@
   transform-origin: center;
 }
 
+.clientNotes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 2.2rem;
+  padding-top: 1.55rem;
+  border-top: 1px solid rgba(201, 168, 106, 0.16);
+}
+
+.clientNote {
+  position: relative;
+  margin: 0;
+  padding: 1rem 0 0;
+}
+
+.clientNote::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.68), rgba(201, 168, 106, 0));
+}
+
+.clientNote p {
+  margin: 0;
+  color: rgba(230, 221, 198, 0.82);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.05rem, 1.45vw, 1.28rem);
+  line-height: 1.38;
+}
+
 .reverse {
   grid-template-columns: 0.95fr 1.05fr;
 }
@@ -1185,6 +1217,21 @@
   .clientLogoTile img {
     max-width: 7.25rem;
     height: 2.65rem;
+  }
+
+  .clientNotes {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+  }
+
+  .clientNote {
+    padding-top: 0.85rem;
+  }
+
+  .clientNote p {
+    font-size: 1.05rem;
   }
 
   .page {
