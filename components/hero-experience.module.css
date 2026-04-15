@@ -563,11 +563,12 @@
 .clientLogoTile img {
   display: block;
   width: 100%;
-  max-width: 8.75rem;
-  height: 3.15rem;
+  max-width: 9rem;
+  height: 3.25rem;
   object-fit: contain;
-  filter: brightness(0) invert(91%) sepia(14%) saturate(330%) hue-rotate(358deg) brightness(1.02) contrast(0.92);
-  opacity: 0.82;
+  opacity: 0.86;
+  transform: scale(var(--logo-scale, 1));
+  transform-origin: center;
 }
 
 .testimonialPanel {
