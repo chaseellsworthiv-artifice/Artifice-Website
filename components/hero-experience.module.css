@@ -261,7 +261,7 @@
   max-width: 10.6ch;
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(3rem, 6vw, 5.15rem);
-  line-height: 1.01;
+  line-height: 0.96;
   color: var(--aged-paper);
 }
 
@@ -271,7 +271,8 @@
 
 .copyBody {
   display: grid;
-  gap: 0.35rem;
+  gap: 1.45rem;
+  margin-top: 1.45rem;
 }
 
 .copyBody > * {
@@ -281,7 +282,7 @@
 }
 
 .lead {
-  margin: 1.6rem 0 0;
+  margin: 0;
   max-width: 26ch;
   color: rgba(230, 221, 198, 0.82);
   font-family: "Cormorant Garamond", serif;
@@ -294,7 +295,7 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-top: 1.9rem;
+  margin-top: 0;
 }
 
 .sectionActions {
@@ -1130,6 +1131,12 @@
 
   .copyTitle {
     max-width: 9.1ch;
+    line-height: 0.98;
+  }
+
+  .copyBody {
+    gap: 1.25rem;
+    margin-top: 1.25rem;
   }
 
   .lead {
@@ -1270,6 +1277,7 @@
   .copyTitle {
     max-width: 10.2ch;
     font-size: clamp(2.1rem, 10vw, 3rem);
+    line-height: 0.99;
   }
 
   .lead {
@@ -1278,7 +1286,6 @@
   }
 
   .heroActions {
-    margin-top: 1.1rem;
     gap: 0.65rem;
   }
 
