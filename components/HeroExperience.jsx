@@ -585,7 +585,7 @@ export default function HeroExperience() {
           </div>
           <MorphRevealText
             as="h1"
-            lines={["A darker room.", "Familiar objects.", "Impossible outcomes."]}
+            lines={["Impossible close-up", "for rooms that", "expect more."]}
             className={styles.copyTitle}
             lineClassName={styles.copyTitleLine}
             start="top 69%"
@@ -593,14 +593,14 @@ export default function HeroExperience() {
           />
           <div ref={copyBodyRef} className={styles.copyBody}>
             <p className={styles.lead}>
-              Sleight of hand by Chase Ellsworth, staged as atmosphere rather than performance.
+              Designed for private events, weddings, and exceptional gatherings where the atmosphere matters as much as the occasion itself.
             </p>
             <div className={styles.heroActions}>
               <a href="/design" className={styles.primaryLink}>
-                Design Your Experience
+                Explore Experiences
               </a>
               <a href="#booking" className={styles.secondaryLink}>
-                Begin Inquiry
+                Contact
               </a>
             </div>
           </div>
