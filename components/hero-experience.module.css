@@ -294,7 +294,7 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-top: 2.9rem;
+  margin-top: 1.45rem;
 }
 
 .sectionActions {
@@ -1146,7 +1146,7 @@
   .heroActions {
     flex-direction: column;
     align-items: stretch;
-    margin-top: 2.8rem;
+    margin-top: 1.25rem;
   }
 
   .primaryLink {
@@ -1290,7 +1290,7 @@
 
   .heroActions {
     gap: 0.72rem;
-    margin-top: 2.75rem;
+    margin-top: 1.25rem;
   }
 
   .primaryLink,
