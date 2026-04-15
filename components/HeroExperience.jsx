@@ -21,10 +21,8 @@ const clientLogos = [
   { name: "Leo Events", src: "/assets/logos-clean/leo-events.png", scale: 0.86 },
   { name: "Literary Ink", src: "/assets/logos-clean/literary-ink.png", scale: 1.15 },
   { name: "McLemore", src: "/assets/logos-clean/mclemore.png", scale: 1.42 },
-  { name: "Tennessee Valley", src: "/assets/logos-clean/tennessee-valley-authority.png", scale: 0.78 },
   { name: "The Dwell Hotel", src: "/assets/logos-clean/the-dwell-hotel.png", scale: 1.32 },
   { name: "The Rio", src: "/assets/logos-clean/the-rio.png", scale: 1.08 },
-  { name: "The Southern Bell", src: "/assets/logos-clean/the-southern-bell.png", scale: 1.45 },
   { name: "TVA", src: "/assets/logos-clean/tva.png", scale: 0.94 },
   { name: "Pizza Bros", src: "/assets/logos-clean/pizza-bros.png", scale: 1.34 },
 ];
