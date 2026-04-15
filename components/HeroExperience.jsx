@@ -11,6 +11,27 @@ import styles from "./hero-experience.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const clientLogos = [
+  { name: "BlueCross BlueShield", src: "/assets/logos/blue-cross-blue-shield.png" },
+  { name: "Tennessee Valley Authority", src: "/assets/logos/tennessee-valley-authority.png" },
+  { name: "Common House", src: "/assets/logos/common-house.png" },
+  { name: "The Dwell Hotel", src: "/assets/logos/the-dwell-hotel.png" },
+  { name: "Hi-Fi Clyde's", src: "/assets/logos/hi-fi-clydes.png" },
+  { name: "Leo Events", src: "/assets/logos/leo-events.png" },
+  { name: "Mellow Mushroom", src: "/assets/logos/mellow-mushroom.png" },
+  { name: "DECA", src: "/assets/logos/deca.png" },
+  { name: "Fountain Head", src: "/assets/logos/fountain-head.png" },
+  { name: "Gardens in the Gorge", src: "/assets/logos/gardens-in-the-gorge.png" },
+  { name: "Literary Ink", src: "/assets/logos/literary-ink.png" },
+  { name: "Puckett's", src: "/assets/logos/pucketts.png" },
+];
+
+const clientNotes = [
+  "Thoughtful, understated, and remarkably strong work.",
+  "The room settled in and then opened up. Perfect tone for the evening.",
+  "Using ordinary objects made everything feel cleaner and more impossible.",
+];
+
 export default function HeroExperience() {
   const [isMobileSeam, setIsMobileSeam] = useState(false);
   const [seamResolved, setSeamResolved] = useState(false);
@@ -707,6 +728,38 @@ export default function HeroExperience() {
                   Design Your Experience
                 </a>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="clients" ref={(node) => { sectionRefs.current[5] = node; }} className={`${styles.section} ${styles.clientsSection}`}>
+          <div className={styles.clientsHeader} data-section-reveal>
+            <p className={styles.sectionLabel}>Selected Clients</p>
+            <h2>Trusted in rooms where the standard is already high.</h2>
+            <p>
+              A record of private events, venues, hospitality groups, and organizations that have brought Artifice into the room.
+            </p>
+          </div>
+
+          <div className={styles.clientLogoGrid} data-section-reveal aria-label="Selected Artifice clients">
+            {clientLogos.map((logo) => (
+              <figure className={styles.clientLogoTile} key={logo.name}>
+                <img src={logo.src} alt={`${logo.name} logo`} loading="lazy" />
+              </figure>
+            ))}
+          </div>
+
+          <div className={styles.testimonialPanel} data-section-reveal>
+            <div className={styles.testimonialIntro}>
+              <p className={styles.sectionLabel}>Client Notes</p>
+              <h3>Quiet proof from the people in the room.</h3>
+            </div>
+            <div className={styles.testimonialGrid}>
+              {clientNotes.map((note) => (
+                <article className={styles.testimonialCard} key={note}>
+                  <p>&ldquo;{note}&rdquo;</p>
+                </article>
+              ))}
             </div>
           </div>
         </section>

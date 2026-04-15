@@ -518,6 +518,135 @@
   line-height: 1.6;
 }
 
+.clientsSection::after {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(201, 168, 106, 0.05), transparent 18%),
+    radial-gradient(circle at 86% 26%, rgba(74, 15, 23, 0.12), transparent 22%),
+    linear-gradient(180deg, rgba(5, 5, 6, 0.26) 0%, rgba(4, 4, 5, 0.64) 48%, rgba(3, 3, 4, 0.82) 100%);
+}
+
+.clientsHeader {
+  max-width: 54ch;
+}
+
+.clientsHeader h2 {
+  margin: 0;
+  max-width: 15ch;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.1rem, 4.2vw, 3.35rem);
+  line-height: 1.01;
+  color: var(--aged-paper);
+}
+
+.clientsHeader p {
+  margin: 1.2rem 0 0;
+  max-width: 40ch;
+  color: var(--muted-paper);
+  line-height: 1.62;
+}
+
+.clientLogoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.72rem;
+  margin-top: 2rem;
+}
+
+.clientLogoTile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 7.2rem;
+  margin: 0;
+  padding: 1.35rem;
+  overflow: hidden;
+  border: 1px solid rgba(201, 168, 106, 0.1);
+  border-radius: 24px 24px 8px 8px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(201, 168, 106, 0.05), transparent 46%),
+    linear-gradient(180deg, rgba(18, 16, 17, 0.48), rgba(7, 7, 8, 0.9));
+  box-shadow:
+    inset 0 1px 0 rgba(230, 221, 198, 0.024),
+    0 18px 38px rgba(0, 0, 0, 0.14);
+}
+
+.clientLogoTile::after {
+  content: "";
+  position: absolute;
+  inset: auto 1rem 0.9rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.2), transparent 72%);
+  opacity: 0.42;
+}
+
+.clientLogoTile img {
+  display: block;
+  width: min(100%, 9.5rem);
+  max-height: 3.5rem;
+  object-fit: contain;
+  filter: grayscale(1) invert(1) sepia(0.08) saturate(0.65) brightness(1.1) contrast(0.86);
+  opacity: 0.72;
+}
+
+.testimonialPanel {
+  display: grid;
+  grid-template-columns: 0.72fr 1.28fr;
+  gap: 1.2rem;
+  align-items: stretch;
+  margin-top: 1rem;
+  padding-top: 1.4rem;
+}
+
+.testimonialIntro {
+  padding: 1.25rem 1.2rem;
+  border: 1px solid rgba(201, 168, 106, 0.08);
+  border-radius: 24px 24px 8px 8px;
+  background: linear-gradient(180deg, rgba(12, 11, 12, 0.52), rgba(6, 6, 7, 0.8));
+}
+
+.testimonialIntro h3 {
+  margin: 0;
+  max-width: 11ch;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  line-height: 1.03;
+  color: var(--aged-paper);
+}
+
+.testimonialGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.72rem;
+}
+
+.testimonialCard {
+  position: relative;
+  min-height: 10.5rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(201, 168, 106, 0.1);
+  border-radius: 24px 24px 8px 8px;
+  background:
+    radial-gradient(circle at 80% 18%, rgba(201, 168, 106, 0.05), transparent 24%),
+    linear-gradient(180deg, rgba(18, 16, 17, 0.58), rgba(7, 7, 8, 0.94));
+}
+
+.testimonialCard::before {
+  content: "";
+  display: block;
+  width: 38px;
+  height: 1px;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.54), transparent);
+}
+
+.testimonialCard p {
+  margin: 0;
+  color: rgba(230, 221, 198, 0.82);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  line-height: 1.35;
+}
+
 .reverse {
   grid-template-columns: 0.95fr 1.05fr;
 }
@@ -1119,6 +1248,54 @@
     align-items: flex-start;
     gap: 0.8rem;
     margin-top: 1.2rem;
+  }
+
+  .clientsHeader h2 {
+    max-width: 14ch;
+  }
+
+  .clientLogoGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.62rem;
+    margin-top: 1.45rem;
+  }
+
+  .clientLogoTile {
+    min-height: 5.7rem;
+    padding: 1rem;
+    border-radius: 20px 20px 8px 8px;
+  }
+
+  .clientLogoTile img {
+    width: min(100%, 7.6rem);
+    max-height: 2.8rem;
+  }
+
+  .testimonialPanel {
+    grid-template-columns: 1fr;
+    gap: 0.72rem;
+    margin-top: 0.8rem;
+    padding-top: 1rem;
+  }
+
+  .testimonialIntro {
+    padding: 1rem;
+    border-radius: 20px 20px 8px 8px;
+  }
+
+  .testimonialIntro h3 {
+    max-width: 14ch;
+  }
+
+  .testimonialGrid {
+    grid-template-columns: 1fr;
+    gap: 0.62rem;
+  }
+
+  .testimonialCard {
+    min-height: auto;
+    padding: 1rem;
+    border-radius: 20px 20px 8px 8px;
   }
 
   .page {
