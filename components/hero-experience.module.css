@@ -271,7 +271,7 @@
 
 .copyBody {
   display: grid;
-  gap: 1.45rem;
+  gap: 1.72rem;
   margin-top: 1.45rem;
 }
 
@@ -1135,7 +1135,7 @@
   }
 
   .copyBody {
-    gap: 1.25rem;
+    gap: 1.58rem;
     margin-top: 1.25rem;
   }
 
@@ -1286,7 +1286,7 @@
   }
 
   .heroActions {
-    gap: 0.65rem;
+    gap: 0.72rem;
   }
 
   .primaryLink,
