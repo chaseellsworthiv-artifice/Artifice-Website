@@ -18,7 +18,7 @@ const clientLogos = [
   { name: "Delmonte Hotel Group", src: "/assets/logos-clean/delmonte.png", scale: 0.96 },
   { name: "Gardens in the Gorge", src: "/assets/logos-clean/gardens-in-the-gorge.png", scale: 1.18 },
   { name: "Hunter Museum of American Art", src: "/assets/logos-clean/hunter-museum.png", scale: 1.0 },
-  { name: "Leo Events", src: "/assets/logos-clean/leo-events.png", scale: 0.86 },
+  { name: "Leo Events", src: "/assets/logos-clean/leo-events.png", scale: 0.72 },
   { name: "Literary Ink", src: "/assets/logos-clean/literary-ink.png", scale: 1.15 },
   { name: "McLemore", src: "/assets/logos-clean/mclemore.png", scale: 1.42 },
   { name: "The Dwell Hotel", src: "/assets/logos-clean/the-dwell-hotel.png", scale: 1.32 },
