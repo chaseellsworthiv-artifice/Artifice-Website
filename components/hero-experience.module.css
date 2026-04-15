@@ -299,6 +299,9 @@
 }
 
 .sectionActions {
+  display: flex;
+  gap: 1.35rem;
+  flex-wrap: wrap;
   margin-top: 1.5rem;
 }
 
@@ -635,7 +638,6 @@
 }
 
 .materialPanel,
-.eventCard,
 .portraitFrame {
   border: 1px solid rgba(201, 168, 106, 0.1);
   background:
@@ -716,75 +718,40 @@
 }
 
 .eventGrid {
-  margin-top: 1.8rem;
+  margin-top: 2.2rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1.35rem;
+  border-top: 1px solid rgba(201, 168, 106, 0.14);
 }
 
 .eventCard {
-  min-height: 13rem;
-  padding: 1.45rem 1.35rem 1.55rem;
   position: relative;
-  overflow: hidden;
-  border-radius: 26px 26px 8px 8px;
+  min-height: 10rem;
+  padding: 1.35rem 0 0;
 }
 
 .eventCard h3 {
   margin: 0;
   font-family: "Cormorant Garamond", serif;
-  font-size: 1.35rem;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.04;
   color: var(--aged-paper);
 }
 
 .eventCard h3::after {
   content: "";
   display: block;
-  width: 42px;
+  width: 54px;
   height: 1px;
-  margin-top: 0.6rem;
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.42), rgba(201, 168, 106, 0));
+  margin-top: 0.75rem;
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.58), rgba(201, 168, 106, 0));
 }
 
 .eventCard p {
-  margin: 0.7rem 0 0;
+  margin: 0.95rem 0 0;
   color: var(--muted-paper);
   line-height: 1.56;
-}
-
-.eventCard::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.18;
-  pointer-events: none;
-}
-
-.eventCard::after {
-  content: "";
-  position: absolute;
-  inset: auto 1.35rem 1rem;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.22), transparent 68%);
-  opacity: 0.48;
-}
-
-.cardPrivate::before {
-  background:
-    radial-gradient(circle at 80% 18%, rgba(201, 168, 106, 0.16), transparent 18%),
-    linear-gradient(160deg, transparent 52%, rgba(201, 168, 106, 0.08) 70%, transparent 100%);
-}
-
-.cardCorporate::before {
-  background:
-    linear-gradient(145deg, rgba(46, 31, 31, 0.24), transparent 48%),
-    linear-gradient(180deg, transparent 60%, rgba(201, 168, 106, 0.06) 100%);
-}
-
-.cardHospitality::before {
-  background:
-    radial-gradient(circle at 22% 24%, rgba(74, 15, 23, 0.18), transparent 18%),
-    linear-gradient(140deg, transparent 48%, rgba(201, 168, 106, 0.08) 72%, transparent 100%);
 }
 
 .portraitFrame {
@@ -1140,12 +1107,11 @@
   }
 
   .eventGrid {
-    gap: 0.8rem;
+    gap: 1.15rem;
   }
 
   .materialPanel,
-  .portraitFrame,
-  .eventCard {
+  .portraitFrame {
     box-shadow:
       inset 0 1px 0 rgba(230, 221, 198, 0.02),
       0 12px 24px rgba(0, 0, 0, 0.12);
@@ -1172,6 +1138,9 @@
 
 @media (max-width: 640px) {
   .sectionActions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
     margin-top: 1.2rem;
   }
 
@@ -1382,15 +1351,6 @@
 
   .panelInset::before {
     opacity: 0.08;
-  }
-
-  .eventCard {
-    min-height: auto;
-    padding: 1rem;
-  }
-
-  .eventCard::before {
-    opacity: 0.14;
   }
 
   .portraitFrame,

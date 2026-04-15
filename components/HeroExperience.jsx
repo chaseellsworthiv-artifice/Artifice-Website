@@ -660,7 +660,10 @@ export default function HeroExperience() {
             </p>
             <div className={styles.sectionActions}>
               <a href="/design" className={styles.secondaryLink}>
-                Explore Guided Booking
+                Explore Experiences
+              </a>
+              <a href="#booking" className={styles.secondaryLink}>
+                Contact
               </a>
             </div>
           </div>
@@ -675,21 +678,24 @@ export default function HeroExperience() {
 
         <section id="events" ref={(node) => { sectionRefs.current[1] = node; }} className={styles.section}>
           <div className={styles.sectionHeading} data-section-reveal>
-            <p className={styles.sectionLabel}>Events</p>
-            <h2>For rooms where expectation is already set high.</h2>
+            <p className={styles.sectionLabel}>Where It Belongs</p>
+            <h2>For rooms where atmosphere is part of the occasion.</h2>
+            <p>
+              The work lands best in spaces where intimacy, tone, and attention matter as much as the event itself.
+            </p>
           </div>
           <div className={styles.eventGrid} data-section-reveal>
-            <article className={`${styles.eventCard} ${styles.cardPrivate}`}>
-              <h3>Private Events</h3>
+            <article className={styles.eventCard}>
+              <h3>Private Evenings</h3>
               <p>Private dinners, homes, and evenings where conversation matters as much as atmosphere.</p>
             </article>
-            <article className={`${styles.eventCard} ${styles.cardCorporate}`}>
-              <h3>Corporate Receptions</h3>
-              <p>Work that elevates the room without pulling it toward novelty or obvious performance.</p>
+            <article className={styles.eventCard}>
+              <h3>Corporate Gatherings</h3>
+              <p>For receptions and client events where the room should feel elevated, not interrupted.</p>
             </article>
-            <article className={`${styles.eventCard} ${styles.cardHospitality}`}>
-              <h3>Luxury Hospitality</h3>
-              <p>For hotels, lounges, and venues where the standard is already high.</p>
+            <article className={styles.eventCard}>
+              <h3>Exceptional Venues</h3>
+              <p>For hotels, lounges, and spaces where tone, discretion, and experience already matter.</p>
             </article>
           </div>
         </section>
@@ -700,10 +706,11 @@ export default function HeroExperience() {
           </div>
           <div className={styles.sectionCopy} data-section-reveal>
             <p className={styles.sectionLabel}>About</p>
-            <h2>Years of discipline, reduced to something that looks effortless.</h2>
+            <h2>Years of discipline, refined into something that feels effortless.</h2>
             <p>
-              Chase Ellsworth performs close-up sleight of hand without gimmicks, stooges, or disposable props.
-              The material is tactile, exacting, and designed to leave the impossible in a guest’s own hands.
+              Based in Chattanooga, Chase Ellsworth performs close-up sleight of hand built from ordinary objects,
+              exacting technique, and direct human contact. No gimmicks, no stooges, and nothing disposable — just
+              craft designed to place the impossible in your guest’s own hands.
             </p>
           </div>
         </section>
@@ -726,7 +733,10 @@ export default function HeroExperience() {
               </p>
               <div className={styles.heroActions}>
                 <a href="/design" className={styles.primaryLink}>
-                  Design Your Experience
+                  Explore Experiences
+                </a>
+                <a href="#booking" className={styles.secondaryLink}>
+                  Contact
                 </a>
               </div>
             </div>
@@ -768,7 +778,7 @@ export default function HeroExperience() {
               <p className={styles.sectionLabel}>Private Invitation</p>
               <p className={styles.invitationLine}>Private performances are limited.</p>
               <button type="button" className={styles.invitationTrigger} onClick={handleInvitationActivate}>
-                Request an invitation
+                Contact
               </button>
             </div>
 
