@@ -271,7 +271,7 @@
 
 .copyBody {
   display: grid;
-  gap: 1.45rem;
+  gap: 3rem;
   margin-top: 1.45rem;
 }
 
@@ -1135,7 +1135,7 @@
   }
 
   .copyBody {
-    gap: 1.25rem;
+    gap: 2.65rem;
     margin-top: 1.25rem;
   }
 
@@ -1278,6 +1278,10 @@
     max-width: 10.2ch;
     font-size: clamp(2.1rem, 10vw, 3rem);
     line-height: 0.99;
+  }
+
+  .copyBody {
+    gap: 2.35rem;
   }
 
   .lead {
