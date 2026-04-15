@@ -540,7 +540,7 @@
 
 .clientLogoGrid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1rem 1.35rem;
   margin-top: 2rem;
 }
@@ -556,7 +556,7 @@
 .clientLogoTile img {
   display: block;
   width: 100%;
-  max-width: 9rem;
+  max-width: 9.6rem;
   height: 3.25rem;
   object-fit: contain;
   opacity: 0.86;

@@ -12,18 +12,21 @@ import styles from "./hero-experience.module.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const clientLogos = [
-  { name: "BlueCross BlueShield", src: "/assets/logos-clean/blue-cross-blue-shield.png", scale: 1.35 },
-  { name: "Tennessee Valley Authority", src: "/assets/logos-clean/tennessee-valley-authority.png", scale: 0.96 },
+  { name: "BlueCross BlueShield", src: "/assets/logos-clean/blue-cross-blue-shield.png", scale: 1.18 },
   { name: "Common House", src: "/assets/logos-clean/common-house.png", scale: 0.9 },
-  { name: "The Dwell Hotel", src: "/assets/logos-clean/the-dwell-hotel.png", scale: 1.65 },
-  { name: "Hi-Fi Clyde's", src: "/assets/logos-clean/hi-fi-clydes.png", scale: 0.98 },
-  { name: "Leo Events", src: "/assets/logos-clean/leo-events.png", scale: 1 },
-  { name: "Hunter Museum of American Art", src: "/assets/logos-clean/hunter-museum.png", scale: 0.92 },
-  { name: "DECA", src: "/assets/logos-clean/deca.png", scale: 1.24 },
-  { name: "Fountain Head", src: "/assets/logos-clean/fountain-head.png", scale: 1.55 },
-  { name: "Gardens in the Gorge", src: "/assets/logos-clean/gardens-in-the-gorge.png", scale: 1.36 },
-  { name: "Puckett's", src: "/assets/logos-clean/pucketts.png", scale: 1.24 },
-  { name: "The Rio", src: "/assets/logos-clean/the-rio.png", scale: 0.92 },
+  { name: "DECA", src: "/assets/logos-clean/deca.png", scale: 1.08 },
+  { name: "Delmonte Hotel Group", src: "/assets/logos-clean/delmonte.png", scale: 0.96 },
+  { name: "Gardens in the Gorge", src: "/assets/logos-clean/gardens-in-the-gorge.png", scale: 1.18 },
+  { name: "Hunter Museum of American Art", src: "/assets/logos-clean/hunter-museum.png", scale: 1.0 },
+  { name: "Leo Events", src: "/assets/logos-clean/leo-events.png", scale: 0.86 },
+  { name: "Literary Ink", src: "/assets/logos-clean/literary-ink.png", scale: 1.15 },
+  { name: "McLemore", src: "/assets/logos-clean/mclemore.png", scale: 1.42 },
+  { name: "Tennessee Valley", src: "/assets/logos-clean/tennessee-valley-authority.png", scale: 0.78 },
+  { name: "The Dwell Hotel", src: "/assets/logos-clean/the-dwell-hotel.png", scale: 1.32 },
+  { name: "The Rio", src: "/assets/logos-clean/the-rio.png", scale: 1.08 },
+  { name: "The Southern Bell", src: "/assets/logos-clean/the-southern-bell.png", scale: 1.45 },
+  { name: "TVA", src: "/assets/logos-clean/tva.png", scale: 0.94 },
+  { name: "Pizza Bros", src: "/assets/logos-clean/pizza-bros.png", scale: 1.34 },
 ];
 
 const clientNotes = [
