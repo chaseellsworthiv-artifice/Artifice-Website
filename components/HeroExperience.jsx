@@ -133,7 +133,8 @@ export default function HeroExperience() {
       const heroActions = copyBodyRef.current?.querySelector("[data-hero-actions]");
 
       gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 6, filter: "blur(5px)" });
-      gsap.set([leadCopy, heroActions], { autoAlpha: 0, y: 12, filter: "blur(2.5px)" });
+      gsap.set(leadCopy, { autoAlpha: 0, y: 12, filter: "blur(2.5px)" });
+      gsap.set(heroActions, { autoAlpha: 0, y: 0, filter: "blur(2px)" });
       heroActions?.classList.remove(styles.heroActionsRevealed);
 
       const copyReveal = gsap.timeline({
@@ -185,9 +186,9 @@ export default function HeroExperience() {
             autoAlpha: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 0.95,
+            duration: 0.7,
             ease: "sine.out",
-            onStart: () => {
+            onComplete: () => {
               heroActions?.classList.add(styles.heroActionsRevealed);
             },
           },
