@@ -1222,6 +1222,10 @@
     grid-column: auto;
   }
 
+  .clientLogoTile:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
   .clientLogoTile img {
     max-width: 7.25rem;
     height: 2.65rem;
