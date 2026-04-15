@@ -129,10 +129,11 @@ export default function HeroExperience() {
     const context = gsap.context(() => {
       const curtainScrollDistance = isReduced ? "+=200%" : "+=180%";
 
-      const copyBodyItems = copyBodyRef.current?.children ? Array.from(copyBodyRef.current.children) : [];
+      const leadCopy = copyBodyRef.current?.querySelector("[data-hero-lead]");
+      const heroActions = copyBodyRef.current?.querySelector("[data-hero-actions]");
 
       gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 6, filter: "blur(5px)" });
-      gsap.set(copyBodyItems, { autoAlpha: 0, y: 12, filter: "blur(2.5px)" });
+      gsap.set([leadCopy, heroActions], { autoAlpha: 0, y: 12, filter: "blur(2.5px)" });
 
       const copyReveal = gsap.timeline({
         scrollTrigger: {
@@ -165,17 +166,28 @@ export default function HeroExperience() {
       });
       if (bodyReveal.scrollTrigger) localTriggers.push(bodyReveal.scrollTrigger);
 
-      bodyReveal.to(
-          copyBodyItems,
+      bodyReveal
+        .to(
+          leadCopy,
           {
             autoAlpha: 1,
             y: 0,
             filter: "blur(0px)",
             duration: 1,
             ease: "sine.out",
-            stagger: 0.14,
           },
           2.28
+        )
+        .to(
+          heroActions,
+          {
+            autoAlpha: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 0.95,
+            ease: "sine.out",
+          },
+          2.88
         );
 
       const veilTween = gsap.to(veilRef.current, {
@@ -592,10 +604,10 @@ export default function HeroExperience() {
             revealDelay={0.75}
           />
           <div ref={copyBodyRef} className={styles.copyBody}>
-            <p className={styles.lead}>
+            <p className={styles.lead} data-hero-lead>
               Designed for private events, weddings, and exceptional gatherings where the atmosphere matters as much as the occasion itself.
             </p>
-            <div className={styles.heroActions}>
+            <div className={styles.heroActions} data-hero-actions>
               <a href="/design" className={styles.primaryLink}>
                 Explore Experiences
               </a>
