@@ -18,7 +18,7 @@ const clientLogos = [
   { name: "The Dwell Hotel", src: "/assets/logos-clean/the-dwell-hotel.png", scale: 1.65 },
   { name: "Hi-Fi Clyde's", src: "/assets/logos-clean/hi-fi-clydes.png", scale: 0.98 },
   { name: "Leo Events", src: "/assets/logos-clean/leo-events.png", scale: 1 },
-  { name: "Mellow Mushroom", src: "/assets/logos-clean/mellow-mushroom.png", scale: 1.28 },
+  { name: "Pizza Bros", src: "/assets/logos-clean/pizza-bros.png", scale: 1.1 },
   { name: "DECA", src: "/assets/logos-clean/deca.png", scale: 1.24 },
   { name: "Fountain Head", src: "/assets/logos-clean/fountain-head.png", scale: 1.55 },
   { name: "Gardens in the Gorge", src: "/assets/logos-clean/gardens-in-the-gorge.png", scale: 1.36 },
