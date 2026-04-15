@@ -216,7 +216,7 @@ export default function HeroExperience() {
           stagger: isReduced ? 0.12 : 0.18,
           scrollTrigger: {
             trigger: section,
-            start: isReduced ? "top 78%" : "top 74%",
+            start: isReduced ? "top 83%" : "top 79%",
             once: true,
           },
         });
