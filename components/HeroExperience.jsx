@@ -26,12 +26,6 @@ const clientLogos = [
   { name: "The Rio", src: "/assets/logos-clean/the-rio.png", scale: 0.92 },
 ];
 
-const clientNotes = [
-  "Thoughtful, understated, and remarkably strong work.",
-  "The room settled in and then opened up. Perfect tone for the evening.",
-  "Using ordinary objects made everything feel cleaner and more impossible.",
-];
-
 export default function HeroExperience() {
   const [isMobileSeam, setIsMobileSeam] = useState(false);
   const [seamResolved, setSeamResolved] = useState(false);
@@ -736,9 +730,6 @@ export default function HeroExperience() {
           <div className={styles.clientsHeader} data-section-reveal>
             <p className={styles.sectionLabel}>Selected Clients</p>
             <h2>Trusted in rooms where the standard is already high.</h2>
-            <p>
-              A record of private events, venues, hospitality groups, and organizations that have brought Artifice into the room.
-            </p>
           </div>
 
           <div className={styles.clientLogoGrid} data-section-reveal aria-label="Selected Artifice clients">
@@ -747,20 +738,6 @@ export default function HeroExperience() {
                 <img src={logo.src} alt={`${logo.name} logo`} loading="lazy" />
               </figure>
             ))}
-          </div>
-
-          <div className={styles.testimonialPanel} data-section-reveal>
-            <div className={styles.testimonialIntro}>
-              <p className={styles.sectionLabel}>Client Notes</p>
-              <h3>Quiet proof from the people in the room.</h3>
-            </div>
-            <div className={styles.testimonialGrid}>
-              {clientNotes.map((note) => (
-                <article className={styles.testimonialCard} key={note}>
-                  <p>&ldquo;{note}&rdquo;</p>
-                </article>
-              ))}
-            </div>
           </div>
         </section>
 
