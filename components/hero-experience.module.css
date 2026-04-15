@@ -553,6 +553,10 @@
   padding: 0.65rem 0.5rem;
 }
 
+.clientLogoTile:nth-last-child(3) {
+  grid-column: 2;
+}
+
 .clientLogoTile img {
   display: block;
   width: 100%;
@@ -1212,6 +1216,10 @@
   .clientLogoTile {
     min-height: 4.6rem;
     padding: 0.4rem;
+  }
+
+  .clientLogoTile:nth-last-child(3) {
+    grid-column: auto;
   }
 
   .clientLogoTile img {
