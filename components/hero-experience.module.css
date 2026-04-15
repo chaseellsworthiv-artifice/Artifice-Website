@@ -335,6 +335,35 @@
   height: 1px;
   margin-top: 0.45rem;
   background: linear-gradient(90deg, rgba(201, 168, 106, 0.62), rgba(201, 168, 106, 0));
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform, opacity;
+  opacity: 0.72;
+}
+
+.heroActionsRevealed .primaryLink::after,
+.heroActionsRevealed .secondaryLink::after {
+  animation: ctaLineDraw 1.15s cubic-bezier(0.22, 0.8, 0.22, 1) forwards;
+}
+
+.heroActionsRevealed .secondaryLink::after {
+  animation-delay: 0.16s;
+}
+
+@keyframes ctaLineDraw {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  18% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
 }
 
 .sections {

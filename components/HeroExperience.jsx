@@ -134,6 +134,7 @@ export default function HeroExperience() {
 
       gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 6, filter: "blur(5px)" });
       gsap.set([leadCopy, heroActions], { autoAlpha: 0, y: 12, filter: "blur(2.5px)" });
+      heroActions?.classList.remove(styles.heroActionsRevealed);
 
       const copyReveal = gsap.timeline({
         scrollTrigger: {
@@ -186,6 +187,9 @@ export default function HeroExperience() {
             filter: "blur(0px)",
             duration: 0.95,
             ease: "sine.out",
+            onStart: () => {
+              heroActions?.classList.add(styles.heroActionsRevealed);
+            },
           },
           2.88
         );
