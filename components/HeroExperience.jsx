@@ -132,7 +132,7 @@ export default function HeroExperience() {
       const copyBodyItems = copyBodyRef.current?.children ? Array.from(copyBodyRef.current.children) : [];
 
       gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 6, filter: "blur(5px)" });
-      gsap.set(copyBodyItems, { autoAlpha: 0, y: 16, filter: "blur(3px)" });
+      gsap.set(copyBodyItems, { autoAlpha: 0, y: 12, filter: "blur(2.5px)" });
 
       const copyReveal = gsap.timeline({
         scrollTrigger: {
@@ -171,11 +171,11 @@ export default function HeroExperience() {
             autoAlpha: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 1.15,
-            ease: "power2.out",
-            stagger: 0.18,
+            duration: 1,
+            ease: "sine.out",
+            stagger: 0.14,
           },
-          2.55
+          2.28
         );
 
       const veilTween = gsap.to(veilRef.current, {
