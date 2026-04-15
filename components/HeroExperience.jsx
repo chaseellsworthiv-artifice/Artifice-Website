@@ -27,9 +27,9 @@ const clientLogos = [
 ];
 
 const clientNotes = [
-  "I knew people would enjoy it. I did not expect that many people to be talking about it for the rest of the night. It completely changed the energy in the room.",
-  "What I loved most was how natural it felt. Nothing was forced, nothing was overdone, and somehow that made it even more impossible. People were genuinely blown away.",
-  "This was one of the strongest parts of the entire event. Guests kept pulling other guests over to see it, and the reactions just kept building all night.",
+  "I honestly underestimated how big the reactions would be. People were stopping me the rest of the night to talk about it.",
+  "It gave the event a completely different energy. People loosened up, started talking more, and the whole room felt more alive.",
+  "I’ve had entertainment at events before, but this felt different. It was elegant, personal, and people were genuinely blown away.",
 ];
 
 export default function HeroExperience() {
