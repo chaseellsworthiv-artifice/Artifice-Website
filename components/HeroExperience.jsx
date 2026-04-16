@@ -30,7 +30,7 @@ const clientLogos = [
 const clientNotes = [
   {
     quote: "I honestly underestimated how big the reactions would be. People were stopping me the rest of the night to talk about it.",
-    name: "Eleanor M.",
+    name: "Margot H.",
   },
   {
     quote: "It gave the event a completely different energy. People loosened up, started talking more, and the whole room felt more alive.",
