@@ -217,15 +217,22 @@
 }
 
 .brandLockup {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.55rem;
+  display: block;
+  width: fit-content;
   margin: 0 0 2.75rem;
   opacity: 0;
   transform: translateY(8px);
   filter: blur(7px);
   will-change: opacity, transform, filter;
+}
+
+.wordmarkImage {
+  display: block;
+  width: clamp(18rem, 36vw, 32rem);
+  height: auto;
+  max-width: 86vw;
+  user-select: none;
+  pointer-events: none;
 }
 
 .eyebrow {
@@ -1402,17 +1409,11 @@
   }
 
   .brandLockup {
-    gap: 0.4rem;
     margin-bottom: 2.1rem;
   }
 
-  .wordmark {
-    font-size: clamp(4.2rem, 18vw, 6rem);
-  }
-
-  .wordmarkByline {
-    font-size: 0.82rem;
-    letter-spacing: 0.07em;
+  .wordmarkImage {
+    width: clamp(15rem, 78vw, 21rem);
   }
 
   .copyTitle {

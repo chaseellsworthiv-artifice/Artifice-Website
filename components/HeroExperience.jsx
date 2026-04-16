@@ -617,10 +617,11 @@ export default function HeroExperience() {
 
         <header className={styles.copy}>
           <div ref={wordmarkRef} className={styles.brandLockup}>
-            <p className={`${styles.eyebrow} ${styles.wordmark}`}>
-              ärtifice
-            </p>
-            <p className={styles.wordmarkByline}>By Chase Ellsworth</p>
+            <img
+              className={styles.wordmarkImage}
+              src="/assets/brand/artifice-wordmark-lockup.png"
+              alt="Artifice by Chase Ellsworth"
+            />
           </div>
           <MorphRevealText
             as="h1"
