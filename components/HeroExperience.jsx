@@ -758,30 +758,20 @@ export default function HeroExperience() {
           </div>
         </section>
 
-        <section id="guided-booking" ref={(node) => { sectionRefs.current[4] = node; }} className={`${styles.section} ${styles.consultationSection}`}>
-          <div className={styles.consultationGrid}>
-            <div className={styles.sectionCopy} data-section-reveal>
-              <p className={styles.sectionLabel}>Guided Booking</p>
-              <h2>For events that fit a clear shape and deserve a precise recommendation.</h2>
-              <p>
-                The guided booking path begins with a tailored recommendation, not a package grid. Share the shape of the
-                event, then step into the experience I would begin with.
-              </p>
-            </div>
-            <div className={styles.consultationCard} data-section-reveal>
-              <p className={styles.consultationEyebrow}>Guided Recommendation</p>
-              <h3>Close-Up, Table, and Cabaret</h3>
-              <p>
-                A tailored recommendation first. Pricing only after fit. The right format appears before any transaction does.
-              </p>
-              <div className={styles.heroActions}>
-                <a href="/design" className={styles.primaryLink}>
-                  Explore Experiences
-                </a>
-                <a href="#booking" className={styles.secondaryLink}>
-                  Contact
-                </a>
-              </div>
+        <section id="begin" ref={(node) => { sectionRefs.current[4] = node; }} className={`${styles.section} ${styles.beginSection}`}>
+          <div className={styles.beginInner} data-section-reveal>
+            <p className={styles.sectionLabel}>Begin</p>
+            <h2>
+              Start with the event.
+              <span>I’ll guide the rest.</span>
+            </h2>
+            <p>
+              Every room asks for something different. Share a few details, and I’ll recommend the experience I would begin with.
+            </p>
+            <div className={styles.beginActions}>
+              <a href="/design" className={styles.primaryLink}>
+                Explore Experiences
+              </a>
             </div>
           </div>
         </section>
