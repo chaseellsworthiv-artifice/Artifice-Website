@@ -616,16 +616,23 @@ export default function HeroExperience() {
         <div ref={veilRef} className={styles.scrollVeil} />
 
         <header className={styles.copy}>
-          <div ref={wordmarkRef} className={styles.brandLockup}>
+          <div ref={wordmarkRef} className={styles.brandLockup} aria-label="Artifice by Chase Ellsworth">
             <img
               className={styles.wordmarkImage}
-              src="/assets/brand/artifice-wordmark-lockup.png"
-              alt="Artifice by Chase Ellsworth"
+              src="/assets/brand/artifice-wordmark.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <img
+              className={styles.wordmarkBylineImage}
+              src="/assets/brand/artifice-byline.png"
+              alt=""
+              aria-hidden="true"
             />
           </div>
           <MorphRevealText
             as="h1"
-            lines={["Impossible close-up", "for rooms that", "expect more."]}
+            lines={["Impossible close-up", "for rooms that expect more."]}
             className={styles.copyTitle}
             lineClassName={styles.copyTitleLine}
             start="top 69%"

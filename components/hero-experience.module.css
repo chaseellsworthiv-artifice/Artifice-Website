@@ -217,9 +217,12 @@
 }
 
 .brandLockup {
-  display: block;
+  display: flex;
   width: fit-content;
-  margin: 0 0 2.75rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(0.52rem, 0.8vw, 0.78rem);
+  margin: 0 0 clamp(3.35rem, 4.8vw, 4.65rem);
   opacity: 0;
   transform: translateY(8px);
   filter: blur(7px);
@@ -231,6 +234,15 @@
   width: clamp(18rem, 36vw, 32rem);
   height: auto;
   max-width: 86vw;
+  user-select: none;
+  pointer-events: none;
+}
+
+.wordmarkBylineImage {
+  display: block;
+  width: clamp(11.25rem, 22vw, 22.4rem);
+  height: auto;
+  max-width: 72vw;
   user-select: none;
   pointer-events: none;
 }
@@ -265,7 +277,7 @@
 
 .copyTitle {
   margin: 0;
-  max-width: 10.6ch;
+  max-width: 12.8ch;
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(3rem, 6vw, 5.15rem);
   line-height: 0.96;
@@ -277,9 +289,9 @@
 }
 
 .copyBody {
-  --hero-copy-gap: 1.45rem;
+  --hero-copy-gap: clamp(1.75rem, 2.45vw, 2.4rem);
   display: block;
-  margin-top: var(--hero-copy-gap);
+  margin-top: clamp(1.9rem, 2.7vw, 2.65rem);
 }
 
 .copyBody > * {
@@ -290,8 +302,8 @@
 
 .lead {
   margin: 0;
-  max-width: 26ch;
-  color: rgba(230, 221, 198, 0.82);
+  max-width: 31ch;
+  color: rgba(230, 221, 198, 0.9);
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.2rem, 1.7vw, 1.55rem);
   line-height: 1.18;
@@ -1292,7 +1304,7 @@
   }
 
   .copyBody {
-    --hero-copy-gap: 1.25rem;
+    --hero-copy-gap: 1.45rem;
     margin-top: var(--hero-copy-gap);
   }
 
@@ -1409,32 +1421,37 @@
   }
 
   .brandLockup {
-    margin-bottom: 2.1rem;
+    gap: 0.48rem;
+    margin-bottom: 2.85rem;
   }
 
   .wordmarkImage {
     width: clamp(15rem, 78vw, 21rem);
   }
 
+  .wordmarkBylineImage {
+    width: clamp(9.7rem, 58vw, 16rem);
+  }
+
   .copyTitle {
-    max-width: 10.2ch;
+    max-width: 12.6ch;
     font-size: clamp(2.1rem, 10vw, 3rem);
     line-height: 0.99;
   }
 
   .copyBody {
-    --hero-copy-gap: 1.25rem;
+    --hero-copy-gap: 1.45rem;
     margin-top: var(--hero-copy-gap);
   }
 
   .lead {
-    max-width: 24ch;
-    font-size: 0.9rem;
+    max-width: 27ch;
+    font-size: 0.95rem;
   }
 
   .heroActions {
     gap: 0.9rem;
-    margin-top: var(--hero-copy-gap);
+    margin-top: 1.75rem;
   }
 
   .primaryLink,
