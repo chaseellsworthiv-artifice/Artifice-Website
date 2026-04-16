@@ -749,6 +749,16 @@
   line-height: 1.38;
 }
 
+.clientNote cite {
+  display: block;
+  margin-top: 0.85rem;
+  color: rgba(201, 168, 106, 0.78);
+  font-style: normal;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
 .reverse {
   grid-template-columns: 0.95fr 1.05fr;
 }
@@ -1408,6 +1418,10 @@
 
   .clientNote p {
     font-size: 1.05rem;
+  }
+
+  .clientNote cite {
+    margin-top: 0.75rem;
   }
 
   .page {

@@ -28,9 +28,18 @@ const clientLogos = [
 ];
 
 const clientNotes = [
-  "I honestly underestimated how big the reactions would be. People were stopping me the rest of the night to talk about it.",
-  "It gave the event a completely different energy. People loosened up, started talking more, and the whole room felt more alive.",
-  "I’ve had entertainment at events before, but this felt different. It was elegant, personal, and people were genuinely blown away.",
+  {
+    quote: "I honestly underestimated how big the reactions would be. People were stopping me the rest of the night to talk about it.",
+    name: "Eleanor M.",
+  },
+  {
+    quote: "It gave the event a completely different energy. People loosened up, started talking more, and the whole room felt more alive.",
+    name: "James R.",
+  },
+  {
+    quote: "I’ve had entertainment at events before, but this felt different. It was elegant, personal, and people were genuinely blown away.",
+    name: "Caroline S.",
+  },
 ];
 
 const pressItems = [
@@ -824,8 +833,9 @@ export default function HeroExperience() {
 
           <div className={styles.clientNotes} data-section-reveal>
             {clientNotes.map((note) => (
-              <blockquote className={styles.clientNote} key={note}>
-                <p>&ldquo;{note}&rdquo;</p>
+              <blockquote className={styles.clientNote} key={note.quote}>
+                <p>&ldquo;{note.quote}&rdquo;</p>
+                <cite>- {note.name}</cite>
               </blockquote>
             ))}
           </div>
