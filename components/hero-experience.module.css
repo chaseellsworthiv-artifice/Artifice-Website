@@ -723,7 +723,6 @@
   gap: 1.25rem;
   margin-top: 2.35rem;
   padding-top: 1.65rem;
-  border-top: 1px solid rgba(201, 168, 106, 0.14);
 }
 
 .clientNote {
@@ -878,7 +877,6 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.35rem;
-  border-top: 1px solid rgba(201, 168, 106, 0.14);
 }
 
 .eventCard {
@@ -1263,7 +1261,13 @@
   }
 
   .eventGrid {
-    gap: 1.15rem;
+    gap: 2.45rem;
+    margin-top: 2rem;
+  }
+
+  .eventCard {
+    min-height: auto;
+    padding-top: 0;
   }
 
   .materialPanel,
