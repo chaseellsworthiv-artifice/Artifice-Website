@@ -230,9 +230,6 @@ export default function MorphRevealText({
           profile.lineOffset + profile.washFadeStart + 0.04
         );
 
-        timeline.set(entry.finalText, { opacity: 1 }, profile.lineOffset + profile.washFadeStart - 0.34);
-        timeline.set(entry.washText, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.28);
-        timeline.set(entry.svgRoot, { opacity: 0 }, profile.lineOffset + profile.washFadeStart + 0.32);
       });
 
       ScrollTrigger.create({
