@@ -43,15 +43,16 @@ Environment variables are documented in `.env.example`.
    - `SUPABASE_SERVICE_ROLE_KEY`
    - optional `INQUIRY_TABLE_NAME`
    - optional `BOOKING_TABLE_NAME`
-5. Optional: set `BOOKING_WEBHOOK_URL` to forward inquiries, bookings, and deposit requests
+5. Optional: set `BOOKING_WEBHOOK_URL` to forward inquiries and booking records
 6. Optional: set:
    - `RESEND_API_KEY`
    - `BOOKING_TO_EMAIL`
    - `BOOKING_FROM_EMAIL`
    to deliver inquiry and booking notifications by email
-7. Optional: set Google Calendar and Stripe env vars from [.env.example](/Users/Artifice/Desktop/Artifice%20Site%20v2/.env.example) to activate hosted availability and deposit flows
+7. Optional: set Google Calendar env vars from [.env.example](/Users/Artifice/Desktop/Artifice%20Site%20v2/.env.example) to activate hosted availability review
 
 ## Notes
 
 - This repo now includes server routes and is no longer the old static-only setup.
-- Local QA inquiry data is ignored via `.gitignore`.
+- Public experience detail pages now hand off to custom inquiry; Stripe checkout/deposit code has been removed from the app.
+- Local QA inquiry and booking data are ignored via `.gitignore`.

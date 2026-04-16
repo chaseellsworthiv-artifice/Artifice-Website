@@ -12,10 +12,7 @@ create table if not exists public.bookings (
   location text,
   message text,
   selected_slot_start timestamptz,
-  selected_slot_end timestamptz,
-  deposit_status text not null default 'not_requested',
-  deposit_amount integer not null default 0,
-  deposit_session_id text not null default ''
+  selected_slot_end timestamptz
 );
 
 create index if not exists bookings_created_at_idx on public.bookings (created_at desc);

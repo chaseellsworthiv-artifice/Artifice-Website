@@ -81,9 +81,6 @@ function mapBookingRecordToRow(record) {
     message: record.message,
     selected_slot_start: record.selectedSlotStart,
     selected_slot_end: record.selectedSlotEnd,
-    deposit_status: record.depositStatus,
-    deposit_amount: record.depositAmount,
-    deposit_session_id: record.depositSessionId,
     created_at: record.createdAt,
     updated_at: record.updatedAt,
   };
@@ -223,9 +220,6 @@ export async function createBooking(input) {
     message: input.message ?? "",
     selectedSlotStart: input.selectedSlotStart ?? "",
     selectedSlotEnd: input.selectedSlotEnd ?? "",
-    depositStatus: input.depositStatus ?? "not_requested",
-    depositAmount: input.depositAmount ?? 0,
-    depositSessionId: input.depositSessionId ?? "",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
@@ -273,9 +267,6 @@ export async function updateBooking(id, updates) {
     const mapped = {};
     if (payload.status !== undefined) mapped.status = payload.status;
     if (payload.notes !== undefined) mapped.notes = payload.notes;
-    if (payload.depositStatus !== undefined) mapped.deposit_status = payload.depositStatus;
-    if (payload.depositAmount !== undefined) mapped.deposit_amount = payload.depositAmount;
-    if (payload.depositSessionId !== undefined) mapped.deposit_session_id = payload.depositSessionId;
     if (payload.updatedAt !== undefined) mapped.updated_at = payload.updatedAt;
     return updateSupabase(tableName, id, mapped);
   }

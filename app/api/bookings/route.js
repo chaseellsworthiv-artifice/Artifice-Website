@@ -31,9 +31,6 @@ export async function POST(request) {
       selectedSlotEnd: clean(body.selectedSlotEnd),
       status: clean(body.status) || "pending",
       notes: clean(body.notes),
-      depositStatus: clean(body.depositStatus) || "not_requested",
-      depositAmount: Number(body.depositAmount ?? 0),
-      depositSessionId: clean(body.depositSessionId),
     };
 
     if (!bookingInput.contactName || !bookingInput.contactEmail || !bookingInput.eventType || !bookingInput.selectedSlotStart || !bookingInput.selectedSlotEnd) {

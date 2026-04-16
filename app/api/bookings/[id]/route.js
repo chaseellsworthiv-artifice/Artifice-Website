@@ -8,9 +8,6 @@ export async function PATCH(request, context) {
     const updates = {
       status: typeof body.status === "string" ? body.status : undefined,
       notes: typeof body.notes === "string" ? body.notes : undefined,
-      depositStatus: typeof body.depositStatus === "string" ? body.depositStatus : undefined,
-      depositAmount: Number.isFinite(Number(body.depositAmount)) ? Number(body.depositAmount) : undefined,
-      depositSessionId: typeof body.depositSessionId === "string" ? body.depositSessionId : undefined,
     };
     const payload = Object.fromEntries(Object.entries(updates).filter(([, value]) => value !== undefined));
     const record = await updateBooking(id, payload);

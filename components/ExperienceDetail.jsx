@@ -111,7 +111,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                   Request This Experience
                 </Link>
                 <p className={styles.placeholderNote}>
-                  I’ll review the details first. If the date and fit are right, I’ll send the deposit link personally.
+                  I’ll review the details first. If the date and fit are right, I’ll send the next step personally.
                 </p>
               </>
             )}
