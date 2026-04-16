@@ -33,6 +33,41 @@ const clientNotes = [
   "I’ve had entertainment at events before, but this felt different. It was elegant, personal, and people were genuinely blown away.",
 ];
 
+const pressItems = [
+  {
+    source: "Chattanooga Pulse",
+    format: "Article",
+    title: "Chase Ellsworth: Illusionist Extraordinaire",
+    date: "Feature",
+    href: "https://www.chattanoogapulse.com/citylife/news/chase-ellsworth-illusionist-extraordinaire/",
+    action: "Read",
+  },
+  {
+    source: "WUTC / NPR",
+    format: "Radio Interview",
+    title: "The Mind of Artifice, The Mentalist",
+    date: "January 19, 2020",
+    href: "https://www.wutc.org/news/2020-01-19/the-mind-of-artifice-the-mentalist",
+    action: "Listen",
+  },
+  {
+    source: "Inside Magic",
+    format: "Industry Feature",
+    title: "Magician Chase Ellsworth Featured",
+    date: "October 16, 2019",
+    href: "https://insidemagic.com/2019/10/16/magician-chase-ellsworth-featured/",
+    action: "Read",
+  },
+  {
+    source: "Local Television",
+    format: "Interview & Performance",
+    title: "A brief news appearance with close-up performance",
+    date: "Broadcast Appearance",
+    href: "https://youtu.be/Eyk0SKBYxHU?si=iWZgIDyvI1ZMXj5k",
+    action: "Watch",
+  },
+];
+
 export default function HeroExperience() {
   const [isMobileSeam, setIsMobileSeam] = useState(false);
   const [seamResolved, setSeamResolved] = useState(false);
@@ -751,7 +786,39 @@ export default function HeroExperience() {
           </div>
         </section>
 
-        <section id="clients" ref={(node) => { sectionRefs.current[5] = node; }} className={`${styles.section} ${styles.clientsSection}`}>
+        <section id="press" ref={(node) => { sectionRefs.current[5] = node; }} className={`${styles.section} ${styles.pressSection}`}>
+          <div className={styles.pressIntro} data-section-reveal>
+            <p className={styles.sectionLabel}>Press</p>
+            <h2>Recognized for work that feels impossible up close.</h2>
+            <p>
+              A small record of interviews, features, and appearances around Artifice and Chase Ellsworth.
+            </p>
+          </div>
+
+          <div className={styles.pressList} data-section-reveal aria-label="Press features and appearances">
+            {pressItems.map((item) => (
+              <a
+                className={styles.pressItem}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                key={`${item.source}-${item.title}`}
+              >
+                <span className={styles.pressMeta}>{item.format}</span>
+                <span className={styles.pressMain}>
+                  <span className={styles.pressSource}>{item.source}</span>
+                  <span className={styles.pressTitle}>{item.title}</span>
+                </span>
+                <span className={styles.pressAside}>
+                  <span>{item.date}</span>
+                  <span>{item.action}</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section id="clients" ref={(node) => { sectionRefs.current[6] = node; }} className={`${styles.section} ${styles.clientsSection}`}>
           <div className={styles.clientsHeader} data-section-reveal>
             <p className={styles.sectionLabel}>Selected Clients</p>
             <h2>Trusted in rooms where the standard is already high.</h2>
