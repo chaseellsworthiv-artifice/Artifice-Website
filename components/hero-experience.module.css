@@ -1638,4 +1638,26 @@
   .sections {
     margin-top: 0;
   }
+
+  .beginSection {
+    padding-top: 5rem;
+    padding-bottom: 4.75rem;
+  }
+
+  .pressSection {
+    padding-top: 4.45rem;
+    padding-bottom: 3.85rem;
+  }
+
+  .clientsSection {
+    padding-top: 3.85rem;
+  }
+
+  .pressItem {
+    padding: 1.12rem 0;
+  }
+
+  .clientLogoTile {
+    min-height: 4.35rem;
+  }
 }
