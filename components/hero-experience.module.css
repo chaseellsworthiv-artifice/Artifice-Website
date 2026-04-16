@@ -221,8 +221,8 @@
   width: fit-content;
   flex-direction: column;
   align-items: flex-start;
-  gap: clamp(0.52rem, 0.8vw, 0.78rem);
-  margin: 0 0 clamp(3.35rem, 4.8vw, 4.65rem);
+  gap: clamp(0.46rem, 0.68vw, 0.66rem);
+  margin: 0 0 clamp(2.85rem, 3.9vw, 3.75rem);
   opacity: 0;
   transform: translateY(8px);
   filter: blur(7px);
@@ -231,7 +231,7 @@
 
 .wordmarkImage {
   display: block;
-  width: clamp(18rem, 36vw, 32rem);
+  width: clamp(17rem, 31vw, 27.5rem);
   height: auto;
   max-width: 86vw;
   user-select: none;
@@ -240,7 +240,7 @@
 
 .wordmarkBylineImage {
   display: block;
-  width: clamp(11.25rem, 22vw, 22.4rem);
+  width: clamp(10.8rem, 19.2vw, 19.4rem);
   height: auto;
   max-width: 72vw;
   user-select: none;
@@ -277,10 +277,10 @@
 
 .copyTitle {
   margin: 0;
-  max-width: 12.8ch;
+  max-width: 10.7ch;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(3rem, 6vw, 5.15rem);
-  line-height: 0.96;
+  font-size: clamp(2.9rem, 5.35vw, 4.72rem);
+  line-height: 0.95;
   color: var(--aged-paper);
 }
 
@@ -289,9 +289,9 @@
 }
 
 .copyBody {
-  --hero-copy-gap: clamp(1.75rem, 2.45vw, 2.4rem);
+  --hero-copy-gap: clamp(1.32rem, 1.75vw, 1.78rem);
   display: block;
-  margin-top: clamp(1.9rem, 2.7vw, 2.65rem);
+  margin-top: clamp(1.42rem, 1.95vw, 1.95rem);
 }
 
 .copyBody > * {
@@ -302,19 +302,25 @@
 
 .lead {
   margin: 0;
-  max-width: 31ch;
-  color: rgba(230, 221, 198, 0.9);
+  max-width: 32ch;
+  color: rgba(230, 221, 198, 0.92);
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
-  line-height: 1.18;
+  font-size: clamp(1.22rem, 1.52vw, 1.44rem);
+  line-height: 1.2;
   letter-spacing: 0.01em;
 }
 
 .heroActions {
   display: flex;
-  gap: 1.35rem;
+  gap: 1.55rem;
   flex-wrap: wrap;
   margin-top: var(--hero-copy-gap);
+}
+
+.heroActions .primaryLink,
+.heroActions .secondaryLink {
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
 }
 
 .sectionActions {
@@ -1421,37 +1427,37 @@
   }
 
   .brandLockup {
-    gap: 0.48rem;
-    margin-bottom: 2.85rem;
+    gap: 0.42rem;
+    margin-bottom: 2.35rem;
   }
 
   .wordmarkImage {
-    width: clamp(15rem, 78vw, 21rem);
+    width: clamp(14.25rem, 72vw, 19.25rem);
   }
 
   .wordmarkBylineImage {
-    width: clamp(9.7rem, 58vw, 16rem);
+    width: clamp(9.05rem, 52vw, 14.6rem);
   }
 
   .copyTitle {
-    max-width: min(100%, 14.8ch);
-    font-size: clamp(1.95rem, 8.35vw, 2.62rem);
-    line-height: 1.01;
+    max-width: 10.4ch;
+    font-size: clamp(2.18rem, 9.45vw, 2.82rem);
+    line-height: 0.99;
   }
 
   .copyBody {
-    --hero-copy-gap: 1.45rem;
+    --hero-copy-gap: 1.32rem;
     margin-top: var(--hero-copy-gap);
   }
 
   .lead {
     max-width: 27ch;
-    font-size: 0.95rem;
+    font-size: 0.98rem;
   }
 
   .heroActions {
     gap: 0.9rem;
-    margin-top: 1.75rem;
+    margin-top: 1.48rem;
   }
 
   .primaryLink,

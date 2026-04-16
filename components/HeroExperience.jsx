@@ -632,7 +632,7 @@ export default function HeroExperience() {
           </div>
           <MorphRevealText
             as="h1"
-            lines={["Impossible close-up", "for rooms that expect more."]}
+            lines={["Impossible close-up", "for rooms that", "expect more."]}
             className={styles.copyTitle}
             lineClassName={styles.copyTitleLine}
             start="top 69%"
