@@ -1434,9 +1434,9 @@
   }
 
   .copyTitle {
-    max-width: 12.6ch;
-    font-size: clamp(2.1rem, 10vw, 3rem);
-    line-height: 0.99;
+    max-width: min(100%, 14.8ch);
+    font-size: clamp(1.95rem, 8.35vw, 2.62rem);
+    line-height: 1.01;
   }
 
   .copyBody {
