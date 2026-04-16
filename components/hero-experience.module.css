@@ -588,7 +588,7 @@
   grid-column: 2;
   margin: 0;
   max-width: 34ch;
-  color: rgba(230, 221, 198, 0.68);
+  color: rgba(230, 221, 198, 0.72);
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.12rem, 1.5vw, 1.34rem);
   line-height: 1.36;
@@ -627,7 +627,7 @@
 
 .pressMeta,
 .pressAside {
-  color: rgba(201, 168, 106, 0.78);
+  color: rgba(201, 168, 106, 0.84);
   font-size: 0.68rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -639,14 +639,14 @@
 }
 
 .pressSource {
-  color: rgba(230, 221, 198, 0.6);
+  color: rgba(230, 221, 198, 0.68);
   font-size: 0.78rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .pressTitle {
-  color: rgba(244, 239, 224, 0.92);
+  color: rgba(244, 239, 224, 0.95);
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.25rem, 2vw, 1.7rem);
   line-height: 1.16;
@@ -656,7 +656,7 @@
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  color: rgba(230, 221, 198, 0.52);
+  color: rgba(230, 221, 198, 0.58);
 }
 
 .pressAside span:last-child {
@@ -1337,8 +1337,8 @@
   }
 
   .pressIntro h2 {
-    max-width: 12.5ch;
-    font-size: clamp(2rem, 10vw, 2.65rem);
+    max-width: 13.2ch;
+    font-size: clamp(1.92rem, 9.35vw, 2.48rem);
   }
 
   .pressIntro p:not(.sectionLabel) {
@@ -1357,7 +1357,9 @@
   }
 
   .pressTitle {
-    font-size: 1.22rem;
+    font-size: 1.12rem;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
   }
 
   .pressAside {
