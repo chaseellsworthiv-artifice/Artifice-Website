@@ -42,11 +42,6 @@ const clientNotes = [
   },
 ];
 
-const beginHeadingLines = [
-  ["Start", "with", "the", "event."],
-  ["I’ll", "guide", "the", "rest."],
-];
-
 const pressItems = [
   {
     source: "Chattanooga Pulse",
@@ -291,104 +286,6 @@ export default function HeroExperience() {
 
       sectionRefs.current.forEach((section) => {
         if (!section) return;
-        if (section.id === "begin") {
-          const beginLine = section.querySelector("[data-begin-line]");
-          const beginHeadingLines = section.querySelectorAll("[data-begin-heading-line]");
-          const beginHeadingWords = section.querySelectorAll("[data-begin-heading-word]");
-          const beginTargets = section.querySelectorAll("[data-begin-reveal]");
-          if (!beginLine || beginHeadingLines.length < 2 || !beginHeadingWords.length || !beginTargets.length) return;
-
-          gsap.set(beginLine, {
-            autoAlpha: 0,
-            scaleX: 0,
-            x: 0,
-            transformOrigin: "left center",
-            filter: "blur(0.55px)",
-          });
-          gsap.set(beginTargets, {
-            autoAlpha: 0,
-            y: isReduced ? 6 : 8,
-            filter: "blur(2.6px)",
-          });
-          gsap.set(beginHeadingWords, {
-            autoAlpha: 0,
-            filter: "blur(0.34px)",
-          });
-
-          const beginTimeline = gsap.timeline({
-            scrollTrigger: {
-              trigger: section,
-              start: isReduced ? "top 73%" : "top 69%",
-              once: true,
-            },
-          });
-
-          beginTimeline
-            .to(beginTargets[0], {
-              autoAlpha: 1,
-              y: 0,
-              filter: "blur(0px)",
-              duration: isReduced ? 0.72 : 0.86,
-              ease: "power2.out",
-            })
-            .to(beginLine, {
-              autoAlpha: isReduced ? 0.64 : 0.58,
-              scaleX: 1,
-              x: 0,
-              filter: "blur(0.08px)",
-              duration: isReduced ? 1.05 : 1.18,
-              ease: "power1.out",
-            }, isReduced ? 0.14 : 0.18)
-            .set(beginLine, {
-              transformOrigin: "right center",
-            }, isReduced ? 1.26 : 1.48)
-            .to(beginLine, {
-              autoAlpha: 0,
-              scaleX: 0,
-              x: 0,
-              filter: "blur(0.5px)",
-              duration: isReduced ? 0.92 : 1.02,
-              ease: "sine.inOut",
-            }, isReduced ? 1.44 : 1.68)
-            .to(beginHeadingLines[0].querySelectorAll("[data-begin-heading-word]"), {
-              autoAlpha: 1,
-              filter: "blur(0px)",
-              duration: isReduced ? 0.96 : 1.12,
-              ease: "sine.inOut",
-              stagger: {
-                each: isReduced ? 0.09 : 0.105,
-                from: "start",
-              },
-            }, isReduced ? 1.58 : 1.84)
-            .to(beginHeadingLines[1].querySelectorAll("[data-begin-heading-word]"), {
-              autoAlpha: 1,
-              filter: "blur(0px)",
-              duration: isReduced ? 0.96 : 1.12,
-              ease: "sine.inOut",
-              stagger: {
-                each: isReduced ? 0.09 : 0.105,
-                from: "start",
-              },
-            }, isReduced ? 1.72 : 2.0)
-            .to(beginTargets[1], {
-              autoAlpha: 1,
-              y: 0,
-              filter: "blur(0px)",
-              duration: isReduced ? 0.82 : 0.95,
-              ease: "power2.out",
-            }, isReduced ? 2.62 : 3.02)
-            .to(beginTargets[2], {
-              autoAlpha: 1,
-              y: 0,
-              filter: "blur(0px)",
-              duration: isReduced ? 0.78 : 0.88,
-              ease: "power2.out",
-            }, isReduced ? 2.9 : 3.34);
-
-          if (beginTimeline.scrollTrigger) localTriggers.push(beginTimeline.scrollTrigger);
-          return;
-        }
-
         const targets = section.querySelectorAll("[data-section-reveal]");
         if (!targets.length) return;
 
@@ -871,35 +768,16 @@ export default function HeroExperience() {
         </section>
 
         <section id="begin" ref={(node) => { sectionRefs.current[4] = node; }} className={`${styles.section} ${styles.beginSection}`}>
-          <div className={styles.beginInner}>
-            <p className={styles.sectionLabel} data-begin-reveal>Begin</p>
-            <div className={styles.beginHeadingStage}>
-              <span className={styles.beginRevealLine} data-begin-line aria-hidden="true" />
-              <h2>
-                {beginHeadingLines.map((line, lineIndex) => (
-                  <span
-                    className={styles.beginHeadingLine}
-                    data-begin-heading-line
-                    key={`begin-line-${lineIndex}`}
-                  >
-                    {line.map((word, wordIndex) => (
-                      <span
-                        className={styles.beginHeadingWord}
-                        data-begin-heading-word
-                        key={`${lineIndex}-${word}`}
-                      >
-                        {word}
-                        {wordIndex < line.length - 1 ? "\u00A0" : ""}
-                      </span>
-                    ))}
-                  </span>
-                ))}
-              </h2>
-            </div>
-            <p data-begin-reveal>
+          <div className={styles.beginInner} data-section-reveal>
+            <p className={styles.sectionLabel}>Begin</p>
+            <h2>
+              Start with the event.
+              <span>I’ll guide the rest.</span>
+            </h2>
+            <p>
               Every room asks for something different. Share a few details, and I’ll recommend the experience I would begin with.
             </p>
-            <div className={styles.beginActions} data-begin-reveal>
+            <div className={styles.beginActions}>
               <a href="/design" className={styles.primaryLink}>
                 Explore Experiences
               </a>

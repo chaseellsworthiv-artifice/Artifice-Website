@@ -525,41 +525,8 @@
   z-index: 1;
 }
 
-.beginHeadingLine {
+.beginInner h2 span {
   display: block;
-}
-
-.beginHeadingWord {
-  display: inline-block;
-  white-space: nowrap;
-  will-change: opacity, filter;
-}
-
-.beginHeadingStage {
-  position: relative;
-  width: min(100%, 42rem);
-}
-
-.beginRevealLine {
-  content: "";
-  display: block;
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  top: 48%;
-  width: min(82vw, 34rem);
-  height: 1px;
-  margin: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(201, 168, 106, 0),
-    rgba(201, 168, 106, 0.16) 10%,
-    rgba(201, 168, 106, 0.46) 34%,
-    rgba(201, 168, 106, 0.26) 70%,
-    rgba(201, 168, 106, 0)
-  );
-  box-shadow: 0 0 12px rgba(201, 168, 106, 0.07);
-  will-change: transform, opacity, filter;
 }
 
 .beginInner p:not(.sectionLabel) {
