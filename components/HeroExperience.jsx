@@ -288,8 +288,9 @@ export default function HeroExperience() {
         if (!section) return;
         if (section.id === "begin") {
           const beginLine = section.querySelector("[data-begin-line]");
+          const beginHeadingPieces = section.querySelectorAll("[data-begin-heading-piece]");
           const beginTargets = section.querySelectorAll("[data-begin-reveal]");
-          if (!beginLine || !beginTargets.length) return;
+          if (!beginLine || !beginHeadingPieces.length || !beginTargets.length) return;
 
           gsap.set(beginLine, {
             autoAlpha: 0,
@@ -302,6 +303,11 @@ export default function HeroExperience() {
             autoAlpha: 0,
             y: isReduced ? 6 : 8,
             filter: "blur(2.6px)",
+          });
+          gsap.set(beginHeadingPieces, {
+            autoAlpha: 0,
+            x: isReduced ? -10 : -16,
+            filter: "blur(2.2px)",
           });
 
           const beginTimeline = gsap.timeline({
@@ -330,7 +336,7 @@ export default function HeroExperience() {
             }, isReduced ? 0.12 : 0.16)
             .set(beginLine, {
               transformOrigin: "right center",
-            }, isReduced ? 0.78 : 0.9)
+            }, isReduced ? 0.92 : 1.08)
             .to(beginLine, {
               autoAlpha: 0,
               scaleX: 0,
@@ -338,28 +344,29 @@ export default function HeroExperience() {
               filter: "blur(0.85px)",
               duration: isReduced ? 0.62 : 0.72,
               ease: "power2.inOut",
-            }, isReduced ? 0.8 : 0.92)
-            .to(beginTargets[1], {
+            }, isReduced ? 0.98 : 1.16)
+            .to(beginHeadingPieces, {
               autoAlpha: 1,
-              y: 0,
+              x: 0,
               filter: "blur(0px)",
-              duration: isReduced ? 1.06 : 1.22,
-              ease: "power2.inOut",
-            }, isReduced ? 0.82 : 0.94)
-            .to(beginTargets[2], {
+              duration: isReduced ? 0.82 : 0.96,
+              ease: "power2.out",
+              stagger: isReduced ? 0.11 : 0.14,
+            }, isReduced ? 1.12 : 1.3)
+            .to(beginTargets[1], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.82 : 0.95,
               ease: "power2.out",
-            }, isReduced ? 1.56 : 1.8)
-            .to(beginTargets[3], {
+            }, isReduced ? 1.82 : 2.08)
+            .to(beginTargets[2], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.78 : 0.88,
               ease: "power2.out",
-            }, isReduced ? 1.84 : 2.12);
+            }, isReduced ? 2.08 : 2.38);
 
           if (beginTimeline.scrollTrigger) localTriggers.push(beginTimeline.scrollTrigger);
           return;
@@ -851,9 +858,9 @@ export default function HeroExperience() {
             <p className={styles.sectionLabel} data-begin-reveal>Begin</p>
             <div className={styles.beginHeadingStage}>
               <span className={styles.beginRevealLine} data-begin-line aria-hidden="true" />
-              <h2 data-begin-reveal>
-                Start with the event.
-                <span>I’ll guide the rest.</span>
+              <h2>
+                <span data-begin-heading-piece>Start with the event.</span>
+                <span data-begin-heading-piece>I’ll guide the rest.</span>
               </h2>
             </div>
             <p data-begin-reveal>
