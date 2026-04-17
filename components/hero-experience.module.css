@@ -525,39 +525,18 @@
   z-index: 1;
 }
 
-.beginInner h2 span {
+.beginHeadingLine {
   display: block;
 }
 
-.beginHeadingBase,
-.beginHeadingPass {
+.beginHeadingWord {
+  display: inline-block;
+  margin-right: 0.18em;
   will-change: opacity, filter;
 }
 
-.beginHeadingPass {
-  --begin-heading-pass: 0%;
-  position: absolute !important;
-  inset: 0 auto auto 0;
-  pointer-events: none;
-  width: 100%;
-  color: rgba(244, 239, 224, 0.96);
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(0, 0, 0, 0.2) max(0%, calc(var(--begin-heading-pass) - 28%)),
-    #000 max(0%, calc(var(--begin-heading-pass) - 15%)),
-    rgba(0, 0, 0, 0.62) max(0%, calc(var(--begin-heading-pass) - 4%)),
-    transparent var(--begin-heading-pass)
-  );
-  mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(0, 0, 0, 0.2) max(0%, calc(var(--begin-heading-pass) - 28%)),
-    #000 max(0%, calc(var(--begin-heading-pass) - 15%)),
-    rgba(0, 0, 0, 0.62) max(0%, calc(var(--begin-heading-pass) - 4%)),
-    transparent var(--begin-heading-pass)
-  );
-  will-change: opacity, filter, mask-image;
+.beginHeadingWord:last-child {
+  margin-right: 0;
 }
 
 .beginHeadingStage {
