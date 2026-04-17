@@ -529,7 +529,7 @@
   display: block;
 }
 
-.beginInner h2[data-begin-heading] {
+.beginInner h2 [data-begin-heading-line] {
   will-change: opacity, filter;
 }
 
