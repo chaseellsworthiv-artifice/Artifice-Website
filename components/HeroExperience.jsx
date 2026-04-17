@@ -77,99 +77,6 @@ const pressItems = [
   },
 ];
 
-const textRevealSelector = [
-  "p",
-  "h2",
-  "h3",
-  "cite",
-  "button",
-  "a",
-  "a span",
-].join(",");
-
-function restoreLineRevealElement(element) {
-  const original = element.dataset.lineRevealOriginal;
-  if (!original) return;
-  element.textContent = original;
-}
-
-function getRevealText(element) {
-  if (element.dataset.lineRevealOriginal) return element.dataset.lineRevealOriginal;
-  return Array.from(element.childNodes)
-    .map((node) => node.textContent || "")
-    .join(" ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function splitElementIntoRenderedLines(element, classNames) {
-  if (!element || element.closest("form") || element.querySelector("img, svg, input, textarea, select")) {
-    return [];
-  }
-
-  const sourceText = getRevealText(element);
-  if (!sourceText) return [];
-
-  element.dataset.lineRevealOriginal = sourceText;
-  element.textContent = "";
-
-  const words = sourceText.split(" ");
-  const measuringWords = words.map((word, index) => {
-    const wrapper = document.createElement("span");
-    wrapper.textContent = index < words.length - 1 ? `${word} ` : word;
-    element.appendChild(wrapper);
-    return wrapper;
-  });
-
-  const groupedLines = [];
-  measuringWords.forEach((wordNode) => {
-    const top = Math.round(wordNode.offsetTop);
-    const currentLine = groupedLines[groupedLines.length - 1];
-    if (!currentLine || Math.abs(currentLine.top - top) > 2) {
-      groupedLines.push({ top, text: wordNode.textContent });
-      return;
-    }
-    currentLine.text += wordNode.textContent;
-  });
-
-  element.textContent = "";
-
-  return groupedLines.map((line) => {
-    const lineNode = document.createElement("span");
-    lineNode.className = classNames.line;
-    lineNode.textContent = line.text.trimEnd();
-    element.appendChild(lineNode);
-    return lineNode;
-  });
-}
-
-function prepareTextRevealLines(root, classNames) {
-  const candidates = Array.from(root.querySelectorAll(textRevealSelector)).filter((element) => {
-    if (element.closest("form")) return false;
-    if (element.closest("[data-line-reveal-skip]")) return false;
-    if (element.children.length && element.tagName !== "H2") return false;
-    if (!element.textContent?.trim()) return false;
-    return true;
-  });
-
-  const lineNodes = [];
-  const textElements = [];
-  candidates.forEach((element) => {
-    const lines = prepareLineRevealElement(element, classNames);
-    if (!lines.length) return;
-    textElements.push(element);
-    lineNodes.push(...lines);
-  });
-
-  return { lineNodes, textElements };
-}
-
-function prepareLineRevealElement(element, classNames) {
-  restoreLineRevealElement(element);
-  element.classList.add(classNames.text);
-  return splitElementIntoRenderedLines(element, classNames);
-}
-
 export default function HeroExperience() {
   const [isMobileSeam, setIsMobileSeam] = useState(false);
   const [seamResolved, setSeamResolved] = useState(false);
@@ -390,29 +297,26 @@ export default function HeroExperience() {
           const invitationContact = section.querySelector("[data-invitation-contact]");
           if (!invitationLabel || !invitationLine || !invitationGoldLine || !invitationWords.length || !invitationContact) return;
 
-          const labelLines = prepareLineRevealElement(invitationLabel, {
-            text: styles.lineRevealText,
-            line: styles.lineRevealLine,
-          });
-          const contactLines = prepareLineRevealElement(invitationContact, {
-            text: styles.lineRevealText,
-            line: styles.lineRevealLine,
-          });
-
-          gsap.set([...labelLines, ...contactLines], {
+          gsap.set(invitationLabel, {
             autoAlpha: 0,
-            y: isReduced ? 5 : 7,
-            filter: isReduced ? "blur(1.2px)" : "blur(1.8px)",
+            y: isReduced ? 6 : 8,
+            filter: "blur(2.2px)",
           });
           gsap.set(invitationGoldLine, {
             autoAlpha: 0,
             scaleX: 0,
+            xPercent: -50,
             transformOrigin: "left center",
             filter: "blur(0.55px)",
           });
           gsap.set(invitationWords, {
             autoAlpha: 0,
             filter: "blur(0.34px)",
+          });
+          gsap.set(invitationContact, {
+            autoAlpha: 0,
+            y: isReduced ? 6 : 8,
+            filter: "blur(2.2px)",
           });
 
           const bookingTimeline = gsap.timeline({
@@ -424,17 +328,12 @@ export default function HeroExperience() {
           });
 
           bookingTimeline
-            .call(() => invitationLabel.classList.add(styles.lineRevealTextVisible), null, 0.02)
-            .to(labelLines, {
+            .to(invitationLabel, {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
-              duration: isReduced ? 0.78 : 0.9,
-              ease: "sine.out",
-              stagger: {
-                each: isReduced ? 0.3 : 0.38,
-                from: "start",
-              },
+              duration: isReduced ? 0.72 : 0.86,
+              ease: "power2.out",
             }, 0)
             .to(invitationGoldLine, {
               autoAlpha: isReduced ? 0.64 : 0.58,
@@ -463,85 +362,33 @@ export default function HeroExperience() {
                 from: "start",
               },
             }, isReduced ? 1.84 : 2.06)
-            .call(() => invitationContact.classList.add(styles.lineRevealTextVisible), null, isReduced ? 2.66 : 2.92)
-            .to(contactLines, {
+            .to(invitationContact, {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.72 : 0.82,
-              ease: "sine.out",
-            }, isReduced ? 2.7 : 2.96);
+              ease: "power2.out",
+            }, isReduced ? 2.72 : 3.0);
 
           if (bookingTimeline.scrollTrigger) localTriggers.push(bookingTimeline.scrollTrigger);
           return;
         }
 
-        const textLines = [];
-        const textElements = [];
-        const visualTargets = [];
-
-        targets.forEach((target) => {
-          const revealParts = prepareTextRevealLines(target, {
-            text: styles.lineRevealText,
-            line: styles.lineRevealLine,
-          });
-          textLines.push(...revealParts.lineNodes);
-          textElements.push(...revealParts.textElements);
-
-          if (target.querySelector("img")) {
-            visualTargets.push(target);
-          }
-        });
-
-        gsap.set(textLines, {
-          autoAlpha: 0,
-          y: isReduced ? 5 : 7,
-          filter: isReduced ? "blur(1.2px)" : "blur(1.8px)",
-        });
-        gsap.set(visualTargets, {
-          autoAlpha: 0,
-          y: isReduced ? 10 : 14,
-          filter: isReduced ? "blur(3px)" : "blur(4px)",
-        });
-
-        const sectionTimeline = gsap.timeline({
+        gsap.set(targets, { autoAlpha: 0, y: isReduced ? 16 : 22, filter: "blur(6px)" });
+        const revealTween = gsap.to(targets, {
+          autoAlpha: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: isReduced ? 1.25 : 1.55,
+          ease: "power2.out",
+          stagger: isReduced ? 0.12 : 0.18,
           scrollTrigger: {
             trigger: section,
             start: isReduced ? "top 73%" : "top 69%",
             once: true,
           },
         });
-
-        if (textLines.length) {
-          sectionTimeline.call(() => {
-            textElements.forEach((element) => element.classList.add(styles.lineRevealTextVisible));
-          }, null, 0.08);
-
-          sectionTimeline.to(textLines, {
-            autoAlpha: 1,
-            y: 0,
-            filter: "blur(0px)",
-            duration: isReduced ? 0.78 : 0.9,
-            ease: "sine.out",
-            stagger: {
-              each: isReduced ? 0.3 : 0.38,
-              from: "start",
-            },
-          }, 0);
-        }
-
-        if (visualTargets.length) {
-          sectionTimeline.to(visualTargets, {
-            autoAlpha: 1,
-            y: 0,
-            filter: "blur(0px)",
-            duration: isReduced ? 1.05 : 1.25,
-            ease: "sine.out",
-            stagger: isReduced ? 0.08 : 0.12,
-          }, textLines.length ? 0.18 : 0);
-        }
-
-        if (sectionTimeline.scrollTrigger) localTriggers.push(sectionTimeline.scrollTrigger);
+        if (revealTween.scrollTrigger) localTriggers.push(revealTween.scrollTrigger);
       });
     }, heroRef);
 
@@ -1092,7 +939,6 @@ export default function HeroExperience() {
               <p
                 className={`${styles.invitationLine} ${styles.invitationSpecialLine}`}
                 data-invitation-special
-                data-line-reveal-skip
                 aria-label="Private performances are limited."
               >
                 <span className={styles.invitationGoldLine} data-invitation-gold-line aria-hidden="true" />
@@ -1149,7 +995,7 @@ export default function HeroExperience() {
               </button>
             </form>
 
-            <p className={styles.invitationConfirmation} data-line-reveal-skip>We’ll be in touch.</p>
+            <p className={styles.invitationConfirmation}>We’ll be in touch.</p>
           </div>
         </section>
       </div>
