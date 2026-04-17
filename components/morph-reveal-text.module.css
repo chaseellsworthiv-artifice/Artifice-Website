@@ -22,32 +22,24 @@
   position: absolute;
   inset: 0 auto auto 0;
   overflow: visible;
-  color: inherit;
-  opacity: 0;
-  pointer-events: none;
 }
 
-.svgTextSoft,
-.svgTextAtmosphere,
+.svgTextBase,
+.svgTextWash,
 .svgTextFinal {
   text-rendering: geometricPrecision;
+}
+
+.svgTextBase {
   fill: currentColor;
-  transform-box: fill-box;
-  transform-origin: center;
-  will-change: opacity, filter;
 }
 
-.svgTextSoft {
-  opacity: 0;
-  fill: rgba(255, 248, 236, 0.24);
-}
-
-.svgTextAtmosphere {
-  opacity: 0;
-  fill: rgba(246, 238, 217, 0.52);
+.svgTextWash {
+  fill: rgba(255, 248, 240, 0.28);
+  opacity: 0.22;
 }
 
 .svgTextFinal {
-  opacity: 0;
   fill: currentColor;
+  opacity: 0;
 }
