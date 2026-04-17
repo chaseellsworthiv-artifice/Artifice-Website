@@ -8,8 +8,6 @@ import styles from "./morph-reveal-text.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const BLOB_COUNT = 16;
-
 function seeded(seed) {
   let value = seed >>> 0;
   return () => {
@@ -19,34 +17,24 @@ function seeded(seed) {
 }
 
 function createProfile(lineIndex) {
-  const rand = seeded(9173 + lineIndex * 127);
-  const blobs = Array.from({ length: BLOB_COUNT }, (_, blobIndex) => {
-    const verticalBand = blobIndex % 3;
-    const yBase = verticalBand === 0 ? 0.34 : verticalBand === 1 ? 0.52 : 0.68;
-    const y = Math.min(0.82, Math.max(0.22, yBase + (rand() - 0.5) * 0.18));
-    const radius = 0.03 + rand() * 0.04;
-    const fromLeft = blobIndex % 2 === 0;
-    const start = fromLeft ? (-0.18 - rand() * 0.22) : (1.18 + rand() * 0.22);
-    const settleBase = 0.04 + rand() * 0.92;
-    const settle = Math.min(1.12, Math.max(-0.12, settleBase + (fromLeft ? 1 : -1) * (rand() - 0.5) * 0.08));
-    const duration = 1.72 + rand() * 1.05;
-    const delay = blobIndex * 0.038 + rand() * 0.42;
-    const washLead = 0.01 + rand() * 0.05;
-    return {
-      y,
-      radius,
-      start,
-      settle,
-      duration,
-      delay,
-      washLead,
-    };
-  });
+  const rand = seeded(4219 + lineIndex * 193);
 
   return {
-    blobs,
-    washFadeStart: 1.88,
-    lineOffset: 0,
+    lineOffset: lineIndex * 0.34,
+    maskCenter: {
+      x: 0.18 + rand() * 0.18,
+      y: 0.18 + rand() * 0.16,
+    },
+    fadeCenter: {
+      x: -0.06 + rand() * 0.12,
+      y: 0.58 + rand() * 0.16,
+    },
+    thicknessCenter: {
+      x: -0.02 + rand() * 0.1,
+      y: 0.42 + rand() * 0.16,
+    },
+    atmosphereDelay: 0.08 + rand() * 0.08,
+    finalDelay: 1.18 + rand() * 0.08,
   };
 }
 
@@ -55,10 +43,12 @@ function measureLine(node) {
   const rect = node.getBoundingClientRect();
   const computed = window.getComputedStyle(node);
   const fontSize = parseFloat(computed.fontSize);
-  const extraWidth = Math.max(88, Math.ceil(fontSize * 1.16));
+  const extraWidth = Math.max(92, Math.ceil(fontSize * 1.18));
+  const extraHeight = Math.max(16, Math.ceil(fontSize * 0.18));
+
   return {
     width: Math.ceil(rect.width) + extraWidth,
-    height: Math.ceil(rect.height),
+    height: Math.ceil(rect.height) + extraHeight,
     fontFamily: computed.fontFamily,
     fontSize,
     fontWeight: computed.fontWeight,
@@ -69,7 +59,17 @@ function measureLine(node) {
 function ensureEntry(entries, index) {
   const existing = entries.current[index];
   if (existing) return existing;
-  const created = { blobs: [], washBlobs: [], washText: null, finalText: null, svgRoot: null };
+  const created = {
+    svgRoot: null,
+    finalText: null,
+    atmosphereText: null,
+    softText: null,
+    maskGate: null,
+    maskFade: null,
+    maskWeight: null,
+    displacement: null,
+    softBlur: null,
+  };
   entries.current[index] = created;
   return created;
 }
@@ -117,119 +117,158 @@ export default function MorphRevealText({
     if (!rootRef.current || !lines?.length || metrics.length !== lines.length) return undefined;
 
     const trigger = triggerRef?.current || rootRef.current;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const context = gsap.context(() => {
-      lineAnimRefs.current.forEach((entry, index) => {
-        if (!entry?.washText || !entry?.svgRoot || !entry?.finalText) return;
+      lineAnimRefs.current.forEach((entry) => {
+        if (!entry?.svgRoot || !entry?.finalText) return;
 
-        if (hasPlayedRef.current) {
-          gsap.set(entry.svgRoot, { opacity: 0 });
-          gsap.set(entry.washText, { opacity: 0 });
-          gsap.set(entry.finalText, { opacity: 1 });
+        if (hasPlayedRef.current || prefersReduced) {
+          gsap.set(entry.svgRoot, { opacity: 1 });
+          gsap.set(entry.finalText, { opacity: 1, filter: "blur(0px)" });
+          gsap.set([entry.atmosphereText, entry.softText], { opacity: 0 });
           return;
         }
 
         gsap.set(entry.svgRoot, { opacity: 0 });
-        gsap.set(entry.washText, { opacity: 0.22 });
-        gsap.set(entry.finalText, { opacity: 0 });
-
-        const profile = createProfile(index);
-        entry.blobs.forEach((blob, blobIndex) => {
-          const descriptor = profile.blobs[blobIndex];
-          if (!blob || !descriptor) return;
-          const width = metrics[index].width;
-          gsap.set(blob, {
-            attr: {
-              cx: width * descriptor.start,
-              rx: width * descriptor.radius * 0.02,
-            },
-          });
-        });
-
-        entry.washBlobs.forEach((blob, blobIndex) => {
-          const descriptor = profile.blobs[blobIndex];
-          if (!blob || !descriptor) return;
-          const width = metrics[index].width;
-          gsap.set(blob, {
-            attr: {
-              cx: width * (descriptor.start - descriptor.washLead),
-              rx: width * descriptor.radius * 0.04,
-            },
-          });
-        });
+        gsap.set(entry.finalText, { opacity: 0, filter: "blur(1.4px)" });
+        gsap.set(entry.atmosphereText, { opacity: 0, filter: "blur(1.8px)" });
+        gsap.set(entry.softText, { opacity: 0, filter: "blur(4px)" });
       });
 
       const timeline = gsap.timeline({ paused: true });
 
       lineAnimRefs.current.forEach((entry, index) => {
-        if (!entry?.washText || !entry?.svgRoot || !entry?.finalText) return;
-        const width = metrics[index].width;
+        if (!entry?.svgRoot || !entry?.finalText || !entry?.maskGate) return;
+
+        const metric = metrics[index];
         const profile = createProfile(index);
+        const gateMax = Math.max(metric.width, metric.height) * 1.28;
+        const fadeMax = Math.max(metric.width, metric.height) * 1.7;
+        const weightMax = Math.max(metric.width, metric.height) * 1.08;
+        const base = profile.lineOffset;
 
-        timeline.set(entry.svgRoot, { opacity: 1 }, profile.lineOffset);
-
-        profile.blobs.forEach((descriptor, blobIndex) => {
-          const blob = entry.blobs[blobIndex];
-          const washBlob = entry.washBlobs[blobIndex];
-          if (!blob || !washBlob) return;
-
-          timeline.to(
-            blob,
-            {
-              attr: {
-                cx: width * descriptor.settle,
-                rx: width * descriptor.radius * 3.9,
-              },
-              duration: descriptor.duration,
-              ease: blobIndex % 3 === 0 ? "power1.out" : blobIndex % 3 === 1 ? "power2.out" : "sine.out",
-            },
-            profile.lineOffset + descriptor.delay
-          );
-
-          timeline.to(
-            washBlob,
-            {
-              attr: {
-                cx: width * (descriptor.settle + descriptor.washLead),
-                rx: width * descriptor.radius * 0.68,
-              },
-              duration: descriptor.duration * (0.58 + (blobIndex % 4) * 0.05),
-              ease: blobIndex % 3 === 0 ? "power1.out" : blobIndex % 3 === 1 ? "power2.out" : "sine.out",
-            },
-            profile.lineOffset + descriptor.delay + 0.02
-          );
+        gsap.set(entry.maskGate, {
+          attr: {
+            cx: metric.width * profile.maskCenter.x,
+            cy: metric.height * profile.maskCenter.y,
+            rx: metric.width * 0.015,
+            ry: metric.height * 0.035,
+          },
         });
+        gsap.set(entry.maskFade, {
+          attr: {
+            cx: metric.width * profile.fadeCenter.x,
+            cy: metric.height * profile.fadeCenter.y,
+            rx: metric.width * 0.02,
+            ry: metric.height * 0.08,
+          },
+        });
+        gsap.set(entry.maskWeight, {
+          attr: {
+            cx: metric.width * profile.thicknessCenter.x,
+            cy: metric.height * profile.thicknessCenter.y,
+            rx: metric.width * 0.01,
+            ry: metric.height * 0.05,
+          },
+        });
+        gsap.set(entry.displacement, { attr: { scale: metric.fontSize * 0.08 } });
+        gsap.set(entry.softBlur, { attr: { stdDeviation: metric.fontSize * 0.095 } });
+
+        timeline.set(entry.svgRoot, { opacity: 1 }, base);
+
+        timeline.to(
+          entry.maskGate,
+          {
+            attr: { rx: gateMax, ry: gateMax * 0.55 },
+            duration: 3.45,
+            ease: "power3.out",
+          },
+          base
+        );
+
+        timeline.to(
+          entry.maskFade,
+          {
+            attr: { rx: fadeMax, ry: fadeMax * 0.42 },
+            duration: 3.9,
+            ease: "power2.out",
+          },
+          base + 0.06
+        );
+
+        timeline.to(
+          entry.maskWeight,
+          {
+            attr: { rx: weightMax, ry: weightMax * 0.5 },
+            duration: 3.15,
+            ease: "power2.out",
+          },
+          base + 0.1
+        );
+
+        timeline.to(
+          entry.atmosphereText,
+          {
+            opacity: 0.4,
+            filter: "blur(0.9px)",
+            duration: 1.35,
+            ease: "sine.out",
+          },
+          base + profile.atmosphereDelay
+        );
+
+        timeline.to(
+          entry.softText,
+          {
+            opacity: 0.18,
+            filter: "blur(1.6px)",
+            duration: 1.7,
+            ease: "sine.out",
+          },
+          base + 0.22
+        );
+
+        timeline.to(
+          entry.displacement,
+          {
+            attr: { scale: 0 },
+            duration: 2.6,
+            ease: "power2.out",
+          },
+          base + 0.28
+        );
+
+        timeline.to(
+          entry.softBlur,
+          {
+            attr: { stdDeviation: metric.fontSize * 0.015 },
+            duration: 2.25,
+            ease: "sine.out",
+          },
+          base + 0.36
+        );
 
         timeline.to(
           entry.finalText,
           {
             opacity: 1,
+            filter: "blur(0px)",
+            duration: 2.2,
+            ease: "sine.out",
+          },
+          base + profile.finalDelay
+        );
+
+        timeline.to(
+          [entry.atmosphereText, entry.softText],
+          {
+            opacity: 0,
             duration: 0.95,
-            ease: "sine.out",
+            ease: "sine.inOut",
           },
-          profile.lineOffset + profile.washFadeStart - 0.78
+          base + 2.72
         );
-
-        timeline.to(
-          entry.washText,
-          {
-            opacity: 0,
-            duration: 0.42,
-            ease: "sine.out",
-          },
-          profile.lineOffset + profile.washFadeStart
-        );
-
-        timeline.to(
-          entry.svgRoot,
-          {
-            opacity: 0,
-            duration: 0.32,
-            ease: "sine.out",
-          },
-          profile.lineOffset + profile.washFadeStart + 0.04
-        );
-
       });
 
       ScrollTrigger.create({
@@ -239,6 +278,7 @@ export default function MorphRevealText({
         onEnter: () => {
           if (hasPlayedRef.current) return;
           hasPlayedRef.current = true;
+          if (prefersReduced) return;
           timeline.delay(revealDelay).play(0);
         },
       });
@@ -253,11 +293,13 @@ export default function MorphRevealText({
     <Tag ref={rootRef} className={rootClassName}>
       {lines.map((line, index) => {
         const metric = metrics[index];
-        const maskId = `${idPrefix}-reveal-${index}`;
-        const washMaskId = `${idPrefix}-wash-${index}`;
-        const blurId = `${idPrefix}-blur-${index}`;
-        const washBlurId = `${idPrefix}-wash-blur-${index}`;
         const profile = createProfile(index);
+        const clipId = `${idPrefix}-clip-${index}`;
+        const softMaskId = `${idPrefix}-soft-mask-${index}`;
+        const weightMaskId = `${idPrefix}-weight-mask-${index}`;
+        const noiseId = `${idPrefix}-noise-${index}`;
+        const blurId = `${idPrefix}-soft-blur-${index}`;
+        const entry = ensureEntry(lineAnimRefs, index);
 
         return (
           <span key={`${line}-${index}`} className={styles.lineMask}>
@@ -271,80 +313,85 @@ export default function MorphRevealText({
               {line}
             </span>
             {metric ? (
-              <>
-                <svg
-                  ref={(node) => {
-                    ensureEntry(lineAnimRefs, index).svgRoot = node;
-                  }}
-                  className={styles.lineSvg}
-                  viewBox={`0 0 ${metric.width} ${metric.height}`}
-                  width={metric.width}
-                  height={metric.height}
-                  aria-hidden="true"
-                  preserveAspectRatio="xMinYMin meet"
-                >
-                  <defs>
-                    <filter id={blurId} x="-45%" y="-140%" width="220%" height="380%">
-                      <feGaussianBlur stdDeviation={metric.height * 0.17} />
-                    </filter>
-                    <filter id={washBlurId} x="-45%" y="-140%" width="220%" height="380%">
-                      <feGaussianBlur stdDeviation={metric.height * 0.12} />
-                    </filter>
-                    <mask id={maskId}>
-                      <rect width={metric.width} height={metric.height} fill="black" />
-                      <g filter={`url(#${blurId})`}>
-                        {profile.blobs.map((descriptor, blobIndex) => (
-                          <ellipse
-                            key={`blob-${blobIndex}`}
-                            ref={(node) => {
-                              ensureEntry(lineAnimRefs, index).blobs[blobIndex] = node;
-                            }}
-                            cx="0"
-                            cy={metric.height * descriptor.y}
-                            rx={metric.width * descriptor.radius * 0.2}
-                            ry={metric.height * (0.18 + (blobIndex % 5) * 0.024)}
-                            fill="white"
-                          />
-                        ))}
-                      </g>
-                    </mask>
-                    <mask id={washMaskId}>
-                      <rect width={metric.width} height={metric.height} fill="black" />
-                      <g filter={`url(#${washBlurId})`}>
-                        {profile.blobs.map((descriptor, blobIndex) => (
-                          <ellipse
-                            key={`wash-blob-${blobIndex}`}
-                            ref={(node) => {
-                              ensureEntry(lineAnimRefs, index).washBlobs[blobIndex] = node;
-                            }}
-                            cx="0"
-                            cy={metric.height * descriptor.y}
-                            rx={metric.width * descriptor.radius * 0.34}
-                            ry={metric.height * (0.14 + (blobIndex % 5) * 0.02)}
-                            fill="white"
-                          />
-                        ))}
-                      </g>
-                    </mask>
-                  </defs>
-                  <text
-                    className={styles.svgTextBase}
-                    x="0"
-                    y={metric.fontSize * 0.08}
-                    dominantBaseline="hanging"
-                    fontFamily={metric.fontFamily}
-                    fontSize={metric.fontSize}
-                    fontWeight={metric.fontWeight}
-                    letterSpacing={metric.letterSpacing}
-                    mask={`url(#${maskId})`}
-                  >
-                    {line}
-                  </text>
+              <svg
+                ref={(node) => {
+                  entry.svgRoot = node;
+                }}
+                className={styles.lineSvg}
+                viewBox={`0 0 ${metric.width} ${metric.height}`}
+                width={metric.width}
+                height={metric.height}
+                aria-hidden="true"
+                preserveAspectRatio="xMinYMin meet"
+              >
+                <defs>
+                  <filter id={noiseId} x="-20%" y="-60%" width="150%" height="240%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.018 0.045" numOctaves="3" seed={13 + index * 17} result="noise" />
+                    <feDisplacementMap
+                      ref={(node) => {
+                        entry.displacement = node;
+                      }}
+                      in="SourceGraphic"
+                      in2="noise"
+                      scale="0"
+                      xChannelSelector="R"
+                      yChannelSelector="G"
+                    />
+                  </filter>
+                  <filter id={blurId} x="-28%" y="-90%" width="180%" height="300%">
+                    <feGaussianBlur
+                      ref={(node) => {
+                        entry.softBlur = node;
+                      }}
+                      stdDeviation="0"
+                    />
+                  </filter>
+                  <mask id={softMaskId} maskUnits="userSpaceOnUse">
+                    <rect width={metric.width} height={metric.height} fill="black" />
+                    <ellipse
+                      ref={(node) => {
+                        entry.maskFade = node;
+                      }}
+                      cx={metric.width * profile.fadeCenter.x}
+                      cy={metric.height * profile.fadeCenter.y}
+                      rx="0"
+                      ry="0"
+                      fill="white"
+                      filter={`url(#${blurId})`}
+                    />
+                  </mask>
+                  <mask id={weightMaskId} maskUnits="userSpaceOnUse">
+                    <rect width={metric.width} height={metric.height} fill="black" />
+                    <ellipse
+                      ref={(node) => {
+                        entry.maskWeight = node;
+                      }}
+                      cx={metric.width * profile.thicknessCenter.x}
+                      cy={metric.height * profile.thicknessCenter.y}
+                      rx="0"
+                      ry="0"
+                      fill="white"
+                      filter={`url(#${blurId})`}
+                    />
+                  </mask>
+                  <clipPath id={clipId}>
+                    <ellipse
+                      ref={(node) => {
+                        entry.maskGate = node;
+                      }}
+                      cx={metric.width * profile.maskCenter.x}
+                      cy={metric.height * profile.maskCenter.y}
+                      rx="0"
+                      ry="0"
+                    />
+                  </clipPath>
+                </defs>
+                <g clipPath={`url(#${clipId})`}>
                   <text
                     ref={(node) => {
-                      ensureEntry(lineAnimRefs, index).washText = node;
+                      entry.softText = node;
                     }}
-                    className={styles.svgTextWash}
+                    className={styles.svgTextSoft}
                     x="0"
                     y={metric.fontSize * 0.08}
                     dominantBaseline="hanging"
@@ -352,22 +399,31 @@ export default function MorphRevealText({
                     fontSize={metric.fontSize}
                     fontWeight={metric.fontWeight}
                     letterSpacing={metric.letterSpacing}
-                    mask={`url(#${washMaskId})`}
+                    mask={`url(#${softMaskId})`}
+                    filter={`url(#${noiseId})`}
                   >
                     {line}
                   </text>
-                </svg>
-                <svg
-                  className={styles.lineSvg}
-                  viewBox={`0 0 ${metric.width} ${metric.height}`}
-                  width={metric.width}
-                  height={metric.height}
-                  aria-hidden="true"
-                  preserveAspectRatio="xMinYMin meet"
-                >
                   <text
                     ref={(node) => {
-                      ensureEntry(lineAnimRefs, index).finalText = node;
+                      entry.atmosphereText = node;
+                    }}
+                    className={styles.svgTextAtmosphere}
+                    x="0"
+                    y={metric.fontSize * 0.08}
+                    dominantBaseline="hanging"
+                    fontFamily={metric.fontFamily}
+                    fontSize={metric.fontSize}
+                    fontWeight={metric.fontWeight}
+                    letterSpacing={metric.letterSpacing}
+                    mask={`url(#${weightMaskId})`}
+                    filter={`url(#${noiseId})`}
+                  >
+                    {line}
+                  </text>
+                  <text
+                    ref={(node) => {
+                      entry.finalText = node;
                     }}
                     className={styles.svgTextFinal}
                     x="0"
@@ -380,8 +436,8 @@ export default function MorphRevealText({
                   >
                     {line}
                   </text>
-                </svg>
-              </>
+                </g>
+              </svg>
             ) : null}
           </span>
         );
