@@ -341,17 +341,17 @@ export default function HeroExperience() {
               filter: "blur(0.08px)",
               duration: isReduced ? 1.05 : 1.18,
               ease: "power1.out",
-            }, isReduced ? 0.42 : 0.5)
+            }, isReduced ? 0.22 : 0.28)
             .set(invitationGoldLine, {
               transformOrigin: "right center",
-            }, isReduced ? 1.54 : 1.72)
+            }, isReduced ? 1.3 : 1.46)
             .to(invitationGoldLine, {
               autoAlpha: 0,
               scaleX: 0,
               filter: "blur(0.5px)",
               duration: isReduced ? 0.92 : 1.02,
               ease: "sine.inOut",
-            }, isReduced ? 1.7 : 1.9)
+            }, isReduced ? 1.46 : 1.62)
             .to(invitationWords, {
               autoAlpha: 1,
               filter: "blur(0px)",
@@ -361,14 +361,14 @@ export default function HeroExperience() {
                 each: isReduced ? 0.09 : 0.105,
                 from: "start",
               },
-            }, isReduced ? 1.84 : 2.06)
+            }, isReduced ? 1.58 : 1.76)
             .to(invitationContact, {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.72 : 0.82,
               ease: "power2.out",
-            }, isReduced ? 2.72 : 3.0);
+            }, isReduced ? 2.42 : 2.66);
 
           if (bookingTimeline.scrollTrigger) localTriggers.push(bookingTimeline.scrollTrigger);
           return;
