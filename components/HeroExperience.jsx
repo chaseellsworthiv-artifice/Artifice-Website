@@ -288,9 +288,9 @@ export default function HeroExperience() {
         if (!section) return;
         if (section.id === "begin") {
           const beginLine = section.querySelector("[data-begin-line]");
-          const beginHeadingLines = section.querySelectorAll("[data-begin-heading-line]");
+          const beginHeading = section.querySelector("[data-begin-heading]");
           const beginTargets = section.querySelectorAll("[data-begin-reveal]");
-          if (!beginLine || !beginHeadingLines.length || !beginTargets.length) return;
+          if (!beginLine || !beginHeading || !beginTargets.length) return;
 
           gsap.set(beginLine, {
             autoAlpha: 0,
@@ -304,8 +304,9 @@ export default function HeroExperience() {
             y: isReduced ? 6 : 8,
             filter: "blur(2.6px)",
           });
-          gsap.set(beginHeadingLines, {
-            autoAlpha: 0,
+          gsap.set(beginHeading, {
+            autoAlpha: 1,
+            "--begin-heading-reveal": "0%",
             filter: "blur(0.55px)",
           });
 
@@ -344,27 +345,27 @@ export default function HeroExperience() {
               duration: isReduced ? 0.92 : 1.02,
               ease: "sine.inOut",
             }, isReduced ? 1.44 : 1.68)
-            .to(beginHeadingLines, {
-              autoAlpha: 0.16,
+            .to(beginHeading, {
+              "--begin-heading-reveal": "42%",
+              opacity: 0.32,
               filter: "blur(0.42px)",
-              duration: isReduced ? 0.44 : 0.52,
+              duration: isReduced ? 0.68 : 0.78,
               ease: "sine.out",
-              stagger: isReduced ? 0.16 : 0.2,
             }, isReduced ? 1.5 : 1.76)
-            .to(beginHeadingLines, {
-              autoAlpha: 0.56,
+            .to(beginHeading, {
+              "--begin-heading-reveal": "82%",
+              opacity: 0.68,
               filter: "blur(0.22px)",
-              duration: isReduced ? 0.68 : 0.8,
+              duration: isReduced ? 0.74 : 0.86,
               ease: "sine.inOut",
-              stagger: isReduced ? 0.1 : 0.12,
-            }, isReduced ? 1.82 : 2.12)
-            .to(beginHeadingLines, {
-              autoAlpha: 1,
+            }, isReduced ? 2.02 : 2.34)
+            .to(beginHeading, {
+              "--begin-heading-reveal": "128%",
+              opacity: 1,
               filter: "blur(0px)",
-              duration: isReduced ? 0.78 : 0.92,
+              duration: isReduced ? 0.82 : 0.96,
               ease: "sine.inOut",
-              stagger: isReduced ? 0.08 : 0.1,
-            }, isReduced ? 2.32 : 2.68)
+            }, isReduced ? 2.54 : 2.94)
             .to(beginTargets[1], {
               autoAlpha: 1,
               y: 0,
@@ -870,9 +871,9 @@ export default function HeroExperience() {
             <p className={styles.sectionLabel} data-begin-reveal>Begin</p>
             <div className={styles.beginHeadingStage}>
               <span className={styles.beginRevealLine} data-begin-line aria-hidden="true" />
-              <h2>
-                <span data-begin-heading-line>Start with the event.</span>
-                <span data-begin-heading-line>I’ll guide the rest.</span>
+              <h2 data-begin-heading>
+                <span>Start with the event.</span>
+                <span>I’ll guide the rest.</span>
               </h2>
             </div>
             <p data-begin-reveal>
