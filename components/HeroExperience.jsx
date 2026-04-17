@@ -42,7 +42,10 @@ const clientNotes = [
   },
 ];
 
-const beginHeadingLines = ["Start with the event.", "I’ll guide the rest."];
+const beginHeadingLines = [
+  ["Start with", "the event."],
+  ["I’ll guide", "the rest."],
+];
 
 const pressItems = [
   {
@@ -290,9 +293,9 @@ export default function HeroExperience() {
         if (!section) return;
         if (section.id === "begin") {
           const beginLine = section.querySelector("[data-begin-line]");
-          const beginHeadingChars = section.querySelectorAll("[data-begin-heading-char]");
+          const beginHeadingPhrases = section.querySelectorAll("[data-begin-heading-phrase]");
           const beginTargets = section.querySelectorAll("[data-begin-reveal]");
-          if (!beginLine || !beginHeadingChars.length || !beginTargets.length) return;
+          if (!beginLine || !beginHeadingPhrases.length || !beginTargets.length) return;
 
           gsap.set(beginLine, {
             autoAlpha: 0,
@@ -306,9 +309,9 @@ export default function HeroExperience() {
             y: isReduced ? 6 : 8,
             filter: "blur(2.6px)",
           });
-          gsap.set(beginHeadingChars, {
+          gsap.set(beginHeadingPhrases, {
             autoAlpha: 0,
-            filter: "blur(0.32px)",
+            filter: "blur(0.34px)",
           });
 
           const beginTimeline = gsap.timeline({
@@ -346,18 +349,16 @@ export default function HeroExperience() {
               duration: isReduced ? 0.92 : 1.02,
               ease: "sine.inOut",
             }, isReduced ? 1.44 : 1.68)
-            .to(beginHeadingChars, {
+            .to(beginHeadingPhrases, {
               autoAlpha: 1,
               filter: "blur(0px)",
-              duration: isReduced ? 0.64 : 0.76,
-              ease: "sine.out",
+              duration: isReduced ? 0.92 : 1.08,
+              ease: "sine.inOut",
               stagger: {
-                each: isReduced ? 0.018 : 0.022,
+                each: isReduced ? 0.16 : 0.18,
                 from: "start",
-                grid: "auto",
-                axis: "x",
               },
-            }, isReduced ? 1.62 : 1.88)
+            }, isReduced ? 1.58 : 1.84)
             .to(beginTargets[1], {
               autoAlpha: 1,
               y: 0,
@@ -864,22 +865,16 @@ export default function HeroExperience() {
             <div className={styles.beginHeadingStage}>
               <span className={styles.beginRevealLine} data-begin-line aria-hidden="true" />
               <h2>
-                {beginHeadingLines.map((line) => (
-                  <span className={styles.beginHeadingLine} key={line}>
-                    {line.split(" ").map((word, wordIndex) => (
+                {beginHeadingLines.map((line, lineIndex) => (
+                  <span className={styles.beginHeadingLine} key={`begin-line-${lineIndex}`}>
+                    {line.map((phrase, phraseIndex) => (
                       <span
-                        className={styles.beginHeadingWord}
-                        key={`${line}-${word}-${wordIndex}`}
+                        className={styles.beginHeadingPhrase}
+                        data-begin-heading-phrase
+                        key={`${lineIndex}-${phrase}`}
                       >
-                        {[...word].map((character, characterIndex) => (
-                          <span
-                            className={styles.beginHeadingChar}
-                            data-begin-heading-char
-                            key={`${line}-${word}-${character}-${characterIndex}`}
-                          >
-                            {character}
-                          </span>
-                        ))}
+                        {phrase}
+                        {phraseIndex < line.length - 1 ? "\u00A0" : ""}
                       </span>
                     ))}
                   </span>
