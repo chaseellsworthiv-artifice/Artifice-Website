@@ -253,15 +253,14 @@ export default function DesignFlow() {
 
       {step === "recommendation" && result ? (
         <section className={styles.recommendationShell}>
-          <div className={styles.recommendationIntro}>
-            <p className={styles.eyebrow}>Recommendation</p>
-            <h1 className={styles.title}>Your event, thoughtfully considered.</h1>
-            <p className={styles.subtext}>Based on what you shared, this is where I would begin.</p>
-            <p className={styles.eventSummary}>{eventSummary}</p>
-          </div>
+          <div className={styles.recommendationFrame}>
+            <div className={styles.recommendationIntro}>
+              <p className={styles.eyebrow}>Recommendation</p>
+              <h1 className={styles.title}>Your event, thoughtfully considered.</h1>
+              <p className={styles.subtext}>Based on what you shared, this is where I would begin.</p>
+              <p className={styles.eventSummary}>{eventSummary}</p>
+            </div>
 
-          <div className={styles.recommendationEditorial}>
-            <div className={styles.recommendationRule} aria-hidden="true" />
             <article className={styles.primaryRecommendation}>
               <p className={styles.cardEyebrow}>{recommendationLabel}</p>
               <h2>{result.primary.name}</h2>
@@ -276,20 +275,22 @@ export default function DesignFlow() {
                 Explore {result.primary.name}
               </Link>
             </article>
+          </div>
 
-            <aside className={styles.alternateEditorial}>
-              <p className={styles.cardEyebrow}>Other Directions</p>
-              {result.alternatives.map((experience) => (
-                <article key={experience.slug} className={styles.alternateRow}>
+          <aside className={styles.alternateEditorial}>
+            <p className={styles.cardEyebrow}>Other Directions</p>
+            {result.alternatives.map((experience) => (
+              <article key={experience.slug} className={styles.alternateRow}>
+                <div>
                   <h3>{experience.name}</h3>
                   <p>{experience.why}</p>
-                  <Link href={experienceHref(experience.slug)} className={styles.secondaryAction}>
-                    Explore
-                  </Link>
-                </article>
-              ))}
-            </aside>
-          </div>
+                </div>
+                <Link href={experienceHref(experience.slug)} className={styles.secondaryAction}>
+                  Explore
+                </Link>
+              </article>
+            ))}
+          </aside>
 
           <div className={styles.customPrompt}>
             <div>

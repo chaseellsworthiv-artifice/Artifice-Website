@@ -267,17 +267,48 @@
 
 .recommendationShell {
   display: block;
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding-top: clamp(4.8rem, 8vw, 7rem);
+  padding-bottom: clamp(5rem, 8vw, 7rem);
+}
+
+.recommendationFrame {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: end;
+}
+
+.recommendationFrame::before {
+  content: "";
+  position: absolute;
+  top: -1.55rem;
+  left: 0;
+  width: min(38rem, 48vw);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.72), rgba(201, 168, 106, 0.16), rgba(201, 168, 106, 0));
 }
 
 .recommendationIntro {
-  max-width: 42rem;
+  max-width: 31rem;
+  padding-bottom: clamp(0.25rem, 1vw, 0.8rem);
+}
+
+.recommendationIntro .title {
+  max-width: 9.5ch;
+  font-size: clamp(3.6rem, 6.8vw, 6.2rem);
+  line-height: 0.9;
+}
+
+.recommendationIntro .subtext {
+  max-width: 28ch;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  line-height: 1.24;
 }
 
 .eventSummary {
   display: inline-flex;
-  margin: 1.35rem 0 0;
+  margin: clamp(1.35rem, 2.2vw, 1.9rem) 0 0;
   padding-top: 0.8rem;
   color: rgba(230, 221, 198, 0.58);
   border-top: 1px solid rgba(201, 168, 106, 0.22);
@@ -286,51 +317,34 @@
   text-transform: uppercase;
 }
 
-.recommendationEditorial {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: start;
-  margin-top: clamp(2.6rem, 6vw, 5rem);
-}
-
-.recommendationRule {
-  position: absolute;
-  top: -1.1rem;
-  left: 0;
-  width: min(34rem, 66vw);
-  height: 1px;
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.66), rgba(201, 168, 106, 0.18), rgba(201, 168, 106, 0));
-}
-
 .primaryRecommendation {
-  max-width: 42rem;
+  max-width: 49rem;
+  padding: clamp(0.35rem, 1vw, 0.9rem) 0 0;
 }
 
 .primaryRecommendation h2 {
   margin: 0;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(4.8rem, 10vw, 8rem);
-  line-height: 0.82;
+  font-size: clamp(5.4rem, 9.5vw, 9rem);
+  line-height: 0.78;
   letter-spacing: -0.035em;
   color: var(--aged-paper);
 }
 
 .primaryStatement {
-  margin: clamp(1.25rem, 2.2vw, 1.9rem) 0 0;
-  max-width: 29ch;
+  margin: clamp(1.35rem, 2.4vw, 2.15rem) 0 0;
+  max-width: 34ch;
   color: rgba(230, 221, 198, 0.82);
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1.35rem, 2.2vw, 1.95rem);
-  line-height: 1.14;
+  font-size: clamp(1.38rem, 2vw, 2rem);
+  line-height: 1.12;
 }
 
 .recommendationNotes {
   display: grid;
   gap: 1rem;
-  margin-top: clamp(1.15rem, 2.4vw, 1.65rem);
-  max-width: 28rem;
+  margin-top: clamp(1.35rem, 2.6vw, 2.1rem);
+  max-width: 32rem;
 }
 
 .recommendationNotes p {
@@ -350,31 +364,46 @@
 
 .alternateEditorial {
   display: grid;
-  gap: 1.35rem;
-  padding-top: 0.45rem;
+  grid-template-columns: auto 1fr;
+  gap: 0 clamp(1.8rem, 5vw, 4.5rem);
+  align-items: start;
+  margin-top: clamp(4rem, 7vw, 6.25rem);
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(201, 168, 106, 0.14);
+}
+
+.alternateEditorial > .cardEyebrow {
+  margin-top: 0.35rem;
+  min-width: 10rem;
 }
 
 .alternateRow {
-  padding-top: 1.25rem;
-  border-top: 1px solid rgba(201, 168, 106, 0.1);
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.4rem;
+  align-items: baseline;
+  padding: 0 0 1.25rem;
+  border-bottom: 1px solid rgba(201, 168, 106, 0.09);
 }
 
 .alternateRow h3 {
   margin: 0;
   color: var(--aged-paper);
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1.85rem, 3vw, 2.55rem);
+  font-size: clamp(1.75rem, 2.5vw, 2.35rem);
   line-height: 0.98;
 }
 
 .alternateRow p {
-  margin: 0.75rem 0 0;
+  margin: 0.42rem 0 0;
+  max-width: 46rem;
   color: rgba(230, 221, 198, 0.58);
   line-height: 1.5;
 }
 
 .customPrompt {
-  margin-top: clamp(3rem, 6vw, 5rem);
+  margin-top: clamp(2.4rem, 5vw, 4rem);
   padding-top: 1.3rem;
   border-top: 1px solid rgba(201, 168, 106, 0.12);
   display: flex;
@@ -452,13 +481,23 @@
     flex-direction: column;
   }
 
-  .recommendationEditorial {
+  .recommendationFrame {
     grid-template-columns: 1fr;
-    gap: 2.6rem;
+    gap: 2.9rem;
+    align-items: start;
   }
 
-  .recommendationRule {
+  .recommendationFrame::before {
     width: min(22rem, 72vw);
+  }
+
+  .recommendationIntro {
+    max-width: 100%;
+    padding-bottom: 0;
+  }
+
+  .recommendationIntro .title {
+    max-width: 9.2ch;
   }
 
   .primaryRecommendation h2 {
@@ -466,7 +505,19 @@
   }
 
   .alternateEditorial {
-    gap: 1.15rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 3.2rem;
+  }
+
+  .alternateEditorial > .cardEyebrow {
+    min-width: 0;
+  }
+
+  .alternateRow {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 
   .primaryAction,
