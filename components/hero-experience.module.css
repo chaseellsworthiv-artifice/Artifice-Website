@@ -525,8 +525,13 @@
   z-index: 1;
 }
 
-.beginInner h2 span {
+.beginHeadingLine {
   display: block;
+}
+
+.beginHeadingLine span {
+  display: inline-block;
+  will-change: opacity, filter;
 }
 
 .beginHeadingStage {

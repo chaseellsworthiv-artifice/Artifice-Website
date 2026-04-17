@@ -288,9 +288,9 @@ export default function HeroExperience() {
         if (!section) return;
         if (section.id === "begin") {
           const beginLine = section.querySelector("[data-begin-line]");
-          const beginHeadingPieces = section.querySelectorAll("[data-begin-heading-piece]");
+          const beginHeadingWords = section.querySelectorAll("[data-begin-heading-word]");
           const beginTargets = section.querySelectorAll("[data-begin-reveal]");
-          if (!beginLine || !beginHeadingPieces.length || !beginTargets.length) return;
+          if (!beginLine || !beginHeadingWords.length || !beginTargets.length) return;
 
           gsap.set(beginLine, {
             autoAlpha: 0,
@@ -304,10 +304,10 @@ export default function HeroExperience() {
             y: isReduced ? 6 : 8,
             filter: "blur(2.6px)",
           });
-          gsap.set(beginHeadingPieces, {
+          gsap.set(beginHeadingWords, {
             autoAlpha: 0,
-            x: isReduced ? -10 : -16,
-            filter: "blur(2.2px)",
+            y: 0,
+            filter: "blur(1.6px)",
           });
 
           const beginTimeline = gsap.timeline({
@@ -336,37 +336,39 @@ export default function HeroExperience() {
             }, isReduced ? 0.12 : 0.16)
             .set(beginLine, {
               transformOrigin: "right center",
-            }, isReduced ? 0.92 : 1.08)
+            }, isReduced ? 1.04 : 1.22)
             .to(beginLine, {
               autoAlpha: 0,
               scaleX: 0,
               x: isReduced ? 12 : 18,
               filter: "blur(0.85px)",
-              duration: isReduced ? 0.62 : 0.72,
+              duration: isReduced ? 0.58 : 0.66,
               ease: "power2.inOut",
-            }, isReduced ? 0.98 : 1.16)
-            .to(beginHeadingPieces, {
+            }, isReduced ? 1.12 : 1.32)
+            .to(beginHeadingWords, {
               autoAlpha: 1,
-              x: 0,
               filter: "blur(0px)",
-              duration: isReduced ? 0.82 : 0.96,
-              ease: "power2.out",
-              stagger: isReduced ? 0.11 : 0.14,
-            }, isReduced ? 1.12 : 1.3)
+              duration: isReduced ? 0.78 : 0.92,
+              ease: "power1.out",
+              stagger: {
+                each: isReduced ? 0.045 : 0.055,
+                from: "start",
+              },
+            }, isReduced ? 1.24 : 1.44)
             .to(beginTargets[1], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.82 : 0.95,
               ease: "power2.out",
-            }, isReduced ? 1.82 : 2.08)
+            }, isReduced ? 1.9 : 2.18)
             .to(beginTargets[2], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.78 : 0.88,
               ease: "power2.out",
-            }, isReduced ? 2.08 : 2.38);
+            }, isReduced ? 2.16 : 2.48);
 
           if (beginTimeline.scrollTrigger) localTriggers.push(beginTimeline.scrollTrigger);
           return;
@@ -859,8 +861,18 @@ export default function HeroExperience() {
             <div className={styles.beginHeadingStage}>
               <span className={styles.beginRevealLine} data-begin-line aria-hidden="true" />
               <h2>
-                <span data-begin-heading-piece>Start with the event.</span>
-                <span data-begin-heading-piece>I’ll guide the rest.</span>
+                <span className={styles.beginHeadingLine}>
+                  <span data-begin-heading-word>Start</span>{" "}
+                  <span data-begin-heading-word>with</span>{" "}
+                  <span data-begin-heading-word>the</span>{" "}
+                  <span data-begin-heading-word>event.</span>
+                </span>
+                <span className={styles.beginHeadingLine}>
+                  <span data-begin-heading-word>I’ll</span>{" "}
+                  <span data-begin-heading-word>guide</span>{" "}
+                  <span data-begin-heading-word>the</span>{" "}
+                  <span data-begin-heading-word>rest.</span>
+                </span>
               </h2>
             </div>
             <p data-begin-reveal>
