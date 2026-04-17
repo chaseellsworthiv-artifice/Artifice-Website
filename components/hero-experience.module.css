@@ -529,22 +529,33 @@
   display: block;
 }
 
-.beginInner h2[data-begin-heading] {
-  --begin-heading-reveal: 0%;
-  opacity: 0;
+.beginHeadingBase,
+.beginHeadingPass {
+  will-change: opacity, filter;
+}
+
+.beginHeadingPass {
+  --begin-heading-pass: 0%;
+  position: absolute !important;
+  inset: 0 auto auto 0;
+  pointer-events: none;
+  width: 100%;
+  color: rgba(244, 239, 224, 0.96);
   -webkit-mask-image: linear-gradient(
     90deg,
-    #000 0%,
-    #000 max(0%, calc(var(--begin-heading-reveal) - 18%)),
-    rgba(0, 0, 0, 0.52) max(0%, calc(var(--begin-heading-reveal) - 8%)),
-    transparent var(--begin-heading-reveal)
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) max(0%, calc(var(--begin-heading-pass) - 28%)),
+    #000 max(0%, calc(var(--begin-heading-pass) - 15%)),
+    rgba(0, 0, 0, 0.62) max(0%, calc(var(--begin-heading-pass) - 4%)),
+    transparent var(--begin-heading-pass)
   );
   mask-image: linear-gradient(
     90deg,
-    #000 0%,
-    #000 max(0%, calc(var(--begin-heading-reveal) - 18%)),
-    rgba(0, 0, 0, 0.52) max(0%, calc(var(--begin-heading-reveal) - 8%)),
-    transparent var(--begin-heading-reveal)
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) max(0%, calc(var(--begin-heading-pass) - 28%)),
+    #000 max(0%, calc(var(--begin-heading-pass) - 15%)),
+    rgba(0, 0, 0, 0.62) max(0%, calc(var(--begin-heading-pass) - 4%)),
+    transparent var(--begin-heading-pass)
   );
   will-change: opacity, filter, mask-image;
 }
