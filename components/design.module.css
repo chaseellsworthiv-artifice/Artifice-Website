@@ -48,7 +48,10 @@
   align-items: start;
 }
 
-.intakeCopy,
+.intakeCopy {
+  padding-top: 0;
+}
+
 .inquiryCopy {
   padding-top: clamp(0.4rem, 2vw, 2rem);
 }
@@ -57,19 +60,6 @@
   width: min(100%, 42rem);
 }
 
-.intakeRule {
-  width: min(24rem, 64vw);
-  height: 1px;
-  margin-top: clamp(1.7rem, 3vw, 2.4rem);
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.64), rgba(201, 168, 106, 0.16), rgba(201, 168, 106, 0));
-}
-
-.intakeAside {
-  margin: clamp(1.2rem, 2vw, 1.8rem) 0 0;
-  max-width: 34ch;
-  color: rgba(230, 221, 198, 0.52);
-  line-height: 1.62;
-}
 
 .eyebrow,
 .cardEyebrow {
@@ -449,11 +439,6 @@
   .inquiryCopy {
     padding-top: 0;
   }
-
-  .intakeAside {
-    max-width: 30ch;
-  }
-
   .form {
     grid-template-columns: 1fr;
     gap: 0.85rem;

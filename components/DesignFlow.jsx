@@ -183,10 +183,6 @@ export default function DesignFlow() {
               <p className={styles.eyebrow}>Begin</p>
               <h1 className={styles.title}>Start with the event.</h1>
               <p className={styles.subtext}>Share the shape of the room. I’ll guide the experience from there.</p>
-              <div className={styles.intakeRule} aria-hidden="true" />
-              <p className={styles.intakeAside}>
-                The recommendation is not a package picker. It is a starting point based on date, scale, and the kind of atmosphere you want to create.
-              </p>
             </div>
 
             <form className={styles.form} onSubmit={handleSubmit}>
