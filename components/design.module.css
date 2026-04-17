@@ -179,6 +179,7 @@
   text-transform: uppercase;
   font-size: 0.78rem;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .primaryAction {
@@ -238,72 +239,132 @@
   padding-bottom: 6rem;
 }
 
-.recommendationHeader {
+.recommendationIntro {
   max-width: 42rem;
 }
 
-.recommendationStack {
+.eventSummary {
+  display: inline-flex;
+  margin: 1.35rem 0 0;
+  padding-top: 0.8rem;
+  color: rgba(230, 221, 198, 0.58);
+  border-top: 1px solid rgba(201, 168, 106, 0.22);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.recommendationEditorial {
+  position: relative;
   display: grid;
-  gap: 1rem;
-  margin-top: 2rem;
+  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  margin-top: clamp(2.6rem, 6vw, 5rem);
 }
 
-.primaryCard {
-  padding: 1.6rem;
+.recommendationRule {
+  position: absolute;
+  top: -1.1rem;
+  left: 0;
+  width: min(34rem, 66vw);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.66), rgba(201, 168, 106, 0.18), rgba(201, 168, 106, 0));
 }
 
-.primaryCard h2,
-.card h3 {
+.primaryRecommendation {
+  max-width: 42rem;
+}
+
+.primaryRecommendation h2 {
   margin: 0;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1;
+  font-size: clamp(4.8rem, 10vw, 8rem);
+  line-height: 0.82;
+  letter-spacing: -0.035em;
   color: var(--aged-paper);
 }
 
-.primaryCard {
-  outline: 1px solid rgba(201, 168, 106, 0.12);
+.primaryStatement {
+  margin: clamp(1.25rem, 2.2vw, 1.9rem) 0 0;
+  max-width: 38ch;
+  color: rgba(230, 221, 198, 0.82);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.35rem, 2.2vw, 1.95rem);
+  line-height: 1.14;
 }
 
-.cardSection {
-  margin-top: 1rem;
+.recommendationNotes {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(1.35rem, 3vw, 2rem);
+  max-width: 40rem;
 }
 
-.cardSection strong {
+.recommendationNotes p {
+  margin: 0;
+  color: var(--muted-paper);
+  line-height: 1.62;
+}
+
+.recommendationNotes span {
   display: block;
   margin-bottom: 0.35rem;
-  color: rgba(230, 221, 198, 0.88);
-  font-size: 0.84rem;
-  letter-spacing: 0.04em;
+  color: rgba(201, 168, 106, 0.82);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
-.alternateStack {
+.alternateEditorial {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1.35rem;
+  padding-top: 0.45rem;
 }
 
-.alternateStack .card,
-.designedCard {
-  padding: 1.3rem;
+.alternateRow {
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(201, 168, 106, 0.1);
 }
 
-.priceCue {
-  color: rgba(230, 221, 198, 0.7);
+.alternateRow h3 {
+  margin: 0;
+  color: var(--aged-paper);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.85rem, 3vw, 2.55rem);
+  line-height: 0.98;
+}
+
+.alternateRow p {
+  margin: 0.75rem 0 0;
+  color: rgba(230, 221, 198, 0.58);
+  line-height: 1.58;
 }
 
 .customPrompt {
-  margin-top: 1.25rem;
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-top: 1.3rem;
+  border-top: 1px solid rgba(201, 168, 106, 0.12);
   display: flex;
-  gap: 1rem;
-  align-items: center;
+  justify-content: space-between;
+  gap: 1.4rem;
+  align-items: flex-start;
   flex-wrap: wrap;
 }
 
 .customPromptLabel {
   margin: 0;
-  color: rgba(230, 221, 198, 0.58);
-  letter-spacing: 0.04em;
+  color: var(--aged-paper);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  line-height: 1.05;
+}
+
+.customPromptCopy {
+  margin: 0.5rem 0 0;
+  max-width: 42ch;
+  color: rgba(230, 221, 198, 0.52);
+  line-height: 1.55;
 }
 
 .formError {
@@ -321,7 +382,7 @@
 @media (max-width: 700px) {
   .shell,
   .recommendationShell {
-    width: min(100% - 1rem, 980px);
+    width: min(100% - 1.35rem, 980px);
   }
 
   .intakePanel,
@@ -344,10 +405,26 @@
   }
 
   .formActions,
-  .alternateStack,
   .customPrompt {
     grid-template-columns: 1fr;
     flex-direction: column;
+  }
+
+  .recommendationEditorial {
+    grid-template-columns: 1fr;
+    gap: 2.6rem;
+  }
+
+  .recommendationRule {
+    width: min(22rem, 72vw);
+  }
+
+  .primaryRecommendation h2 {
+    font-size: clamp(4rem, 18vw, 6.2rem);
+  }
+
+  .alternateEditorial {
+    gap: 1.15rem;
   }
 
   .primaryAction,

@@ -24,6 +24,18 @@ function mapSlug(slug) {
   return slug === "designed" ? "designed-experience" : slug;
 }
 
+function buildEventParams(form, selectedType) {
+  const params = new URLSearchParams();
+  const eventType = selectedType || form.eventType;
+
+  if (form.date) params.set("date", form.date);
+  if (form.guestCount) params.set("guestCount", form.guestCount);
+  if (eventType) params.set("eventType", eventType);
+  if (form.details) params.set("details", form.details);
+
+  return params;
+}
+
 export default function DesignFlow() {
   const [step, setStep] = useState("intake");
   const [form, setForm] = useState(initialForm);
@@ -110,15 +122,26 @@ export default function DesignFlow() {
   }, [result]);
 
   const inquiryHref = useMemo(() => {
-    const params = new URLSearchParams({
-      date: form.date,
-      guestCount: form.guestCount,
-      eventType: selectedType || form.eventType,
-      details: form.details,
-    });
+    const params = buildEventParams(form, selectedType);
 
     return `/design/custom-inquiry?${params.toString()}`;
   }, [form, selectedType]);
+
+  const eventParams = useMemo(() => buildEventParams(form, selectedType), [form, selectedType]);
+  const eventSummary = useMemo(() => {
+    const pieces = [
+      form.guestCount ? `${form.guestCount} guests` : "",
+      selectedType || form.eventType,
+      form.date,
+    ].filter(Boolean);
+
+    return pieces.length ? pieces.join(" / ") : "Your event details";
+  }, [form, selectedType]);
+
+  function experienceHref(slug) {
+    const params = eventParams.toString();
+    return `/design/${mapSlug(slug)}${params ? `?${params}` : ""}`;
+  }
 
   function handleChange(event) {
     const { name, value } = event.currentTarget;
@@ -222,46 +245,55 @@ export default function DesignFlow() {
 
       {step === "recommendation" && result ? (
         <section className={styles.recommendationShell}>
-          <div className={styles.recommendationHeader}>
+          <div className={styles.recommendationIntro}>
             <p className={styles.eyebrow}>Recommendation</p>
-            <h1 className={styles.title}>Your Event, Thoughtfully Considered</h1>
-            <p className={styles.subtext}>
-              Based on what you shared, here is what I would recommend to create the strongest experience for your guests.
-            </p>
+            <h1 className={styles.title}>Your event, thoughtfully considered.</h1>
+            <p className={styles.subtext}>Based on what you shared, this is where I would begin.</p>
+            <p className={styles.eventSummary}>{eventSummary}</p>
           </div>
 
-          <div className={styles.recommendationStack}>
-            <article className={`${styles.card} ${styles.primaryCard}`}>
+          <div className={styles.recommendationEditorial}>
+            <div className={styles.recommendationRule} aria-hidden="true" />
+            <article className={styles.primaryRecommendation}>
               <p className={styles.cardEyebrow}>{recommendationLabel}</p>
               <h2>{result.primary.name}</h2>
-              <div className={styles.cardSection}>
-                <strong>Why this fits</strong>
-                <p>{result.primary.why}</p>
+              <p className={styles.primaryStatement}>{result.primary.why}</p>
+              <div className={styles.recommendationNotes}>
+                <p>
+                  <span>What it creates</span>
+                  {result.primary.feeling}
+                </p>
+                <p>
+                  <span>Why I would begin here</span>
+                  It gives the room a clear shape without making the evening feel scheduled around a performance.
+                </p>
               </div>
-              <div className={styles.cardSection}>
-                <strong>What it feels like</strong>
-                <p>{result.primary.feeling}</p>
-              </div>
-              <Link href={`/design/${mapSlug(result.primary.slug)}`} className={styles.primaryAction}>
-                View Experience
+              <Link href={experienceHref(result.primary.slug)} className={styles.primaryAction}>
+                Explore {result.primary.name}
               </Link>
             </article>
 
-            <div className={styles.alternateStack}>
+            <aside className={styles.alternateEditorial}>
+              <p className={styles.cardEyebrow}>Other Directions</p>
               {result.alternatives.map((experience) => (
-                <article key={experience.slug} className={styles.card}>
+                <article key={experience.slug} className={styles.alternateRow}>
                   <h3>{experience.name}</h3>
                   <p>{experience.why}</p>
-                  <Link href={`/design/${mapSlug(experience.slug)}`} className={styles.secondaryAction}>
-                    View Experience
+                  <Link href={experienceHref(experience.slug)} className={styles.secondaryAction}>
+                    Explore
                   </Link>
                 </article>
               ))}
-            </div>
+            </aside>
           </div>
 
           <div className={styles.customPrompt}>
-            <p className={styles.customPromptLabel}>Do not see the right fit?</p>
+            <div>
+              <p className={styles.customPromptLabel}>Need something outside these paths?</p>
+              <p className={styles.customPromptCopy}>
+                Your event details will carry forward. You will not need to start over.
+              </p>
+            </div>
             <Link href={inquiryHref} className={styles.secondaryAction}>
               Custom Inquiry
             </Link>

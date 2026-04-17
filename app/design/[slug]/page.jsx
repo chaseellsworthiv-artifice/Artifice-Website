@@ -35,6 +35,12 @@ export default async function DesignDetailPage({ params, searchParams }) {
   }
 
   const selectedDepth = getDepthById(experience, resolvedSearchParams?.depth);
+  const eventContext = {
+    date: resolvedSearchParams?.date ?? "",
+    guestCount: resolvedSearchParams?.guestCount ?? "",
+    eventType: resolvedSearchParams?.eventType ?? "",
+    details: resolvedSearchParams?.details ?? "",
+  };
 
-  return <ExperienceDetail experience={experience} selectedDepth={selectedDepth} basePath="/design" />;
+  return <ExperienceDetail experience={experience} selectedDepth={selectedDepth} basePath="/design" eventContext={eventContext} />;
 }

@@ -3,11 +3,19 @@ import Link from "next/link";
 import { durationSupportLine } from "./experience-data";
 import styles from "./experience.module.css";
 
-function inquiryHref({ experience, selectedDepth }) {
+function appendEventContext(params, eventContext = {}) {
+  Object.entries(eventContext).forEach(([key, value]) => {
+    if (value) params.set(key, value);
+  });
+}
+
+function inquiryHref({ experience, selectedDepth, eventContext }) {
   const params = new URLSearchParams({
     experience: experience.name,
     experienceSlug: experience.slug,
   });
+
+  appendEventContext(params, eventContext);
 
   if (selectedDepth) {
     params.set("depth", selectedDepth.name);
@@ -19,7 +27,18 @@ function inquiryHref({ experience, selectedDepth }) {
   return `/design/custom-inquiry?${params.toString()}`;
 }
 
-export default function ExperienceDetail({ experience, selectedDepth, basePath = "/experience" }) {
+function detailHref({ basePath, experience, depth, eventContext }) {
+  const params = new URLSearchParams();
+  appendEventContext(params, eventContext);
+  if (depth) params.set("depth", depth.id);
+
+  const slug = experience.slug === "designed" ? "designed-experience" : experience.slug;
+  const query = params.toString();
+
+  return `${basePath}/${slug}${query ? `?${query}` : ""}`;
+}
+
+export default function ExperienceDetail({ experience, selectedDepth, basePath = "/experience", eventContext = {} }) {
   const isDesigned = experience.slug === "designed";
 
   return (
@@ -67,7 +86,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                   take place inside it.
                 </p>
                 <p className={styles.selectionNote}>{experience.depthIntro}</p>
-                <Link href={inquiryHref({ experience })} className={styles.primaryAction}>
+                <Link href={inquiryHref({ experience, eventContext })} className={styles.primaryAction}>
                   Custom Inquiry
                 </Link>
               </>
@@ -80,7 +99,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                     return (
                       <Link
                         key={depth.id}
-                        href={`${basePath}/${experience.slug === "designed" ? "designed-experience" : experience.slug}?depth=${depth.id}`}
+                        href={detailHref({ basePath, experience, depth, eventContext })}
                         className={`${styles.depthItem} ${isActive ? styles.depthItemActive : ""}`}
                       >
                         <div>
@@ -107,7 +126,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                   </div>
                 ) : null}
 
-                <Link href={inquiryHref({ experience, selectedDepth })} className={styles.primaryAction}>
+                <Link href={inquiryHref({ experience, selectedDepth, eventContext })} className={styles.primaryAction}>
                   Request This Experience
                 </Link>
                 <p className={styles.placeholderNote}>
