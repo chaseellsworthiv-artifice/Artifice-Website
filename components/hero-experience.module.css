@@ -525,12 +525,11 @@
   z-index: 1;
 }
 
-.beginHeadingLine {
+.beginInner h2 span {
   display: block;
 }
 
-.beginHeadingLine span {
-  display: inline-block;
+.beginInner h2[data-begin-heading] {
   will-change: opacity, filter;
 }
 
