@@ -293,9 +293,10 @@ export default function HeroExperience() {
         if (!section) return;
         if (section.id === "begin") {
           const beginLine = section.querySelector("[data-begin-line]");
+          const beginHeadingLines = section.querySelectorAll("[data-begin-heading-line]");
           const beginHeadingWords = section.querySelectorAll("[data-begin-heading-word]");
           const beginTargets = section.querySelectorAll("[data-begin-reveal]");
-          if (!beginLine || !beginHeadingWords.length || !beginTargets.length) return;
+          if (!beginLine || beginHeadingLines.length < 2 || !beginHeadingWords.length || !beginTargets.length) return;
 
           gsap.set(beginLine, {
             autoAlpha: 0,
@@ -349,7 +350,7 @@ export default function HeroExperience() {
               duration: isReduced ? 0.92 : 1.02,
               ease: "sine.inOut",
             }, isReduced ? 1.44 : 1.68)
-            .to(beginHeadingWords, {
+            .to(beginHeadingLines[0].querySelectorAll("[data-begin-heading-word]"), {
               autoAlpha: 1,
               filter: "blur(0px)",
               duration: isReduced ? 0.96 : 1.12,
@@ -359,6 +360,16 @@ export default function HeroExperience() {
                 from: "start",
               },
             }, isReduced ? 1.58 : 1.84)
+            .to(beginHeadingLines[1].querySelectorAll("[data-begin-heading-word]"), {
+              autoAlpha: 1,
+              filter: "blur(0px)",
+              duration: isReduced ? 0.96 : 1.12,
+              ease: "sine.inOut",
+              stagger: {
+                each: isReduced ? 0.09 : 0.105,
+                from: "start",
+              },
+            }, isReduced ? 1.72 : 2.0)
             .to(beginTargets[1], {
               autoAlpha: 1,
               y: 0,
@@ -866,7 +877,11 @@ export default function HeroExperience() {
               <span className={styles.beginRevealLine} data-begin-line aria-hidden="true" />
               <h2>
                 {beginHeadingLines.map((line, lineIndex) => (
-                  <span className={styles.beginHeadingLine} key={`begin-line-${lineIndex}`}>
+                  <span
+                    className={styles.beginHeadingLine}
+                    data-begin-heading-line
+                    key={`begin-line-${lineIndex}`}
+                  >
                     {line.map((word, wordIndex) => (
                       <span
                         className={styles.beginHeadingWord}
