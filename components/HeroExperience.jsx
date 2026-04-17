@@ -295,7 +295,7 @@ export default function HeroExperience() {
             autoAlpha: 0,
             scaleX: 0,
             transformOrigin: "left center",
-            filter: "blur(0.7px)",
+            filter: "blur(0.8px)",
           });
           gsap.set(beginTargets, {
             autoAlpha: 0,
@@ -322,36 +322,41 @@ export default function HeroExperience() {
             .to(beginLine, {
               autoAlpha: 1,
               scaleX: 1,
-              filter: "blur(0px)",
-              duration: isReduced ? 1 : 1.18,
-              ease: "power3.out",
+              filter: "blur(0.15px)",
+              duration: isReduced ? 0.78 : 0.92,
+              ease: "power2.out",
             }, isReduced ? 0.12 : 0.16)
+            .set(beginLine, {
+              transformOrigin: "right center",
+            }, isReduced ? 0.72 : 0.84)
             .to(beginLine, {
-              autoAlpha: 0.52,
-              duration: 0.55,
-              ease: "power1.out",
-            }, ">-0.18")
+              autoAlpha: 0,
+              scaleX: 0,
+              filter: "blur(0.7px)",
+              duration: isReduced ? 0.82 : 0.98,
+              ease: "power2.inOut",
+            }, isReduced ? 0.74 : 0.86)
             .to(beginTargets[1], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
-              duration: isReduced ? 0.95 : 1.12,
+              duration: isReduced ? 1.04 : 1.22,
               ease: "power2.out",
-            }, isReduced ? 0.78 : 0.9)
+            }, isReduced ? 0.68 : 0.78)
             .to(beginTargets[2], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.82 : 0.95,
               ease: "power2.out",
-            }, isReduced ? 1.28 : 1.48)
+            }, isReduced ? 1.32 : 1.54)
             .to(beginTargets[3], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.78 : 0.88,
               ease: "power2.out",
-            }, isReduced ? 1.55 : 1.78);
+            }, isReduced ? 1.58 : 1.84);
 
           if (beginTimeline.scrollTrigger) localTriggers.push(beginTimeline.scrollTrigger);
           return;
