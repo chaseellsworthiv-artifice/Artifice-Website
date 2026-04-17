@@ -527,13 +527,21 @@
   display: block;
 }
 
-.beginInner h2::after {
+.beginRevealLine {
   content: "";
   display: block;
-  width: 86px;
+  width: clamp(8.5rem, 20vw, 17rem);
   height: 1px;
-  margin-top: 1.08rem;
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.62), rgba(201, 168, 106, 0));
+  margin: 0 0 clamp(1.08rem, 1.8vw, 1.48rem);
+  background: linear-gradient(
+    90deg,
+    rgba(201, 168, 106, 0.02),
+    rgba(201, 168, 106, 0.68) 12%,
+    rgba(201, 168, 106, 0.42) 62%,
+    rgba(201, 168, 106, 0)
+  );
+  box-shadow: 0 0 12px rgba(201, 168, 106, 0.08);
+  will-change: transform, opacity, filter;
 }
 
 .beginInner p:not(.sectionLabel) {

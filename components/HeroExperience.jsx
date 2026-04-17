@@ -286,6 +286,77 @@ export default function HeroExperience() {
 
       sectionRefs.current.forEach((section) => {
         if (!section) return;
+        if (section.id === "begin") {
+          const beginLine = section.querySelector("[data-begin-line]");
+          const beginTargets = section.querySelectorAll("[data-begin-reveal]");
+          if (!beginLine || !beginTargets.length) return;
+
+          gsap.set(beginLine, {
+            autoAlpha: 0,
+            scaleX: 0,
+            transformOrigin: "left center",
+            filter: "blur(0.7px)",
+          });
+          gsap.set(beginTargets, {
+            autoAlpha: 0,
+            y: isReduced ? 10 : 14,
+            filter: "blur(5px)",
+          });
+
+          const beginTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: isReduced ? "top 73%" : "top 69%",
+              once: true,
+            },
+          });
+
+          beginTimeline
+            .to(beginTargets[0], {
+              autoAlpha: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: isReduced ? 0.72 : 0.86,
+              ease: "power2.out",
+            })
+            .to(beginLine, {
+              autoAlpha: 1,
+              scaleX: 1,
+              filter: "blur(0px)",
+              duration: isReduced ? 1 : 1.18,
+              ease: "power3.out",
+            }, isReduced ? 0.12 : 0.16)
+            .to(beginLine, {
+              autoAlpha: 0.52,
+              duration: 0.55,
+              ease: "power1.out",
+            }, ">-0.18")
+            .to(beginTargets[1], {
+              autoAlpha: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: isReduced ? 0.95 : 1.12,
+              ease: "power2.out",
+            }, isReduced ? 0.78 : 0.9)
+            .to(beginTargets[2], {
+              autoAlpha: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: isReduced ? 0.82 : 0.95,
+              ease: "power2.out",
+            }, isReduced ? 1.28 : 1.48)
+            .to(beginTargets[3], {
+              autoAlpha: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: isReduced ? 0.78 : 0.88,
+              ease: "power2.out",
+            }, isReduced ? 1.55 : 1.78);
+
+          if (beginTimeline.scrollTrigger) localTriggers.push(beginTimeline.scrollTrigger);
+          return;
+        }
+
         const targets = section.querySelectorAll("[data-section-reveal]");
         if (!targets.length) return;
 
@@ -768,16 +839,17 @@ export default function HeroExperience() {
         </section>
 
         <section id="begin" ref={(node) => { sectionRefs.current[4] = node; }} className={`${styles.section} ${styles.beginSection}`}>
-          <div className={styles.beginInner} data-section-reveal>
-            <p className={styles.sectionLabel}>Begin</p>
-            <h2>
+          <div className={styles.beginInner}>
+            <p className={styles.sectionLabel} data-begin-reveal>Begin</p>
+            <span className={styles.beginRevealLine} data-begin-line aria-hidden="true" />
+            <h2 data-begin-reveal>
               Start with the event.
               <span>I’ll guide the rest.</span>
             </h2>
-            <p>
+            <p data-begin-reveal>
               Every room asks for something different. Share a few details, and I’ll recommend the experience I would begin with.
             </p>
-            <div className={styles.beginActions}>
+            <div className={styles.beginActions} data-begin-reveal>
               <a href="/design" className={styles.primaryLink}>
                 Explore Experiences
               </a>
