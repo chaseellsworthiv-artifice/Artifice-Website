@@ -295,9 +295,9 @@ export default function HeroExperience() {
           gsap.set(beginLine, {
             autoAlpha: 0,
             scaleX: 0,
-            x: isReduced ? -10 : -16,
+            x: 0,
             transformOrigin: "left center",
-            filter: "blur(0.9px)",
+            filter: "blur(0.55px)",
           });
           gsap.set(beginTargets, {
             autoAlpha: 0,
@@ -306,7 +306,7 @@ export default function HeroExperience() {
           });
           gsap.set(beginHeading, {
             autoAlpha: 0,
-            filter: "blur(1.15px)",
+            filter: "blur(0.55px)",
           });
 
           const beginTimeline = gsap.timeline({
@@ -326,50 +326,56 @@ export default function HeroExperience() {
               ease: "power2.out",
             })
             .to(beginLine, {
-              autoAlpha: 1,
+              autoAlpha: isReduced ? 0.64 : 0.58,
               scaleX: 1,
               x: 0,
-              filter: "blur(0.12px)",
-              duration: isReduced ? 0.92 : 1.08,
-              ease: "power2.out",
-            }, isReduced ? 0.12 : 0.16)
+              filter: "blur(0.08px)",
+              duration: isReduced ? 1.05 : 1.18,
+              ease: "power1.out",
+            }, isReduced ? 0.14 : 0.18)
             .set(beginLine, {
               transformOrigin: "right center",
-            }, isReduced ? 1.04 : 1.22)
+            }, isReduced ? 1.26 : 1.48)
             .to(beginLine, {
               autoAlpha: 0,
               scaleX: 0,
-              x: isReduced ? 12 : 18,
-              filter: "blur(0.85px)",
-              duration: isReduced ? 0.58 : 0.66,
-              ease: "power2.inOut",
-            }, isReduced ? 1.12 : 1.32)
+              x: 0,
+              filter: "blur(0.5px)",
+              duration: isReduced ? 0.92 : 1.02,
+              ease: "sine.inOut",
+            }, isReduced ? 1.44 : 1.68)
             .to(beginHeading, {
-              autoAlpha: 0.38,
-              filter: "blur(0.8px)",
-              duration: isReduced ? 0.42 : 0.5,
+              autoAlpha: 0.18,
+              filter: "blur(0.42px)",
+              duration: isReduced ? 0.48 : 0.56,
               ease: "sine.out",
-            }, isReduced ? 1.24 : 1.44)
+            }, isReduced ? 1.5 : 1.76)
+            .to(beginHeading, {
+              autoAlpha: 0.58,
+              filter: "blur(0.22px)",
+              duration: isReduced ? 0.72 : 0.84,
+              ease: "sine.inOut",
+            }, isReduced ? 1.84 : 2.16)
             .to(beginHeading, {
               autoAlpha: 1,
               filter: "blur(0px)",
-              duration: isReduced ? 0.92 : 1.08,
+              duration: isReduced ? 0.82 : 0.96,
               ease: "sine.inOut",
-            }, isReduced ? 1.5 : 1.74)
+            }, isReduced ? 2.38 : 2.78)
             .to(beginTargets[1], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.82 : 0.95,
               ease: "power2.out",
-            }, isReduced ? 2.1 : 2.44)
+            }, isReduced ? 2.9 : 3.34)
             .to(beginTargets[2], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.78 : 0.88,
               ease: "power2.out",
-            }, isReduced ? 2.34 : 2.76);
+            }, isReduced ? 3.18 : 3.66);
 
           if (beginTimeline.scrollTrigger) localTriggers.push(beginTimeline.scrollTrigger);
           return;

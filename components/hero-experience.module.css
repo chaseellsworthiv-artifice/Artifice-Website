@@ -551,12 +551,12 @@
   background: linear-gradient(
     90deg,
     rgba(201, 168, 106, 0),
-    rgba(201, 168, 106, 0.22) 9%,
-    rgba(201, 168, 106, 0.7) 32%,
-    rgba(201, 168, 106, 0.38) 68%,
+    rgba(201, 168, 106, 0.16) 10%,
+    rgba(201, 168, 106, 0.46) 34%,
+    rgba(201, 168, 106, 0.26) 70%,
     rgba(201, 168, 106, 0)
   );
-  box-shadow: 0 0 16px rgba(201, 168, 106, 0.12);
+  box-shadow: 0 0 12px rgba(201, 168, 106, 0.07);
   will-change: transform, opacity, filter;
 }
 
