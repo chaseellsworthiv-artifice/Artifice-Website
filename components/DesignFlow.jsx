@@ -20,6 +20,12 @@ const interstitialLines = [
   "Shaping the strongest experience",
 ];
 
+const recommendationNotes = {
+  "close-up": "A fluid choice for cocktail-style rooms, receptions, and evenings built around movement.",
+  table: "A focused choice when the room can support a deliberate point of invitation.",
+  cabaret: "A shared choice when the evening needs one concentrated room-wide moment.",
+};
+
 function mapSlug(slug) {
   return slug === "designed" ? "designed-experience" : slug;
 }
@@ -172,10 +178,16 @@ export default function DesignFlow() {
     <main className={styles.page}>
       {step === "intake" ? (
         <section className={styles.shell}>
-          <div className={styles.intakePanel}>
-            <p className={styles.eyebrow}>Design Your Experience</p>
-            <h1 className={styles.title}>Tell me about your event.</h1>
-            <p className={styles.subtext}>A few details will help me recommend the right experience.</p>
+          <div className={styles.intakeEditorial}>
+            <div className={styles.intakeCopy}>
+              <p className={styles.eyebrow}>Begin</p>
+              <h1 className={styles.title}>Start with the event.</h1>
+              <p className={styles.subtext}>Share the shape of the room. I’ll guide the experience from there.</p>
+              <div className={styles.intakeRule} aria-hidden="true" />
+              <p className={styles.intakeAside}>
+                The recommendation is not a package picker. It is a starting point based on date, scale, and the kind of atmosphere you want to create.
+              </p>
+            </div>
 
             <form className={styles.form} onSubmit={handleSubmit}>
               <label className={styles.field}>
@@ -257,15 +269,11 @@ export default function DesignFlow() {
             <article className={styles.primaryRecommendation}>
               <p className={styles.cardEyebrow}>{recommendationLabel}</p>
               <h2>{result.primary.name}</h2>
-              <p className={styles.primaryStatement}>{result.primary.why}</p>
+              <p className={styles.primaryStatement}>{result.primary.feeling}</p>
               <div className={styles.recommendationNotes}>
                 <p>
-                  <span>What it creates</span>
-                  {result.primary.feeling}
-                </p>
-                <p>
-                  <span>Why I would begin here</span>
-                  It gives the room a clear shape without making the evening feel scheduled around a performance.
+                  <span>Why this direction</span>
+                  {recommendationNotes[result.primary.slug] || result.primary.why}
                 </p>
               </div>
               <Link href={experienceHref(result.primary.slug)} className={styles.primaryAction}>

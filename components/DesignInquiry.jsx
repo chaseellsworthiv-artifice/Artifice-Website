@@ -100,7 +100,7 @@ export default function DesignInquiry({ initialValues }) {
     return (
       <main className={styles.page}>
         <section className={styles.shell}>
-          <div className={styles.intakePanel}>
+          <div className={styles.confirmationEditorial}>
             <p className={styles.eyebrow}>Inquiry Received</p>
             <h1 className={styles.title}>Inquiry received.</h1>
             <p className={styles.subtext}>
@@ -120,25 +120,27 @@ export default function DesignInquiry({ initialValues }) {
   return (
     <main className={styles.page}>
       <section className={styles.shell}>
-        <div className={styles.intakePanel}>
-          <p className={styles.eyebrow}>Custom Inquiry</p>
-          <h1 className={styles.title}>Design Your Experience</h1>
-          <p className={styles.subtext}>
-            Tell me a bit more about what you’re planning, and I’ll structure something specifically for your event.
-          </p>
+        <div className={styles.inquiryEditorial}>
+          <div className={styles.inquiryCopy}>
+            <p className={styles.eyebrow}>Request</p>
+            <h1 className={styles.title}>Complete the request.</h1>
+            <p className={styles.subtext}>
+              I already have the event shape. Add the best way to reach you and anything the room should feel like.
+            </p>
 
-          {selectedExperience ? (
-            <div className={styles.selectionSummary}>
-              <p className={styles.cardEyebrow}>Selected Path</p>
-              <h2>
-                {selectedExperience}
-                {selectedDepth ? ` / ${selectedDepth}` : ""}
-              </h2>
-              <p>
-                {[selectedDuration, selectedPrice].filter(Boolean).join(" · ")}
-              </p>
-            </div>
-          ) : null}
+            {selectedExperience ? (
+              <div className={styles.inquiryMemory}>
+                <p className={styles.cardEyebrow}>Selected Direction</p>
+                <h2>
+                  {selectedExperience}
+                  {selectedDepth ? ` / ${selectedDepth}` : ""}
+                </h2>
+                <p>
+                  {[selectedDuration, selectedPrice].filter(Boolean).join(" / ")}
+                </p>
+              </div>
+            ) : null}
+          </div>
 
           <form className={styles.form} onSubmit={handleSubmit}>
             <label className={styles.field}>

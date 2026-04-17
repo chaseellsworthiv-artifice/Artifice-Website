@@ -92,7 +92,8 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
               </>
             ) : (
               <>
-                <p className={styles.cardEyebrow}>Depth & Pricing</p>
+                <p className={styles.cardEyebrow}>Depth</p>
+                <h3>Choose how deeply it should unfold.</h3>
                 <div className={styles.depthList}>
                   {experience.depths.map((depth) => {
                     const isActive = selectedDepth?.id === depth.id;
@@ -117,12 +118,11 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
 
                 {selectedDepth ? (
                   <div className={styles.selectionPanel}>
-                    <p className={styles.selectionLabel}>Selected Depth</p>
+                    <p className={styles.selectionLabel}>Current Selection</p>
                     <h3>
                       {selectedDepth.name} <span>{selectedDepth.price}</span>
                     </h3>
-                    <p>{selectedDepth.note}</p>
-                    <p>{selectedDepth.duration}</p>
+                    <p>{selectedDepth.note} {selectedDepth.duration}.</p>
                   </div>
                 ) : null}
 

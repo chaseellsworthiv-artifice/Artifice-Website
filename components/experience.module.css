@@ -59,7 +59,7 @@
 .stage,
 .results,
 .detailStage {
-  width: min(100% - 2.5rem, 1100px);
+  width: min(100% - 2.5rem, 1140px);
   margin: 0 auto;
   padding-bottom: 6rem;
 }
@@ -67,8 +67,8 @@
 .intakeWrap,
 .detailGrid {
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: 1.35rem;
+  grid-template-columns: minmax(0, 0.95fr) minmax(24rem, 1fr);
+  gap: clamp(2.4rem, 5vw, 5.5rem);
   align-items: start;
 }
 
@@ -117,6 +117,15 @@
 .detailCard {
   padding: 1.3rem;
   border-radius: 30px 30px 12px 12px;
+}
+
+.detailCard {
+  border: 0;
+  border-top: 1px solid rgba(201, 168, 106, 0.2);
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 1.25rem 0 0;
 }
 
 .intakeCard {
@@ -312,26 +321,28 @@
 
 .depthList {
   display: grid;
-  gap: 0.9rem;
-  margin-top: 1rem;
+  gap: 0;
+  margin-top: 1.2rem;
 }
 
 .depthItem {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.95rem 0 0;
+  padding: 1.1rem 0;
   border-top: 1px solid rgba(201, 168, 106, 0.08);
   text-decoration: none;
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease;
 }
 
 .depthItem:hover {
   opacity: 0.92;
+  border-color: rgba(201, 168, 106, 0.22);
 }
 
 .depthItemActive {
-  transform: translateX(6px);
+  transform: translateX(8px);
+  border-color: rgba(201, 168, 106, 0.34);
 }
 
 .depthItem p {
@@ -341,9 +352,9 @@
 }
 
 .selectionPanel {
-  margin-top: 1.15rem;
+  margin-top: 0.85rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(201, 168, 106, 0.08);
+  border-top: 1px solid rgba(201, 168, 106, 0.16);
 }
 
 .selectionLabel {
@@ -368,7 +379,7 @@
 
 .selectionPanel p {
   margin: 0.55rem 0 0;
-  color: var(--muted-paper);
+  color: rgba(230, 221, 198, 0.62);
   line-height: 1.55;
 }
 
@@ -401,6 +412,7 @@
 .placeholderNote {
   margin: 1rem 0 0;
   font-size: 0.92rem;
+  max-width: 34ch;
 }
 
 .detailFooter {
@@ -477,6 +489,11 @@
   .detailCard {
     padding: 1.1rem;
     border-radius: 24px 24px 10px 10px;
+  }
+
+  .detailCard {
+    padding: 1.1rem 0 0;
+    border-radius: 0;
   }
 
   .recommendationCard h3,
