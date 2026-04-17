@@ -320,13 +320,15 @@
 
 .primaryRecommendation {
   display: grid;
-  grid-template-columns: minmax(10rem, 0.28fr) minmax(0, 1fr);
-  gap: 0 clamp(1.8rem, 5vw, 5rem);
+  grid-template-columns: minmax(7.5rem, 0.2fr) minmax(0, 1fr);
+  gap: 0 clamp(1.5rem, 4vw, 3.5rem);
   align-items: start;
   max-width: none;
-  margin-top: clamp(4rem, 7vw, 6rem);
-  padding-top: clamp(1.8rem, 3vw, 2.5rem);
+  margin-top: clamp(3.1rem, 5.2vw, 4.6rem);
+  padding-top: clamp(1.55rem, 2.6vw, 2.15rem);
+  padding-bottom: clamp(1.35rem, 2.3vw, 1.9rem);
   border-top: 1px solid rgba(201, 168, 106, 0.16);
+  border-bottom: 1px solid rgba(201, 168, 106, 0.08);
 }
 
 .primaryRecommendation .cardEyebrow {
@@ -357,7 +359,7 @@
 .recommendationNotes {
   display: grid;
   gap: 1rem;
-  margin-top: clamp(1.35rem, 2.6vw, 2.1rem);
+  margin-top: clamp(1.2rem, 2.2vw, 1.75rem);
   max-width: 32rem;
   grid-column: 2;
 }
@@ -379,14 +381,15 @@
 
 .primaryRecommendation .primaryAction {
   grid-column: 2;
+  margin-top: clamp(1rem, 1.7vw, 1.35rem);
 }
 
 .alternateEditorial {
   display: grid;
-  grid-template-columns: minmax(10rem, 0.28fr) minmax(0, 1fr);
-  gap: 0 clamp(1.8rem, 5vw, 5rem);
+  grid-template-columns: minmax(7.5rem, 0.2fr) minmax(0, 1fr);
+  gap: 0 clamp(1.5rem, 4vw, 3.5rem);
   align-items: start;
-  margin-top: clamp(4rem, 7vw, 6rem);
+  margin-top: clamp(3rem, 5.6vw, 4.8rem);
   padding-top: 1.35rem;
   border-top: 1px solid rgba(201, 168, 106, 0.14);
 }
@@ -422,7 +425,7 @@
 }
 
 .customPrompt {
-  margin-top: clamp(2.4rem, 5vw, 4rem);
+  margin-top: clamp(2.1rem, 4vw, 3.2rem);
   padding-top: 1.3rem;
   border-top: 1px solid rgba(201, 168, 106, 0.12);
   display: flex;
@@ -524,8 +527,9 @@
   .primaryRecommendation {
     grid-template-columns: 1fr;
     gap: 0;
-    margin-top: 2.9rem;
+    margin-top: 2.45rem;
     padding-top: 1.45rem;
+    padding-bottom: 1.65rem;
   }
 
   .primaryRecommendation .cardEyebrow,
@@ -544,10 +548,14 @@
     font-size: clamp(4rem, 18vw, 6.2rem);
   }
 
+  .primaryRecommendation .primaryAction {
+    margin-top: 1.15rem;
+  }
+
   .alternateEditorial {
     grid-template-columns: 1fr;
     gap: 1rem;
-    margin-top: 3.2rem;
+    margin-top: 2.65rem;
   }
 
   .alternateEditorial > .cardEyebrow {
