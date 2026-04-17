@@ -273,10 +273,7 @@
 
 .recommendationFrame {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
-  gap: clamp(3rem, 7vw, 7rem);
-  align-items: end;
+  display: block;
 }
 
 .recommendationFrame::before {
@@ -290,54 +287,71 @@
 }
 
 .recommendationIntro {
-  max-width: 31rem;
-  padding-bottom: clamp(0.25rem, 1vw, 0.8rem);
+  max-width: 46rem;
+  display: block;
 }
 
 .recommendationIntro .title {
-  max-width: 9.5ch;
-  font-size: clamp(3.6rem, 6.8vw, 6.2rem);
-  line-height: 0.9;
+  max-width: 11.2ch;
+  font-size: clamp(3.2rem, 5.4vw, 5.2rem);
+  line-height: 0.94;
 }
 
 .recommendationIntro .subtext {
-  max-width: 28ch;
-  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
-  line-height: 1.24;
+  max-width: 30ch;
+  margin-top: clamp(1.15rem, 2vw, 1.55rem);
+  font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+  line-height: 1.22;
 }
 
 .eventSummary {
-  display: inline-flex;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
   margin: clamp(1.35rem, 2.2vw, 1.9rem) 0 0;
   padding-top: 0.8rem;
   color: rgba(230, 221, 198, 0.58);
   border-top: 1px solid rgba(201, 168, 106, 0.22);
   font-size: 0.76rem;
   letter-spacing: 0.12em;
+  line-height: 1.45;
   text-transform: uppercase;
 }
 
 .primaryRecommendation {
-  max-width: 49rem;
-  padding: clamp(0.35rem, 1vw, 0.9rem) 0 0;
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.28fr) minmax(0, 1fr);
+  gap: 0 clamp(1.8rem, 5vw, 5rem);
+  align-items: start;
+  max-width: none;
+  margin-top: clamp(4rem, 7vw, 6rem);
+  padding-top: clamp(1.8rem, 3vw, 2.5rem);
+  border-top: 1px solid rgba(201, 168, 106, 0.16);
+}
+
+.primaryRecommendation .cardEyebrow {
+  margin-top: 0.6rem;
+  max-width: 12rem;
 }
 
 .primaryRecommendation h2 {
   margin: 0;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(5.4rem, 9.5vw, 9rem);
-  line-height: 0.78;
+  font-size: clamp(5rem, 10vw, 9.5rem);
+  line-height: 0.8;
   letter-spacing: -0.035em;
   color: var(--aged-paper);
+  grid-column: 2;
 }
 
 .primaryStatement {
   margin: clamp(1.35rem, 2.4vw, 2.15rem) 0 0;
-  max-width: 34ch;
+  max-width: 38ch;
   color: rgba(230, 221, 198, 0.82);
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.38rem, 2vw, 2rem);
   line-height: 1.12;
+  grid-column: 2;
 }
 
 .recommendationNotes {
@@ -345,6 +359,7 @@
   gap: 1rem;
   margin-top: clamp(1.35rem, 2.6vw, 2.1rem);
   max-width: 32rem;
+  grid-column: 2;
 }
 
 .recommendationNotes p {
@@ -362,12 +377,16 @@
   text-transform: uppercase;
 }
 
+.primaryRecommendation .primaryAction {
+  grid-column: 2;
+}
+
 .alternateEditorial {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0 clamp(1.8rem, 5vw, 4.5rem);
+  grid-template-columns: minmax(10rem, 0.28fr) minmax(0, 1fr);
+  gap: 0 clamp(1.8rem, 5vw, 5rem);
   align-items: start;
-  margin-top: clamp(4rem, 7vw, 6.25rem);
+  margin-top: clamp(4rem, 7vw, 6rem);
   padding-top: 1.35rem;
   border-top: 1px solid rgba(201, 168, 106, 0.14);
 }
@@ -482,9 +501,7 @@
   }
 
   .recommendationFrame {
-    grid-template-columns: 1fr;
-    gap: 2.9rem;
-    align-items: start;
+    display: block;
   }
 
   .recommendationFrame::before {
@@ -492,12 +509,35 @@
   }
 
   .recommendationIntro {
+    display: block;
     max-width: 100%;
-    padding-bottom: 0;
   }
 
   .recommendationIntro .title {
     max-width: 9.2ch;
+  }
+
+  .recommendationIntro .subtext {
+    margin-top: 1.15rem;
+  }
+
+  .primaryRecommendation {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 2.9rem;
+    padding-top: 1.45rem;
+  }
+
+  .primaryRecommendation .cardEyebrow,
+  .primaryRecommendation h2,
+  .primaryStatement,
+  .recommendationNotes,
+  .primaryRecommendation .primaryAction {
+    grid-column: auto;
+  }
+
+  .primaryRecommendation .cardEyebrow {
+    margin-top: 0;
   }
 
   .primaryRecommendation h2 {
