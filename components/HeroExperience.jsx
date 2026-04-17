@@ -290,9 +290,9 @@ export default function HeroExperience() {
         if (!section) return;
         if (section.id === "begin") {
           const beginLine = section.querySelector("[data-begin-line]");
-          const beginHeadingWords = section.querySelectorAll("[data-begin-heading-word]");
+          const beginHeadingChars = section.querySelectorAll("[data-begin-heading-char]");
           const beginTargets = section.querySelectorAll("[data-begin-reveal]");
-          if (!beginLine || !beginHeadingWords.length || !beginTargets.length) return;
+          if (!beginLine || !beginHeadingChars.length || !beginTargets.length) return;
 
           gsap.set(beginLine, {
             autoAlpha: 0,
@@ -306,9 +306,9 @@ export default function HeroExperience() {
             y: isReduced ? 6 : 8,
             filter: "blur(2.6px)",
           });
-          gsap.set(beginHeadingWords, {
+          gsap.set(beginHeadingChars, {
             autoAlpha: 0,
-            filter: "blur(0.38px)",
+            filter: "blur(0.32px)",
           });
 
           const beginTimeline = gsap.timeline({
@@ -346,12 +346,17 @@ export default function HeroExperience() {
               duration: isReduced ? 0.92 : 1.02,
               ease: "sine.inOut",
             }, isReduced ? 1.44 : 1.68)
-            .to(beginHeadingWords, {
+            .to(beginHeadingChars, {
               autoAlpha: 1,
               filter: "blur(0px)",
-              duration: isReduced ? 0.82 : 0.96,
+              duration: isReduced ? 0.64 : 0.76,
               ease: "sine.out",
-              stagger: isReduced ? 0.075 : 0.09,
+              stagger: {
+                each: isReduced ? 0.018 : 0.022,
+                from: "start",
+                grid: "auto",
+                axis: "x",
+              },
             }, isReduced ? 1.62 : 1.88)
             .to(beginTargets[1], {
               autoAlpha: 1,
@@ -861,13 +866,20 @@ export default function HeroExperience() {
               <h2>
                 {beginHeadingLines.map((line) => (
                   <span className={styles.beginHeadingLine} key={line}>
-                    {line.split(" ").map((word, index) => (
+                    {line.split(" ").map((word, wordIndex) => (
                       <span
                         className={styles.beginHeadingWord}
-                        data-begin-heading-word
-                        key={`${line}-${word}-${index}`}
+                        key={`${line}-${word}-${wordIndex}`}
                       >
-                        {word}
+                        {[...word].map((character, characterIndex) => (
+                          <span
+                            className={styles.beginHeadingChar}
+                            data-begin-heading-char
+                            key={`${line}-${word}-${character}-${characterIndex}`}
+                          >
+                            {character}
+                          </span>
+                        ))}
                       </span>
                     ))}
                   </span>

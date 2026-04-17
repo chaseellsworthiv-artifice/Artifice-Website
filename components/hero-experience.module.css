@@ -532,6 +532,11 @@
 .beginHeadingWord {
   display: inline-block;
   margin-right: 0.18em;
+  white-space: nowrap;
+}
+
+.beginHeadingChar {
+  display: inline-block;
   will-change: opacity, filter;
 }
 
