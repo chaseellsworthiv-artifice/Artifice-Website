@@ -330,36 +330,36 @@ export default function HeroExperience() {
             }, isReduced ? 0.12 : 0.16)
             .set(beginLine, {
               transformOrigin: "right center",
-            }, isReduced ? 0.82 : 0.96)
+            }, isReduced ? 0.78 : 0.9)
             .to(beginLine, {
               autoAlpha: 0,
               scaleX: 0,
               x: isReduced ? 12 : 18,
               filter: "blur(0.85px)",
-              duration: isReduced ? 0.9 : 1.08,
+              duration: isReduced ? 0.62 : 0.72,
               ease: "power2.inOut",
-            }, isReduced ? 0.84 : 0.98)
+            }, isReduced ? 0.8 : 0.92)
             .to(beginTargets[1], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
-              duration: isReduced ? 1.18 : 1.36,
+              duration: isReduced ? 1.06 : 1.22,
               ease: "power2.inOut",
-            }, isReduced ? 0.64 : 0.72)
+            }, isReduced ? 0.82 : 0.94)
             .to(beginTargets[2], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.82 : 0.95,
               ease: "power2.out",
-            }, isReduced ? 1.48 : 1.72)
+            }, isReduced ? 1.56 : 1.8)
             .to(beginTargets[3], {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.78 : 0.88,
               ease: "power2.out",
-            }, isReduced ? 1.76 : 2.04);
+            }, isReduced ? 1.84 : 2.12);
 
           if (beginTimeline.scrollTrigger) localTriggers.push(beginTimeline.scrollTrigger);
           return;
