@@ -378,6 +378,21 @@
   filter: blur(0);
 }
 
+.primaryLink::before,
+.secondaryLink::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.92), rgba(201, 168, 106, 0.08));
+  box-shadow: 0 0 12px rgba(201, 168, 106, 0.14);
+  pointer-events: none;
+  transition: width 520ms cubic-bezier(0.16, 0.72, 0.18, 1), opacity 420ms ease;
+}
+
 .copyBody .primaryLink::after,
 .copyBody .secondaryLink::after {
   opacity: 0;
@@ -392,6 +407,13 @@
 
 .heroActionsRevealed .secondaryLink::after {
   animation-delay: 0.2s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primaryLink:hover::before,
+  .secondaryLink:hover::before {
+    width: min(72%, 34rem);
+  }
 }
 
 @keyframes ctaLineDraw {
@@ -1046,6 +1068,7 @@
 .invitationTrigger,
 .invitationSubmit {
   appearance: none;
+  position: relative;
   border: 0;
   background: none;
   color: var(--antique-gold);
@@ -1066,6 +1089,20 @@
   height: 1px;
   margin-top: 0.45rem;
   background: linear-gradient(90deg, rgba(201, 168, 106, 0.68), rgba(201, 168, 106, 0));
+}
+
+.invitationTrigger::before,
+.invitationSubmit::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.92), rgba(201, 168, 106, 0.08));
+  box-shadow: 0 0 12px rgba(201, 168, 106, 0.14);
+  pointer-events: none;
+  transition: width 520ms cubic-bezier(0.16, 0.72, 0.18, 1), opacity 420ms ease;
 }
 
 .invitationForm {
@@ -1172,6 +1209,11 @@
     color: rgba(230, 221, 198, 0.9);
     transform: translate3d(0, -1px, 0) scale(1.03);
     text-shadow: 0 0 18px rgba(201, 168, 106, 0.16);
+  }
+
+  .invitationTrigger:hover::before,
+  .invitationSubmit:hover::before {
+    width: min(72%, 34rem);
   }
 }
 
