@@ -529,7 +529,7 @@
   display: block;
 }
 
-.beginHeadingPhrase {
+.beginHeadingWord {
   display: inline-block;
   white-space: nowrap;
   will-change: opacity, filter;
