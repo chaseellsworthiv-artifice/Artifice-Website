@@ -341,7 +341,7 @@ export default function HeroExperience() {
               filter: "blur(0.08px)",
               duration: isReduced ? 1.05 : 1.18,
               ease: "power1.out",
-            }, isReduced ? 0.22 : 0.28)
+            }, isReduced ? 0.08 : 0.12)
             .set(invitationGoldLine, {
               transformOrigin: "right center",
             }, isReduced ? 1.3 : 1.46)
