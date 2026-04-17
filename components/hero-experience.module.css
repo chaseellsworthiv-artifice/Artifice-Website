@@ -374,7 +374,7 @@
   transform: scaleX(1);
   transform-origin: left center;
   will-change: transform, opacity, filter;
-  opacity: 0.74;
+  opacity: calc(0.74 * var(--line-reveal-accent-opacity, 1));
   filter: blur(0);
 }
 
@@ -768,6 +768,20 @@
   font-size: 0.68rem;
 }
 
+.lineRevealText {
+  overflow: visible;
+  --line-reveal-accent-opacity: 0;
+}
+
+.lineRevealTextVisible {
+  --line-reveal-accent-opacity: 1;
+}
+
+.lineRevealLine {
+  display: block;
+  will-change: opacity, transform, filter;
+}
+
 .sectionHeading h2,
 .sectionCopy h2 {
   margin: 0;
@@ -893,6 +907,8 @@
   height: 1px;
   margin-top: 0.75rem;
   background: linear-gradient(90deg, rgba(201, 168, 106, 0.58), rgba(201, 168, 106, 0));
+  opacity: var(--line-reveal-accent-opacity, 1);
+  transition: opacity 640ms ease;
 }
 
 .eventCard p {
@@ -1009,6 +1025,41 @@
   color: var(--aged-paper);
 }
 
+.invitationSpecialLine {
+  position: relative;
+}
+
+.invitationGoldLine {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: min(78vw, 34rem);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(201, 168, 106, 0),
+    rgba(201, 168, 106, 0.16) 10%,
+    rgba(201, 168, 106, 0.46) 34%,
+    rgba(201, 168, 106, 0.26) 70%,
+    rgba(201, 168, 106, 0)
+  );
+  box-shadow: 0 0 12px rgba(201, 168, 106, 0.07);
+  transform: translateX(-50%);
+  will-change: transform, opacity, filter;
+}
+
+.invitationWordWrap {
+  position: relative;
+  z-index: 1;
+}
+
+.invitationWord {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: opacity, filter;
+}
+
 .invitationTrigger,
 .invitationSubmit {
   appearance: none;
@@ -1032,6 +1083,8 @@
   height: 1px;
   margin-top: 0.45rem;
   background: linear-gradient(90deg, rgba(201, 168, 106, 0.68), rgba(201, 168, 106, 0));
+  opacity: var(--line-reveal-accent-opacity, 1);
+  transition: opacity 640ms ease;
 }
 
 .invitationForm {
@@ -1215,6 +1268,8 @@
   height: 1px;
   margin-top: 0.8rem;
   background: linear-gradient(90deg, rgba(201, 168, 106, 0.55), rgba(201, 168, 106, 0));
+  opacity: var(--line-reveal-accent-opacity, 1);
+  transition: opacity 640ms ease;
 }
 
 @media (max-width: 900px) {
