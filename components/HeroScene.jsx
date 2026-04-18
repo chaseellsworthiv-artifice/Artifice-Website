@@ -98,7 +98,6 @@ export default function HeroScene() {
         className={styles.heroVideo}
         autoPlay
         muted
-        defaultMuted
         loop
         playsInline
         preload="auto"

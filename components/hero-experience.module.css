@@ -1508,8 +1508,8 @@
   }
 
   .hero {
-    min-height: 170svh;
-    --hero-copy-offset: clamp(31rem, 112vw, 39rem);
+    min-height: 160svh;
+    --hero-copy-offset: clamp(29rem, 104vw, 36rem);
   }
 
   .sceneShell {

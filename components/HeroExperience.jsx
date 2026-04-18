@@ -203,6 +203,13 @@ export default function HeroExperience() {
       gsap.set(heroActions, { autoAlpha: 0, y: 0, filter: "blur(2px)" });
       heroActions?.classList.remove(styles.heroActionsRevealed);
 
+      const completeHeroBody = () => {
+        gsap.killTweensOf([leadCopy, heroActions]);
+        gsap.set(leadCopy, { autoAlpha: 1, y: 0, filter: "blur(0px)" });
+        gsap.set(heroActions, { autoAlpha: 1, y: 0, filter: "blur(0px)" });
+        heroActions?.classList.add(styles.heroActionsRevealed);
+      };
+
       const copyReveal = gsap.timeline({
         scrollTrigger: {
           trigger: wordmarkRef.current,
@@ -227,8 +234,8 @@ export default function HeroExperience() {
 
       const bodyReveal = gsap.timeline({
         scrollTrigger: {
-          trigger: wordmarkRef.current,
-          start: "top 69%",
+          trigger: copyBodyRef.current,
+          start: isReduced ? "top 92%" : "top 84%",
           once: true,
         },
       });
@@ -244,7 +251,7 @@ export default function HeroExperience() {
             duration: 1,
             ease: "sine.out",
           },
-          2.28
+          0.18
         )
         .to(
           heroActions,
@@ -258,8 +265,15 @@ export default function HeroExperience() {
               heroActions?.classList.add(styles.heroActionsRevealed);
             },
           },
-          2.88
+          0.62
         );
+
+      localTriggers.push(ScrollTrigger.create({
+        trigger: copyBodyRef.current,
+        start: "top 42%",
+        once: true,
+        onEnter: completeHeroBody,
+      }));
 
       const veilTween = gsap.to(veilRef.current, {
         opacity: isReduced ? 0.78 : 0.92,
