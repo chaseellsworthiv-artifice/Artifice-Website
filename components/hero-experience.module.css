@@ -972,6 +972,18 @@
 
 .experienceFrame {
   min-height: 24rem;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.experienceFrame::after {
+  display: none;
+}
+
+.experienceFrame::before {
+  display: none;
 }
 
 .experiencePhoto {
@@ -979,6 +991,11 @@
   object-position: center 34%;
   transform: scale(1.02);
   filter: saturate(0.76) brightness(0.74) contrast(1.08) sepia(0.02);
+  border-radius: 0;
+  -webkit-mask-image:
+    radial-gradient(ellipse 62% 54% at 50% 58%, #000 0%, #000 38%, rgba(0, 0, 0, 0.78) 54%, rgba(0, 0, 0, 0.26) 68%, transparent 80%);
+  mask-image:
+    radial-gradient(ellipse 62% 54% at 50% 58%, #000 0%, #000 38%, rgba(0, 0, 0, 0.78) 54%, rgba(0, 0, 0, 0.26) 68%, transparent 80%);
 }
 
 .bookingSection {
@@ -1333,13 +1350,27 @@
   }
 
   .eventGrid {
-    gap: 2.45rem;
-    margin-top: 2rem;
+    gap: 1.65rem;
+    margin-top: 2.15rem;
   }
 
   .eventCard {
+    display: grid;
+    grid-template-columns: minmax(7.6rem, 0.42fr) minmax(0, 1fr);
+    gap: 1.1rem;
     min-height: auto;
-    padding-top: 0;
+    padding: 1.05rem 0 0;
+    border-top: 1px solid rgba(201, 168, 106, 0.1);
+  }
+
+  .eventCard h3::after {
+    width: 38px;
+    margin-top: 0.65rem;
+  }
+
+  .eventCard p {
+    margin-top: 0.08rem;
+    line-height: 1.48;
   }
 
   .materialPanel,
@@ -1645,11 +1676,19 @@
 
   .experienceFrame,
   .experiencePhoto {
-    min-height: 18rem;
+    min-height: 16.5rem;
   }
 
   .portraitFrame::before {
     opacity: 0.12;
+  }
+
+  .experienceFrame {
+    margin-top: -0.35rem;
+  }
+
+  .experienceFrame::before {
+    opacity: 0.22;
   }
 
   .invitationStage {
