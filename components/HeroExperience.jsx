@@ -832,21 +832,21 @@ export default function HeroExperience() {
             <p className={styles.sectionLabel}>Where It Belongs</p>
             <h2>For rooms where atmosphere is part of the occasion.</h2>
             <p>
-              The work lands best in spaces where intimacy, tone, and attention matter as much as the event itself.
+              Best suited to spaces where intimacy, tone, and attention can shape the room.
             </p>
           </div>
           <div className={styles.eventGrid} data-section-reveal>
             <article className={styles.eventCard}>
               <h3>Private Evenings</h3>
-              <p>Private dinners, homes, and evenings where conversation matters as much as atmosphere.</p>
+              <p>For dinners, homes, and private gatherings where conversation sets the pace.</p>
             </article>
             <article className={styles.eventCard}>
               <h3>Corporate Gatherings</h3>
-              <p>For receptions and client events where the room should feel elevated, not interrupted.</p>
+              <p>For receptions, client events, and leadership evenings that should feel elevated without interruption.</p>
             </article>
             <article className={styles.eventCard}>
               <h3>Exceptional Venues</h3>
-              <p>For hotels, lounges, and spaces where tone, discretion, and experience already matter.</p>
+              <p>For hotels, lounges, and destination spaces where discretion and atmosphere already matter.</p>
             </article>
           </div>
         </section>
@@ -889,7 +889,7 @@ export default function HeroExperience() {
             <p className={styles.sectionLabel}>Press</p>
             <h2>Recognized for work that feels impossible up close.</h2>
             <p>
-              A small record of interviews, features, and appearances around Artifice and Chase Ellsworth.
+              Features, interviews, and appearances documenting the work behind Artifice.
             </p>
           </div>
 
