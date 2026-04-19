@@ -975,7 +975,8 @@
   overflow: visible;
   border-radius: 0;
   border: 0 !important;
-  background: none !important;
+  outline: 0 !important;
+  background: transparent !important;
   box-shadow: none !important;
 }
 
@@ -995,10 +996,17 @@
   transform: scale(1.02);
   filter: saturate(0.76) brightness(0.74) contrast(1.08) sepia(0.02);
   border-radius: 0;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
   -webkit-mask-image:
-    radial-gradient(ellipse 48% 38% at 50% 60%, #000 0%, #000 18%, rgba(0, 0, 0, 0.78) 34%, rgba(0, 0, 0, 0.34) 50%, rgba(0, 0, 0, 0.08) 64%, transparent 74%);
+    radial-gradient(ellipse 82% 70% at 51% 58%, #000 0%, #000 40%, rgba(0, 0, 0, 0.88) 54%, rgba(0, 0, 0, 0.62) 69%, rgba(0, 0, 0, 0.28) 84%, transparent 100%);
   mask-image:
-    radial-gradient(ellipse 48% 38% at 50% 60%, #000 0%, #000 18%, rgba(0, 0, 0, 0.78) 34%, rgba(0, 0, 0, 0.34) 50%, rgba(0, 0, 0, 0.08) 64%, transparent 74%);
+    radial-gradient(ellipse 82% 70% at 51% 58%, #000 0%, #000 40%, rgba(0, 0, 0, 0.88) 54%, rgba(0, 0, 0, 0.62) 69%, rgba(0, 0, 0, 0.28) 84%, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 .bookingSection {
