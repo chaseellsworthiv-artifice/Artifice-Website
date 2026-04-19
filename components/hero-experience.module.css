@@ -993,7 +993,7 @@
 .experiencePhoto {
   min-height: 24rem;
   object-position: center 34%;
-  transform: scale(1.1);
+  transform: scale(1.2);
   filter: none;
   mix-blend-mode: normal;
   border-radius: 0;
