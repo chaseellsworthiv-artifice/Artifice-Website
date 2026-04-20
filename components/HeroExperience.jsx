@@ -20,7 +20,7 @@ const clientLogos = [
   { name: "Hunter Museum of American Art", src: "/assets/logos-clean/hunter-museum.png", scale: 1.0 },
   { name: "Leo Events", src: "/assets/logos-clean/leo-events.png", scale: 0.72 },
   { name: "Literary Ink", src: "/assets/logos-clean/literary-ink.png", scale: 1.15 },
-  { name: "McLemore", src: "/assets/logos-clean/mclemore.png", scale: 1.42 },
+  { name: "McLemore", src: "/assets/logos-clean/mclemore.png", scale: 1.42, mobileScale: 1.12 },
   { name: "The Dwell Hotel", src: "/assets/logos-clean/the-dwell-hotel.png", scale: 1.32 },
   { name: "The Rio", src: "/assets/logos-clean/the-rio.png", scale: 1.08 },
   { name: "TVA", src: "/assets/logos-clean/tva.png", scale: 0.94 },
@@ -884,7 +884,31 @@ export default function HeroExperience() {
           </div>
         </section>
 
-        <section id="press" ref={(node) => { sectionRefs.current[5] = node; }} className={`${styles.section} ${styles.pressSection}`}>
+        <section id="clients" ref={(node) => { sectionRefs.current[5] = node; }} className={`${styles.section} ${styles.clientsSection}`}>
+          <div className={styles.clientsHeader} data-section-reveal>
+            <p className={styles.sectionLabel}>Selected Clients</p>
+            <h2>Trusted in rooms where the standard is already high.</h2>
+          </div>
+
+          <div className={styles.clientLogoGrid} data-section-reveal aria-label="Selected Artifice clients">
+            {clientLogos.map((logo) => (
+              <figure className={styles.clientLogoTile} key={logo.name} style={{ "--logo-scale": logo.scale, "--logo-mobile-scale": logo.mobileScale ?? logo.scale }}>
+                <img src={logo.src} alt={`${logo.name} logo`} loading="lazy" />
+              </figure>
+            ))}
+          </div>
+
+          <div className={styles.clientNotes} data-section-reveal>
+            {clientNotes.map((note) => (
+              <blockquote className={styles.clientNote} key={note.quote}>
+                <p>&ldquo;{note.quote}&rdquo;</p>
+                <cite>- {note.name}</cite>
+              </blockquote>
+            ))}
+          </div>
+        </section>
+
+        <section id="press" ref={(node) => { sectionRefs.current[6] = node; }} className={`${styles.section} ${styles.pressSection}`}>
           <div className={styles.pressIntro} data-section-reveal>
             <p className={styles.sectionLabel}>Press</p>
             <h2>Recognized for work that feels impossible up close.</h2>
@@ -912,30 +936,6 @@ export default function HeroExperience() {
                   <span>{item.action}</span>
                 </span>
               </a>
-            ))}
-          </div>
-        </section>
-
-        <section id="clients" ref={(node) => { sectionRefs.current[6] = node; }} className={`${styles.section} ${styles.clientsSection}`}>
-          <div className={styles.clientsHeader} data-section-reveal>
-            <p className={styles.sectionLabel}>Selected Clients</p>
-            <h2>Trusted in rooms where the standard is already high.</h2>
-          </div>
-
-          <div className={styles.clientLogoGrid} data-section-reveal aria-label="Selected Artifice clients">
-            {clientLogos.map((logo) => (
-              <figure className={styles.clientLogoTile} key={logo.name} style={{ "--logo-scale": logo.scale }}>
-                <img src={logo.src} alt={`${logo.name} logo`} loading="lazy" />
-              </figure>
-            ))}
-          </div>
-
-          <div className={styles.clientNotes} data-section-reveal>
-            {clientNotes.map((note) => (
-              <blockquote className={styles.clientNote} key={note.quote}>
-                <p>&ldquo;{note.quote}&rdquo;</p>
-                <cite>- {note.name}</cite>
-              </blockquote>
             ))}
           </div>
         </section>
