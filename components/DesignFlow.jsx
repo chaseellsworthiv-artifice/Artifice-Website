@@ -277,7 +277,7 @@ export default function DesignFlow() {
               <div className={styles.eventSummaryGroup}>
                 <p className={styles.eventSummary}>{eventSummary}</p>
                 <button type="button" className={styles.detailAction} onClick={handleAdjustDetails}>
-                  Adjust Details
+                  Edit Details
                 </button>
               </div>
             </div>
@@ -315,7 +315,7 @@ export default function DesignFlow() {
 
           <div className={styles.customPrompt}>
             <div>
-              <p className={styles.customPromptLabel}>Need something outside these paths?</p>
+              <p className={styles.customPromptLabel}>Need something more specific?</p>
               <p className={styles.customPromptCopy}>
                 Your event details will carry forward. You will not need to start over.
               </p>

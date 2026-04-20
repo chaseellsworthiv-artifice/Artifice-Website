@@ -139,7 +139,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                   Request This Experience
                 </Link>
                 <p className={styles.placeholderNote}>
-                  I’ll review the details first. If the date and fit are right, I’ll send the next step personally.
+                  I’ll review the event first. If the date is available, I’ll send the next step personally.
                 </p>
               </>
             )}
@@ -148,7 +148,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
 
         <div className={styles.detailFooter}>
           <Link href={basePath} className={styles.secondaryAction}>
-            Back to Recommendation Flow
+            Back to Recommendation
           </Link>
         </div>
       </section>

@@ -125,7 +125,7 @@ export default function DesignInquiry({ initialValues }) {
             <p className={styles.eyebrow}>Request</p>
             <h1 className={styles.title}>Complete the request.</h1>
             <p className={styles.subtext}>
-              I already have the event shape. Add the best way to reach you and any final details I should consider.
+              I have the event shape. Add the best way to reach you and anything else you want me to consider.
             </p>
 
             {selectedExperience ? (
