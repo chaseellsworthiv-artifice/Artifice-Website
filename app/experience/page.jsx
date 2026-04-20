@@ -1,5 +1,5 @@
-import ExperienceFlow from "../../components/ExperienceFlow";
+import { redirect } from "next/navigation";
 
 export default function ExperiencePage() {
-  return <ExperienceFlow />;
+  redirect("/design");
 }

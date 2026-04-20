@@ -1,10 +1,9 @@
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
-import ExperienceDetail from "../../../components/ExperienceDetail";
-import { experienceContent, getDepthById, getExperienceBySlug } from "../../../components/experience-data";
+import { getExperienceBySlug, getPublicSlug } from "../../../components/experience-data";
 
 export function generateStaticParams() {
-  return [...Object.keys(experienceContent), "close-up"].map((slug) => ({ slug }));
+  return ["roaming", "close-up", "table", "cabaret", "designed", "designed-experience"].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {
@@ -27,10 +26,18 @@ export default async function ExperienceDetailPage({ params, searchParams }) {
   const experience = getExperienceBySlug(resolvedParams.slug);
 
   if (!experience) {
-    notFound();
+    redirect("/design");
   }
 
-  const selectedDepth = getDepthById(experience, resolvedSearchParams?.depth);
+  const query = new URLSearchParams();
+  Object.entries(resolvedSearchParams || {}).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((entry) => query.append(key, entry));
+    } else if (value) {
+      query.set(key, value);
+    }
+  });
 
-  return <ExperienceDetail experience={experience} selectedDepth={selectedDepth} basePath="/experience" />;
+  const queryString = query.toString();
+  redirect(`/design/${getPublicSlug(experience.slug)}${queryString ? `?${queryString}` : ""}`);
 }

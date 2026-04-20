@@ -38,7 +38,7 @@ function detailHref({ basePath, experience, depth, eventContext }) {
   return `${basePath}/${slug}${query ? `?${query}` : ""}`;
 }
 
-export default function ExperienceDetail({ experience, selectedDepth, basePath = "/experience", eventContext = {} }) {
+export default function ExperienceDetail({ experience, selectedDepth, basePath = "/design", eventContext = {} }) {
   const isDesigned = experience.slug === "designed";
 
   return (
