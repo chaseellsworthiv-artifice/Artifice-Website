@@ -19,6 +19,19 @@ function formatTimestamp(value) {
   });
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function toHtmlLines(value) {
+  return escapeHtml(value || "No message provided.").replaceAll("\n", "<br>");
+}
+
 function buildEmailContent(eventType, payload) {
   if (eventType === "inquiry.created") {
     const submission = payload.submission ?? {};
@@ -28,16 +41,16 @@ function buildEmailContent(eventType, payload) {
         <div style="font-family: Georgia, serif; line-height: 1.55; color: #111; max-width: 700px;">
           <h2 style="margin: 0 0 18px; font-weight: 500;">New Artifice Inquiry</h2>
           <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-            <tr><td style="padding: 8px 0; color: #6b5a38; width: 160px;">Name</td><td style="padding: 8px 0;">${submission.name || "Unknown"}</td></tr>
-            <tr><td style="padding: 8px 0; color: #6b5a38;">Email</td><td style="padding: 8px 0;">${submission.email || "Unknown"}</td></tr>
-            <tr><td style="padding: 8px 0; color: #6b5a38;">Event Type</td><td style="padding: 8px 0;">${submission.eventType || "Not specified"}</td></tr>
-            <tr><td style="padding: 8px 0; color: #6b5a38;">Date</td><td style="padding: 8px 0;">${submission.date || "Not specified"}</td></tr>
-            <tr><td style="padding: 8px 0; color: #6b5a38;">Location</td><td style="padding: 8px 0;">${submission.location || "Not specified"}</td></tr>
-            <tr><td style="padding: 8px 0; color: #6b5a38;">Submitted</td><td style="padding: 8px 0;">${formatTimestamp(submission.submittedAt)}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38; width: 160px;">Name</td><td style="padding: 8px 0;">${escapeHtml(submission.name || "Unknown")}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38;">Email</td><td style="padding: 8px 0;">${escapeHtml(submission.email || "Unknown")}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38;">Event Type</td><td style="padding: 8px 0;">${escapeHtml(submission.eventType || "Not specified")}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38;">Date</td><td style="padding: 8px 0;">${escapeHtml(submission.date || "Not specified")}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38;">Location</td><td style="padding: 8px 0;">${escapeHtml(submission.location || "Not specified")}</td></tr>
+            <tr><td style="padding: 8px 0; color: #6b5a38;">Submitted</td><td style="padding: 8px 0;">${escapeHtml(formatTimestamp(submission.submittedAt))}</td></tr>
           </table>
           <div style="margin-top: 18px; padding: 16px 18px; background: #f7f4ee; border-radius: 10px;">
             <div style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #6b5a38; margin-bottom: 8px;">Message</div>
-            <div>${submission.message || "No message provided."}</div>
+            <div>${toHtmlLines(submission.message)}</div>
           </div>
         </div>
       `,
