@@ -48,6 +48,11 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
           <p className={styles.eyebrow}>{experience.eyebrow}</p>
           <h1 className={styles.title}>{experience.name}</h1>
           <p className={styles.intro}>{experience.summary}</p>
+          <div className={styles.heroActions}>
+            <Link href={inquiryHref({ experience, selectedDepth, eventContext })} className={styles.primaryAction}>
+              Request This Experience
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -124,7 +129,11 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                     </h3>
                     <p>{selectedDepth.note} {selectedDepth.duration}.</p>
                   </div>
-                ) : null}
+                ) : (
+                  <p className={styles.selectionPrompt}>
+                    Select a depth to carry that preference into the request.
+                  </p>
+                )}
 
                 <Link href={inquiryHref({ experience, selectedDepth, eventContext })} className={styles.primaryAction}>
                   Request This Experience

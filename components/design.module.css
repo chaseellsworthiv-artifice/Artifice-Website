@@ -53,7 +53,7 @@
 }
 
 .inquiryCopy {
-  padding-top: clamp(0.4rem, 2vw, 2rem);
+  padding-top: clamp(0.2rem, 1.2vw, 1rem);
 }
 
 .confirmationEditorial {
@@ -105,8 +105,8 @@
 
 .selectionSummary,
 .inquiryMemory {
-  margin-top: 1.6rem;
-  padding-top: 1.1rem;
+  margin-top: 1.35rem;
+  padding-top: 0.95rem;
   border-top: 1px solid rgba(201, 168, 106, 0.16);
 }
 
@@ -191,9 +191,10 @@
 .formActions {
   grid-column: 1 / -1;
   display: flex;
-  gap: 1rem;
+  gap: 1rem 1.2rem;
   flex-wrap: wrap;
-  margin-top: 0.35rem;
+  margin-top: 0.15rem;
+  align-items: baseline;
 }
 
 .primaryAction,
@@ -230,6 +231,12 @@
 
 .secondaryAction {
   color: var(--aged-paper);
+}
+
+.formActions .secondaryAction {
+  color: rgba(230, 221, 198, 0.54);
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
 }
 
 .primaryAction::after,
@@ -555,7 +562,7 @@
   .intakeEditorial,
   .inquiryEditorial {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.55rem;
   }
 
   .intakeCopy,
@@ -564,9 +571,9 @@
   }
   .form {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0.88rem;
     padding-top: 1.25rem;
-    padding-bottom: 4.5rem;
+    padding-bottom: 3.6rem;
   }
 
   .formActions,

@@ -125,7 +125,7 @@ export default function DesignInquiry({ initialValues }) {
             <p className={styles.eyebrow}>Request</p>
             <h1 className={styles.title}>Complete the request.</h1>
             <p className={styles.subtext}>
-              I already have the event shape. Add the best way to reach you and anything the room should feel like.
+              I already have the event shape. Add the best way to reach you and any final details I should consider.
             </p>
 
             {selectedExperience ? (
@@ -172,13 +172,13 @@ export default function DesignInquiry({ initialValues }) {
               <textarea name="details" rows="5" value={form.details} onChange={handleChange} />
             </label>
             <label className={`${styles.field} ${styles.fullWidth}`}>
-              <span>What Kind of Atmosphere Do You Want to Create?</span>
-              <textarea name="atmosphere" rows="4" value={form.atmosphere} onChange={handleChange} />
+              <span>Anything Else I Should Know?</span>
+              <textarea name="atmosphere" rows="3" value={form.atmosphere} onChange={handleChange} />
             </label>
             {error ? <p className={styles.formError}>{error}</p> : null}
             <div className={styles.formActions}>
               <button type="submit" className={styles.primaryAction} disabled={state === "submitting"}>
-                Submit Inquiry
+                Request Your Date
               </button>
               <Link href="/design" className={styles.secondaryAction}>
                 Back to Recommendation
