@@ -17,11 +17,16 @@
 
 html {
   scroll-behavior: auto;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   min-width: 320px;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
   font-family: "Manrope", sans-serif;
   background:
@@ -29,6 +34,13 @@ body {
     radial-gradient(circle at 80% 0%, rgba(201, 168, 106, 0.06), transparent 28%),
     linear-gradient(180deg, #060607 0%, var(--ink-black) 100%);
   color: var(--aged-paper);
+}
+
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
 }
 
 body::before {

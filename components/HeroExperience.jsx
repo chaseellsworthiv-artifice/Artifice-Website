@@ -711,6 +711,7 @@ export default function HeroExperience() {
         <div
           ref={curtainShellRef}
           className={`${styles.curtainShell} ${curtainReady && seamResolved ? styles.curtainShellReady : ""}`}
+          style={{ visibility: curtainReady && seamResolved ? "visible" : "hidden" }}
           aria-hidden="true"
         >
           <div
@@ -838,7 +839,7 @@ export default function HeroExperience() {
           <div className={styles.eventGrid} data-section-reveal>
             <article className={styles.eventCard}>
               <h3>Private Evenings</h3>
-              <p>For dinners, homes, and private gatherings where conversation sets the pace.</p>
+              <p>For dinners, homes, and private gatherings where the atmosphere matters as much as the conversation.</p>
             </article>
             <article className={styles.eventCard}>
               <h3>Corporate Gatherings</h3>
