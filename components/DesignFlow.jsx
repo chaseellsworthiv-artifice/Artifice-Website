@@ -124,7 +124,7 @@ export default function DesignFlow() {
 
   const recommendationLabel = useMemo(() => {
     if (!result) return "";
-    return result.primary.slug === "close-up" ? "Recommended For Your Event" : "Where I Would Begin";
+    return "Where I Would Begin";
   }, [result]);
 
   const inquiryHref = useMemo(() => {
@@ -172,6 +172,22 @@ export default function DesignFlow() {
 
     setLineIndex(0);
     setStep("considering");
+  }
+
+  function handleAdjustDetails() {
+    setStep("intake");
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(
+        "artifice-design-draft",
+        JSON.stringify({
+          date: form.date,
+          guestCount: form.guestCount,
+          eventType: selectedType || form.eventType,
+          details: form.details,
+          step: "intake",
+        })
+      );
+    }
   }
 
   return (
@@ -258,7 +274,12 @@ export default function DesignFlow() {
               <p className={styles.eyebrow}>Recommendation</p>
               <h1 className={styles.title}>Your event, thoughtfully considered.</h1>
               <p className={styles.subtext}>Based on what you shared, this is where I would begin.</p>
-              <p className={styles.eventSummary}>{eventSummary}</p>
+              <div className={styles.eventSummaryGroup}>
+                <p className={styles.eventSummary}>{eventSummary}</p>
+                <button type="button" className={styles.detailAction} onClick={handleAdjustDetails}>
+                  Adjust Details
+                </button>
+              </div>
             </div>
 
             <article className={styles.primaryRecommendation}>
