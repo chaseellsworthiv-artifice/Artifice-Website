@@ -48,11 +48,6 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
           <p className={styles.eyebrow}>{experience.eyebrow}</p>
           <h1 className={styles.title}>{experience.name}</h1>
           <p className={styles.intro}>{experience.summary}</p>
-          <div className={styles.heroActions}>
-            <Link href={inquiryHref({ experience, selectedDepth, eventContext })} className={styles.primaryAction}>
-              Request This Experience
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -60,9 +55,9 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
         <div className={styles.detailGrid}>
           <div className={styles.detailCopy}>
             <p className={styles.sectionLabel}>Experience</p>
-            <h2>{experience.opening}</h2>
+            <h2>{experience.detailHeadline || experience.opening}</h2>
             <div className={styles.detailNotes}>
-              <p>{experience.why}</p>
+              <p>{experience.opening}</p>
               <p>{experience.feeling}</p>
             </div>
             {isDesigned ? (
@@ -74,6 +69,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
               </div>
             ) : (
               <div className={styles.detailSupport}>
+                <p>{experience.why}</p>
                 <p>{experience.depthIntro}</p>
                 <p>{durationSupportLine}</p>
                 {experience.audienceNote ? <p>{experience.audienceNote}</p> : null}
@@ -97,8 +93,13 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
               </>
             ) : (
               <>
-                <p className={styles.cardEyebrow}>Depth</p>
-                <h3>Choose how deeply it should unfold.</h3>
+                <div className={styles.detailCardHeader}>
+                  <p className={styles.cardEyebrow}>Select Depth</p>
+                  <h3>Choose the depth.</h3>
+                  <p>
+                    Time changes how fully the experience can move through the room, not the quality of the work.
+                  </p>
+                </div>
                 <div className={styles.depthList}>
                   {experience.depths.map((depth) => {
                     const isActive = selectedDepth?.id === depth.id;
@@ -108,6 +109,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                         href={detailHref({ basePath, experience, depth, eventContext })}
                         className={`${styles.depthItem} ${isActive ? styles.depthItemActive : ""}`}
                       >
+                        <span className={styles.depthMarker} aria-hidden="true" />
                         <div>
                           <h3>{depth.name}</h3>
                           <p>{depth.descriptor}</p>
@@ -136,7 +138,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                 )}
 
                 <Link href={inquiryHref({ experience, selectedDepth, eventContext })} className={styles.primaryAction}>
-                  Request This Experience
+                  Request {experience.name}
                 </Link>
                 <p className={styles.placeholderNote}>
                   I’ll review the event first. If the date is available, I’ll send the next step personally.

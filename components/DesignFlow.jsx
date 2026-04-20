@@ -238,7 +238,7 @@ export default function DesignFlow() {
               </div>
 
               <div className={`${styles.field} ${styles.fullWidth}`}>
-                <span>How should guests experience it?</span>
+                <span>Choose how the room should experience it.</span>
                 <div className={styles.flowOptions}>
                   {performanceFlowOptions.map((option) => {
                     const active = form.performanceFlow === option.id;
@@ -248,7 +248,9 @@ export default function DesignFlow() {
                         type="button"
                         className={`${styles.flowOption} ${active ? styles.flowOptionActive : ""}`}
                         onClick={() => setForm((current) => ({ ...current, performanceFlow: option.id }))}
+                        aria-pressed={active}
                       >
+                        <span className={styles.flowIndicator} aria-hidden="true" />
                         <strong>{option.label}</strong>
                         <small>{option.summary}</small>
                       </button>

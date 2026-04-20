@@ -7,18 +7,18 @@ export const legacyExperienceSlugs = {
 export const performanceFlowOptions = [
   {
     id: "throughout",
-    label: "In natural moments throughout the room",
-    summary: "The experience moves through the event without requiring a formal setup.",
+    label: "Throughout the room",
+    summary: "For receptions, cocktail hours, and rooms where guests are naturally mingling.",
   },
   {
     id: "table",
-    label: "At a dedicated table or station",
-    summary: "Guests approach a clear point of invitation: a table, chair, or station.",
+    label: "At a table or station",
+    summary: "For trade shows, activations, or intimate gatherings centered around one place.",
   },
   {
     id: "shared",
-    label: "As one shared performance for everyone",
-    summary: "The room briefly gathers attention for a single focused moment.",
+    label: "As one shared moment",
+    summary: "For groups of 75 or fewer when everyone should experience it together.",
   },
   {
     id: "unsure",
@@ -53,6 +53,7 @@ export const experienceContent = {
     eyebrow: "Guided Experience",
     summary:
       "A close-up performance that moves with the event rather than interrupting it, creating moments of astonishment directly inside the room's natural rhythm.",
+    detailHeadline: "Designed to move with the room.",
     opening:
       "Roaming is designed for evenings where the experience should move through the room naturally rather than gather everyone into a formal point of attention.",
     why:
@@ -95,6 +96,7 @@ export const experienceContent = {
     eyebrow: "Guided Experience",
     summary:
       "A dedicated performance table that becomes a destination inside the event, giving guests a more focused and memorable encounter with the work.",
+    detailHeadline: "A point of gravity inside the event.",
     opening:
       "Table creates a quieter point of gravity within the event — a place guests can choose to enter, rather than something imposed on the room.",
     why:
@@ -137,6 +139,7 @@ export const experienceContent = {
     eyebrow: "Guided Experience",
     summary:
       "A shared, room-wide performance designed to bring everyone into the same moment at once without losing intimacy or control.",
+    detailHeadline: "One focused moment for the room.",
     opening:
       "Cabaret is for moments when the room should gather and turn together — not for long, but decisively.",
     why:
@@ -164,6 +167,7 @@ export const experienceContent = {
     eyebrow: "Designed Path",
     summary:
       "A fully considered performance structure built around the rhythm of the evening rather than a single self-contained format.",
+    detailHeadline: "Designed around the evening, not added onto it.",
     opening:
       "Designed Experience is not a standard performance selection. It is a considered structure for the evening — shaped around timing, guest flow, and the moments that matter most.",
     why:
