@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { durationSupportLine } from "./experience-data";
+import { durationSupportLine, getPublicSlug } from "./experience-data";
 import styles from "./experience.module.css";
 
 function appendEventContext(params, eventContext = {}) {
@@ -32,7 +32,7 @@ function detailHref({ basePath, experience, depth, eventContext }) {
   appendEventContext(params, eventContext);
   if (depth) params.set("depth", depth.id);
 
-  const slug = experience.slug === "designed" ? "designed-experience" : experience.slug;
+  const slug = getPublicSlug(experience.slug);
   const query = params.toString();
 
   return `${basePath}/${slug}${query ? `?${query}` : ""}`;

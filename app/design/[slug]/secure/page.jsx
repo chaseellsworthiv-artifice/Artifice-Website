@@ -2,13 +2,9 @@ import { notFound, redirect } from "next/navigation";
 
 import { getDepthById, getExperienceBySlug } from "../../../../components/experience-data";
 
-function mapIncomingSlug(slug) {
-  return slug === "designed-experience" ? "designed" : slug;
-}
-
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
-  const experience = getExperienceBySlug(mapIncomingSlug(resolvedParams.slug));
+  const experience = getExperienceBySlug(resolvedParams.slug);
 
   if (!experience) {
     return { title: "Artifice" };
@@ -23,7 +19,7 @@ export async function generateMetadata({ params }) {
 export default async function DesignSecureDatePage({ params, searchParams }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const experience = getExperienceBySlug(mapIncomingSlug(resolvedParams.slug));
+  const experience = getExperienceBySlug(resolvedParams.slug);
 
   if (!experience || experience.slug === "designed") {
     notFound();
@@ -42,6 +38,10 @@ export default async function DesignSecureDatePage({ params, searchParams }) {
     depthId: selectedDepth.id,
     duration: selectedDepth.duration,
     price: selectedDepth.price,
+  });
+
+  ["date", "guestCount", "eventType", "performanceFlow", "details"].forEach((key) => {
+    if (resolvedSearchParams?.[key]) paramsOut.set(key, resolvedSearchParams[key]);
   });
 
   redirect(`/design/custom-inquiry?${paramsOut.toString()}`);

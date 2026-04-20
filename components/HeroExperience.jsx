@@ -877,6 +877,7 @@ export default function HeroExperience() {
             <p>
               Every room asks for something different. Share a few details, and I’ll recommend the experience I would begin with.
             </p>
+            <p className={styles.pricingAnchor}>Private experiences begin at $1,000.</p>
             <div className={styles.beginActions}>
               <a href="/design" className={styles.primaryLink}>
                 Explore Experiences

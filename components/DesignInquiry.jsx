@@ -3,7 +3,12 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { performanceFlowOptions } from "./experience-data";
 import styles from "./design.module.css";
+
+function getFlowLabel(flowId) {
+  return performanceFlowOptions.find((option) => option.id === flowId)?.label || "";
+}
 
 export default function DesignInquiry({ initialValues }) {
   const selectedExperience = initialValues.experience || "";
@@ -19,6 +24,7 @@ export default function DesignInquiry({ initialValues }) {
     date: initialValues.date || "",
     guestCount: initialValues.guestCount || "",
     eventType: initialValues.eventType || "",
+    performanceFlow: initialValues.performanceFlow || "",
     details: initialValues.details || "",
   });
   const [state, setState] = useState("idle");
@@ -36,6 +42,7 @@ export default function DesignInquiry({ initialValues }) {
         date: current.date || draft.date || "",
         guestCount: current.guestCount || draft.guestCount || "",
         eventType: current.eventType || draft.eventType || "",
+        performanceFlow: current.performanceFlow || draft.performanceFlow || "",
         details: current.details || draft.details || "",
       }));
     } catch {}
@@ -74,6 +81,7 @@ export default function DesignInquiry({ initialValues }) {
             selectedDepth ? `Selected Depth: ${selectedDepth}` : "",
             selectedDuration ? `Duration: ${selectedDuration}` : "",
             selectedPrice ? `Listed Price: ${selectedPrice}` : "",
+            form.performanceFlow ? `Guest Experience Preference: ${getFlowLabel(form.performanceFlow) || form.performanceFlow}` : "",
             form.details,
             form.atmosphere ? `Atmosphere: ${form.atmosphere}` : "",
             form.guestCount ? `Guest Count: ${form.guestCount}` : "",

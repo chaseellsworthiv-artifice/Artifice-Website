@@ -4,7 +4,7 @@ import ExperienceDetail from "../../../components/ExperienceDetail";
 import { experienceContent, getDepthById, getExperienceBySlug } from "../../../components/experience-data";
 
 export function generateStaticParams() {
-  return Object.keys(experienceContent).map((slug) => ({ slug }));
+  return [...Object.keys(experienceContent), "close-up"].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {

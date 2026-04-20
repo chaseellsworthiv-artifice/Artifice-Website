@@ -11,6 +11,7 @@ export default async function DesignInquiryPage({ searchParams }) {
     date: resolvedSearchParams?.date ?? "",
     guestCount: resolvedSearchParams?.guestCount ?? "",
     eventType: resolvedSearchParams?.eventType ?? "",
+    performanceFlow: resolvedSearchParams?.performanceFlow ?? "",
     details: resolvedSearchParams?.details ?? "",
     venue: resolvedSearchParams?.venue ?? "",
     experience: resolvedSearchParams?.experience ?? "",

@@ -40,5 +40,9 @@ export default async function SecureDatePage({ params, searchParams }) {
     price: selectedDepth.price,
   });
 
+  ["date", "guestCount", "eventType", "performanceFlow", "details"].forEach((key) => {
+    if (resolvedSearchParams?.[key]) paramsOut.set(key, resolvedSearchParams[key]);
+  });
+
   redirect(`/design/custom-inquiry?${paramsOut.toString()}`);
 }

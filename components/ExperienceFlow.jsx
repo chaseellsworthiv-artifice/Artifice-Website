@@ -20,7 +20,7 @@ export default function ExperienceFlow() {
 
   const dominantLabel = useMemo(() => {
     if (!result) return "";
-    return result.primary.slug === "close-up" ? "Recommended For Your Event" : "Where I Would Begin";
+    return result.primary.slug === "roaming" ? "Recommended For Your Event" : "Where I Would Begin";
   }, [result]);
 
   function handleChange(event) {
@@ -102,7 +102,7 @@ export default function ExperienceFlow() {
               <div className={styles.cardBody}>
                 <p>
                   <strong>Why this fits</strong>
-                  <span>{result.primary.why}</span>
+                  <span>{result.reason}</span>
                 </p>
                 <p>
                   <strong>What it feels like</strong>

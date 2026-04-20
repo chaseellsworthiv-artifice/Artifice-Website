@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
-import { buildRecommendation } from "./experience-data";
+import { buildRecommendation, getPublicSlug, performanceFlowOptions } from "./experience-data";
 import styles from "./design.module.css";
 
 const initialForm = {
   date: "",
   guestCount: "",
   eventType: "",
+  performanceFlow: "",
   details: "",
 };
 
@@ -20,14 +21,12 @@ const interstitialLines = [
   "Shaping the strongest experience",
 ];
 
-const recommendationNotes = {
-  "close-up": "A fluid choice for cocktail-style rooms, receptions, and evenings built around movement.",
-  table: "A focused choice when the room can support a deliberate point of invitation.",
-  cabaret: "A shared choice when the evening needs one concentrated room-wide moment.",
-};
-
 function mapSlug(slug) {
-  return slug === "designed" ? "designed-experience" : slug;
+  return getPublicSlug(slug);
+}
+
+function getFlowLabel(flowId) {
+  return performanceFlowOptions.find((option) => option.id === flowId)?.label || "";
 }
 
 function buildEventParams(form, selectedType) {
@@ -37,6 +36,7 @@ function buildEventParams(form, selectedType) {
   if (form.date) params.set("date", form.date);
   if (form.guestCount) params.set("guestCount", form.guestCount);
   if (eventType) params.set("eventType", eventType);
+  if (form.performanceFlow) params.set("performanceFlow", form.performanceFlow);
   if (form.details) params.set("details", form.details);
 
   return params;
@@ -62,6 +62,7 @@ export default function DesignFlow() {
         date: draft.date || "",
         guestCount: draft.guestCount || "",
         eventType: draft.eventType || "",
+        performanceFlow: draft.performanceFlow || "",
         details: draft.details || "",
       };
       setForm(restoredForm);
@@ -89,6 +90,7 @@ export default function DesignFlow() {
           date: form.date,
           guestCount: form.guestCount,
           eventType: selectedType || form.eventType,
+          performanceFlow: form.performanceFlow,
           details: form.details,
           step: "considering",
         })
@@ -109,6 +111,7 @@ export default function DesignFlow() {
             date: form.date,
             guestCount: form.guestCount,
             eventType: selectedType || form.eventType,
+            performanceFlow: form.performanceFlow,
             details: form.details,
             step: "recommendation",
           })
@@ -138,6 +141,7 @@ export default function DesignFlow() {
     const pieces = [
       form.guestCount ? `${form.guestCount} guests` : "",
       selectedType || form.eventType,
+      getFlowLabel(form.performanceFlow),
       form.date,
     ].filter(Boolean);
 
@@ -165,6 +169,7 @@ export default function DesignFlow() {
           date: form.date,
           guestCount: form.guestCount,
           eventType: selectedType || form.eventType,
+          performanceFlow: form.performanceFlow,
           details: form.details,
         })
       );
@@ -183,6 +188,7 @@ export default function DesignFlow() {
           date: form.date,
           guestCount: form.guestCount,
           eventType: selectedType || form.eventType,
+          performanceFlow: form.performanceFlow,
           details: form.details,
           step: "intake",
         })
@@ -225,6 +231,26 @@ export default function DesignFlow() {
                         onClick={() => setSelectedType(type)}
                       >
                         {type}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className={`${styles.field} ${styles.fullWidth}`}>
+                <span>How should guests experience it?</span>
+                <div className={styles.flowOptions}>
+                  {performanceFlowOptions.map((option) => {
+                    const active = form.performanceFlow === option.id;
+                    return (
+                      <button
+                        key={option.id}
+                        type="button"
+                        className={`${styles.flowOption} ${active ? styles.flowOptionActive : ""}`}
+                        onClick={() => setForm((current) => ({ ...current, performanceFlow: option.id }))}
+                      >
+                        <strong>{option.label}</strong>
+                        <small>{option.summary}</small>
                       </button>
                     );
                   })}
@@ -289,7 +315,7 @@ export default function DesignFlow() {
               <div className={styles.recommendationNotes}>
                 <p>
                   <span>Why this direction</span>
-                  {recommendationNotes[result.primary.slug] || result.primary.why}
+                  {result.reason}
                 </p>
               </div>
               <Link href={experienceHref(result.primary.slug)} className={styles.primaryAction}>

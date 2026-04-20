@@ -3,17 +3,13 @@ import { notFound } from "next/navigation";
 import ExperienceDetail from "../../../components/ExperienceDetail";
 import { getDepthById, getExperienceBySlug } from "../../../components/experience-data";
 
-function mapIncomingSlug(slug) {
-  return slug === "designed-experience" ? "designed" : slug;
-}
-
 export function generateStaticParams() {
-  return ["close-up", "table", "cabaret", "designed-experience"].map((slug) => ({ slug }));
+  return ["roaming", "close-up", "table", "cabaret", "designed-experience"].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
-  const experience = getExperienceBySlug(mapIncomingSlug(resolvedParams.slug));
+  const experience = getExperienceBySlug(resolvedParams.slug);
 
   if (!experience) {
     return { title: "Artifice" };
@@ -28,7 +24,7 @@ export async function generateMetadata({ params }) {
 export default async function DesignDetailPage({ params, searchParams }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
-  const experience = getExperienceBySlug(mapIncomingSlug(resolvedParams.slug));
+  const experience = getExperienceBySlug(resolvedParams.slug);
 
   if (!experience) {
     notFound();
@@ -39,6 +35,7 @@ export default async function DesignDetailPage({ params, searchParams }) {
     date: resolvedSearchParams?.date ?? "",
     guestCount: resolvedSearchParams?.guestCount ?? "",
     eventType: resolvedSearchParams?.eventType ?? "",
+    performanceFlow: resolvedSearchParams?.performanceFlow ?? "",
     details: resolvedSearchParams?.details ?? "",
   };
 
