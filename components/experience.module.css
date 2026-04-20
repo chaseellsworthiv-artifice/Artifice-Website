@@ -359,6 +359,10 @@
   gap: 0.65rem;
 }
 
+.detailNotes p {
+  margin: 0;
+}
+
 .detailSupport {
   margin-top: 1.2rem;
   display: grid;
