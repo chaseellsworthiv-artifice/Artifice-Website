@@ -396,11 +396,13 @@
 }
 
 .consideringLead {
+  position: relative;
   max-width: 34rem;
 }
 
 .consideringRule {
   position: relative;
+  z-index: 2;
   width: min(24rem, 58vw);
   height: 1px;
   margin: 0 0 1.45rem;
@@ -424,8 +426,75 @@
   animation: consideringRuleGlow 1200ms ease-out 120ms both;
 }
 
+.consideringSigils {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  right: max(-8vw, -7rem);
+  width: min(27rem, 46vw);
+  aspect-ratio: 340 / 220;
+  pointer-events: none;
+  transform: translateY(-46%);
+  opacity: 0.88;
+  mix-blend-mode: screen;
+}
+
+.consideringSigilSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sigilFragment {
+  fill: none;
+  stroke: rgba(201, 168, 106, 0.66);
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 160;
+  stroke-dashoffset: 160;
+  filter: drop-shadow(0 0 8px rgba(201, 168, 106, 0.18));
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity 520ms ease,
+    stroke-dashoffset 900ms cubic-bezier(0.16, 0.72, 0.18, 1),
+    transform 900ms ease,
+    filter 620ms ease;
+}
+
+.sigilFragmentOne {
+  transform: translate3d(-4px, -2px, 0) rotate(-7deg);
+}
+
+.sigilFragmentTwo {
+  stroke-width: 1;
+  transform: translate3d(0, 5px, 0) rotate(2deg);
+  transition-delay: 80ms;
+}
+
+.sigilFragmentThree {
+  transform: translate3d(6px, -1px, 0) rotate(8deg);
+  transition-delay: 120ms;
+}
+
+.sigilFragmentActive {
+  opacity: 0.72;
+  stroke-dashoffset: 58;
+}
+
+.sigilFragmentDrift {
+  opacity: 0.13;
+  stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 2px rgba(201, 168, 106, 0.04));
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1.02);
+}
+
 .consideringStory {
   position: relative;
+  z-index: 2;
   display: grid;
   gap: 0.55rem;
   margin-top: clamp(1.55rem, 3vw, 2.2rem);
@@ -778,6 +847,13 @@
     margin-bottom: 1.15rem;
   }
 
+  .consideringSigils {
+    top: 48%;
+    right: -8.5rem;
+    width: 18rem;
+    opacity: 0.54;
+  }
+
   .consideringStory {
     margin-top: 1.35rem;
   }
@@ -959,6 +1035,12 @@
   .consideringRule {
     width: min(18rem, 44vw);
     margin-bottom: 1rem;
+  }
+
+  .consideringSigils {
+    right: -5rem;
+    width: min(18rem, 38vw);
+    opacity: 0.52;
   }
 
   .consideringStory {

@@ -292,6 +292,28 @@ export default function DesignFlow() {
                 <span />
                 <span />
               </div>
+              <div className={styles.consideringSigils} aria-hidden="true">
+                <svg viewBox="0 0 340 220" className={styles.consideringSigilSvg}>
+                  <path
+                    d="M28 136 C48 92, 86 86, 112 114"
+                    className={`${styles.sigilFragment} ${styles.sigilFragmentOne} ${
+                      lineIndex >= 0 ? styles.sigilFragmentActive : ""
+                    } ${lineIndex >= 1 ? styles.sigilFragmentDrift : ""}`}
+                  />
+                  <path
+                    d="M146 158 L176 122 L208 156"
+                    className={`${styles.sigilFragment} ${styles.sigilFragmentTwo} ${
+                      lineIndex >= 1 ? styles.sigilFragmentActive : ""
+                    } ${lineIndex >= 2 ? styles.sigilFragmentDrift : ""}`}
+                  />
+                  <path
+                    d="M228 120 C248 90, 286 88, 308 122"
+                    className={`${styles.sigilFragment} ${styles.sigilFragmentThree} ${
+                      lineIndex >= 2 ? styles.sigilFragmentActive : ""
+                    }`}
+                  />
+                </svg>
+              </div>
               <div className={styles.consideringStory}>
                 <p
                   className={`${styles.consideringThought} ${lineIndex >= 0 ? styles.consideringThoughtActive : ""} ${
