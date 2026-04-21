@@ -25,10 +25,6 @@ function mapSlug(slug) {
   return getPublicSlug(slug);
 }
 
-function getFlowLabel(flowId) {
-  return performanceFlowOptions.find((option) => option.id === flowId)?.label || "";
-}
-
 function buildEventParams(form, selectedType) {
   const params = new URLSearchParams();
   const eventType = selectedType || form.eventType;
@@ -141,7 +137,6 @@ export default function DesignFlow() {
     const pieces = [
       form.guestCount ? `${form.guestCount} guests` : "",
       selectedType || form.eventType,
-      getFlowLabel(form.performanceFlow),
       form.date,
     ].filter(Boolean);
 
@@ -283,14 +278,28 @@ export default function DesignFlow() {
       {step === "considering" ? (
         <section className={`${styles.shell} ${styles.consideringShell}`}>
           <div className={styles.consideringPanel}>
-            <div className={styles.trace} aria-hidden="true">
-              <span />
-              <span />
-              <span />
+            <div className={styles.consideringLead}>
+              <p className={styles.eyebrow}>Considering Your Event</p>
+              <div className={styles.consideringRule} aria-hidden="true">
+                <span />
+                <span />
+              </div>
+              <h2 className={styles.consideringTitle}>Considering your event</h2>
+              <p className={styles.consideringSummary}>
+                A recommendation is taking shape around the room, the pacing, and how attention should move.
+              </p>
             </div>
-            <p className={styles.eyebrow}>Considering Your Event</p>
-            <h2 className={styles.consideringTitle}>Considering your event</h2>
-            <p className={styles.consideringLine}>{interstitialLines[lineIndex]}</p>
+            <div className={styles.consideringSequence}>
+              {interstitialLines.map((line, index) => {
+                const active = lineIndex === index;
+                return (
+                  <p key={line} className={`${styles.consideringStep} ${active ? styles.consideringStepActive : ""}`}>
+                    {line}
+                  </p>
+                );
+              })}
+            </div>
+            <p className={styles.consideringMeta}>{eventSummary}</p>
           </div>
         </section>
       ) : null}

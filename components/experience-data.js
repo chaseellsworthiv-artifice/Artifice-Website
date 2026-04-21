@@ -12,8 +12,8 @@ export const performanceFlowOptions = [
   },
   {
     id: "table",
-    label: "At a table or station",
-    summary: "For trade shows, activations, or intimate gatherings centered around one place.",
+    label: "From a single point",
+    summary: "For intimate gatherings centered around one place, as well as trade shows, conventions, and activations.",
   },
   {
     id: "shared",
@@ -67,7 +67,7 @@ export const experienceContent = {
       {
         id: "focused",
         name: "Focused",
-        descriptor: "Best for larger or faster-moving events.",
+        descriptor: "A shorter-format presence with precise coverage.",
         duration: "60 minutes",
         price: experiencePricing.roaming.focused,
         note: "A concentrated presence built for pace and impact.",
@@ -110,7 +110,7 @@ export const experienceContent = {
       {
         id: "focused",
         name: "Focused",
-        descriptor: "A shorter table presence for selective guest flow.",
+        descriptor: "A shorter-format table presence with precise coverage.",
         duration: "60 minutes",
         price: experiencePricing.table.focused,
         note: "A concise table set for rooms that only need a single refined destination.",

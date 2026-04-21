@@ -58,7 +58,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
             <h2>{experience.detailHeadline || experience.opening}</h2>
             <div className={styles.detailNotes}>
               <p>{experience.opening}</p>
-              <p>{experience.feeling}</p>
+              <p className={styles.detailFeeling}>{experience.feeling}</p>
             </div>
             {isDesigned ? (
               <div className={styles.detailSupport}>
@@ -70,7 +70,6 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
             ) : (
               <div className={styles.detailSupport}>
                 <p>{experience.why}</p>
-                <p>{experience.depthIntro}</p>
                 <p>{durationSupportLine}</p>
                 {experience.audienceNote ? <p>{experience.audienceNote}</p> : null}
               </div>
@@ -108,6 +107,8 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                         key={depth.id}
                         href={detailHref({ basePath, experience, depth, eventContext })}
                         className={`${styles.depthItem} ${isActive ? styles.depthItemActive : ""}`}
+                        scroll={false}
+                        replace
                       >
                         <span className={styles.depthMarker} aria-hidden="true" />
                         <div>
