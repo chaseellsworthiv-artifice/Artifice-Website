@@ -15,11 +15,6 @@ const initialForm = {
 };
 
 const eventTypes = ["Wedding", "Corporate", "Private Event", "Other"];
-const interstitialLines = [
-  "Reviewing guest count",
-  "Considering flow of the room",
-  "Shaping the strongest experience",
-];
 
 function mapSlug(slug) {
   return getPublicSlug(slug);
@@ -93,9 +88,13 @@ export default function DesignFlow() {
       );
     }
 
-    const lineTimer = window.setInterval(() => {
-      setLineIndex((current) => (current + 1) % interstitialLines.length);
-    }, 650);
+    const firstBeat = window.setTimeout(() => {
+      setLineIndex(1);
+    }, 880);
+
+    const secondBeat = window.setTimeout(() => {
+      setLineIndex(2);
+    }, 1820);
 
     const revealTimer = window.setTimeout(() => {
       setResult(recommendation);
@@ -113,10 +112,11 @@ export default function DesignFlow() {
           })
         );
       }
-    }, 1850);
+    }, 2850);
 
     return () => {
-      window.clearInterval(lineTimer);
+      window.clearTimeout(firstBeat);
+      window.clearTimeout(secondBeat);
       window.clearTimeout(revealTimer);
     };
   }, [form, selectedType, step]);
@@ -133,6 +133,14 @@ export default function DesignFlow() {
   }, [form, selectedType]);
 
   const eventParams = useMemo(() => buildEventParams(form, selectedType), [form, selectedType]);
+  const consideringRecommendation = useMemo(
+    () =>
+      buildRecommendation({
+        ...form,
+        eventType: selectedType || form.eventType,
+      }),
+    [form, selectedType]
+  );
   const eventSummary = useMemo(() => {
     const pieces = [
       form.guestCount ? `${form.guestCount} guests` : "",
@@ -279,25 +287,26 @@ export default function DesignFlow() {
         <section className={`${styles.shell} ${styles.consideringShell}`}>
           <div className={styles.consideringPanel}>
             <div className={styles.consideringLead}>
-              <p className={styles.eyebrow}>Considering Your Event</p>
+              <p className={styles.eyebrow}>Composing The Recommendation</p>
               <div className={styles.consideringRule} aria-hidden="true">
                 <span />
                 <span />
               </div>
-              <h2 className={styles.consideringTitle}>Considering your event</h2>
-              <p className={styles.consideringSummary}>
-                A recommendation is taking shape around the room, the pacing, and how attention should move.
-              </p>
-            </div>
-            <div className={styles.consideringSequence}>
-              {interstitialLines.map((line, index) => {
-                const active = lineIndex === index;
-                return (
-                  <p key={line} className={`${styles.consideringStep} ${active ? styles.consideringStepActive : ""}`}>
-                    {line}
-                  </p>
-                );
-              })}
+              <div className={styles.consideringStory}>
+                <p
+                  className={`${styles.consideringThought} ${lineIndex >= 0 ? styles.consideringThoughtActive : ""} ${
+                    lineIndex >= 2 ? styles.consideringThoughtRecede : ""
+                  }`}
+                >
+                  Every room asks differently.
+                </p>
+                <p className={`${styles.consideringWhisper} ${lineIndex >= 1 ? styles.consideringWhisperActive : ""}`}>
+                  The room decides the shape of it.
+                </p>
+                <p className={`${styles.consideringVerdict} ${lineIndex >= 2 ? styles.consideringVerdictActive : ""}`}>
+                  I would begin with {consideringRecommendation.primary.name}.
+                </p>
+              </div>
             </div>
             <p className={styles.consideringMeta}>{eventSummary}</p>
           </div>
