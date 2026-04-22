@@ -79,7 +79,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
           <div className={styles.detailCard}>
             {isDesigned ? (
               <>
-                <p className={styles.cardEyebrow}>Custom Inquiry</p>
+                <p className={styles.cardEyebrow}>Custom Request</p>
                 <h3>Designed around the evening, not added onto it.</h3>
                 <p>
                   This path is for events where the experience should help shape the evening itself, rather than simply
@@ -87,7 +87,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                 </p>
                 <p className={styles.selectionNote}>{experience.depthIntro}</p>
                 <Link href={inquiryHref({ experience, eventContext })} className={styles.primaryAction}>
-                  Custom Inquiry
+                  Custom Request
                 </Link>
               </>
             ) : (

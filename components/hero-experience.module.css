@@ -972,6 +972,10 @@
   filter: saturate(0.64) brightness(0.66) contrast(1.18) sepia(0.02);
 }
 
+.aboutPortrait {
+  filter: saturate(0.68) brightness(0.74) contrast(1.12) sepia(0.02);
+}
+
 
 .experienceFrame {
   min-height: 24rem;

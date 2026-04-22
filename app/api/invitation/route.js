@@ -47,7 +47,7 @@ export async function POST(request) {
         mode: storageResult.mode,
       });
     } catch (notificationError) {
-      console.error("Inquiry notification failed", notificationError);
+      console.error("Request notification failed", notificationError);
     }
 
     return NextResponse.json({

@@ -14,12 +14,12 @@ export async function PATCH(request, context) {
     const record = await updateInquiry(id, updates);
 
     if (!record) {
-      return NextResponse.json({ error: "Inquiry not found." }, { status: 404 });
+      return NextResponse.json({ error: "Request not found." }, { status: 404 });
     }
 
     return NextResponse.json({ ok: true, inquiry: record });
   } catch (error) {
-    console.error("Update inquiry failed", error);
-    return NextResponse.json({ error: "Unable to update inquiry." }, { status: 500 });
+    console.error("Update request failed", error);
+    return NextResponse.json({ error: "Unable to update request." }, { status: 500 });
   }
 }

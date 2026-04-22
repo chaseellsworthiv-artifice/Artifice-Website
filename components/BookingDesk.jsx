@@ -76,7 +76,7 @@ export default function BookingDesk({ initialInquiries, initialBookings, initial
       <header className={styles.header}>
         <p className={styles.kicker}>Booking Flow</p>
         <h1>Booking desk</h1>
-        <p className={styles.subtitle}>Convert qualified inquiries into booking records using the current availability layer.</p>
+        <p className={styles.subtitle}>Convert qualified requests into booking records using the current availability layer.</p>
       </header>
 
       <section className={styles.shell}>
@@ -101,12 +101,12 @@ export default function BookingDesk({ initialInquiries, initialBookings, initial
         <section className={styles.detail}>
           <form className={styles.controls} onSubmit={handleSubmit}>
             <label className={styles.controlBlock}>
-              <span>Inquiry</span>
+              <span>Request</span>
               <select name="inquiryId" defaultValue="">
                 <option value="">Manual entry</option>
                 {inquiries.map((inquiry) => (
                   <option key={inquiry.id} value={inquiry.id}>
-                    {inquiry.name} · {inquiry.event_type ?? inquiry.eventType ?? "Inquiry"}
+                    {inquiry.name} · {inquiry.event_type ?? inquiry.eventType ?? "Request"}
                   </option>
                 ))}
               </select>

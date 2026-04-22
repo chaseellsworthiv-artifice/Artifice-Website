@@ -36,10 +36,10 @@ function buildEmailContent(eventType, payload) {
   if (eventType === "inquiry.created") {
     const submission = payload.submission ?? {};
     return {
-      subject: "New Artifice Inquiry",
+      subject: "New Artifice Request",
       html: `
         <div style="font-family: Georgia, serif; line-height: 1.55; color: #111; max-width: 700px;">
-          <h2 style="margin: 0 0 18px; font-weight: 500;">New Artifice Inquiry</h2>
+          <h2 style="margin: 0 0 18px; font-weight: 500;">New Artifice Request</h2>
           <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
             <tr><td style="padding: 8px 0; color: #6b5a38; width: 160px;">Name</td><td style="padding: 8px 0;">${escapeHtml(submission.name || "Unknown")}</td></tr>
             <tr><td style="padding: 8px 0; color: #6b5a38;">Email</td><td style="padding: 8px 0;">${escapeHtml(submission.email || "Unknown")}</td></tr>
@@ -55,7 +55,7 @@ function buildEmailContent(eventType, payload) {
         </div>
       `,
       text: [
-        "New Artifice Inquiry",
+        "New Artifice Request",
         "",
         `Name: ${submission.name || "Unknown"}`,
         `Email: ${submission.email || "Unknown"}`,

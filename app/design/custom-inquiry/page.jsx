@@ -1,8 +1,8 @@
 import DesignInquiry from "../../../components/DesignInquiry";
 
 export const metadata = {
-  title: "Custom Inquiry | Artifice",
-  description: "Design a custom Artifice experience around your event.",
+  title: "Custom Request | Artifice",
+  description: "Request an Artifice experience shaped around your event.",
 };
 
 export default async function DesignInquiryPage({ searchParams }) {

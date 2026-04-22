@@ -854,7 +854,7 @@ export default function HeroExperience() {
 
         <section id="about" ref={(node) => { sectionRefs.current[2] = node; }} className={`${styles.section} ${styles.splitSection} ${styles.reverse}`}>
           <div className={styles.portraitFrame} data-section-reveal>
-            <img src="/assets/images/chase-headshot.jpg" alt="Chase Ellsworth" className={styles.portrait} />
+            <img src="/assets/images/chase-headshot.jpg" alt="Chase Ellsworth" className={`${styles.portrait} ${styles.aboutPortrait}`} />
           </div>
           <div className={styles.sectionCopy} data-section-reveal>
             <p className={styles.sectionLabel}>About</p>

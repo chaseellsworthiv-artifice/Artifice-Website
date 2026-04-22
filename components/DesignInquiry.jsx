@@ -93,14 +93,14 @@ export default function DesignInquiry({ initialValues }) {
       });
 
       if (!response.ok) {
-        throw new Error("Inquiry failed");
+        throw new Error("Request failed");
       }
 
       setState("submitted");
     } catch (submitError) {
-      console.error("Design inquiry failed", submitError);
+      console.error("Design request failed", submitError);
       setState("idle");
-      setError("The inquiry did not go through. Please try again.");
+      setError("The request did not go through. Please try again.");
     }
   }
 
@@ -109,10 +109,10 @@ export default function DesignInquiry({ initialValues }) {
       <main className={styles.page}>
         <section className={styles.shell}>
           <div className={styles.confirmationEditorial}>
-            <p className={styles.eyebrow}>Inquiry Received</p>
-            <h1 className={styles.title}>Inquiry received.</h1>
+            <p className={styles.eyebrow}>Request Received</p>
+            <h1 className={styles.title}>Your request is in hand.</h1>
             <p className={styles.subtext}>
-              I’ll review the details and follow up with a recommended structure for your event.
+              I’ll review the details and follow up with the next step for your event.
             </p>
             <div className={styles.formActions}>
               <Link href="/" className={styles.primaryAction}>

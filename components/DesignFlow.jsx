@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
-import { buildRecommendation, getPublicSlug, performanceFlowOptions } from "./experience-data";
+import { buildRecommendation, getPublicSlug } from "./experience-data";
 import styles from "./design.module.css";
 
 const initialForm = {
@@ -240,28 +240,6 @@ export default function DesignFlow() {
                 </div>
               </div>
 
-              <div className={`${styles.field} ${styles.fullWidth}`}>
-                <span>Choose how the room should experience it.</span>
-                <div className={styles.flowOptions}>
-                  {performanceFlowOptions.map((option) => {
-                    const active = form.performanceFlow === option.id;
-                    return (
-                      <button
-                        key={option.id}
-                        type="button"
-                        className={`${styles.flowOption} ${active ? styles.flowOptionActive : ""}`}
-                        onClick={() => setForm((current) => ({ ...current, performanceFlow: option.id }))}
-                        aria-pressed={active}
-                      >
-                        <span className={styles.flowIndicator} aria-hidden="true" />
-                        <strong>{option.label}</strong>
-                        <small>{option.summary}</small>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
               <label className={`${styles.field} ${styles.fullWidth}`}>
                 <span>A Few Details</span>
                 <textarea
@@ -269,7 +247,7 @@ export default function DesignFlow() {
                   rows="5"
                   value={form.details}
                   onChange={handleChange}
-                  placeholder="Anything I should know about the setting, pacing, or kind of experience you want to create?"
+                  placeholder="Anything I should know about the room, pacing, venue, or atmosphere you want to create?"
                 />
               </label>
 
@@ -367,7 +345,7 @@ export default function DesignFlow() {
               </p>
             </div>
             <Link href={inquiryHref} className={styles.secondaryAction}>
-              Custom Inquiry
+              Custom Request
             </Link>
           </div>
         </section>

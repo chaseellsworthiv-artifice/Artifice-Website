@@ -47,7 +47,7 @@ export default function InquiryDashboard({ initialInquiries }) {
       );
     } catch (issue) {
       console.error(issue);
-      setError("Could not save this inquiry.");
+      setError("Could not save this request.");
     } finally {
       setSaving(false);
     }
@@ -57,7 +57,7 @@ export default function InquiryDashboard({ initialInquiries }) {
     <main className={styles.page}>
       <header className={styles.header}>
         <p className={styles.kicker}>Private Queue</p>
-        <h1>Inquiry desk</h1>
+        <h1>Request desk</h1>
         <p className={styles.subtitle}>A minimal internal view for reviewing new interest before the booking flow takes over.</p>
       </header>
 
@@ -75,12 +75,12 @@ export default function InquiryDashboard({ initialInquiries }) {
                   <span>{inquiry.name}</span>
                   <span className={styles.status}>{inquiry.status}</span>
                 </div>
-                <p>{inquiry.event_type ?? inquiry.eventType ?? "Event inquiry"}</p>
+                <p>{inquiry.event_type ?? inquiry.eventType ?? "Event request"}</p>
                 <small>{formatDate(inquiry.submitted_at ?? inquiry.submittedAt ?? inquiry.createdAt)}</small>
               </button>
             ))
           ) : (
-            <div className={styles.empty}>No inquiries yet.</div>
+            <div className={styles.empty}>No requests yet.</div>
           )}
         </aside>
 
@@ -89,7 +89,7 @@ export default function InquiryDashboard({ initialInquiries }) {
             <>
               <div className={styles.detailHeader}>
                 <div>
-                  <p className={styles.detailLabel}>Selected inquiry</p>
+                  <p className={styles.detailLabel}>Selected request</p>
                   <h2>{selectedInquiry.name}</h2>
                 </div>
                 <div className={styles.meta}>
@@ -156,7 +156,7 @@ export default function InquiryDashboard({ initialInquiries }) {
               {error ? <p className={styles.error}>{error}</p> : null}
             </>
           ) : (
-            <div className={styles.empty}>No inquiry selected.</div>
+            <div className={styles.empty}>No request selected.</div>
           )}
         </section>
       </section>

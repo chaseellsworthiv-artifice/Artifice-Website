@@ -182,77 +182,118 @@ export const experienceContent = {
 };
 
 export const recommendationReasons = {
-  "explicit-roaming": "Because you want the experience to unfold naturally throughout the room, I would begin with Roaming. It asks the least of the event while creating moments that travel through the room.",
-  "explicit-table": "Because you want a dedicated point of invitation, I would begin with Table. This works best when the event can support a table, chair, or station guests can naturally approach.",
-  "explicit-cabaret": "Because you want one shared performance for everyone, I would begin with Cabaret. This works best when the room can briefly gather attention and introduce a focused moment.",
+  "explicit-cabaret": "Because this sounds like a moment where the room can gather around one shared focus, I would begin with Cabaret.",
   "cabaret-too-large": "Because a shared performance for this guest count would need more structure, I would begin with Roaming unless you want to plan a more tailored room-wide moment.",
-  "table-trade-show": "Because your event sounds station-based, I would begin with Table. When guests are already moving between attractions, the experience works best as a destination.",
-  "table-single-dinner": "Because your event sounds centered around a single table, I would begin with Table — a focused point of invitation where the experience can unfold naturally.",
+  "table-commercial": "Because this sounds like an environment where guests will already be moving between points of interest, I would begin with Table. A fixed point gives the experience gravity without competing with the room.",
+  "table-intimate": "Because this sounds centered around one close point of attention, I would begin with Table. It gives the experience a quiet point of gravity without needing the room to change shape.",
   "roaming-multiple-tables": "Because guests will be spread across multiple tables or a reception-style room, I would begin with Roaming so the experience can move naturally without asking the room to shift focus.",
-  "roaming-social-flow": "Because your event sounds social and fluid, I would begin with Roaming. It moves through the room naturally without requiring a setup, announcement, or change in flow.",
+  "roaming-social-flow": "Because this sounds social and fluid, I would begin with Roaming. It lets the experience move naturally through the room without asking the event to stop.",
   "roaming-default": "Because this format is the most versatile and asks the least of the room, I would begin with Roaming and let the experience adapt to the event as it unfolds.",
 };
 
 const detailSignals = {
-  tableTradeShow: [
+  tableCommercial: [
     "trade show",
     "convention",
     "expo",
     "booth",
-    "activation",
-    "vendor",
+    "vendor table",
     "exhibit",
-    "stations",
-    "multiple attractions",
-    "guests walking around",
-    "people walking around",
+    "brand activation",
+    "product activation",
+    "activation",
+    "hosted station",
+    "demo station",
+    "fixed station",
   ],
-  tableSingleDinner: [
+  tableIntimate: [
     "single dinner table",
     "one dinner table",
-    "one table",
+    "around one table",
     "around the table",
-    "around a table",
-    "dinner table",
     "family dinner",
-    "friends dinner",
-    "small dinner",
+    "private dinner",
     "intimate dinner",
-    "small get together",
-    "small gathering",
+    "dinner party",
+    "small dinner",
+    "small group around a table",
+    "coffee table",
+    "dining room table",
   ],
   roamingMultipleTables: [
-    "multiple tables",
+    "multiple dinner tables",
     "dinner tables",
     "banquet tables",
-    "several tables",
-    "wedding reception",
+    "seated at multiple tables",
   ],
   roamingSocialFlow: [
     "cocktail hour",
-    "cocktail party",
+    "cocktail reception",
     "reception",
-    "mixer",
-    "networking",
     "mingling",
-    "gala",
-    "fundraiser",
+    "networking",
+    "mixer",
+    "lounge",
+    "lounge areas",
+    "guests spread out",
+    "open room",
+    "moving through the room",
   ],
   cabaretShared: [
     "perform for everyone",
+    "performance for everyone",
+    "everyone watching",
+    "everyone gathered",
+    "everyone together",
     "everyone at once",
     "all at once",
-    "whole room",
-    "full room",
-    "all guests together",
-    "shared performance",
     "one shared moment",
+    "shared moment",
+    "shared performance",
+    "featured performance",
+    "room-wide performance",
+    "room wide performance",
     "short show",
     "brief show",
+    "after dinner show",
+    "after dinner performance",
+    "after dinner moment",
+    "seated audience",
+    "audience seating",
+    "gather everyone",
+    "gather the room",
+    "bring everyone together",
     "introduce you",
     "make an announcement",
-    "gather everyone",
-    "everyone together",
+    "announcement before",
+    "formal performance",
+  ],
+  tableSoft: [
+    "guests come to one place",
+    "fixed point",
+    "focal point",
+    "dedicated table",
+    "performance table",
+  ],
+  cabaretSoft: [
+    "one focused moment",
+    "room-wide moment",
+    "room wide moment",
+    "gathered attention",
+    "seated audience",
+    "audience seating",
+  ],
+  cabaretPairedAfterDinner: [
+    "after dinner performance",
+    "after dinner show",
+    "after dinner moment",
+  ],
+  tablePairedStation: [
+    "hosted station",
+    "demo station",
+    "brand station",
+    "activation station",
+    "vendor station",
   ],
 };
 
@@ -268,6 +309,10 @@ function includesAny(text, phrases) {
   return phrases.some((phrase) => text.includes(phrase));
 }
 
+function scoreSignals(text, phrases) {
+  return phrases.reduce((score, phrase) => score + (text.includes(phrase) ? 1 : 0), 0);
+}
+
 function getPerformanceFlow(value) {
   const normalized = normalizeText(value);
   return performanceFlowOptions.some((option) => option.id === normalized) ? normalized : "";
@@ -281,46 +326,62 @@ function pickRecommendation(input) {
   const combined = `${eventType} ${details}`;
 
   const hasCabaretSignal = includesAny(combined, detailSignals.cabaretShared);
-  const hasTableTradeSignal = includesAny(combined, detailSignals.tableTradeShow);
-  const hasTableDinnerSignal = includesAny(combined, detailSignals.tableSingleDinner);
+  const hasTableCommercialSignal = includesAny(combined, detailSignals.tableCommercial);
+  const hasTableIntimateSignal = includesAny(combined, detailSignals.tableIntimate);
   const hasRoamingTableSignal = includesAny(combined, detailSignals.roamingMultipleTables);
   const hasRoamingSocialSignal = includesAny(combined, detailSignals.roamingSocialFlow);
-  const isSmallPrivateDinner =
-    guestCount > 0 &&
-    guestCount <= 24 &&
-    eventType.includes("private") &&
-    ["family", "friends", "dinner"].some((term) => details.includes(term));
+  const isSmallEnoughForTable = guestCount > 0 && guestCount <= 25;
+  const isSmallEnoughForCabaret = guestCount > 0 && guestCount <= 75;
 
-  if ((performanceFlow === "shared" || hasCabaretSignal) && guestCount > 75) {
+  if (hasTableCommercialSignal) {
+    return { slug: "table", reasonCode: "table-commercial" };
+  }
+
+  if (hasCabaretSignal && !isSmallEnoughForCabaret) {
     return { slug: "roaming", reasonCode: "cabaret-too-large" };
   }
 
-  if ((performanceFlow === "shared" || hasCabaretSignal) && guestCount > 0 && guestCount <= 75) {
+  if (hasCabaretSignal && isSmallEnoughForCabaret) {
     return { slug: "cabaret", reasonCode: "explicit-cabaret" };
+  }
+
+  if (hasTableIntimateSignal && isSmallEnoughForTable) {
+    return { slug: "table", reasonCode: "table-intimate" };
   }
 
   if (hasRoamingTableSignal) {
     return { slug: "roaming", reasonCode: "roaming-multiple-tables" };
   }
 
-  if (hasTableTradeSignal) {
-    return { slug: "table", reasonCode: "table-trade-show" };
-  }
-
-  if (hasTableDinnerSignal || isSmallPrivateDinner) {
-    return { slug: "table", reasonCode: "table-single-dinner" };
-  }
-
-  if (performanceFlow === "table") {
-    return { slug: "table", reasonCode: "explicit-table" };
-  }
-
-  if (performanceFlow === "throughout") {
-    return { slug: "roaming", reasonCode: "explicit-roaming" };
-  }
-
   if (hasRoamingSocialSignal) {
     return { slug: "roaming", reasonCode: "roaming-social-flow" };
+  }
+
+  const scores = {
+    roaming: scoreSignals(combined, [...detailSignals.roamingSocialFlow, ...detailSignals.roamingMultipleTables]),
+    table: scoreSignals(combined, [...detailSignals.tableSoft, ...detailSignals.tablePairedStation]),
+    cabaret: isSmallEnoughForCabaret
+      ? scoreSignals(combined, [...detailSignals.cabaretSoft, ...detailSignals.cabaretPairedAfterDinner])
+      : 0,
+  };
+
+  if (performanceFlow === "throughout") scores.roaming += 1;
+  if (performanceFlow === "table") scores.table += 1;
+  if (performanceFlow === "shared" && isSmallEnoughForCabaret) scores.cabaret += 1;
+
+  const highScore = Math.max(scores.roaming, scores.table, scores.cabaret);
+
+  if (highScore > 0) {
+    const winners = Object.entries(scores)
+      .filter(([, score]) => score === highScore)
+      .map(([slug]) => slug);
+
+    if (winners.length === 1) {
+      const [winner] = winners;
+      if (winner === "table") return { slug: "table", reasonCode: "table-intimate" };
+      if (winner === "cabaret") return { slug: "cabaret", reasonCode: "explicit-cabaret" };
+      return { slug: "roaming", reasonCode: "roaming-social-flow" };
+    }
   }
 
   return { slug: "roaming", reasonCode: "roaming-default" };
