@@ -973,7 +973,7 @@
 }
 
 .aboutPortrait {
-  filter: saturate(0.68) brightness(0.74) contrast(1.12) sepia(0.02);
+  filter: none;
 }
 
 
