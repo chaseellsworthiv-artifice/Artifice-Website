@@ -868,19 +868,26 @@ export default function HeroExperience() {
         </section>
 
         <section id="begin" ref={(node) => { sectionRefs.current[4] = node; }} className={`${styles.section} ${styles.beginSection}`}>
-          <div className={styles.beginInner} data-section-reveal>
-            <p className={styles.sectionLabel}>Begin</p>
-            <h2>
-              Start with the event.
-              <span>I’ll guide the rest.</span>
-            </h2>
-            <p>
-              Every room asks for something different. Share a few details, and I’ll recommend the experience I would begin with.
-            </p>
-            <div className={styles.beginActions}>
-              <a href="/design" className={styles.primaryLink}>
-                Explore Experiences
-              </a>
+          <div className={styles.beginLayout}>
+            <div className={styles.beginInner} data-section-reveal>
+              <p className={styles.sectionLabel}>Begin</p>
+              <h2>
+                Start with the event.
+                <span>I’ll guide the rest.</span>
+              </h2>
+              <p>
+                Every room asks for something different. Share a few details, and I’ll recommend the experience I would begin with.
+              </p>
+              <div className={styles.beginActions}>
+                <a href="/design" className={styles.primaryLink}>
+                  Explore Experiences
+                </a>
+              </div>
+            </div>
+
+            <div className={styles.beginMedia} data-section-reveal>
+              <img src="/assets/images/begin-hands.jpg" alt="Hands guiding a deck of cards through motion." className={styles.beginImage} />
+              <div className={styles.beginMediaGlow} aria-hidden="true" />
             </div>
           </div>
         </section>
