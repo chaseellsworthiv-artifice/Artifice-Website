@@ -854,7 +854,7 @@ export default function HeroExperience() {
 
         <section id="about" ref={(node) => { sectionRefs.current[2] = node; }} className={`${styles.section} ${styles.aboutSection}`}>
           <div className={styles.aboutScene} data-section-reveal>
-            <img src="/assets/images/about-hallway-wide.jpg" alt="Chase Ellsworth standing in a dim hallway." className={styles.aboutImage} />
+            <img src="/assets/images/chase-about-hallway.jpg" alt="Chase Ellsworth standing in a dim hallway." className={styles.aboutImage} />
             <div className={styles.aboutAtmosphere} aria-hidden="true" />
             <div className={styles.aboutCopy}>
               <p className={styles.sectionLabel}>About</p>
