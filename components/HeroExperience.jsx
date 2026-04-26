@@ -852,18 +852,19 @@ export default function HeroExperience() {
           </div>
         </section>
 
-        <section id="about" ref={(node) => { sectionRefs.current[2] = node; }} className={`${styles.section} ${styles.splitSection} ${styles.reverse}`}>
-          <div className={styles.portraitFrame} data-section-reveal>
-            <img src="/assets/images/chase-about-hallway.jpg" alt="Chase Ellsworth" className={`${styles.portrait} ${styles.aboutPortrait}`} />
-          </div>
-          <div className={styles.sectionCopy} data-section-reveal>
-            <p className={styles.sectionLabel}>About</p>
-            <h2>Years of discipline, refined into something that feels effortless.</h2>
-            <p>
-              Based in Chattanooga, Chase Ellsworth performs close-up sleight of hand built from ordinary objects,
-              exacting technique, and direct human contact. No gimmicks, no stooges, and nothing disposable — just
-              craft designed to place the impossible in your guest’s own hands.
-            </p>
+        <section id="about" ref={(node) => { sectionRefs.current[2] = node; }} className={`${styles.section} ${styles.aboutSection}`}>
+          <div className={styles.aboutScene} data-section-reveal>
+            <img src="/assets/images/about-hallway-wide.jpg" alt="Chase Ellsworth standing in a dim hallway." className={styles.aboutImage} />
+            <div className={styles.aboutAtmosphere} aria-hidden="true" />
+            <div className={styles.aboutCopy}>
+              <p className={styles.sectionLabel}>About</p>
+              <h2>Years of discipline, refined into something that feels effortless.</h2>
+              <p>
+                Based in Chattanooga, Chase Ellsworth performs close-up sleight of hand built from ordinary objects,
+                exacting technique, and direct human contact. No gimmicks, no stooges, and nothing disposable — just
+                craft designed to place the impossible in your guest’s own hands.
+              </p>
+            </div>
           </div>
         </section>
 
