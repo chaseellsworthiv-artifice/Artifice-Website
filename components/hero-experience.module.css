@@ -555,18 +555,16 @@
 
 .aboutImage {
   position: absolute;
-  inset: 0;
+  inset: 0 0 0 auto;
   display: block;
-  width: 100%;
+  width: min(64vw, 54rem);
   height: 100%;
   object-fit: cover;
-  object-position: 62% 18%;
-  transform: scale(1.015);
-  filter: saturate(0.96) brightness(1.04) contrast(1.01);
-  -webkit-mask-image:
-    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.52) 6%, #000 14%, #000 84%, rgba(0, 0, 0, 0.58) 92%, transparent 100%);
-  mask-image:
-    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.52) 6%, #000 14%, #000 84%, rgba(0, 0, 0, 0.58) 92%, transparent 100%);
+  object-position: 64% 18%;
+  transform: scale(1.02);
+  filter: saturate(0.96) brightness(1.02) contrast(1.01);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.16) 12%, rgba(0, 0, 0, 0.82) 30%, #000 44%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.16) 12%, rgba(0, 0, 0, 0.82) 30%, #000 44%, #000 100%);
 }
 
 .aboutAtmosphere {
@@ -575,8 +573,8 @@
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(4, 4, 5, 0.72) 0%, rgba(4, 4, 5, 0.58) 16%, rgba(4, 4, 5, 0.22) 38%, rgba(4, 4, 5, 0.08) 56%, rgba(4, 4, 5, 0.16) 100%),
-    linear-gradient(180deg, rgba(4, 4, 5, 0.04) 0%, rgba(4, 4, 5, 0.02) 18%, rgba(4, 4, 5, 0.08) 66%, rgba(4, 4, 5, 0.7) 100%);
+    linear-gradient(90deg, rgba(4, 4, 5, 0.88) 0%, rgba(4, 4, 5, 0.78) 20%, rgba(4, 4, 5, 0.34) 42%, rgba(4, 4, 5, 0.12) 62%, rgba(4, 4, 5, 0.16) 100%),
+    linear-gradient(180deg, rgba(4, 4, 5, 0.14) 0%, rgba(4, 4, 5, 0.06) 16%, rgba(4, 4, 5, 0.08) 70%, rgba(4, 4, 5, 0.78) 100%);
 }
 
 .aboutCopy {
@@ -1580,23 +1578,28 @@
   }
 
   .aboutScene {
-    min-height: 29rem;
+    min-height: 30rem;
   }
 
   .aboutAtmosphere {
     background:
-      linear-gradient(180deg, rgba(4, 4, 5, 0.08) 0%, rgba(4, 4, 5, 0.04) 16%, rgba(4, 4, 5, 0.18) 58%, rgba(4, 4, 5, 0.82) 100%),
-      linear-gradient(90deg, rgba(4, 4, 5, 0.5) 0%, rgba(4, 4, 5, 0.24) 26%, rgba(4, 4, 5, 0.1) 54%, rgba(4, 4, 5, 0.3) 100%);
+      linear-gradient(180deg, rgba(4, 4, 5, 0.22) 0%, rgba(4, 4, 5, 0.08) 16%, rgba(4, 4, 5, 0.18) 56%, rgba(4, 4, 5, 0.84) 100%),
+      linear-gradient(90deg, rgba(4, 4, 5, 0.62) 0%, rgba(4, 4, 5, 0.32) 26%, rgba(4, 4, 5, 0.12) 54%, rgba(4, 4, 5, 0.28) 100%);
   }
 
   .aboutCopy {
     width: 100%;
     justify-content: flex-end;
-    padding: 1.6rem 1.25rem 1.4rem;
+    padding: 9.8rem 1.25rem 1.4rem;
   }
 
   .aboutImage {
-    object-position: 58% 18%;
+    inset: 0;
+    width: 100%;
+    object-position: 88% 14%;
+    transform: scale(1.06);
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .aboutCopy h2 {
