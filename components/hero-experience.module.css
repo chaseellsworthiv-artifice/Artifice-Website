@@ -533,7 +533,7 @@
 }
 
 .aboutSection {
-  padding-top: clamp(5.2rem, 7vw, 6.6rem);
+  padding-top: clamp(2.1rem, 3vw, 3rem);
   padding-bottom: clamp(5.6rem, 7vw, 6.8rem);
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
@@ -1571,7 +1571,7 @@
   }
 
   .aboutSection {
-    padding-top: 4.8rem;
+    padding-top: 1.9rem;
     padding-bottom: 5rem;
     margin-left: 0;
     margin-right: 0;
@@ -1584,7 +1584,7 @@
   .aboutAtmosphere {
     background:
       linear-gradient(180deg, rgba(4, 4, 5, 0.22) 0%, rgba(4, 4, 5, 0.08) 16%, rgba(4, 4, 5, 0.18) 56%, rgba(4, 4, 5, 0.84) 100%),
-      linear-gradient(90deg, rgba(4, 4, 5, 0.62) 0%, rgba(4, 4, 5, 0.32) 26%, rgba(4, 4, 5, 0.12) 54%, rgba(4, 4, 5, 0.28) 100%);
+      linear-gradient(90deg, rgba(4, 4, 5, 0.8) 0%, rgba(4, 4, 5, 0.56) 24%, rgba(4, 4, 5, 0.16) 52%, rgba(4, 4, 5, 0.28) 100%);
   }
 
   .aboutCopy {
@@ -1596,8 +1596,8 @@
   .aboutImage {
     inset: 0;
     width: 100%;
-    object-position: 88% 14%;
-    transform: scale(1.06);
+    object-position: 100% 14%;
+    transform: scale(1.08);
     -webkit-mask-image: none;
     mask-image: none;
   }
@@ -2008,7 +2008,7 @@
   }
 
   .aboutSection {
-    padding-top: 4.3rem;
+    padding-top: 1.7rem;
     padding-bottom: 4.7rem;
   }
 
