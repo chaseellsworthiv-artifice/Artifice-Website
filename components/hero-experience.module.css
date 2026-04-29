@@ -557,7 +557,7 @@
   position: absolute;
   inset: 0 0 0 auto;
   display: block;
-  width: min(64vw, 54rem);
+  width: min(82vw, 78rem);
   height: 100%;
 }
 
@@ -566,11 +566,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 64% 18%;
-  transform: scale(1.02);
-  filter: saturate(0.98) brightness(1.12) contrast(1.03);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.16) 12%, rgba(0, 0, 0, 0.82) 30%, #000 44%, #000 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.16) 12%, rgba(0, 0, 0, 0.82) 30%, #000 44%, #000 100%);
+  object-position: 42% 34%;
+  transform: scale(1.01);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.06) 16%, rgba(0, 0, 0, 0.46) 29%, rgba(0, 0, 0, 0.88) 43%, #000 56%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.06) 16%, rgba(0, 0, 0, 0.46) 29%, rgba(0, 0, 0, 0.88) 43%, #000 56%, #000 100%);
 }
 
 .aboutAtmosphere {
@@ -579,8 +578,8 @@
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(4, 4, 5, 0.78) 0%, rgba(4, 4, 5, 0.66) 20%, rgba(4, 4, 5, 0.24) 42%, rgba(4, 4, 5, 0.08) 62%, rgba(4, 4, 5, 0.14) 100%),
-    linear-gradient(180deg, rgba(4, 4, 5, 0.12) 0%, rgba(4, 4, 5, 0.05) 16%, rgba(4, 4, 5, 0.08) 70%, rgba(4, 4, 5, 0.74) 100%);
+    linear-gradient(90deg, rgba(4, 4, 5, 0.88) 0%, rgba(4, 4, 5, 0.78) 22%, rgba(4, 4, 5, 0.34) 44%, rgba(4, 4, 5, 0.08) 66%, rgba(4, 4, 5, 0.14) 100%),
+    linear-gradient(180deg, rgba(4, 4, 5, 0.06) 0%, rgba(4, 4, 5, 0.02) 16%, rgba(4, 4, 5, 0.08) 70%, rgba(4, 4, 5, 0.74) 100%);
 }
 
 .aboutCopy {
@@ -1590,7 +1589,7 @@
   .aboutAtmosphere {
     background:
       linear-gradient(180deg, rgba(4, 4, 5, 0.16) 0%, rgba(4, 4, 5, 0.06) 16%, rgba(4, 4, 5, 0.16) 56%, rgba(4, 4, 5, 0.82) 100%),
-      linear-gradient(90deg, rgba(4, 4, 5, 0.96) 0%, rgba(4, 4, 5, 0.84) 34%, rgba(4, 4, 5, 0.08) 56%, rgba(4, 4, 5, 0.12) 100%);
+      linear-gradient(90deg, rgba(4, 4, 5, 0.96) 0%, rgba(4, 4, 5, 0.86) 36%, rgba(4, 4, 5, 0.16) 62%, rgba(4, 4, 5, 0.14) 100%);
   }
 
   .aboutCopy {
@@ -1600,23 +1599,23 @@
   }
 
   .aboutImage {
-    object-position: 26% 32%;
-    transform: scale(1.08);
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.02) 28%, rgba(0, 0, 0, 0.94) 45%, #000 60%, #000 100%);
-    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.02) 28%, rgba(0, 0, 0, 0.94) 45%, #000 60%, #000 100%);
+    object-position: 26% 34%;
+    transform: scale(1.04);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.04) 22%, rgba(0, 0, 0, 0.56) 38%, rgba(0, 0, 0, 0.94) 54%, #000 68%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.04) 22%, rgba(0, 0, 0, 0.56) 38%, rgba(0, 0, 0, 0.94) 54%, #000 68%, #000 100%);
   }
 
   .aboutPicture {
-    width: 64%;
+    width: 82%;
   }
 
   .aboutCopy h2 {
-    max-width: 8.9ch;
-    font-size: clamp(2rem, 8.8vw, 2.75rem);
+    max-width: 7.8ch;
+    font-size: clamp(2rem, 8.8vw, 2.36rem);
   }
 
   .aboutCopy p:last-child {
-    max-width: 23ch;
+    max-width: 22ch;
     font-size: 1rem;
     line-height: 1.52;
   }
@@ -2031,11 +2030,12 @@
   }
 
   .aboutCopy h2 {
-    font-size: clamp(1.95rem, 9vw, 2.68rem);
+    max-width: 7.8ch;
+    font-size: clamp(2rem, 8.8vw, 2.36rem);
   }
 
   .aboutCopy p:last-child {
-    max-width: 25ch;
+    max-width: 22ch;
     font-size: 0.96rem;
   }
 
