@@ -855,15 +855,8 @@ export default function HeroExperience() {
         <section id="about" ref={(node) => { sectionRefs.current[2] = node; }} className={`${styles.section} ${styles.aboutSection}`}>
           <div className={styles.aboutScene} data-section-reveal>
             <picture className={styles.aboutPicture}>
-              <source
-                type="image/webp"
-                srcSet="/assets/images/about-hallway-back-960.webp 960w, /assets/images/about-hallway-back-1600.webp 1600w, /assets/images/about-hallway-back-2560.webp 2560w"
-                sizes="(max-width: 900px) 82vw, min(82vw, 78rem)"
-              />
-              <source
-                srcSet="/assets/images/about-hallway-back-960.jpg 960w, /assets/images/about-hallway-back-1600.jpg 1600w, /assets/images/about-hallway-back-2560.jpg 2560w"
-                sizes="(max-width: 900px) 82vw, min(82vw, 78rem)"
-              />
+              <source type="image/webp" srcSet="/assets/images/about-hallway-back-2560.webp" />
+              <source srcSet="/assets/images/about-hallway-back-2560.jpg" />
               <img
                 src="/assets/images/about-hallway-back.jpg"
                 alt="Chase Ellsworth standing in a dim hallway."
