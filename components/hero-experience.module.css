@@ -1599,8 +1599,8 @@
   }
 
   .aboutImage {
-    object-position: 30% 34%;
-    transform: scale(1.04);
+    object-position: 34% 34%;
+    transform: scale(1.02);
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.04) 22%, rgba(0, 0, 0, 0.56) 38%, rgba(0, 0, 0, 0.94) 54%, #000 68%, #000 100%);
     mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.04) 22%, rgba(0, 0, 0, 0.56) 38%, rgba(0, 0, 0, 0.94) 54%, #000 68%, #000 100%);
   }
