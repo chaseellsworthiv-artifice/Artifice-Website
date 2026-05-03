@@ -211,11 +211,11 @@
 .enterCue {
   position: fixed;
   left: 50%;
-  bottom: clamp(1.65rem, 4.5vh, 2.9rem);
+  bottom: clamp(5rem, 10vh, 7.25rem);
   z-index: 9;
   display: inline-flex;
-  width: 2.25rem;
-  height: 3.55rem;
+  width: 2.75rem;
+  height: 4.35rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -236,22 +236,35 @@
 
 .enterCueLine {
   display: block;
-  width: 1px;
-  height: clamp(1.75rem, 4vh, 2.45rem);
-  background: linear-gradient(180deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0.76) 38%, rgba(201, 168, 106, 0.46) 100%);
-  box-shadow: 0 0 12px rgba(201, 168, 106, 0.12);
+  width: 2px;
+  height: clamp(2.65rem, 6.2vh, 3.55rem);
+  background: linear-gradient(180deg, rgba(201, 168, 106, 0), rgba(219, 186, 119, 0.98) 34%, rgba(201, 168, 106, 0.74) 100%);
+  box-shadow: 0 0 18px rgba(201, 168, 106, 0.38);
   transform-origin: center top;
   animation: enterCueLine 2.8s cubic-bezier(0.16, 0.72, 0.18, 1) infinite;
 }
 
 .enterCueDot {
   display: block;
-  width: 0.2rem;
-  height: 0.2rem;
+  width: 0.3rem;
+  height: 0.3rem;
   border-radius: 999px;
-  background: rgba(201, 168, 106, 0.64);
-  box-shadow: 0 0 14px rgba(201, 168, 106, 0.16);
+  background: rgba(201, 168, 106, 0.86);
+  box-shadow: 0 0 18px rgba(201, 168, 106, 0.42);
   animation: enterCueDot 2.8s cubic-bezier(0.16, 0.72, 0.18, 1) infinite;
+}
+
+.enterCue::after {
+  content: "";
+  display: block;
+  width: 0.52rem;
+  height: 0.52rem;
+  margin-top: -0.06rem;
+  border-right: 1px solid rgba(219, 186, 119, 0.86);
+  border-bottom: 1px solid rgba(219, 186, 119, 0.86);
+  box-shadow: 4px 4px 14px rgba(201, 168, 106, 0.16);
+  transform: rotate(45deg);
+  animation: enterCueArrow 2.8s cubic-bezier(0.16, 0.72, 0.18, 1) infinite;
 }
 
 .copy {
@@ -460,18 +473,6 @@
   animation-delay: 0.2s;
 }
 
-.heroBookLink.heroBookLink {
-  position: fixed;
-  top: calc(1.24rem + env(safe-area-inset-top));
-  right: clamp(1.1rem, 3vw, 2.15rem);
-  z-index: 10;
-  color: var(--aged-paper);
-  font-size: 0.74rem;
-  letter-spacing: 0.16em;
-  pointer-events: auto;
-  text-shadow: 0 0 18px rgba(0, 0, 0, 0.42);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .primaryLink:hover::before,
   .secondaryLink:hover::before {
@@ -538,6 +539,23 @@
   100% {
     opacity: 0.18;
     transform: translateY(0.48rem);
+  }
+}
+
+@keyframes enterCueArrow {
+  0% {
+    opacity: 0.18;
+    transform: rotate(45deg) translate(-0.08rem, -0.08rem);
+  }
+
+  42% {
+    opacity: 0.74;
+    transform: rotate(45deg) translate(0, 0);
+  }
+
+  100% {
+    opacity: 0.18;
+    transform: rotate(45deg) translate(0.32rem, 0.32rem);
   }
 }
 
@@ -1917,15 +1935,8 @@
     padding-top: var(--hero-copy-offset);
   }
 
-  .heroBookLink.heroBookLink {
-    top: calc(0.95rem + env(safe-area-inset-top));
-    right: 1rem;
-    font-size: 0.66rem;
-    letter-spacing: 0.145em;
-  }
-
   .enterCue {
-    bottom: calc(1.2rem + env(safe-area-inset-bottom));
+    bottom: calc(5.4rem + env(safe-area-inset-bottom));
   }
 
   .copyTitle {
@@ -2096,10 +2107,6 @@
     font-size: 0.98rem;
   }
 
-  .heroBookLink.heroBookLink {
-    font-size: 0.62rem;
-  }
-
   .heroActions {
     gap: 0.9rem;
     margin-top: 1.48rem;
@@ -2196,7 +2203,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .enterCueLine,
-  .enterCueDot {
+  .enterCueDot,
+  .enterCue::after {
     animation: none;
   }
 }

@@ -84,7 +84,6 @@ export default function HeroExperience() {
   const [invitationState, setInvitationState] = useState("idle");
   const [invitationError, setInvitationError] = useState("");
   const heroRef = useRef(null);
-  const heroBookRef = useRef(null);
   const enterCueRef = useRef(null);
   const wordmarkRef = useRef(null);
   const copyBodyRef = useRef(null);
@@ -213,28 +212,25 @@ export default function HeroExperience() {
 
       const leadCopy = copyBodyRef.current?.querySelector("[data-hero-lead]");
       const heroActions = copyBodyRef.current?.querySelector("[data-hero-actions]");
-      const heroBook = heroBookRef.current;
       const enterCue = enterCueRef.current;
 
       gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 6, filter: "blur(5px)" });
       gsap.set(leadCopy, { autoAlpha: 0, y: 12, filter: "blur(2.5px)" });
       gsap.set(heroActions, { autoAlpha: 0, y: 0, filter: "blur(2px)" });
-      gsap.set(heroBook, { autoAlpha: 0, y: -4, filter: "blur(1.6px)" });
       gsap.set(enterCue, { autoAlpha: 0, y: 0 });
       heroActions?.classList.remove(styles.heroActionsRevealed);
 
       const completeHeroBody = () => {
-        gsap.killTweensOf([leadCopy, heroActions, heroBook]);
+        gsap.killTweensOf([leadCopy, heroActions]);
         gsap.set(leadCopy, { autoAlpha: 1, y: 0, filter: "blur(0px)" });
         gsap.set(heroActions, { autoAlpha: 1, y: 0, filter: "blur(0px)" });
-        gsap.set(heroBook, { autoAlpha: 1, y: 0, filter: "blur(0px)" });
         heroActions?.classList.add(styles.heroActionsRevealed);
       };
 
       gsap.to(enterCue, {
-        autoAlpha: 0.72,
+        autoAlpha: 1,
         duration: isReduced ? 0.7 : 0.95,
-        delay: isReduced ? 0.55 : 0.85,
+        delay: isReduced ? 0.28 : 0.42,
         ease: "sine.out",
       });
 
@@ -307,17 +303,6 @@ export default function HeroExperience() {
             },
           },
           0.62
-        )
-        .to(
-          heroBook,
-          {
-            autoAlpha: 1,
-            y: 0,
-            filter: "blur(0px)",
-            duration: 0.82,
-            ease: "sine.out",
-          },
-          0.72
         );
 
       localTriggers.push(ScrollTrigger.create({
@@ -823,9 +808,6 @@ export default function HeroExperience() {
         </button>
 
         <header className={styles.copy}>
-          <a ref={heroBookRef} href="/design" className={`${styles.secondaryLink} ${styles.heroBookLink}`} data-hero-book>
-            Book Artifice
-          </a>
           <div ref={wordmarkRef} className={styles.brandLockup} aria-label="Artifice by Chase Ellsworth">
             <img
               className={styles.wordmarkImage}
@@ -854,7 +836,7 @@ export default function HeroExperience() {
             </p>
             <div className={styles.heroActions} data-hero-actions>
               <a href="/design" className={styles.primaryLink}>
-                Explore Experiences
+                Book Artifice
               </a>
               <a href="#booking" className={styles.secondaryLink}>
                 Contact
