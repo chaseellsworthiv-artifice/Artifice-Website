@@ -91,6 +91,7 @@ export default function HeroExperience() {
   const curtainShellRef = useRef(null);
   const leftClipPathRef = useRef(null);
   const rightClipPathRef = useRef(null);
+  const heroVideoCuedRef = useRef(false);
   const sectionRefs = useRef([]);
   const sliceRefs = useRef([]);
   const imageMetricsRef = useRef({ ready: false, width: 0, height: 0 });
@@ -331,6 +332,10 @@ export default function HeroExperience() {
         scrub: isReduced ? 1 : 0.45,
         onUpdate: (self) => {
           openTargetRef.current = self.progress;
+          if (!heroVideoCuedRef.current && self.progress >= 0.74) {
+            heroVideoCuedRef.current = true;
+            window.dispatchEvent(new CustomEvent("artifice:hero-video-cue"));
+          }
           requestRenderRef.current();
         },
       }));

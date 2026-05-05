@@ -12,17 +12,16 @@ export default function HeroScene() {
     if (!video) return undefined;
 
     let hasStarted = false;
-    const retryTimers = [];
+    let hasBeenCued = false;
 
     const tryPlay = () => {
       if (!video) return;
       video.muted = true;
       video.defaultMuted = true;
       video.playsInline = true;
-      video.autoplay = true;
+      video.autoplay = false;
       video.controls = false;
       video.setAttribute("muted", "");
-      video.setAttribute("autoplay", "");
       video.setAttribute("playsinline", "");
       video.setAttribute("webkit-playsinline", "true");
       video.setAttribute("controlsList", "nodownload nofullscreen noremoteplayback");
@@ -40,6 +39,7 @@ export default function HeroScene() {
     };
 
     const tryPlayIfNeeded = () => {
+      if (!hasBeenCued) return;
       if (hasStarted && !video.paused) return;
       tryPlay();
     };
@@ -54,20 +54,39 @@ export default function HeroScene() {
       tryPlayIfNeeded();
     };
 
-    video.load();
-    tryPlay();
+    const cueVideo = () => {
+      hasBeenCued = true;
+      try {
+        video.currentTime = 0;
+      } catch {
+        // Some browsers can reject seeking before metadata is ready; playback recovery below still handles it.
+      }
+      tryPlay();
+    };
 
-    [120, 320, 700, 1400, 2400].forEach((delay) => {
-      retryTimers.push(window.setTimeout(tryPlayIfNeeded, delay));
-    });
+    const resetToStart = () => {
+      if (hasBeenCued) return;
+      try {
+        video.currentTime = 0;
+      } catch {
+        // The cue will reset again once the curtain reaches the reveal point.
+      }
+      video.pause();
+    };
 
-    video.addEventListener("loadedmetadata", tryPlayIfNeeded);
-    video.addEventListener("loadeddata", tryPlayIfNeeded);
-    video.addEventListener("canplay", tryPlayIfNeeded);
-    video.addEventListener("canplaythrough", tryPlayIfNeeded);
-    video.addEventListener("playing", () => {
+    const onPlaying = () => {
       hasStarted = true;
-    });
+    };
+
+    video.load();
+    video.pause();
+
+    window.addEventListener("artifice:hero-video-cue", cueVideo);
+    video.addEventListener("loadedmetadata", resetToStart);
+    video.addEventListener("loadeddata", resetToStart);
+    video.addEventListener("canplay", resetToStart);
+    video.addEventListener("canplaythrough", tryPlayIfNeeded);
+    video.addEventListener("playing", onPlaying);
     document.addEventListener("visibilitychange", onVisibilityChange);
     window.addEventListener("focus", tryPlayIfNeeded);
     window.addEventListener("pointerdown", recoverOnInteraction, { passive: true });
@@ -76,11 +95,12 @@ export default function HeroScene() {
     window.addEventListener("wheel", recoverOnInteraction, { passive: true });
 
     return () => {
-      retryTimers.forEach((timer) => window.clearTimeout(timer));
-      video.removeEventListener("loadedmetadata", tryPlayIfNeeded);
-      video.removeEventListener("loadeddata", tryPlayIfNeeded);
-      video.removeEventListener("canplay", tryPlayIfNeeded);
+      window.removeEventListener("artifice:hero-video-cue", cueVideo);
+      video.removeEventListener("loadedmetadata", resetToStart);
+      video.removeEventListener("loadeddata", resetToStart);
+      video.removeEventListener("canplay", resetToStart);
       video.removeEventListener("canplaythrough", tryPlayIfNeeded);
+      video.removeEventListener("playing", onPlaying);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("focus", tryPlayIfNeeded);
       window.removeEventListener("pointerdown", recoverOnInteraction);
@@ -96,7 +116,6 @@ export default function HeroScene() {
       <video
         ref={videoRef}
         className={styles.heroVideo}
-        autoPlay
         muted
         loop
         playsInline
