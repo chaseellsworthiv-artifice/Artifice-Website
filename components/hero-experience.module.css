@@ -226,7 +226,8 @@
   opacity: 0;
   pointer-events: none;
   transform: translate3d(-50%, 0, 0);
-  will-change: opacity;
+  will-change: opacity, transform;
+  animation: enterCueSettle 3.8s ease-in-out infinite;
 }
 
 .enterCueReady {
@@ -237,12 +238,11 @@
   position: relative;
   display: block;
   width: 2px;
-  height: clamp(3.35rem, 7vh, 4.25rem);
+  height: clamp(3.1rem, 6.7vh, 4.05rem);
   overflow: hidden;
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0.36) 24%, rgba(201, 168, 106, 0.48) 58%, rgba(201, 168, 106, 0));
+  background: linear-gradient(180deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0.18) 30%, rgba(201, 168, 106, 0.34) 72%, rgba(201, 168, 106, 0));
   box-shadow: 0 0 12px rgba(201, 168, 106, 0.18);
-  animation: enterCueBreathe 4.8s ease-in-out infinite;
 }
 
 .enterCueLine::after {
@@ -251,9 +251,24 @@
   inset: -46% 0 auto;
   height: 54%;
   border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255, 227, 169, 0), rgba(255, 227, 169, 0.98) 48%, rgba(201, 168, 106, 0));
+  background: linear-gradient(180deg, rgba(255, 227, 169, 0), rgba(255, 227, 169, 0.98) 52%, rgba(201, 168, 106, 0));
   box-shadow: 0 0 18px rgba(201, 168, 106, 0.48);
-  animation: enterCueGlint 4.8s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+  animation: enterCueGlint 3.8s cubic-bezier(0.42, 0, 0.2, 1) infinite;
+}
+
+.enterCueEmber {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 999px;
+  background: rgba(255, 227, 169, 0.92);
+  box-shadow:
+    0 0 12px rgba(201, 168, 106, 0.48),
+    0 0 24px rgba(201, 168, 106, 0.22);
+  transform: translate3d(-50%, -2.2rem, 0) scale(0.58);
+  animation: enterCueEmber 3.8s cubic-bezier(0.42, 0, 0.2, 1) infinite;
 }
 
 .copy {
@@ -497,17 +512,17 @@
   }
 }
 
-@keyframes enterCueBreathe {
+@keyframes enterCueSettle {
   0% {
-    opacity: 0.48;
+    transform: translate3d(-50%, 0, 0);
   }
 
-  50% {
-    opacity: 0.92;
+  56% {
+    transform: translate3d(-50%, 0.42rem, 0);
   }
 
   100% {
-    opacity: 0.48;
+    transform: translate3d(-50%, 0.42rem, 0);
   }
 }
 
@@ -517,11 +532,37 @@
   }
 
   62% {
-    transform: translateY(270%);
+    transform: translateY(278%);
   }
 
   100% {
-    transform: translateY(270%);
+    transform: translateY(278%);
+  }
+}
+
+@keyframes enterCueEmber {
+  0% {
+    opacity: 0;
+    transform: translate3d(-50%, -2.16rem, 0) scale(0.52);
+  }
+
+  12% {
+    opacity: 0.84;
+  }
+
+  56% {
+    opacity: 0.86;
+    transform: translate3d(-50%, 2.2rem, 0) scale(0.86);
+  }
+
+  72% {
+    opacity: 0;
+    transform: translate3d(-50%, 2.5rem, 0) scale(0.64);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-50%, 2.5rem, 0) scale(0.64);
   }
 }
 
@@ -2168,8 +2209,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .enterCue,
   .enterCueLine,
-  .enterCueLine::after {
+  .enterCueLine::after,
+  .enterCueEmber {
     animation: none;
   }
 }

@@ -809,6 +809,7 @@ export default function HeroExperience() {
           data-hero-enter
         >
           <span className={styles.enterCueLine} aria-hidden="true" />
+          <span className={styles.enterCueEmber} aria-hidden="true" />
         </button>
 
         <header className={styles.copy}>
