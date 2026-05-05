@@ -214,12 +214,11 @@
   bottom: clamp(5rem, 10vh, 7.25rem);
   z-index: 9;
   display: inline-flex;
-  width: 2.75rem;
-  height: 4.35rem;
+  width: 2.4rem;
+  height: 4.9rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.26rem;
   padding: 0;
   border: 0;
   background: transparent;
@@ -227,7 +226,7 @@
   opacity: 0;
   pointer-events: none;
   transform: translate3d(-50%, 0, 0);
-  will-change: opacity, transform;
+  will-change: opacity;
 }
 
 .enterCueReady {
@@ -235,36 +234,26 @@
 }
 
 .enterCueLine {
+  position: relative;
   display: block;
   width: 2px;
-  height: clamp(2.65rem, 6.2vh, 3.55rem);
-  background: linear-gradient(180deg, rgba(201, 168, 106, 0), rgba(219, 186, 119, 0.98) 34%, rgba(201, 168, 106, 0.74) 100%);
-  box-shadow: 0 0 18px rgba(201, 168, 106, 0.38);
-  transform-origin: center top;
-  animation: enterCueLine 2.8s cubic-bezier(0.16, 0.72, 0.18, 1) infinite;
-}
-
-.enterCueDot {
-  display: block;
-  width: 0.3rem;
-  height: 0.3rem;
+  height: clamp(3.35rem, 7vh, 4.25rem);
+  overflow: hidden;
   border-radius: 999px;
-  background: rgba(201, 168, 106, 0.86);
-  box-shadow: 0 0 18px rgba(201, 168, 106, 0.42);
-  animation: enterCueDot 2.8s cubic-bezier(0.16, 0.72, 0.18, 1) infinite;
+  background: linear-gradient(180deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0.36) 24%, rgba(201, 168, 106, 0.48) 58%, rgba(201, 168, 106, 0));
+  box-shadow: 0 0 12px rgba(201, 168, 106, 0.18);
+  animation: enterCueBreathe 4.8s ease-in-out infinite;
 }
 
-.enterCue::after {
+.enterCueLine::after {
   content: "";
-  display: block;
-  width: 0.52rem;
-  height: 0.52rem;
-  margin-top: -0.06rem;
-  border-right: 1px solid rgba(219, 186, 119, 0.86);
-  border-bottom: 1px solid rgba(219, 186, 119, 0.86);
-  box-shadow: 4px 4px 14px rgba(201, 168, 106, 0.16);
-  transform: rotate(45deg);
-  animation: enterCueArrow 2.8s cubic-bezier(0.16, 0.72, 0.18, 1) infinite;
+  position: absolute;
+  inset: -46% 0 auto;
+  height: 54%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 227, 169, 0), rgba(255, 227, 169, 0.98) 48%, rgba(201, 168, 106, 0));
+  box-shadow: 0 0 18px rgba(201, 168, 106, 0.48);
+  animation: enterCueGlint 4.8s cubic-bezier(0.45, 0, 0.2, 1) infinite;
 }
 
 .copy {
@@ -508,54 +497,31 @@
   }
 }
 
-@keyframes enterCueLine {
+@keyframes enterCueBreathe {
   0% {
-    opacity: 0.22;
-    transform: scaleY(0.58) translateY(-0.05rem);
+    opacity: 0.48;
   }
 
-  42% {
-    opacity: 0.76;
-    transform: scaleY(1) translateY(0);
+  50% {
+    opacity: 0.92;
   }
 
   100% {
-    opacity: 0.2;
-    transform: scaleY(0.72) translateY(0.34rem);
+    opacity: 0.48;
   }
 }
 
-@keyframes enterCueDot {
+@keyframes enterCueGlint {
   0% {
-    opacity: 0.18;
-    transform: translateY(-0.12rem);
-  }
-
-  42% {
-    opacity: 0.68;
     transform: translateY(0);
   }
 
-  100% {
-    opacity: 0.18;
-    transform: translateY(0.48rem);
-  }
-}
-
-@keyframes enterCueArrow {
-  0% {
-    opacity: 0.18;
-    transform: rotate(45deg) translate(-0.08rem, -0.08rem);
-  }
-
-  42% {
-    opacity: 0.74;
-    transform: rotate(45deg) translate(0, 0);
+  62% {
+    transform: translateY(270%);
   }
 
   100% {
-    opacity: 0.18;
-    transform: rotate(45deg) translate(0.32rem, 0.32rem);
+    transform: translateY(270%);
   }
 }
 
@@ -2203,8 +2169,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .enterCueLine,
-  .enterCueDot,
-  .enterCue::after {
+  .enterCueLine::after {
     animation: none;
   }
 }
