@@ -211,15 +211,15 @@
 .enterCue {
   position: fixed;
   left: 50%;
-  bottom: clamp(4.6rem, 9.5vh, 6.8rem);
+  bottom: clamp(4.65rem, 9.5vh, 6.8rem);
   z-index: 9;
   display: inline-flex;
-  width: 4.6rem;
-  height: 6rem;
+  width: 5rem;
+  height: 3.2rem;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.62rem;
+  gap: 0.46rem;
   padding: 0;
   border: 0;
   background: transparent;
@@ -228,7 +228,7 @@
   pointer-events: none;
   transform: translate3d(-50%, 0, 0);
   will-change: opacity, transform;
-  animation: enterCueSettle 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: enterCueSettle 3.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .enterCueLeaving {
@@ -236,7 +236,7 @@
 }
 
 .enterCueLabel {
-  color: rgba(230, 221, 198, 0.72);
+  color: rgba(230, 221, 198, 0.7);
   font-size: 0.62rem;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -249,41 +249,17 @@
   pointer-events: auto;
 }
 
-.enterCueLine {
-  position: relative;
-  display: block;
-  width: 2px;
-  height: clamp(2.2rem, 4.8vh, 3rem);
-  overflow: hidden;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0.24) 20%, rgba(201, 168, 106, 0.42) 70%, rgba(201, 168, 106, 0.06));
-  box-shadow: 0 0 14px rgba(201, 168, 106, 0.22);
-}
-
-.enterCueLine::after {
-  content: "";
-  position: absolute;
-  inset: -50% 0 auto;
-  height: 48%;
-  border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255, 227, 169, 0), rgba(255, 227, 169, 0.98) 52%, rgba(201, 168, 106, 0));
-  box-shadow: 0 0 18px rgba(201, 168, 106, 0.48);
-  opacity: 0;
-  animation: enterCueGlint 4.2s cubic-bezier(0.42, 0, 0.2, 1) infinite;
-}
-
 .enterCue::after {
   content: "";
   display: block;
-  width: 0.72rem;
-  height: 0.72rem;
-  margin-top: -0.3rem;
-  border-right: 1px solid rgba(255, 227, 169, 0.82);
-  border-bottom: 1px solid rgba(255, 227, 169, 0.82);
-  filter: drop-shadow(0 0 10px rgba(201, 168, 106, 0.34));
-  opacity: 0.82;
+  width: 0.64rem;
+  height: 0.64rem;
+  border-right: 1px solid rgba(201, 168, 106, 0.76);
+  border-bottom: 1px solid rgba(201, 168, 106, 0.76);
+  filter: drop-shadow(0 0 8px rgba(201, 168, 106, 0.26));
+  opacity: 0.74;
   transform: rotate(45deg);
-  animation: enterCueArrow 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: enterCueArrow 3.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .copy {
@@ -532,12 +508,12 @@
     transform: translate3d(-50%, 0, 0);
   }
 
-  38% {
-    transform: translate3d(-50%, 0.28rem, 0);
+  42% {
+    transform: translate3d(-50%, 0.22rem, 0);
   }
 
-  74% {
-    transform: translate3d(-50%, 0.28rem, 0);
+  72% {
+    transform: translate3d(-50%, 0.22rem, 0);
   }
 
   100% {
@@ -545,50 +521,24 @@
   }
 }
 
-@keyframes enterCueGlint {
-  0% {
-    opacity: 0;
-    transform: translateY(-8%);
-  }
-
-  12% {
-    opacity: 0.92;
-  }
-
-  48% {
-    opacity: 0.7;
-    transform: translateY(278%);
-  }
-
-  62% {
-    opacity: 0;
-    transform: translateY(302%);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-8%);
-  }
-}
-
 @keyframes enterCueArrow {
   0% {
-    opacity: 0.46;
+    opacity: 0.48;
     transform: translateY(-0.02rem) rotate(45deg);
   }
 
-  38% {
-    opacity: 0.84;
-    transform: translateY(0.1rem) rotate(45deg);
+  42% {
+    opacity: 0.82;
+    transform: translateY(0.12rem) rotate(45deg);
   }
 
-  74% {
-    opacity: 0.64;
-    transform: translateY(0.1rem) rotate(45deg);
+  72% {
+    opacity: 0.62;
+    transform: translateY(0.12rem) rotate(45deg);
   }
 
   100% {
-    opacity: 0.46;
+    opacity: 0.48;
     transform: translateY(-0.02rem) rotate(45deg);
   }
 }
@@ -2237,8 +2187,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .enterCue,
-  .enterCueLine,
-  .enterCueLine::after,
   .enterCue::after {
     animation: none;
   }

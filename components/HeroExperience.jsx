@@ -339,8 +339,8 @@ export default function HeroExperience() {
             gsap.killTweensOf(enterCue);
             gsap.to(enterCue, {
               autoAlpha: 0,
-              y: 10,
-              duration: isReduced ? 0.12 : 0.32,
+              y: 14,
+              duration: isReduced ? 0.18 : 0.52,
               ease: "sine.out",
               onComplete: () => {
                 gsap.set(enterCue, { pointerEvents: "none" });
@@ -824,7 +824,6 @@ export default function HeroExperience() {
           data-hero-enter
         >
           <span className={styles.enterCueLabel}>Scroll</span>
-          <span className={styles.enterCueLine} aria-hidden="true" />
         </button>
 
         <header className={styles.copy}>
