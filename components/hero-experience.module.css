@@ -271,6 +271,21 @@
   animation: enterCueEmber 3.8s cubic-bezier(0.42, 0, 0.2, 1) infinite;
 }
 
+.enterCue::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.46rem;
+  width: 0.58rem;
+  height: 0.58rem;
+  border-right: 1px solid rgba(255, 227, 169, 0.74);
+  border-bottom: 1px solid rgba(255, 227, 169, 0.74);
+  filter: drop-shadow(0 0 8px rgba(201, 168, 106, 0.32));
+  opacity: 0.76;
+  transform: translate3d(-50%, 0, 0) rotate(45deg);
+  animation: enterCueArrow 3.8s ease-in-out infinite;
+}
+
 .copy {
   position: relative;
   z-index: 6;
@@ -563,6 +578,23 @@
   100% {
     opacity: 0;
     transform: translate3d(-50%, 2.5rem, 0) scale(0.64);
+  }
+}
+
+@keyframes enterCueArrow {
+  0% {
+    opacity: 0.4;
+    transform: translate3d(-50%, -0.08rem, 0) rotate(45deg);
+  }
+
+  56% {
+    opacity: 0.82;
+    transform: translate3d(-50%, 0.1rem, 0) rotate(45deg);
+  }
+
+  100% {
+    opacity: 0.42;
+    transform: translate3d(-50%, 0.1rem, 0) rotate(45deg);
   }
 }
 
@@ -2212,7 +2244,8 @@
   .enterCue,
   .enterCueLine,
   .enterCueLine::after,
-  .enterCueEmber {
+  .enterCueEmber,
+  .enterCue::after {
     animation: none;
   }
 }

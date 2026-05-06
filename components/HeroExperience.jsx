@@ -332,6 +332,9 @@ export default function HeroExperience() {
         scrub: isReduced ? 1 : 0.45,
         onUpdate: (self) => {
           openTargetRef.current = self.progress;
+          if (enterCue && self.progress > 0.01) {
+            gsap.set(enterCue, { autoAlpha: 0, pointerEvents: "none" });
+          }
           if (!heroVideoCuedRef.current && self.progress > 0.002) {
             heroVideoCuedRef.current = true;
             window.dispatchEvent(new CustomEvent("artifice:hero-video-cue"));
