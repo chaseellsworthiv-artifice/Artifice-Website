@@ -211,14 +211,15 @@
 .enterCue {
   position: fixed;
   left: 50%;
-  bottom: clamp(5rem, 10vh, 7.25rem);
+  bottom: clamp(4.6rem, 9.5vh, 6.8rem);
   z-index: 9;
   display: inline-flex;
-  width: 2.4rem;
-  height: 4.9rem;
+  width: 4.6rem;
+  height: 6rem;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 0.62rem;
   padding: 0;
   border: 0;
   background: transparent;
@@ -230,6 +231,16 @@
   animation: enterCueSettle 3.8s ease-in-out infinite;
 }
 
+.enterCueLabel {
+  color: rgba(230, 221, 198, 0.72);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.72);
+}
+
 .enterCueReady {
   pointer-events: auto;
 }
@@ -238,51 +249,35 @@
   position: relative;
   display: block;
   width: 2px;
-  height: clamp(3.1rem, 6.7vh, 4.05rem);
+  height: clamp(2.2rem, 4.8vh, 3rem);
   overflow: hidden;
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0.18) 30%, rgba(201, 168, 106, 0.34) 72%, rgba(201, 168, 106, 0));
-  box-shadow: 0 0 12px rgba(201, 168, 106, 0.18);
+  background: linear-gradient(180deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0.24) 20%, rgba(201, 168, 106, 0.42) 70%, rgba(201, 168, 106, 0.06));
+  box-shadow: 0 0 14px rgba(201, 168, 106, 0.22);
 }
 
 .enterCueLine::after {
   content: "";
   position: absolute;
-  inset: -46% 0 auto;
-  height: 54%;
+  inset: -50% 0 auto;
+  height: 48%;
   border-radius: inherit;
   background: linear-gradient(180deg, rgba(255, 227, 169, 0), rgba(255, 227, 169, 0.98) 52%, rgba(201, 168, 106, 0));
   box-shadow: 0 0 18px rgba(201, 168, 106, 0.48);
   animation: enterCueGlint 3.8s cubic-bezier(0.42, 0, 0.2, 1) infinite;
 }
 
-.enterCueEmber {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0.34rem;
-  height: 0.34rem;
-  border-radius: 999px;
-  background: rgba(255, 227, 169, 0.92);
-  box-shadow:
-    0 0 12px rgba(201, 168, 106, 0.48),
-    0 0 24px rgba(201, 168, 106, 0.22);
-  transform: translate3d(-50%, -2.2rem, 0) scale(0.58);
-  animation: enterCueEmber 3.8s cubic-bezier(0.42, 0, 0.2, 1) infinite;
-}
-
 .enterCue::after {
   content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0.46rem;
-  width: 0.58rem;
-  height: 0.58rem;
-  border-right: 1px solid rgba(255, 227, 169, 0.74);
-  border-bottom: 1px solid rgba(255, 227, 169, 0.74);
-  filter: drop-shadow(0 0 8px rgba(201, 168, 106, 0.32));
-  opacity: 0.76;
-  transform: translate3d(-50%, 0, 0) rotate(45deg);
+  display: block;
+  width: 0.72rem;
+  height: 0.72rem;
+  margin-top: -0.3rem;
+  border-right: 1px solid rgba(255, 227, 169, 0.82);
+  border-bottom: 1px solid rgba(255, 227, 169, 0.82);
+  filter: drop-shadow(0 0 10px rgba(201, 168, 106, 0.34));
+  opacity: 0.82;
+  transform: rotate(45deg);
   animation: enterCueArrow 3.8s ease-in-out infinite;
 }
 
@@ -533,11 +528,11 @@
   }
 
   56% {
-    transform: translate3d(-50%, 0.42rem, 0);
+    transform: translate3d(-50%, 0.28rem, 0);
   }
 
   100% {
-    transform: translate3d(-50%, 0.42rem, 0);
+    transform: translate3d(-50%, 0.28rem, 0);
   }
 }
 
@@ -555,46 +550,20 @@
   }
 }
 
-@keyframes enterCueEmber {
+@keyframes enterCueArrow {
   0% {
-    opacity: 0;
-    transform: translate3d(-50%, -2.16rem, 0) scale(0.52);
-  }
-
-  12% {
-    opacity: 0.84;
+    opacity: 0.52;
+    transform: translateY(-0.06rem) rotate(45deg);
   }
 
   56% {
     opacity: 0.86;
-    transform: translate3d(-50%, 2.2rem, 0) scale(0.86);
-  }
-
-  72% {
-    opacity: 0;
-    transform: translate3d(-50%, 2.5rem, 0) scale(0.64);
+    transform: translateY(0.1rem) rotate(45deg);
   }
 
   100% {
-    opacity: 0;
-    transform: translate3d(-50%, 2.5rem, 0) scale(0.64);
-  }
-}
-
-@keyframes enterCueArrow {
-  0% {
-    opacity: 0.4;
-    transform: translate3d(-50%, -0.08rem, 0) rotate(45deg);
-  }
-
-  56% {
-    opacity: 0.82;
-    transform: translate3d(-50%, 0.1rem, 0) rotate(45deg);
-  }
-
-  100% {
-    opacity: 0.42;
-    transform: translate3d(-50%, 0.1rem, 0) rotate(45deg);
+    opacity: 0.54;
+    transform: translateY(0.1rem) rotate(45deg);
   }
 }
 
@@ -2244,7 +2213,6 @@
   .enterCue,
   .enterCueLine,
   .enterCueLine::after,
-  .enterCueEmber,
   .enterCue::after {
     animation: none;
   }

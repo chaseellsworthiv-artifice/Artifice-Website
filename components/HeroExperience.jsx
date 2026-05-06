@@ -811,8 +811,8 @@ export default function HeroExperience() {
           onClick={handleEnterCue}
           data-hero-enter
         >
+          <span className={styles.enterCueLabel}>Scroll</span>
           <span className={styles.enterCueLine} aria-hidden="true" />
-          <span className={styles.enterCueEmber} aria-hidden="true" />
         </button>
 
         <header className={styles.copy}>
