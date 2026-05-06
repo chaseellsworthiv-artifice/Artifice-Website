@@ -228,7 +228,11 @@
   pointer-events: none;
   transform: translate3d(-50%, 0, 0);
   will-change: opacity, transform;
-  animation: enterCueSettle 3.8s ease-in-out infinite;
+  animation: enterCueSettle 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.enterCueLeaving {
+  animation: none;
 }
 
 .enterCueLabel {
@@ -264,7 +268,8 @@
   border-radius: inherit;
   background: linear-gradient(180deg, rgba(255, 227, 169, 0), rgba(255, 227, 169, 0.98) 52%, rgba(201, 168, 106, 0));
   box-shadow: 0 0 18px rgba(201, 168, 106, 0.48);
-  animation: enterCueGlint 3.8s cubic-bezier(0.42, 0, 0.2, 1) infinite;
+  opacity: 0;
+  animation: enterCueGlint 4.2s cubic-bezier(0.42, 0, 0.2, 1) infinite;
 }
 
 .enterCue::after {
@@ -278,7 +283,7 @@
   filter: drop-shadow(0 0 10px rgba(201, 168, 106, 0.34));
   opacity: 0.82;
   transform: rotate(45deg);
-  animation: enterCueArrow 3.8s ease-in-out infinite;
+  animation: enterCueArrow 4.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .copy {
@@ -527,43 +532,64 @@
     transform: translate3d(-50%, 0, 0);
   }
 
-  56% {
+  38% {
+    transform: translate3d(-50%, 0.28rem, 0);
+  }
+
+  74% {
     transform: translate3d(-50%, 0.28rem, 0);
   }
 
   100% {
-    transform: translate3d(-50%, 0.28rem, 0);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @keyframes enterCueGlint {
   0% {
-    transform: translateY(0);
+    opacity: 0;
+    transform: translateY(-8%);
+  }
+
+  12% {
+    opacity: 0.92;
+  }
+
+  48% {
+    opacity: 0.7;
+    transform: translateY(278%);
   }
 
   62% {
-    transform: translateY(278%);
+    opacity: 0;
+    transform: translateY(302%);
   }
 
   100% {
-    transform: translateY(278%);
+    opacity: 0;
+    transform: translateY(-8%);
   }
 }
 
 @keyframes enterCueArrow {
   0% {
-    opacity: 0.52;
-    transform: translateY(-0.06rem) rotate(45deg);
+    opacity: 0.46;
+    transform: translateY(-0.02rem) rotate(45deg);
   }
 
-  56% {
-    opacity: 0.86;
+  38% {
+    opacity: 0.84;
+    transform: translateY(0.1rem) rotate(45deg);
+  }
+
+  74% {
+    opacity: 0.64;
     transform: translateY(0.1rem) rotate(45deg);
   }
 
   100% {
-    opacity: 0.54;
-    transform: translateY(0.1rem) rotate(45deg);
+    opacity: 0.46;
+    transform: translateY(-0.02rem) rotate(45deg);
   }
 }
 

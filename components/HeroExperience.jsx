@@ -214,6 +214,7 @@ export default function HeroExperience() {
       const leadCopy = copyBodyRef.current?.querySelector("[data-hero-lead]");
       const heroActions = copyBodyRef.current?.querySelector("[data-hero-actions]");
       const enterCue = enterCueRef.current;
+      let enterCueDismissed = false;
 
       gsap.set(wordmarkRef.current, { autoAlpha: 0, y: 6, filter: "blur(5px)" });
       gsap.set(leadCopy, { autoAlpha: 0, y: 12, filter: "blur(2.5px)" });
@@ -332,8 +333,19 @@ export default function HeroExperience() {
         scrub: isReduced ? 1 : 0.45,
         onUpdate: (self) => {
           openTargetRef.current = self.progress;
-          if (enterCue && self.progress > 0.01) {
-            gsap.set(enterCue, { autoAlpha: 0, pointerEvents: "none" });
+          if (enterCue && !enterCueDismissed && self.progress > 0.01) {
+            enterCueDismissed = true;
+            enterCue.classList.add(styles.enterCueLeaving);
+            gsap.killTweensOf(enterCue);
+            gsap.to(enterCue, {
+              autoAlpha: 0,
+              y: 10,
+              duration: isReduced ? 0.12 : 0.32,
+              ease: "sine.out",
+              onComplete: () => {
+                gsap.set(enterCue, { pointerEvents: "none" });
+              },
+            });
           }
           if (!heroVideoCuedRef.current && self.progress > 0.002) {
             heroVideoCuedRef.current = true;
