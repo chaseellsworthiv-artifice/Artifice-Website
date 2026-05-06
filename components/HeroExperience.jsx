@@ -236,19 +236,6 @@ export default function HeroExperience() {
         ease: "sine.out",
       });
 
-      const enterCueFade = gsap.to(enterCue, {
-        autoAlpha: 0,
-        y: 10,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "+=180",
-          scrub: true,
-        },
-      });
-      if (enterCueFade.scrollTrigger) localTriggers.push(enterCueFade.scrollTrigger);
-
       const copyReveal = gsap.timeline({
         scrollTrigger: {
           trigger: wordmarkRef.current,
