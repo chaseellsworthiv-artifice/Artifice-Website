@@ -718,17 +718,13 @@
 .beginSection {
   padding-top: clamp(6.6rem, 9vw, 8rem);
   padding-bottom: clamp(5.6rem, 7vw, 6.5rem);
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
   overflow: clip;
 }
 
 .beginLayout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  width: min(100% - 2.5rem, 1180px);
-  min-height: clamp(24rem, 41vw, 35rem);
-  margin: 0 auto;
+  grid-template-columns: minmax(0, 0.92fr) minmax(19rem, 0.86fr);
+  gap: clamp(2.4rem, 6vw, 6.5rem);
   align-items: center;
 }
 
@@ -773,10 +769,10 @@
 }
 
 .beginMedia {
-  position: absolute;
-  inset: -9% 0 -11% max(42vw, calc(50% - 8rem));
-  width: auto;
-  min-height: 0;
+  position: relative;
+  min-height: clamp(18rem, 30vw, 26rem);
+  width: min(100%, 34rem);
+  justify-self: end;
   margin: 0;
   overflow: visible;
 }
@@ -784,43 +780,39 @@
 .beginMedia::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -12% -14% -16% -18%;
   z-index: 2;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(5, 5, 6, 0.98) 0%, rgba(5, 5, 6, 0.72) 18%, rgba(5, 5, 6, 0.18) 42%, rgba(5, 5, 6, 0.04) 74%, rgba(5, 5, 6, 0.1) 100%),
-    linear-gradient(180deg, rgba(5, 5, 6, 0.78) 0%, rgba(5, 5, 6, 0.08) 22%, rgba(5, 5, 6, 0.06) 62%, rgba(5, 5, 6, 0.94) 100%);
+    radial-gradient(ellipse at 58% 52%, rgba(5, 5, 6, 0) 0%, rgba(5, 5, 6, 0.06) 42%, rgba(5, 5, 6, 0.78) 82%, rgba(5, 5, 6, 0.96) 100%),
+    linear-gradient(90deg, rgba(5, 5, 6, 0.74) 0%, rgba(5, 5, 6, 0.12) 34%, rgba(5, 5, 6, 0.2) 100%);
 }
 
 .beginImage {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 100%;
+  min-height: clamp(18rem, 30vw, 26rem);
   object-fit: cover;
   object-position: 50% 52%;
-  transform: scale(1.06);
-  filter: saturate(0.88) brightness(0.86) contrast(1.06);
+  transform: scale(1.025);
+  filter: saturate(0.84) brightness(0.78) contrast(1.04);
   -webkit-mask-image:
-    linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.02) 8%, rgba(0, 0, 0, 0.42) 22%, rgba(0, 0, 0, 0.88) 36%, #000 52%, #000 100%),
-    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.18) 6%, rgba(0, 0, 0, 0.78) 16%, #000 29%, #000 72%, rgba(0, 0, 0, 0.68) 84%, transparent 100%);
+    radial-gradient(ellipse at 58% 54%, #000 0%, #000 44%, rgba(0, 0, 0, 0.76) 62%, rgba(0, 0, 0, 0.22) 82%, transparent 100%);
   mask-image:
-    linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.02) 8%, rgba(0, 0, 0, 0.42) 22%, rgba(0, 0, 0, 0.88) 36%, #000 52%, #000 100%),
-    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.18) 6%, rgba(0, 0, 0, 0.78) 16%, #000 29%, #000 72%, rgba(0, 0, 0, 0.68) 84%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+    radial-gradient(ellipse at 58% 54%, #000 0%, #000 44%, rgba(0, 0, 0, 0.76) 62%, rgba(0, 0, 0, 0.22) 82%, transparent 100%);
 }
 
 .beginMediaGlow {
   position: absolute;
-  inset: auto 2% -12% auto;
-  width: min(28rem, 46%);
+  inset: auto 8% -8% auto;
+  width: min(18rem, 42%);
   aspect-ratio: 1;
   border-radius: 50%;
   pointer-events: none;
   z-index: 1;
-  background: radial-gradient(circle, rgba(201, 168, 106, 0.1) 0%, rgba(201, 168, 106, 0.025) 42%, transparent 72%);
-  filter: blur(18px);
+  background: radial-gradient(circle, rgba(201, 168, 106, 0.08) 0%, rgba(201, 168, 106, 0.018) 42%, transparent 72%);
+  filter: blur(16px);
 }
 
 .pressSection {
@@ -1732,43 +1724,37 @@
   .beginSection {
     padding-top: 5.4rem;
     padding-bottom: 4.9rem;
-    margin-left: 0;
-    margin-right: 0;
   }
 
   .beginLayout {
     grid-template-columns: 1fr;
-    gap: 0.25rem;
-    width: 100%;
-    min-height: 0;
+    gap: 1.05rem;
   }
 
   .beginMedia {
-    position: relative;
-    inset: auto;
     order: -1;
-    min-height: 16rem;
-    width: calc(100vw + 1px);
-    margin: 0 calc(50% - 50vw) 0;
+    min-height: 13.75rem;
+    width: min(100%, 28rem);
+    justify-self: start;
+    margin: 0 0 0 -0.25rem;
   }
 
   .beginImage {
-    min-height: 16rem;
+    min-height: 13.75rem;
     object-position: 52% 50%;
-    transform: scale(1.04);
+    transform: scale(1.03);
+    filter: saturate(0.84) brightness(0.78) contrast(1.04);
     -webkit-mask-image:
-      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.16) 5%, rgba(0, 0, 0, 0.82) 18%, #000 31%, #000 76%, rgba(0, 0, 0, 0.7) 88%, transparent 100%),
-      linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.86) 15%, #000 28%, #000 58%, rgba(0, 0, 0, 0.62) 78%, transparent 100%);
+      radial-gradient(ellipse at 58% 54%, #000 0%, #000 42%, rgba(0, 0, 0, 0.72) 62%, rgba(0, 0, 0, 0.18) 84%, transparent 100%);
     mask-image:
-      linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.16) 5%, rgba(0, 0, 0, 0.82) 18%, #000 31%, #000 76%, rgba(0, 0, 0, 0.7) 88%, transparent 100%),
-      linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.86) 15%, #000 28%, #000 58%, rgba(0, 0, 0, 0.62) 78%, transparent 100%);
+      radial-gradient(ellipse at 58% 54%, #000 0%, #000 42%, rgba(0, 0, 0, 0.72) 62%, rgba(0, 0, 0, 0.18) 84%, transparent 100%);
   }
 
   .beginMedia::before {
-    inset: -7% 0 -10%;
+    inset: -14% -16% -18% -18%;
     background:
-      linear-gradient(90deg, rgba(5, 5, 6, 0.36) 0%, rgba(5, 5, 6, 0.04) 32%, rgba(5, 5, 6, 0.3) 100%),
-      linear-gradient(180deg, rgba(5, 5, 6, 0.48) 0%, rgba(5, 5, 6, 0.02) 34%, rgba(5, 5, 6, 0.9) 100%);
+      radial-gradient(ellipse at 58% 52%, rgba(5, 5, 6, 0) 0%, rgba(5, 5, 6, 0.04) 42%, rgba(5, 5, 6, 0.82) 84%, rgba(5, 5, 6, 0.96) 100%),
+      linear-gradient(90deg, rgba(5, 5, 6, 0.56) 0%, rgba(5, 5, 6, 0.08) 34%, rgba(5, 5, 6, 0.22) 100%);
   }
 
   .beginInner h2 {
@@ -2170,15 +2156,15 @@
   }
 
   .beginLayout {
-    gap: 1.2rem;
+    gap: 1rem;
   }
 
   .beginMedia {
-    min-height: 15rem;
+    min-height: 13rem;
   }
 
   .beginImage {
-    min-height: 15rem;
+    min-height: 13rem;
   }
 
   .pressSection {
