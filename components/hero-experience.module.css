@@ -628,7 +628,7 @@
 
 .aboutSection {
   padding-top: 0;
-  padding-bottom: clamp(5.6rem, 7vw, 6.8rem);
+  padding-bottom: 0;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
 }
@@ -1671,7 +1671,7 @@
 
   .aboutSection {
     padding-top: 0;
-    padding-bottom: 5rem;
+    padding-bottom: 0;
     margin-left: 0;
     margin-right: 0;
   }
@@ -2114,7 +2114,7 @@
 
   .aboutSection {
     padding-top: 0;
-    padding-bottom: 4.7rem;
+    padding-bottom: 0;
   }
 
   .aboutScene {
