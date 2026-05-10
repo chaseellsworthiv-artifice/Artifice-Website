@@ -951,7 +951,7 @@ export default function HeroExperience() {
             </div>
 
             <div className={styles.beginMedia} data-section-reveal>
-              <img src="/assets/images/begin-table-still.jpg" alt="A quiet spread of playing cards resting on a table." className={styles.beginImage} />
+              <img src="/assets/images/begin-card-fan.jpg" alt="A fan of playing cards held in low light." className={styles.beginImage} />
               <div className={styles.beginMediaGlow} aria-hidden="true" />
             </div>
           </div>
