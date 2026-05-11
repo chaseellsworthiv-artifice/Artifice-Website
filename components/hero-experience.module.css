@@ -718,7 +718,7 @@
 .beginSection {
   padding-top: clamp(6.6rem, 9vw, 8rem);
   padding-bottom: clamp(5.6rem, 7vw, 6.5rem);
-  overflow: clip;
+  overflow: visible;
 }
 
 .beginLayout {
@@ -771,9 +771,9 @@
 .beginMedia {
   position: relative;
   min-height: clamp(13rem, 22vw, 18rem);
-  width: min(calc(100% + clamp(2.5rem, 5vw, 4.6rem)), 36rem);
+  width: calc(100% + max(3rem, calc((100vw - 1180px) / 2 + 5rem)));
   justify-self: end;
-  margin: 0 calc(-1 * clamp(1.6rem, 3.8vw, 3.35rem)) 0 0;
+  margin: 0 calc(-1 * max(2rem, calc((100vw - 1180px) / 2 + 3.25rem))) 0 0;
   overflow: visible;
 }
 
@@ -799,11 +799,11 @@
   filter: none;
   -webkit-mask-image:
     radial-gradient(ellipse at 63% 58%, #000 0%, #000 38%, rgba(0, 0, 0, 0.72) 58%, rgba(0, 0, 0, 0.16) 86%, transparent 100%),
-    linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.08) 8%, #000 28%, #000 87%, rgba(0, 0, 0, 0.18) 97%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.08) 8%, #000 28%, #000 92%, rgba(0, 0, 0, 0.28) 99%, transparent 100%),
     linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.38) 15%, #000 31%, #000 72%, rgba(0, 0, 0, 0.14) 92%, transparent 100%);
   mask-image:
     radial-gradient(ellipse at 63% 58%, #000 0%, #000 38%, rgba(0, 0, 0, 0.72) 58%, rgba(0, 0, 0, 0.16) 86%, transparent 100%),
-    linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.08) 8%, #000 28%, #000 87%, rgba(0, 0, 0, 0.18) 97%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.08) 8%, #000 28%, #000 92%, rgba(0, 0, 0, 0.28) 99%, transparent 100%),
     linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.38) 15%, #000 31%, #000 72%, rgba(0, 0, 0, 0.14) 92%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
@@ -1225,8 +1225,8 @@
 
 .experienceFrame {
   min-height: 24rem;
-  width: calc(100% + clamp(2rem, 5vw, 4.25rem));
-  margin-right: calc(-1 * clamp(1.4rem, 3.5vw, 3.25rem));
+  width: calc(100% + max(3rem, calc((100vw - 1180px) / 2 + 5rem)));
+  margin-right: calc(-1 * max(2rem, calc((100vw - 1180px) / 2 + 3.25rem)));
   justify-self: end;
   overflow: visible;
   border-radius: 0;
@@ -1257,13 +1257,13 @@
   background: transparent !important;
   box-shadow: none !important;
   -webkit-mask-image:
-    radial-gradient(ellipse 49% 48% at 61% 62%, #000 0%, #000 33%, rgba(0, 0, 0, 0.78) 49%, rgba(0, 0, 0, 0.34) 68%, rgba(0, 0, 0, 0.06) 87%, transparent 100%),
+    radial-gradient(ellipse 54% 48% at 64% 62%, #000 0%, #000 34%, rgba(0, 0, 0, 0.78) 51%, rgba(0, 0, 0, 0.34) 72%, rgba(0, 0, 0, 0.08) 91%, transparent 100%),
     radial-gradient(ellipse 39% 47% at 38% 44%, #000 0%, #000 29%, rgba(0, 0, 0, 0.68) 46%, rgba(0, 0, 0, 0.28) 66%, rgba(0, 0, 0, 0.05) 84%, transparent 100%),
-    radial-gradient(ellipse 58% 48% at 53% 54%, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.54) 32%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.04) 86%, transparent 100%);
+    radial-gradient(ellipse 64% 48% at 58% 54%, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.54) 34%, rgba(0, 0, 0, 0.22) 64%, rgba(0, 0, 0, 0.05) 91%, transparent 100%);
   mask-image:
-    radial-gradient(ellipse 49% 48% at 61% 62%, #000 0%, #000 33%, rgba(0, 0, 0, 0.78) 49%, rgba(0, 0, 0, 0.34) 68%, rgba(0, 0, 0, 0.06) 87%, transparent 100%),
+    radial-gradient(ellipse 54% 48% at 64% 62%, #000 0%, #000 34%, rgba(0, 0, 0, 0.78) 51%, rgba(0, 0, 0, 0.34) 72%, rgba(0, 0, 0, 0.08) 91%, transparent 100%),
     radial-gradient(ellipse 39% 47% at 38% 44%, #000 0%, #000 29%, rgba(0, 0, 0, 0.68) 46%, rgba(0, 0, 0, 0.28) 66%, rgba(0, 0, 0, 0.05) 84%, transparent 100%),
-    radial-gradient(ellipse 58% 48% at 53% 54%, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.54) 32%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.04) 86%, transparent 100%);
+    radial-gradient(ellipse 64% 48% at 58% 54%, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.54) 34%, rgba(0, 0, 0, 0.22) 64%, rgba(0, 0, 0, 0.05) 91%, transparent 100%);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
