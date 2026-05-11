@@ -1258,28 +1258,26 @@
   height: 100%;
   width: 100%;
   object-fit: contain;
-  object-position: 72% 50%;
-  transform: scale(0.94);
-  filter: none;
+  object-position: 70% 50%;
+  transform: scale(0.97);
+  filter: brightness(1.04) contrast(1.03);
   mix-blend-mode: normal;
   border-radius: 0;
   outline: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
   -webkit-mask-image:
-    linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.03) 18%, rgba(0, 0, 0, 0.42) 32%, rgba(0, 0, 0, 0.86) 45%, #000 58%, #000 100%),
-    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.2) 8%, #000 18%, #000 68%, rgba(0, 0, 0, 0.36) 84%, transparent 100%),
-    radial-gradient(ellipse 68% 62% at 61% 50%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 72%, rgba(0, 0, 0, 0.14) 90%, transparent 100%);
+    radial-gradient(ellipse 30% 30% at 51% 35%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 70%, rgba(0, 0, 0, 0.16) 88%, transparent 100%),
+    radial-gradient(ellipse 39% 34% at 64% 64%, #000 0%, #000 48%, rgba(0, 0, 0, 0.48) 72%, rgba(0, 0, 0, 0.12) 90%, transparent 100%),
+    radial-gradient(ellipse 56% 54% at 59% 53%, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.4) 48%, rgba(0, 0, 0, 0.12) 78%, transparent 100%);
   mask-image:
-    linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.03) 18%, rgba(0, 0, 0, 0.42) 32%, rgba(0, 0, 0, 0.86) 45%, #000 58%, #000 100%),
-    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.2) 8%, #000 18%, #000 68%, rgba(0, 0, 0, 0.36) 84%, transparent 100%),
-    radial-gradient(ellipse 68% 62% at 61% 50%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 72%, rgba(0, 0, 0, 0.14) 90%, transparent 100%);
+    radial-gradient(ellipse 30% 30% at 51% 35%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 70%, rgba(0, 0, 0, 0.16) 88%, transparent 100%),
+    radial-gradient(ellipse 39% 34% at 64% 64%, #000 0%, #000 48%, rgba(0, 0, 0, 0.48) 72%, rgba(0, 0, 0, 0.12) 90%, transparent 100%),
+    radial-gradient(ellipse 56% 54% at 59% 53%, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.4) 48%, rgba(0, 0, 0, 0.12) 78%, transparent 100%);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
   mask-size: 100% 100%;
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
 }
 
 .bookingSection {
