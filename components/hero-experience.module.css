@@ -1230,7 +1230,7 @@
 
 .experienceFrame {
   position: absolute;
-  inset: 3% calc(50% - 50vw) 8% 43%;
+  inset: 3% calc(50% - 50vw - 4vw) 8% 40%;
   min-height: 24rem;
   width: auto;
   margin: 0;
@@ -1258,8 +1258,8 @@
   height: 100%;
   width: 100%;
   object-fit: contain;
-  object-position: 70% 50%;
-  transform: scale(0.97);
+  object-position: 88% 50%;
+  transform: scale(0.99);
   filter: brightness(1.04) contrast(1.03);
   mix-blend-mode: normal;
   border-radius: 0;
@@ -1267,13 +1267,13 @@
   background: transparent !important;
   box-shadow: none !important;
   -webkit-mask-image:
-    radial-gradient(ellipse 30% 30% at 51% 35%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 70%, rgba(0, 0, 0, 0.16) 88%, transparent 100%),
-    radial-gradient(ellipse 39% 34% at 64% 64%, #000 0%, #000 48%, rgba(0, 0, 0, 0.48) 72%, rgba(0, 0, 0, 0.12) 90%, transparent 100%),
-    radial-gradient(ellipse 56% 54% at 59% 53%, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.4) 48%, rgba(0, 0, 0, 0.12) 78%, transparent 100%);
+    radial-gradient(ellipse 28% 30% at 56% 35%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 70%, rgba(0, 0, 0, 0.16) 88%, transparent 100%),
+    radial-gradient(ellipse 38% 30% at 70% 63%, #000 0%, #000 47%, rgba(0, 0, 0, 0.48) 70%, rgba(0, 0, 0, 0.1) 86%, transparent 100%),
+    radial-gradient(ellipse 50% 48% at 64% 52%, rgba(0, 0, 0, 0.66) 0%, rgba(0, 0, 0, 0.38) 46%, rgba(0, 0, 0, 0.1) 74%, transparent 100%);
   mask-image:
-    radial-gradient(ellipse 30% 30% at 51% 35%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 70%, rgba(0, 0, 0, 0.16) 88%, transparent 100%),
-    radial-gradient(ellipse 39% 34% at 64% 64%, #000 0%, #000 48%, rgba(0, 0, 0, 0.48) 72%, rgba(0, 0, 0, 0.12) 90%, transparent 100%),
-    radial-gradient(ellipse 56% 54% at 59% 53%, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0.4) 48%, rgba(0, 0, 0, 0.12) 78%, transparent 100%);
+    radial-gradient(ellipse 28% 30% at 56% 35%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 70%, rgba(0, 0, 0, 0.16) 88%, transparent 100%),
+    radial-gradient(ellipse 38% 30% at 70% 63%, #000 0%, #000 47%, rgba(0, 0, 0, 0.48) 70%, rgba(0, 0, 0, 0.1) 86%, transparent 100%),
+    radial-gradient(ellipse 50% 48% at 64% 52%, rgba(0, 0, 0, 0.66) 0%, rgba(0, 0, 0, 0.38) 46%, rgba(0, 0, 0, 0.1) 74%, transparent 100%);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
