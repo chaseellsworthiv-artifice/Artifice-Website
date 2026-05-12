@@ -590,6 +590,7 @@
 }
 
 .section:nth-of-type(1)::after {
+  inset: 0 calc(50% - 50vw - 2vw);
   background:
     radial-gradient(circle at 72% 18%, rgba(201, 168, 106, 0.026), transparent 16%),
     linear-gradient(180deg, rgba(5, 5, 6, 0.08) 0%, rgba(4, 4, 5, 0.34) 46%, rgba(3, 3, 4, 0.64) 100%);
