@@ -1257,13 +1257,13 @@
   background: transparent !important;
   box-shadow: none !important;
   -webkit-mask-image:
-    radial-gradient(ellipse 28% 30% at 56% 35%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 70%, rgba(0, 0, 0, 0.16) 88%, transparent 100%),
-    radial-gradient(ellipse 38% 30% at 70% 63%, #000 0%, #000 47%, rgba(0, 0, 0, 0.48) 70%, rgba(0, 0, 0, 0.1) 86%, transparent 100%),
-    radial-gradient(ellipse 50% 48% at 64% 52%, rgba(0, 0, 0, 0.66) 0%, rgba(0, 0, 0, 0.38) 46%, rgba(0, 0, 0, 0.1) 74%, transparent 100%);
+    radial-gradient(ellipse 28% 30% at 53% 35%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 70%, rgba(0, 0, 0, 0.16) 88%, transparent 100%),
+    radial-gradient(ellipse 38% 30% at 67% 63%, #000 0%, #000 47%, rgba(0, 0, 0, 0.48) 70%, rgba(0, 0, 0, 0.1) 86%, transparent 100%),
+    radial-gradient(ellipse 50% 48% at 61% 52%, rgba(0, 0, 0, 0.66) 0%, rgba(0, 0, 0, 0.38) 46%, rgba(0, 0, 0, 0.1) 74%, transparent 100%);
   mask-image:
-    radial-gradient(ellipse 28% 30% at 56% 35%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 70%, rgba(0, 0, 0, 0.16) 88%, transparent 100%),
-    radial-gradient(ellipse 38% 30% at 70% 63%, #000 0%, #000 47%, rgba(0, 0, 0, 0.48) 70%, rgba(0, 0, 0, 0.1) 86%, transparent 100%),
-    radial-gradient(ellipse 50% 48% at 64% 52%, rgba(0, 0, 0, 0.66) 0%, rgba(0, 0, 0, 0.38) 46%, rgba(0, 0, 0, 0.1) 74%, transparent 100%);
+    radial-gradient(ellipse 28% 30% at 53% 35%, #000 0%, #000 46%, rgba(0, 0, 0, 0.54) 70%, rgba(0, 0, 0, 0.16) 88%, transparent 100%),
+    radial-gradient(ellipse 38% 30% at 67% 63%, #000 0%, #000 47%, rgba(0, 0, 0, 0.48) 70%, rgba(0, 0, 0, 0.1) 86%, transparent 100%),
+    radial-gradient(ellipse 50% 48% at 61% 52%, rgba(0, 0, 0, 0.66) 0%, rgba(0, 0, 0, 0.38) 46%, rgba(0, 0, 0, 0.1) 74%, transparent 100%);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
