@@ -945,14 +945,9 @@ export default function HeroExperience() {
               </p>
               <div className={styles.beginActions}>
                 <a href="/design" className={styles.primaryLink}>
-                  Explore Experiences
+                  Book Artifice
                 </a>
               </div>
-            </div>
-
-            <div className={styles.beginMedia} data-section-reveal>
-              <img src="/assets/images/begin-card-fan.jpg" alt="A fan of playing cards held in low light." className={styles.beginImage} />
-              <div className={styles.beginMediaGlow} aria-hidden="true" />
             </div>
           </div>
         </section>
