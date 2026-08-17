@@ -96,7 +96,8 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                   <p className={styles.cardEyebrow}>Select Depth</p>
                   <h3>Choose the depth.</h3>
                   <p>
-                    Time changes how fully the experience can move through the room, not the quality of the work.
+                    Select the depth that best fits the room. Time changes how fully the experience can unfold, not the
+                    quality of the work.
                   </p>
                 </div>
                 <div className={styles.depthList}>
@@ -107,6 +108,7 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                         key={depth.id}
                         href={detailHref({ basePath, experience, depth, eventContext })}
                         className={`${styles.depthItem} ${isActive ? styles.depthItemActive : ""}`}
+                        aria-current={isActive ? "true" : undefined}
                         scroll={false}
                         replace
                       >
@@ -116,8 +118,9 @@ export default function ExperienceDetail({ experience, selectedDepth, basePath =
                           <p>{depth.descriptor}</p>
                         </div>
                         <div className={styles.depthMeta}>
-                          <span>{depth.duration}</span>
+                          <span className={styles.depthDuration}>{depth.duration}</span>
                           <strong>{depth.price}</strong>
+                          <span className={styles.depthSelectionState}>{isActive ? "Selected" : "Select"}</span>
                         </div>
                       </Link>
                     );

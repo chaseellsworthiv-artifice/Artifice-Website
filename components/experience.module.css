@@ -405,45 +405,69 @@
   display: grid;
   gap: 0;
   margin-top: clamp(1.45rem, 2.4vw, 2rem);
-  border-top: 1px solid rgba(201, 168, 106, 0.18);
+  border-top: 1px solid rgba(201, 168, 106, 0.22);
 }
 
 .depthItem {
+  position: relative;
   display: grid;
-  grid-template-columns: 0.7rem minmax(0, 1fr) auto;
+  grid-template-columns: 0.82rem minmax(0, 1fr) auto;
   align-items: start;
   gap: clamp(0.8rem, 1.4vw, 1.1rem);
-  padding: clamp(1.05rem, 1.8vw, 1.35rem) 0;
-  border-bottom: 1px solid rgba(201, 168, 106, 0.1);
-  border-top: 0;
+  margin-inline: -0.4rem;
+  padding: clamp(1.05rem, 1.8vw, 1.35rem) 0.4rem;
+  border: 0;
+  border-bottom: 1px solid rgba(201, 168, 106, 0.12);
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0));
   text-decoration: none;
-  transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  cursor: pointer;
+  transition: border-color 220ms ease, background 220ms ease, box-shadow 220ms ease;
 }
 
-.depthItem:hover {
-  opacity: 0.92;
-  border-color: rgba(201, 168, 106, 0.22);
+@media (hover: hover) and (pointer: fine) {
+  .depthItem:hover {
+    border-color: rgba(201, 168, 106, 0.38);
+    background: linear-gradient(90deg, rgba(201, 168, 106, 0.075), rgba(201, 168, 106, 0) 74%);
+  }
+
+  .depthItem:hover .depthSelectionState {
+    color: var(--aged-paper);
+    border-color: rgba(201, 168, 106, 0.82);
+  }
+}
+
+.depthItem:focus-visible {
+  outline: 1px solid rgba(201, 168, 106, 0.86);
+  outline-offset: 4px;
 }
 
 .depthItemActive {
-  transform: translateX(6px);
-  border-color: rgba(201, 168, 106, 0.34);
+  border-color: rgba(201, 168, 106, 0.42);
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.085), rgba(201, 168, 106, 0) 76%);
+  box-shadow: inset 2px 0 0 rgba(201, 168, 106, 0.78);
 }
 
 .depthMarker {
-  width: 0.46rem;
-  height: 0.46rem;
-  margin-top: 0.38rem;
-  border: 1px solid rgba(201, 168, 106, 0.48);
+  position: relative;
+  width: 0.78rem;
+  height: 0.78rem;
+  margin-top: 0.27rem;
+  border: 1px solid rgba(201, 168, 106, 0.66);
   border-radius: 999px;
-  opacity: 0.72;
   transition: background 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
 .depthItemActive .depthMarker {
-  background: var(--antique-gold);
   border-color: var(--antique-gold);
   box-shadow: 0 0 18px rgba(201, 168, 106, 0.22);
+}
+
+.depthItemActive .depthMarker::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  background: var(--antique-gold);
 }
 
 .depthItem p {
@@ -509,7 +533,7 @@
   padding-top: 0.1rem;
 }
 
-.depthMeta span {
+.depthDuration {
   display: block;
   color: rgba(230, 221, 198, 0.58);
   font-size: 0.82rem;
@@ -522,6 +546,24 @@
   margin-top: 0.35rem;
   color: var(--aged-paper);
   font-size: 1.05rem;
+}
+
+.depthSelectionState {
+  display: inline-block;
+  margin-top: 0.72rem;
+  padding-bottom: 0.24rem;
+  border-bottom: 1px solid rgba(201, 168, 106, 0.42);
+  color: var(--antique-gold);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.depthItemActive .depthSelectionState {
+  color: var(--aged-paper);
+  border-color: rgba(201, 168, 106, 0.82);
 }
 
 .placeholderNote {
@@ -672,9 +714,11 @@
   }
 
   .depthItem {
-    grid-template-columns: 0.62rem minmax(0, 1fr) auto;
-    gap: 0.85rem;
+    grid-template-columns: 0.78rem minmax(0, 1fr) auto;
+    gap: 0.68rem;
     align-items: flex-start;
+    margin-inline: -0.3rem;
+    padding: 1rem 0.3rem;
   }
 
   .depthMeta {
