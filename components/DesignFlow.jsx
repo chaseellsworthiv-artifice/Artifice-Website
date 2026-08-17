@@ -123,7 +123,7 @@ export default function DesignFlow() {
 
   const recommendationLabel = useMemo(() => {
     if (!result) return "";
-    return "Where I Would Begin";
+    return "My Recommendation";
   }, [result]);
 
   const inquiryHref = useMemo(() => {
@@ -316,9 +316,12 @@ export default function DesignFlow() {
                   {result.reason}
                 </p>
               </div>
-              <Link href={experienceHref(result.primary.slug)} className={styles.primaryAction}>
-                Explore {result.primary.name}
+              <Link href={experienceHref(result.primary.slug)} className={styles.pathHitArea}>
+                <span className={styles.visuallyHidden}>Continue with {result.primary.name}</span>
               </Link>
+              <span className={styles.primaryAction} aria-hidden="true">
+                Continue with {result.primary.name}
+              </span>
             </article>
           </div>
 
@@ -330,9 +333,12 @@ export default function DesignFlow() {
                   <h3>{experience.name}</h3>
                   <p>{experience.why}</p>
                 </div>
-                <Link href={experienceHref(experience.slug)} className={styles.secondaryAction}>
-                  Explore
+                <Link href={experienceHref(experience.slug)} className={styles.pathHitArea}>
+                  <span className={styles.visuallyHidden}>View {experience.name}</span>
                 </Link>
+                <span className={styles.secondaryAction} aria-hidden="true">
+                  View {experience.name}
+                </span>
               </article>
             ))}
           </aside>

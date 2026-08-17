@@ -490,12 +490,42 @@
 }
 
 .primaryRecommendation {
+  position: relative;
+  isolation: isolate;
   display: block;
   max-width: 44rem;
   margin-top: clamp(0.85rem, 1.8vw, 1.65rem);
-  padding: clamp(0.95rem, 1.9vw, 1.55rem) 0 clamp(1.85rem, 3.1vw, 2.55rem);
+  margin-inline: -0.85rem;
+  padding: clamp(0.95rem, 1.9vw, 1.55rem) 0.85rem clamp(1.85rem, 3.1vw, 2.55rem);
   border-top: 0;
   border-bottom: 1px solid rgba(201, 168, 106, 0.14);
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0));
+  transition: background 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
+}
+
+.pathHitArea {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pathHitArea:focus-visible {
+  outline: 1px solid rgba(201, 168, 106, 0.88);
+  outline-offset: 4px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .primaryRecommendation .cardEyebrow {
@@ -510,6 +540,7 @@
   line-height: 0.82;
   letter-spacing: -0.035em;
   color: var(--aged-paper);
+  transition: color 220ms ease, text-shadow 220ms ease;
 }
 
 .primaryStatement {
@@ -550,11 +581,38 @@
   margin-top: clamp(1.35rem, 2.35vw, 1.9rem);
   font-size: 0.82rem;
   letter-spacing: 0.155em;
+  pointer-events: none;
 }
 
 .primaryRecommendation .primaryAction::after {
   width: min(16rem, 100%);
   background: linear-gradient(90deg, rgba(201, 168, 106, 0.82), rgba(201, 168, 106, 0.16), rgba(201, 168, 106, 0));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primaryRecommendation:hover,
+  .primaryRecommendation:focus-within {
+    border-color: rgba(201, 168, 106, 0.34);
+    background: linear-gradient(90deg, rgba(201, 168, 106, 0.065), rgba(201, 168, 106, 0) 78%);
+    box-shadow: inset 2px 0 0 rgba(201, 168, 106, 0.66);
+  }
+
+  .primaryRecommendation:hover h2,
+  .primaryRecommendation:focus-within h2 {
+    color: #efe6d0;
+    text-shadow: 0 0 24px rgba(201, 168, 106, 0.07);
+  }
+
+  .primaryRecommendation:hover .primaryAction,
+  .primaryRecommendation:focus-within .primaryAction {
+    transform: translate3d(4px, 0, 0);
+    text-shadow: 0 0 18px rgba(201, 168, 106, 0.12);
+  }
+
+  .primaryRecommendation:hover .primaryAction::before,
+  .primaryRecommendation:focus-within .primaryAction::before {
+    width: min(82%, 34rem);
+  }
 }
 
 .alternateEditorial {
@@ -573,13 +631,18 @@
 }
 
 .alternateRow {
+  position: relative;
+  isolation: isolate;
   grid-column: 2;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 1.2rem;
   align-items: baseline;
-  padding: 0 0 0.85rem;
+  margin-inline: -0.65rem;
+  padding: 0.72rem 0.65rem 0.9rem;
   border-bottom: 1px solid rgba(201, 168, 106, 0.09);
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0));
+  transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .alternateRow h3 {
@@ -588,6 +651,7 @@
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.55rem, 2.2vw, 2.05rem);
   line-height: 0.98;
+  transition: color 180ms ease, transform 220ms ease;
 }
 
 .alternateRow p {
@@ -595,6 +659,36 @@
   max-width: 34rem;
   color: rgba(230, 221, 198, 0.52);
   line-height: 1.42;
+}
+
+.alternateRow .secondaryAction {
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .alternateRow:hover,
+  .alternateRow:focus-within {
+    border-color: rgba(201, 168, 106, 0.28);
+    background: linear-gradient(90deg, rgba(201, 168, 106, 0.05), rgba(201, 168, 106, 0) 82%);
+    box-shadow: inset 1px 0 0 rgba(201, 168, 106, 0.5);
+  }
+
+  .alternateRow:hover h3,
+  .alternateRow:focus-within h3 {
+    color: #efe6d0;
+    transform: translate3d(3px, 0, 0);
+  }
+
+  .alternateRow:hover .secondaryAction,
+  .alternateRow:focus-within .secondaryAction {
+    transform: translate3d(4px, 0, 0);
+    text-shadow: 0 0 18px rgba(201, 168, 106, 0.12);
+  }
+
+  .alternateRow:hover .secondaryAction::before,
+  .alternateRow:focus-within .secondaryAction::before {
+    width: min(82%, 34rem);
+  }
 }
 
 .customPrompt {
@@ -754,8 +848,8 @@
     grid-template-columns: 1fr;
     gap: 0;
     margin-top: 1.65rem;
-    padding-top: 1.15rem;
-    padding-bottom: 1.75rem;
+    margin-inline: -0.35rem;
+    padding: 1.15rem 0.35rem 1.75rem;
     border-top: 1px solid rgba(201, 168, 106, 0.12);
   }
 
@@ -794,6 +888,8 @@
     grid-column: auto;
     grid-template-columns: 1fr;
     gap: 0.6rem;
+    margin-inline: -0.35rem;
+    padding: 0.9rem 0.35rem 1rem;
   }
 
   .alternateRow h3 {
