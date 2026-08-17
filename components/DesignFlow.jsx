@@ -320,7 +320,8 @@ export default function DesignFlow() {
                 <span className={styles.visuallyHidden}>Continue with {result.primary.name}</span>
               </Link>
               <span className={styles.primaryAction} aria-hidden="true">
-                Continue with {result.primary.name}
+                <span>Continue with {result.primary.name}</span>
+                <span className={styles.pathArrow}>→</span>
               </span>
             </article>
           </div>
@@ -337,7 +338,8 @@ export default function DesignFlow() {
                   <span className={styles.visuallyHidden}>View {experience.name}</span>
                 </Link>
                 <span className={styles.secondaryAction} aria-hidden="true">
-                  View {experience.name}
+                  <span>View {experience.name}</span>
+                  <span className={styles.pathArrow}>→</span>
                 </span>
               </article>
             ))}

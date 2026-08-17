@@ -497,9 +497,10 @@
   margin-top: clamp(0.85rem, 1.8vw, 1.65rem);
   margin-inline: -0.85rem;
   padding: clamp(0.95rem, 1.9vw, 1.55rem) 0.85rem clamp(1.85rem, 3.1vw, 2.55rem);
-  border-top: 0;
-  border-bottom: 1px solid rgba(201, 168, 106, 0.14);
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0));
+  border-top: 1px solid rgba(201, 168, 106, 0.18);
+  border-bottom: 1px solid rgba(201, 168, 106, 0.24);
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.045), rgba(201, 168, 106, 0) 78%);
+  box-shadow: inset 1px 0 0 rgba(201, 168, 106, 0.48);
   transition: background 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
 }
 
@@ -509,6 +510,7 @@
   inset: 0;
   text-decoration: none;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .pathHitArea:focus-visible {
@@ -576,8 +578,9 @@
 
 .primaryRecommendation .primaryAction {
   display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.78rem;
   margin-top: clamp(1.35rem, 2.35vw, 1.9rem);
   font-size: 0.82rem;
   letter-spacing: 0.155em;
@@ -587,6 +590,21 @@
 .primaryRecommendation .primaryAction::after {
   width: min(16rem, 100%);
   background: linear-gradient(90deg, rgba(201, 168, 106, 0.82), rgba(201, 168, 106, 0.16), rgba(201, 168, 106, 0));
+}
+
+.pathArrow {
+  display: inline-block;
+  color: var(--antique-gold);
+  font-size: 1rem;
+  line-height: 1;
+  transform: translate3d(0, -1px, 0);
+  transition: color 180ms ease, transform 220ms ease, text-shadow 220ms ease;
+}
+
+.primaryRecommendation:active {
+  border-color: rgba(201, 168, 106, 0.44);
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.095), rgba(201, 168, 106, 0) 82%);
+  box-shadow: inset 2px 0 0 rgba(201, 168, 106, 0.76);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -612,6 +630,13 @@
   .primaryRecommendation:hover .primaryAction::before,
   .primaryRecommendation:focus-within .primaryAction::before {
     width: min(82%, 34rem);
+  }
+
+  .primaryRecommendation:hover .pathArrow,
+  .primaryRecommendation:focus-within .pathArrow {
+    color: var(--aged-paper);
+    text-shadow: 0 0 14px rgba(201, 168, 106, 0.18);
+    transform: translate3d(4px, -1px, 0);
   }
 }
 
@@ -640,8 +665,9 @@
   align-items: baseline;
   margin-inline: -0.65rem;
   padding: 0.72rem 0.65rem 0.9rem;
-  border-bottom: 1px solid rgba(201, 168, 106, 0.09);
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0));
+  border-bottom: 1px solid rgba(201, 168, 106, 0.16);
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.025), rgba(201, 168, 106, 0) 84%);
+  box-shadow: inset 1px 0 0 rgba(201, 168, 106, 0.28);
   transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
@@ -662,7 +688,15 @@
 }
 
 .alternateRow .secondaryAction {
+  gap: 0.66rem;
+  color: rgba(230, 221, 198, 0.92);
   pointer-events: none;
+}
+
+.alternateRow:active {
+  border-color: rgba(201, 168, 106, 0.38);
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.08), rgba(201, 168, 106, 0) 86%);
+  box-shadow: inset 2px 0 0 rgba(201, 168, 106, 0.66);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -688,6 +722,12 @@
   .alternateRow:hover .secondaryAction::before,
   .alternateRow:focus-within .secondaryAction::before {
     width: min(82%, 34rem);
+  }
+
+  .alternateRow:hover .pathArrow,
+  .alternateRow:focus-within .pathArrow {
+    color: var(--aged-paper);
+    transform: translate3d(4px, -1px, 0);
   }
 }
 
