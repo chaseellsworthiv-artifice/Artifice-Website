@@ -613,6 +613,11 @@
   margin-bottom: 0.45rem;
 }
 
+.alternateChoice {
+  border-bottom: 1px solid rgba(201, 168, 106, 0.14);
+  transition: border-color 220ms ease;
+}
+
 .alternateRow {
   display: grid;
   grid-template-columns: 0.82rem minmax(0, 1fr) auto;
@@ -620,8 +625,6 @@
   align-items: start;
   margin: 0;
   padding: clamp(0.95rem, 1.6vw, 1.2rem) 0;
-  border-bottom: 1px solid rgba(201, 168, 106, 0.14);
-  transition: border-color 220ms ease;
 }
 
 .alternateRow .experienceMarker {
@@ -660,13 +663,13 @@
 }
 
 .primaryRecommendation:active,
-.alternateRow:active {
+.alternateChoice:active {
   border-color: rgba(201, 168, 106, 0.42);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .primaryRecommendation:hover,
-  .alternateRow:hover {
+  .alternateChoice:hover {
     border-color: rgba(201, 168, 106, 0.38);
   }
 
@@ -718,6 +721,15 @@
   flex: 0 0 auto;
   font-size: 0.82rem;
   letter-spacing: 0.155em;
+}
+
+.primaryChoiceContinue {
+  margin-top: clamp(1.3rem, 2.2vw, 1.75rem);
+}
+
+.alternateChoiceContinue {
+  margin-top: 0;
+  padding: 0 0 clamp(1.1rem, 1.8vw, 1.35rem) clamp(1.6rem, 2.3vw, 1.95rem);
 }
 
 .customPrompt {

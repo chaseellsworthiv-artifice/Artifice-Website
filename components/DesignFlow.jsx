@@ -373,41 +373,53 @@ export default function DesignFlow() {
                 </span>
               </button>
 
+              {selectedExperience?.slug === result.primary.slug ? (
+                <div className={`${styles.selectionContinue} ${styles.primaryChoiceContinue}`}>
+                  <span className={styles.selectionConfirmation}>
+                    <span>Selected Experience</span>
+                    <strong>{result.primary.name}</strong>
+                  </span>
+                  <Link href={experienceHref(result.primary.slug)} className={styles.primaryAction}>
+                    Continue with {result.primary.name}
+                  </Link>
+                </div>
+              ) : null}
+
               <div className={styles.alternateEditorial}>
                 <p className={styles.cardEyebrow}>Other Directions</p>
                 {result.alternatives.map((experience) => {
                   const isSelected = selectedExperience?.slug === experience.slug;
 
                   return (
-                    <button
-                      key={experience.slug}
-                      type="button"
-                      role="radio"
-                      aria-checked={isSelected}
-                      className={`${styles.alternateRow} ${isSelected ? styles.experienceChoiceActive : ""}`}
-                      onClick={() => handleSelectExperience(experience.slug)}
-                    >
-                      <span className={styles.experienceMarker} aria-hidden="true" />
-                      <span className={styles.alternateCopy}>
-                        <span className={styles.alternateTitle}>{experience.name}</span>
-                        <span className={styles.alternateDescription}>{experience.why}</span>
-                      </span>
-                      <span className={styles.choiceState}>{isSelected ? "Selected" : "Select"}</span>
-                    </button>
+                    <div key={experience.slug} className={styles.alternateChoice}>
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={isSelected}
+                        className={`${styles.alternateRow} ${isSelected ? styles.experienceChoiceActive : ""}`}
+                        onClick={() => handleSelectExperience(experience.slug)}
+                      >
+                        <span className={styles.experienceMarker} aria-hidden="true" />
+                        <span className={styles.alternateCopy}>
+                          <span className={styles.alternateTitle}>{experience.name}</span>
+                          <span className={styles.alternateDescription}>{experience.why}</span>
+                        </span>
+                        <span className={styles.choiceState}>{isSelected ? "Selected" : "Select"}</span>
+                      </button>
+                      {isSelected ? (
+                        <div className={`${styles.selectionContinue} ${styles.alternateChoiceContinue}`}>
+                          <span className={styles.selectionConfirmation}>
+                            <span>Selected Experience</span>
+                            <strong>{experience.name}</strong>
+                          </span>
+                          <Link href={experienceHref(experience.slug)} className={styles.primaryAction}>
+                            Continue with {experience.name}
+                          </Link>
+                        </div>
+                      ) : null}
+                    </div>
                   );
                 })}
-              </div>
-
-              <div className={styles.selectionContinue}>
-                <span className={styles.selectionConfirmation}>
-                  <span>Selected Experience</span>
-                  <strong>{selectedExperience?.name}</strong>
-                </span>
-                {selectedExperience ? (
-                  <Link href={experienceHref(selectedExperience.slug)} className={styles.primaryAction}>
-                    Continue with {selectedExperience.name}
-                  </Link>
-                ) : null}
               </div>
             </div>
           </div>
