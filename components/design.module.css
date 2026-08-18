@@ -299,118 +299,188 @@
 }
 
 .consideringPanel {
-  max-width: 40rem;
+  max-width: 64rem;
   padding: 0;
 }
 
-.consideringLead {
-  max-width: 34rem;
+.consideringHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
 }
 
-.consideringRule {
+.consideringHeader .eyebrow,
+.consideringSignature {
+  margin: 0;
+}
+
+.consideringSignature {
+  color: rgba(230, 221, 198, 0.28);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.consideringFacts {
+  display: grid;
+  grid-template-columns: 0.62fr 0.9fr 1.25fr;
+  margin-top: clamp(1.2rem, 2.2vw, 1.7rem);
+  padding: clamp(0.9rem, 1.6vw, 1.15rem) 0;
+  border-top: 1px solid rgba(201, 168, 106, 0.18);
+  border-bottom: 1px solid rgba(201, 168, 106, 0.1);
+}
+
+.consideringFact {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  padding-right: clamp(0.8rem, 2.4vw, 1.8rem);
+  opacity: 0;
+  transform: translateY(7px);
+  animation: consideringFactEnter 460ms cubic-bezier(0.16, 0.72, 0.18, 1) forwards;
+}
+
+.consideringFact + .consideringFact {
+  padding-left: clamp(0.8rem, 2.4vw, 1.8rem);
+  border-left: 1px solid rgba(201, 168, 106, 0.09);
+}
+
+.consideringFact:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.consideringFact:nth-child(3) {
+  animation-delay: 180ms;
+}
+
+.consideringFactLabel {
+  color: rgba(201, 168, 106, 0.62);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.consideringFact strong {
+  overflow-wrap: anywhere;
+  color: rgba(230, 221, 198, 0.74);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.05rem, 1.7vw, 1.32rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.consideringPath {
   position: relative;
-  width: min(24rem, 58vw);
+  width: 100%;
   height: 1px;
-  margin: 0 0 1.45rem;
+  margin-top: clamp(1.6rem, 3vw, 2.4rem);
 }
 
-.consideringRule span {
+.consideringPathTrack,
+.consideringPathProgress {
   position: absolute;
   inset: 0;
   display: block;
 }
 
-.consideringRule span:first-child {
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.92), rgba(201, 168, 106, 0.18), rgba(201, 168, 106, 0));
+.consideringPathTrack {
+  background: rgba(201, 168, 106, 0.09);
+}
+
+.consideringPathProgress {
+  background: linear-gradient(90deg, rgba(201, 168, 106, 0.84), rgba(201, 168, 106, 0.25));
+  transform: scaleX(0);
   transform-origin: left center;
-  animation: consideringRuleDraw 1200ms cubic-bezier(0.16, 0.72, 0.18, 1) both;
+  animation: consideringPathTravel 1550ms cubic-bezier(0.16, 0.72, 0.18, 1) forwards;
 }
 
-.consideringRule span:last-child {
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0), rgba(201, 168, 106, 0.24), rgba(201, 168, 106, 0));
+.consideringPathMarker {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 0.78rem;
+  height: 0.78rem;
+  border: 1px solid rgba(201, 168, 106, 0.58);
+  border-radius: 999px;
   opacity: 0;
-  animation: consideringRuleGlow 1200ms ease-out 120ms both;
+  transform: translate(50%, -50%) scale(0.66);
+  transition: opacity 300ms ease, transform 420ms cubic-bezier(0.16, 0.72, 0.18, 1), box-shadow 420ms ease;
 }
 
-.consideringStory {
-  position: relative;
-  display: grid;
-  gap: 0.55rem;
-  margin-top: clamp(1.55rem, 3vw, 2.2rem);
+.consideringPathMarkerActive {
+  opacity: 1;
+  transform: translate(50%, -50%) scale(1);
+  box-shadow: 0 0 22px rgba(201, 168, 106, 0.2);
 }
 
-.consideringThought,
-.consideringWhisper,
-.consideringVerdict {
-  margin: 0;
+.consideringPathMarkerActive::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  background: var(--antique-gold);
 }
 
-.consideringThought {
-  max-width: 14ch;
-  color: rgba(230, 221, 198, 0.16);
-  font-family: "Cormorant Garamond", serif;
-  font-size: clamp(2.6rem, 5.6vw, 4.35rem);
-  line-height: 0.98;
-  letter-spacing: -0.02em;
-  transform: translateY(10px);
-  transition: color 540ms ease, opacity 540ms ease, transform 540ms ease, filter 540ms ease;
+.consideringInsight {
+  margin-top: clamp(1.4rem, 2.8vw, 2.2rem);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 520ms ease, transform 620ms cubic-bezier(0.16, 0.72, 0.18, 1);
 }
 
-.consideringThoughtActive {
-  color: rgba(230, 221, 198, 0.84);
+.consideringInsightActive {
+  opacity: 1;
   transform: translateY(0);
 }
 
-.consideringThoughtRecede {
-  color: rgba(230, 221, 198, 0.28);
-  filter: blur(0.2px);
-}
-
-.consideringWhisper {
-  max-width: 28ch;
-  color: rgba(230, 221, 198, 0.08);
-  font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1.08rem, 1.9vw, 1.34rem);
-  line-height: 1.26;
-  transform: translateY(8px);
-  transition: color 460ms ease, opacity 460ms ease, transform 460ms ease;
-}
-
-.consideringWhisperActive {
-  color: rgba(230, 221, 198, 0.54);
-  transform: translateY(0);
-}
-
-.consideringVerdict {
-  max-width: 16ch;
-  color: rgba(230, 221, 198, 0.06);
-  font-family: "Cormorant Garamond", serif;
-  font-size: clamp(2.2rem, 4.8vw, 3.7rem);
-  line-height: 0.98;
-  letter-spacing: -0.02em;
-  transform: translateY(14px);
-  transition: color 620ms ease, opacity 620ms ease, transform 620ms ease, text-shadow 620ms ease;
-}
-
-.consideringVerdictActive {
-  color: rgba(230, 221, 198, 0.96);
-  text-shadow: 0 0 24px rgba(201, 168, 106, 0.08);
-  transform: translateY(0);
-}
-
-.consideringMeta {
-  margin: clamp(1.8rem, 3vw, 2.4rem) 0 0;
-  color: rgba(230, 221, 198, 0.46);
-  font-size: 0.72rem;
+.consideringInsightLabel {
+  margin: 0 0 0.7rem;
+  color: rgba(201, 168, 106, 0.68);
+  font-size: 0.64rem;
   letter-spacing: 0.14em;
-  line-height: 1.45;
   text-transform: uppercase;
+}
+
+.consideringInsight h1 {
+  margin: 0;
+  max-width: 13ch;
+  color: var(--aged-paper);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3.2rem, 7vw, 6rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+
+.consideringInsightSupport {
+  margin: clamp(0.8rem, 1.5vw, 1.1rem) 0 0;
+  color: rgba(230, 221, 198, 0.56);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  line-height: 1.18;
+}
+
+.consideringResolution {
+  margin: clamp(1.35rem, 2.4vw, 1.8rem) 0 0;
+  color: rgba(230, 221, 198, 0.08);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: translateY(5px);
+  transition: color 360ms ease, transform 420ms ease;
+}
+
+.consideringResolutionActive {
+  color: rgba(230, 221, 198, 0.46);
+  transform: translateY(0);
 }
 
 .recommendationShell {
   display: block;
   padding-top: clamp(4.8rem, 8vw, 7rem);
   padding-bottom: clamp(5rem, 8vw, 7rem);
+  animation: recommendationArrive 560ms cubic-bezier(0.16, 0.72, 0.18, 1) both;
 }
 
 .recommendationFrame {
@@ -766,32 +836,37 @@
   line-height: 1.5;
 }
 
-@keyframes consideringRuleDraw {
+@keyframes consideringFactEnter {
   0% {
     opacity: 0;
-    transform: scaleX(0);
+    transform: translateY(7px);
   }
 
   100% {
     opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes consideringPathTravel {
+  0% {
+    transform: scaleX(0);
+  }
+
+  100% {
     transform: scaleX(1);
   }
 }
 
-@keyframes consideringRuleGlow {
+@keyframes recommendationArrive {
   0% {
     opacity: 0;
-    transform: scaleX(0.84);
-  }
-
-  40% {
-    opacity: 0.85;
-    transform: scaleX(1);
+    transform: translateY(10px);
   }
 
   100% {
-    opacity: 0.42;
-    transform: scaleX(1);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -817,28 +892,30 @@
     padding: 0;
   }
 
-  .consideringRule {
-    width: min(16rem, 72vw);
-    margin-bottom: 1.15rem;
+  .consideringHeader {
+    gap: 0.9rem;
   }
 
-  .consideringStory {
-    margin-top: 1.35rem;
+  .consideringSignature {
+    display: none;
   }
 
-  .consideringThought {
+  .consideringFacts {
+    grid-template-columns: 0.55fr 1fr;
+  }
+
+  .consideringFact:nth-child(3) {
+    grid-column: 1 / -1;
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    padding-left: 0;
+    border-top: 1px solid rgba(201, 168, 106, 0.09);
+    border-left: 0;
+  }
+
+  .consideringInsight h1 {
     max-width: 11ch;
-    font-size: clamp(2.15rem, 10vw, 3.05rem);
-  }
-
-  .consideringWhisper {
-    max-width: 22ch;
-    font-size: 1.02rem;
-  }
-
-  .consideringVerdict {
-    max-width: 12ch;
-    font-size: clamp(1.95rem, 9vw, 2.7rem);
+    font-size: clamp(2.85rem, 13vw, 4.2rem);
   }
 
   .intakeEditorial,
@@ -950,6 +1027,11 @@
     padding: 2.2rem 0 2.6rem;
   }
 
+  .consideringShell {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
   .intakeEditorial,
   .inquiryEditorial {
     grid-template-columns: minmax(15rem, 0.82fr) minmax(22rem, 1fr);
@@ -985,32 +1067,30 @@
     gap: clamp(1.4rem, 4vw, 2.6rem);
   }
 
-  .consideringRule {
-    width: min(18rem, 44vw);
-    margin-bottom: 1rem;
+  .consideringFacts {
+    margin-top: 0.8rem;
+    padding: 0.65rem 0;
   }
 
-  .consideringStory {
-    margin-top: 1.2rem;
+  .consideringPath {
+    margin-top: 1rem;
   }
 
-  .consideringThought {
-    max-width: 12ch;
-    font-size: clamp(2.1rem, 6vw, 3.05rem);
+  .consideringInsight {
+    margin-top: 1rem;
   }
 
-  .consideringWhisper {
-    max-width: 23ch;
-    font-size: 0.98rem;
+  .consideringInsight h1 {
+    max-width: 18ch;
+    font-size: clamp(2.4rem, 6vw, 3.3rem);
   }
 
-  .consideringVerdict {
-    max-width: 13ch;
-    font-size: clamp(1.85rem, 5.5vw, 2.7rem);
+  .consideringInsightSupport {
+    margin-top: 0.55rem;
   }
 
-  .consideringMeta {
-    margin-top: 1.35rem;
+  .consideringResolution {
+    margin-top: 0.8rem;
   }
 
   .recommendationIntro .title {
@@ -1056,5 +1136,23 @@
   .customPrompt {
     margin-top: 2.2rem;
     padding-top: 1.15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .consideringFact,
+  .consideringPathProgress,
+  .recommendationShell {
+    animation: none;
+  }
+
+  .consideringFact,
+  .consideringInsight,
+  .consideringPathMarker,
+  .consideringResolution,
+  .recommendationShell {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

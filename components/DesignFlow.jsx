@@ -16,6 +16,21 @@ const initialForm = {
 
 const eventTypes = ["Wedding", "Corporate", "Private Event", "Other"];
 
+const considerationInsights = {
+  roaming: {
+    headline: "Keep the room in motion.",
+    support: "The experience should move with it.",
+  },
+  table: {
+    headline: "Give the room a point of gravity.",
+    support: "Let guests choose when to enter.",
+  },
+  cabaret: {
+    headline: "Bring the room together.",
+    support: "One shared moment should carry the attention.",
+  },
+};
+
 function mapSlug(slug) {
   return getPublicSlug(slug);
 }
@@ -98,13 +113,18 @@ export default function DesignFlow() {
       );
     }
 
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const timing = reducedMotion
+      ? { first: 0, second: 0, reveal: 180 }
+      : { first: 620, second: 1550, reveal: 2350 };
+
     const firstBeat = window.setTimeout(() => {
       setLineIndex(1);
-    }, 880);
+    }, timing.first);
 
     const secondBeat = window.setTimeout(() => {
       setLineIndex(2);
-    }, 1820);
+    }, timing.second);
 
     const revealTimer = window.setTimeout(() => {
       setResult(recommendation);
@@ -124,7 +144,7 @@ export default function DesignFlow() {
           })
         );
       }
-    }, 2850);
+    }, timing.reveal);
 
     return () => {
       window.clearTimeout(firstBeat);
@@ -162,6 +182,8 @@ export default function DesignFlow() {
       }),
     [form, selectedType]
   );
+  const consideringInsight =
+    considerationInsights[consideringRecommendation.primary.slug] || considerationInsights.roaming;
   const eventSummary = useMemo(() => {
     const pieces = [
       form.guestCount ? `${form.guestCount} guests` : "",
@@ -304,29 +326,53 @@ export default function DesignFlow() {
       {step === "considering" ? (
         <section className={`${styles.shell} ${styles.consideringShell}`}>
           <div className={styles.consideringPanel}>
-            <div className={styles.consideringLead}>
-              <p className={styles.eyebrow}>Composing The Recommendation</p>
-              <div className={styles.consideringRule} aria-hidden="true">
-                <span />
-                <span />
-              </div>
-              <div className={styles.consideringStory}>
-                <p
-                  className={`${styles.consideringThought} ${lineIndex >= 0 ? styles.consideringThoughtActive : ""} ${
-                    lineIndex >= 2 ? styles.consideringThoughtRecede : ""
-                  }`}
-                >
-                  Every room asks differently.
-                </p>
-                <p className={`${styles.consideringWhisper} ${lineIndex >= 1 ? styles.consideringWhisperActive : ""}`}>
-                  The room decides the shape of it.
-                </p>
-                <p className={`${styles.consideringVerdict} ${lineIndex >= 2 ? styles.consideringVerdictActive : ""}`}>
-                  I would begin with {consideringRecommendation.primary.name}.
-                </p>
-              </div>
+            <header className={styles.consideringHeader}>
+              <p className={styles.eyebrow}>Considering Your Event</p>
+              <p className={styles.consideringSignature}>Artifice / Experience Design</p>
+            </header>
+
+            <div className={styles.consideringFacts} aria-label={eventSummary}>
+              <span className={styles.consideringFact}>
+                <span className={styles.consideringFactLabel}>Guests</span>
+                <strong>{form.guestCount}</strong>
+              </span>
+              <span className={styles.consideringFact}>
+                <span className={styles.consideringFactLabel}>Event</span>
+                <strong>{selectedType || form.eventType || "Open"}</strong>
+              </span>
+              <span className={styles.consideringFact}>
+                <span className={styles.consideringFactLabel}>Date</span>
+                <strong>{form.date}</strong>
+              </span>
             </div>
-            <p className={styles.consideringMeta}>{eventSummary}</p>
+
+            <div className={styles.consideringPath} aria-hidden="true">
+              <span className={styles.consideringPathTrack} />
+              <span className={styles.consideringPathProgress} />
+              <span
+                className={`${styles.consideringPathMarker} ${
+                  lineIndex >= 2 ? styles.consideringPathMarkerActive : ""
+                }`}
+              />
+            </div>
+
+            <div
+              className={`${styles.consideringInsight} ${
+                lineIndex >= 1 ? styles.consideringInsightActive : ""
+              }`}
+            >
+              <p className={styles.consideringInsightLabel}>Reading The Room</p>
+              <h1>{consideringInsight.headline}</h1>
+              <p className={styles.consideringInsightSupport}>{consideringInsight.support}</p>
+            </div>
+
+            <p
+              className={`${styles.consideringResolution} ${
+                lineIndex >= 2 ? styles.consideringResolutionActive : ""
+              }`}
+            >
+              The direction is clear.
+            </p>
           </div>
         </section>
       ) : null}
