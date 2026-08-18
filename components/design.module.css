@@ -489,64 +489,98 @@
   }
 }
 
-.primaryRecommendation {
-  position: relative;
-  isolation: isolate;
-  display: block;
-  max-width: 44rem;
+.recommendationSelection {
+  min-width: 0;
   margin-top: clamp(0.85rem, 1.8vw, 1.65rem);
-  margin-inline: -0.85rem;
-  padding: clamp(0.95rem, 1.9vw, 1.55rem) 0.85rem clamp(1.85rem, 3.1vw, 2.55rem);
-  border-top: 1px solid rgba(201, 168, 106, 0.18);
-  border-bottom: 1px solid rgba(201, 168, 106, 0.24);
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.045), rgba(201, 168, 106, 0) 78%);
-  box-shadow: inset 1px 0 0 rgba(201, 168, 106, 0.48);
-  transition: background 240ms ease, border-color 240ms ease, box-shadow 240ms ease;
 }
 
-.pathHitArea {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  text-decoration: none;
+.primaryRecommendation,
+.alternateRow {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
-.pathHitArea:focus-visible {
-  outline: 1px solid rgba(201, 168, 106, 0.88);
-  outline-offset: 4px;
-}
-
-.visuallyHidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.primaryRecommendation .cardEyebrow {
-  margin-top: 0;
-  max-width: none;
-}
-
-.primaryRecommendation h2 {
+.primaryRecommendation {
+  display: block;
   margin: 0;
+  padding: clamp(1rem, 1.8vw, 1.45rem) 0 clamp(1.6rem, 2.8vw, 2.2rem);
+  border-top: 1px solid rgba(201, 168, 106, 0.24);
+  border-bottom: 1px solid rgba(201, 168, 106, 0.14);
+  transition: border-color 220ms ease;
+}
+
+.choiceKicker {
+  display: grid;
+  grid-template-columns: 0.82rem minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.choiceKicker .cardEyebrow {
+  margin: 0;
+}
+
+.experienceMarker {
+  position: relative;
+  display: block;
+  width: 0.78rem;
+  height: 0.78rem;
+  border: 1px solid rgba(201, 168, 106, 0.66);
+  border-radius: 999px;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.experienceChoiceActive .experienceMarker {
+  border-color: var(--antique-gold);
+  box-shadow: 0 0 18px rgba(201, 168, 106, 0.22);
+}
+
+.experienceChoiceActive .experienceMarker::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  background: var(--antique-gold);
+}
+
+.choiceState {
+  display: inline-block;
+  padding-bottom: 0.24rem;
+  border-bottom: 1px solid rgba(201, 168, 106, 0.42);
+  color: var(--antique-gold);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.experienceChoiceActive .choiceState {
+  color: var(--aged-paper);
+  border-color: rgba(201, 168, 106, 0.82);
+}
+
+.primaryChoiceTitle {
+  display: block;
+  margin-top: clamp(0.85rem, 1.5vw, 1.15rem);
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(5.2rem, 8.1vw, 8.25rem);
   line-height: 0.82;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   color: var(--aged-paper);
   transition: color 220ms ease, text-shadow 220ms ease;
 }
 
 .primaryStatement {
-  margin: clamp(1.2rem, 2.2vw, 1.75rem) 0 0;
+  display: block;
+  margin-top: clamp(1.2rem, 2.2vw, 1.75rem);
   max-width: 34ch;
   color: rgba(230, 221, 198, 0.82);
   font-family: "Cormorant Garamond", serif;
@@ -555,19 +589,14 @@
 }
 
 .recommendationNotes {
-  display: grid;
-  gap: 1rem;
+  display: block;
   margin-top: clamp(1.15rem, 2vw, 1.55rem);
   max-width: 30rem;
-}
-
-.recommendationNotes p {
-  margin: 0;
   color: rgba(230, 221, 198, 0.58);
   line-height: 1.55;
 }
 
-.recommendationNotes span {
+.recommendationNotes > span > span {
   display: block;
   margin-bottom: 0.35rem;
   color: rgba(201, 168, 106, 0.82);
@@ -576,159 +605,119 @@
   text-transform: uppercase;
 }
 
-.primaryRecommendation .primaryAction {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.78rem;
-  margin-top: clamp(1.35rem, 2.35vw, 1.9rem);
-  font-size: 0.82rem;
-  letter-spacing: 0.155em;
-  pointer-events: none;
-}
-
-.primaryRecommendation .primaryAction::after {
-  width: min(16rem, 100%);
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.82), rgba(201, 168, 106, 0.16), rgba(201, 168, 106, 0));
-}
-
-.pathArrow {
-  display: inline-block;
-  color: var(--antique-gold);
-  font-size: 1rem;
-  line-height: 1;
-  transform: translate3d(0, -1px, 0);
-  transition: color 180ms ease, transform 220ms ease, text-shadow 220ms ease;
-}
-
-.primaryRecommendation:active {
-  border-color: rgba(201, 168, 106, 0.44);
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.095), rgba(201, 168, 106, 0) 82%);
-  box-shadow: inset 2px 0 0 rgba(201, 168, 106, 0.76);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .primaryRecommendation:hover,
-  .primaryRecommendation:focus-within {
-    border-color: rgba(201, 168, 106, 0.34);
-    background: linear-gradient(90deg, rgba(201, 168, 106, 0.065), rgba(201, 168, 106, 0) 78%);
-    box-shadow: inset 2px 0 0 rgba(201, 168, 106, 0.66);
-  }
-
-  .primaryRecommendation:hover h2,
-  .primaryRecommendation:focus-within h2 {
-    color: #efe6d0;
-    text-shadow: 0 0 24px rgba(201, 168, 106, 0.07);
-  }
-
-  .primaryRecommendation:hover .primaryAction,
-  .primaryRecommendation:focus-within .primaryAction {
-    transform: translate3d(4px, 0, 0);
-    text-shadow: 0 0 18px rgba(201, 168, 106, 0.12);
-  }
-
-  .primaryRecommendation:hover .primaryAction::before,
-  .primaryRecommendation:focus-within .primaryAction::before {
-    width: min(82%, 34rem);
-  }
-
-  .primaryRecommendation:hover .pathArrow,
-  .primaryRecommendation:focus-within .pathArrow {
-    color: var(--aged-paper);
-    text-shadow: 0 0 14px rgba(201, 168, 106, 0.18);
-    transform: translate3d(4px, -1px, 0);
-  }
-}
-
 .alternateEditorial {
-  display: grid;
-  grid-template-columns: minmax(7.5rem, 0.2fr) minmax(0, 1fr);
-  gap: 0 clamp(1.5rem, 4vw, 3.5rem);
-  align-items: start;
-  margin-top: clamp(2rem, 3.4vw, 2.8rem);
-  padding-top: 1rem;
-  border-top: 1px solid rgba(201, 168, 106, 0.14);
+  margin-top: clamp(1.55rem, 2.8vw, 2.2rem);
 }
 
 .alternateEditorial > .cardEyebrow {
-  margin-top: 0.35rem;
-  min-width: 10rem;
+  margin-bottom: 0.45rem;
 }
 
 .alternateRow {
-  position: relative;
-  isolation: isolate;
-  grid-column: 2;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1.2rem;
-  align-items: baseline;
-  margin-inline: -0.65rem;
-  padding: 0.72rem 0.65rem 0.9rem;
-  border-bottom: 1px solid rgba(201, 168, 106, 0.16);
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.025), rgba(201, 168, 106, 0) 84%);
-  box-shadow: inset 1px 0 0 rgba(201, 168, 106, 0.28);
-  transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  grid-template-columns: 0.82rem minmax(0, 1fr) auto;
+  gap: clamp(0.8rem, 1.4vw, 1.1rem);
+  align-items: start;
+  margin: 0;
+  padding: clamp(0.95rem, 1.6vw, 1.2rem) 0;
+  border-bottom: 1px solid rgba(201, 168, 106, 0.14);
+  transition: border-color 220ms ease;
 }
 
-.alternateRow h3 {
-  margin: 0;
+.alternateRow .experienceMarker {
+  margin-top: 0.24rem;
+}
+
+.alternateCopy,
+.alternateTitle,
+.alternateDescription {
+  display: block;
+}
+
+.alternateTitle {
   color: var(--aged-paper);
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.55rem, 2.2vw, 2.05rem);
   line-height: 0.98;
-  transition: color 180ms ease, transform 220ms ease;
+  transition: color 180ms ease;
 }
 
-.alternateRow p {
-  margin: 0.28rem 0 0;
+.alternateDescription {
+  margin-top: 0.35rem;
   max-width: 34rem;
   color: rgba(230, 221, 198, 0.52);
   line-height: 1.42;
 }
 
-.alternateRow .secondaryAction {
-  gap: 0.66rem;
-  color: rgba(230, 221, 198, 0.92);
-  pointer-events: none;
+.alternateRow .choiceState {
+  margin-top: 0.12rem;
 }
 
+.primaryRecommendation:focus-visible,
+.alternateRow:focus-visible {
+  outline: 1px solid rgba(201, 168, 106, 0.86);
+  outline-offset: 4px;
+}
+
+.primaryRecommendation:active,
 .alternateRow:active {
-  border-color: rgba(201, 168, 106, 0.38);
-  background: linear-gradient(90deg, rgba(201, 168, 106, 0.08), rgba(201, 168, 106, 0) 86%);
-  box-shadow: inset 2px 0 0 rgba(201, 168, 106, 0.66);
+  border-color: rgba(201, 168, 106, 0.42);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .alternateRow:hover,
-  .alternateRow:focus-within {
-    border-color: rgba(201, 168, 106, 0.28);
-    background: linear-gradient(90deg, rgba(201, 168, 106, 0.05), rgba(201, 168, 106, 0) 82%);
-    box-shadow: inset 1px 0 0 rgba(201, 168, 106, 0.5);
+  .primaryRecommendation:hover,
+  .alternateRow:hover {
+    border-color: rgba(201, 168, 106, 0.38);
   }
 
-  .alternateRow:hover h3,
-  .alternateRow:focus-within h3 {
+  .primaryRecommendation:hover .primaryChoiceTitle {
     color: #efe6d0;
-    transform: translate3d(3px, 0, 0);
+    text-shadow: 0 0 24px rgba(201, 168, 106, 0.07);
   }
 
-  .alternateRow:hover .secondaryAction,
-  .alternateRow:focus-within .secondaryAction {
-    transform: translate3d(4px, 0, 0);
-    text-shadow: 0 0 18px rgba(201, 168, 106, 0.12);
-  }
-
-  .alternateRow:hover .secondaryAction::before,
-  .alternateRow:focus-within .secondaryAction::before {
-    width: min(82%, 34rem);
-  }
-
-  .alternateRow:hover .pathArrow,
-  .alternateRow:focus-within .pathArrow {
+  .primaryRecommendation:hover .choiceState,
+  .alternateRow:hover .choiceState {
     color: var(--aged-paper);
-    transform: translate3d(4px, -1px, 0);
+    border-color: rgba(201, 168, 106, 0.82);
   }
+
+  .alternateRow:hover .alternateTitle {
+    color: #efe6d0;
+  }
+}
+
+.selectionContinue {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.selectionConfirmation {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.selectionConfirmation > span {
+  color: rgba(230, 221, 198, 0.46);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.selectionConfirmation strong {
+  color: rgba(230, 221, 198, 0.82);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.selectionContinue .primaryAction {
+  flex: 0 0 auto;
+  font-size: 0.82rem;
+  letter-spacing: 0.155em;
 }
 
 .customPrompt {
@@ -884,56 +873,39 @@
     margin-top: 0.9rem;
   }
 
-  .primaryRecommendation {
-    grid-template-columns: 1fr;
-    gap: 0;
+  .recommendationSelection {
     margin-top: 1.65rem;
+  }
+
+  .primaryRecommendation {
     margin-inline: -0.35rem;
     padding: 1.15rem 0.35rem 1.75rem;
     border-top: 1px solid rgba(201, 168, 106, 0.12);
   }
 
-  .primaryRecommendation .cardEyebrow,
-  .primaryRecommendation h2,
-  .primaryStatement,
-  .recommendationNotes,
-  .primaryRecommendation .primaryAction {
-    grid-column: auto;
-  }
-
-  .primaryRecommendation .cardEyebrow {
-    margin-top: 0;
-  }
-
-  .primaryRecommendation h2 {
+  .primaryChoiceTitle {
     font-size: clamp(4.35rem, 19vw, 6.35rem);
   }
 
-  .primaryRecommendation .primaryAction {
-    margin-top: 1.35rem;
-  }
-
   .alternateEditorial {
-    grid-template-columns: 1fr;
-    gap: 0.8rem;
     margin-top: 2rem;
-    padding-top: 1.05rem;
-  }
-
-  .alternateEditorial > .cardEyebrow {
-    min-width: 0;
   }
 
   .alternateRow {
-    grid-column: auto;
-    grid-template-columns: 1fr;
-    gap: 0.6rem;
+    grid-template-columns: 0.78rem minmax(0, 1fr) auto;
+    gap: 0.68rem;
     margin-inline: -0.35rem;
     padding: 0.9rem 0.35rem 1rem;
   }
 
-  .alternateRow h3 {
+  .alternateTitle {
     font-size: clamp(1.45rem, 7vw, 2rem);
+  }
+
+  .selectionContinue {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .customPrompt {
@@ -1043,12 +1015,15 @@
   }
 
   .primaryRecommendation {
-    margin-top: 0.4rem;
     padding-top: 0.65rem;
     padding-bottom: 1.35rem;
   }
 
-  .primaryRecommendation h2 {
+  .recommendationSelection {
+    margin-top: 0.4rem;
+  }
+
+  .primaryChoiceTitle {
     font-size: clamp(3.65rem, 10vw, 5rem);
   }
 
@@ -1063,7 +1038,6 @@
 
   .alternateEditorial {
     margin-top: 1.65rem;
-    padding-top: 0.9rem;
   }
 
   .customPrompt {

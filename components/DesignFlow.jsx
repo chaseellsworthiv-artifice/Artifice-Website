@@ -37,6 +37,7 @@ export default function DesignFlow() {
   const [step, setStep] = useState("intake");
   const [form, setForm] = useState(initialForm);
   const [selectedType, setSelectedType] = useState("");
+  const [selectedExperienceSlug, setSelectedExperienceSlug] = useState("");
   const [result, setResult] = useState(null);
   const [lineIndex, setLineIndex] = useState(0);
 
@@ -60,7 +61,16 @@ export default function DesignFlow() {
       setSelectedType(draft.eventType || "");
 
       if (draft.step === "recommendation") {
-        setResult(buildRecommendation(restoredForm));
+        const restoredResult = buildRecommendation(restoredForm);
+        const availableSlugs = [restoredResult.primary, ...restoredResult.alternatives].map(
+          (experience) => experience.slug
+        );
+        setResult(restoredResult);
+        setSelectedExperienceSlug(
+          availableSlugs.includes(draft.selectedExperienceSlug)
+            ? draft.selectedExperienceSlug
+            : restoredResult.primary.slug
+        );
         setStep("recommendation");
       }
     } catch {}
@@ -98,6 +108,7 @@ export default function DesignFlow() {
 
     const revealTimer = window.setTimeout(() => {
       setResult(recommendation);
+      setSelectedExperienceSlug(recommendation.primary.slug);
       setStep("recommendation");
       if (typeof window !== "undefined") {
         window.sessionStorage.setItem(
@@ -108,6 +119,7 @@ export default function DesignFlow() {
             eventType: selectedType || form.eventType,
             performanceFlow: form.performanceFlow,
             details: form.details,
+            selectedExperienceSlug: recommendation.primary.slug,
             step: "recommendation",
           })
         );
@@ -133,6 +145,15 @@ export default function DesignFlow() {
   }, [form, selectedType]);
 
   const eventParams = useMemo(() => buildEventParams(form, selectedType), [form, selectedType]);
+  const selectedExperience = useMemo(() => {
+    if (!result) return null;
+
+    return (
+      [result.primary, ...result.alternatives].find(
+        (experience) => experience.slug === selectedExperienceSlug
+      ) || result.primary
+    );
+  }, [result, selectedExperienceSlug]);
   const consideringRecommendation = useMemo(
     () =>
       buildRecommendation({
@@ -194,6 +215,25 @@ export default function DesignFlow() {
           performanceFlow: form.performanceFlow,
           details: form.details,
           step: "intake",
+        })
+      );
+    }
+  }
+
+  function handleSelectExperience(slug) {
+    setSelectedExperienceSlug(slug);
+
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(
+        "artifice-design-draft",
+        JSON.stringify({
+          date: form.date,
+          guestCount: form.guestCount,
+          eventType: selectedType || form.eventType,
+          performanceFlow: form.performanceFlow,
+          details: form.details,
+          selectedExperienceSlug: slug,
+          step: "recommendation",
         })
       );
     }
@@ -306,44 +346,71 @@ export default function DesignFlow() {
               </div>
             </div>
 
-            <article className={styles.primaryRecommendation}>
-              <p className={styles.cardEyebrow}>{recommendationLabel}</p>
-              <h2>{result.primary.name}</h2>
-              <p className={styles.primaryStatement}>{result.primary.feeling}</p>
-              <div className={styles.recommendationNotes}>
-                <p>
-                  <span>Why this direction</span>
-                  {result.reason}
-                </p>
-              </div>
-              <Link href={experienceHref(result.primary.slug)} className={styles.pathHitArea}>
-                <span className={styles.visuallyHidden}>Continue with {result.primary.name}</span>
-              </Link>
-              <span className={styles.primaryAction} aria-hidden="true">
-                <span>Continue with {result.primary.name}</span>
-                <span className={styles.pathArrow}>→</span>
-              </span>
-            </article>
-          </div>
-
-          <aside className={styles.alternateEditorial}>
-            <p className={styles.cardEyebrow}>Other Directions</p>
-            {result.alternatives.map((experience) => (
-              <article key={experience.slug} className={styles.alternateRow}>
-                <div>
-                  <h3>{experience.name}</h3>
-                  <p>{experience.why}</p>
-                </div>
-                <Link href={experienceHref(experience.slug)} className={styles.pathHitArea}>
-                  <span className={styles.visuallyHidden}>View {experience.name}</span>
-                </Link>
-                <span className={styles.secondaryAction} aria-hidden="true">
-                  <span>View {experience.name}</span>
-                  <span className={styles.pathArrow}>→</span>
+            <div className={styles.recommendationSelection} role="radiogroup" aria-label="Choose an experience">
+              <button
+                type="button"
+                role="radio"
+                aria-checked={selectedExperience?.slug === result.primary.slug}
+                className={`${styles.primaryRecommendation} ${
+                  selectedExperience?.slug === result.primary.slug ? styles.experienceChoiceActive : ""
+                }`}
+                onClick={() => handleSelectExperience(result.primary.slug)}
+              >
+                <span className={styles.choiceKicker}>
+                  <span className={styles.experienceMarker} aria-hidden="true" />
+                  <span className={styles.cardEyebrow}>{recommendationLabel}</span>
+                  <span className={styles.choiceState}>
+                    {selectedExperience?.slug === result.primary.slug ? "Selected" : "Select"}
+                  </span>
                 </span>
-              </article>
-            ))}
-          </aside>
+                <span className={styles.primaryChoiceTitle}>{result.primary.name}</span>
+                <span className={styles.primaryStatement}>{result.primary.feeling}</span>
+                <span className={styles.recommendationNotes}>
+                  <span>
+                    <span>Why this direction</span>
+                    {result.reason}
+                  </span>
+                </span>
+              </button>
+
+              <div className={styles.alternateEditorial}>
+                <p className={styles.cardEyebrow}>Other Directions</p>
+                {result.alternatives.map((experience) => {
+                  const isSelected = selectedExperience?.slug === experience.slug;
+
+                  return (
+                    <button
+                      key={experience.slug}
+                      type="button"
+                      role="radio"
+                      aria-checked={isSelected}
+                      className={`${styles.alternateRow} ${isSelected ? styles.experienceChoiceActive : ""}`}
+                      onClick={() => handleSelectExperience(experience.slug)}
+                    >
+                      <span className={styles.experienceMarker} aria-hidden="true" />
+                      <span className={styles.alternateCopy}>
+                        <span className={styles.alternateTitle}>{experience.name}</span>
+                        <span className={styles.alternateDescription}>{experience.why}</span>
+                      </span>
+                      <span className={styles.choiceState}>{isSelected ? "Selected" : "Select"}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className={styles.selectionContinue}>
+                <span className={styles.selectionConfirmation}>
+                  <span>Selected Experience</span>
+                  <strong>{selectedExperience?.name}</strong>
+                </span>
+                {selectedExperience ? (
+                  <Link href={experienceHref(selectedExperience.slug)} className={styles.primaryAction}>
+                    Continue with {selectedExperience.name}
+                  </Link>
+                ) : null}
+              </div>
+            </div>
+          </div>
 
           <div className={styles.customPrompt}>
             <div>
