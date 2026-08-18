@@ -511,7 +511,6 @@
   margin: 0;
   padding: clamp(1rem, 1.8vw, 1.45rem) 0 clamp(1.6rem, 2.8vw, 2.2rem);
   border-top: 1px solid rgba(201, 168, 106, 0.24);
-  border-bottom: 1px solid rgba(201, 168, 106, 0.14);
   transition: border-color 220ms ease;
 }
 
@@ -607,6 +606,8 @@
 
 .alternateEditorial {
   margin-top: clamp(1.55rem, 2.8vw, 2.2rem);
+  padding-top: clamp(1rem, 1.8vw, 1.35rem);
+  border-top: 1px solid rgba(201, 168, 106, 0.14);
 }
 
 .alternateEditorial > .cardEyebrow {
