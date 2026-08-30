@@ -853,6 +853,32 @@ export default function HeroExperience() {
       </section>
 
       <div className={styles.sections}>
+        <section id="about" ref={(node) => { sectionRefs.current[2] = node; }} className={`${styles.section} ${styles.aboutSection}`}>
+          <div className={styles.aboutScene} data-section-reveal>
+            <picture className={styles.aboutPicture}>
+              <source type="image/webp" srcSet="/assets/images/about-hallway-back-2560.webp" />
+              <source srcSet="/assets/images/about-hallway-back-2560.jpg" />
+              <img
+                src="/assets/images/about-hallway-back.jpg"
+                alt="Chase Ellsworth standing in a dim hallway."
+                className={styles.aboutImage}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <div className={styles.aboutAtmosphere} aria-hidden="true" />
+            <div className={styles.aboutCopy}>
+              <p className={styles.sectionLabel}>About</p>
+              <h2>Years of discipline, refined into something that feels effortless.</h2>
+              <p>
+                Based in Chattanooga, Chase Ellsworth performs close-up sleight of hand built from ordinary objects,
+                exacting technique, and direct human contact. No gimmicks, no stooges, and nothing disposable — just
+                craft designed to place the impossible in your guest’s own hands.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section id="experience" ref={(node) => { sectionRefs.current[0] = node; }} className={`${styles.section} ${styles.splitSection}`}>
           <div className={styles.sectionCopy} data-section-reveal>
             <p className={styles.sectionLabel}>Experience</p>
@@ -903,32 +929,6 @@ export default function HeroExperience() {
               <h3>Exceptional Venues</h3>
               <p>For hotels, lounges, and destination spaces where discretion and atmosphere already matter.</p>
             </article>
-          </div>
-        </section>
-
-        <section id="about" ref={(node) => { sectionRefs.current[2] = node; }} className={`${styles.section} ${styles.aboutSection}`}>
-          <div className={styles.aboutScene} data-section-reveal>
-            <picture className={styles.aboutPicture}>
-              <source type="image/webp" srcSet="/assets/images/about-hallway-back-2560.webp" />
-              <source srcSet="/assets/images/about-hallway-back-2560.jpg" />
-              <img
-                src="/assets/images/about-hallway-back.jpg"
-                alt="Chase Ellsworth standing in a dim hallway."
-                className={styles.aboutImage}
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
-            <div className={styles.aboutAtmosphere} aria-hidden="true" />
-            <div className={styles.aboutCopy}>
-              <p className={styles.sectionLabel}>About</p>
-              <h2>Years of discipline, refined into something that feels effortless.</h2>
-              <p>
-                Based in Chattanooga, Chase Ellsworth performs close-up sleight of hand built from ordinary objects,
-                exacting technique, and direct human contact. No gimmicks, no stooges, and nothing disposable — just
-                craft designed to place the impossible in your guest’s own hands.
-              </p>
-            </div>
           </div>
         </section>
 
