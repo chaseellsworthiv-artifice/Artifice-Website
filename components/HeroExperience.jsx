@@ -12,18 +12,18 @@ import styles from "./hero-experience.module.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const clientLogos = [
+  { name: "Hunter Museum of American Art", src: "/assets/logos-clean/hunter-museum.png", scale: 1.0 },
   { name: "BlueCross BlueShield", src: "/assets/logos-clean/blue-cross-blue-shield.png", scale: 1.18 },
+  { name: "McLemore", src: "/assets/logos-clean/mclemore.png", scale: 1.42, mobileScale: 1.12 },
+  { name: "TVA", src: "/assets/logos-clean/tva.png", scale: 0.94 },
   { name: "Common House", src: "/assets/logos-clean/common-house.png", scale: 0.9 },
+  { name: "The Dwell Hotel", src: "/assets/logos-clean/the-dwell-hotel.png", scale: 1.32 },
+  { name: "Leo Events", src: "/assets/logos-clean/leo-events.png", scale: 0.72 },
   { name: "DECA", src: "/assets/logos-clean/deca.png", scale: 1.08 },
   { name: "Delmonte Hotel Group", src: "/assets/logos-clean/delmonte.png", scale: 0.96 },
   { name: "Gardens in the Gorge", src: "/assets/logos-clean/gardens-in-the-gorge.png", scale: 1.18 },
-  { name: "Hunter Museum of American Art", src: "/assets/logos-clean/hunter-museum.png", scale: 1.0 },
-  { name: "Leo Events", src: "/assets/logos-clean/leo-events.png", scale: 0.72 },
   { name: "Literary Ink", src: "/assets/logos-clean/literary-ink.png", scale: 1.15 },
-  { name: "McLemore", src: "/assets/logos-clean/mclemore.png", scale: 1.42, mobileScale: 1.12 },
-  { name: "The Dwell Hotel", src: "/assets/logos-clean/the-dwell-hotel.png", scale: 1.32 },
   { name: "The Rio", src: "/assets/logos-clean/the-rio.png", scale: 1.08 },
-  { name: "TVA", src: "/assets/logos-clean/tva.png", scale: 0.94 },
   { name: "Pizza Bros", src: "/assets/logos-clean/pizza-bros.png", scale: 1.34 },
 ];
 
@@ -352,8 +352,9 @@ export default function HeroExperience() {
           const invitationLine = section.querySelector("[data-invitation-special]");
           const invitationGoldLine = section.querySelector("[data-invitation-gold-line]");
           const invitationWords = section.querySelectorAll("[data-invitation-word]");
+          const invitationDetail = section.querySelector("[data-invitation-detail]");
           const invitationContact = section.querySelector("[data-invitation-contact]");
-          if (!invitationLabel || !invitationLine || !invitationGoldLine || !invitationWords.length || !invitationContact) return;
+          if (!invitationLabel || !invitationLine || !invitationGoldLine || !invitationWords.length || !invitationDetail || !invitationContact) return;
 
           gsap.set(invitationLabel, {
             autoAlpha: 0,
@@ -370,6 +371,11 @@ export default function HeroExperience() {
           gsap.set(invitationWords, {
             autoAlpha: 0,
             filter: "blur(0.34px)",
+          });
+          gsap.set(invitationDetail, {
+            autoAlpha: 0,
+            y: isReduced ? 6 : 8,
+            filter: "blur(2.2px)",
           });
           gsap.set(invitationContact, {
             autoAlpha: 0,
@@ -420,13 +426,20 @@ export default function HeroExperience() {
                 from: "start",
               },
             }, isReduced ? 1.58 : 1.76)
+            .to(invitationDetail, {
+              autoAlpha: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: isReduced ? 0.72 : 0.82,
+              ease: "power2.out",
+            }, isReduced ? 2.34 : 2.58)
             .to(invitationContact, {
               autoAlpha: 1,
               y: 0,
               filter: "blur(0px)",
               duration: isReduced ? 0.72 : 0.82,
               ease: "power2.out",
-            }, isReduced ? 2.42 : 2.66);
+            }, isReduced ? 2.78 : 3.04);
 
           if (bookingTimeline.scrollTrigger) localTriggers.push(bookingTimeline.scrollTrigger);
           return;
@@ -830,7 +843,9 @@ export default function HeroExperience() {
           </div>
           <MorphRevealText
             as="h1"
-            lines={["Impossible close-up", "for rooms that", "expect more."]}
+            lines={isMobileSeam
+              ? ["Impossible close-up", "magic for rooms", "that expect more."]
+              : ["Impossible close-up magic", "for rooms that", "expect more."]}
             className={styles.copyTitle}
             lineClassName={styles.copyTitleLine}
             start="top 69%"
@@ -838,14 +853,14 @@ export default function HeroExperience() {
           />
           <div ref={copyBodyRef} className={styles.copyBody}>
             <p className={styles.lead} data-hero-lead>
-              Designed for private events, weddings, and exceptional gatherings where the atmosphere matters as much as the occasion itself.
+              For more than twenty years, Chase Ellsworth has refined close-up magic that happens inches away—bringing people together and changing the energy of private events, weddings, and corporate gatherings.
             </p>
             <div className={styles.heroActions} data-hero-actions>
-              <a href="/design" className={styles.primaryLink}>
-                Book Artifice
+              <a href="#booking" className={styles.primaryLink}>
+                Check Availability
               </a>
-              <a href="#booking" className={styles.secondaryLink}>
-                Contact
+              <a href="/design" className={styles.secondaryLink}>
+                Explore the Experience
               </a>
             </div>
           </div>
@@ -868,12 +883,15 @@ export default function HeroExperience() {
             </picture>
             <div className={styles.aboutAtmosphere} aria-hidden="true" />
             <div className={styles.aboutCopy}>
-              <p className={styles.sectionLabel}>About</p>
-              <h2>Years of discipline, refined into something that feels effortless.</h2>
+              <p className={styles.sectionLabel}>Chase Ellsworth</p>
+              <h2>More than twenty years at the closest possible distance.</h2>
               <p>
-                Based in Chattanooga, Chase Ellsworth performs close-up sleight of hand built from ordinary objects,
-                exacting technique, and direct human contact. No gimmicks, no stooges, and nothing disposable — just
-                craft designed to place the impossible in your guest’s own hands.
+                I’m Chase Ellsworth, a magician based in Chattanooga. I have spent more than twenty years practicing
+                close-up sleight of hand with ordinary objects, often only inches from the people watching.
+              </p>
+              <p>
+                Every detail matters at that distance. The result is immediate: people lean in, react together, pull
+                others over, and keep talking about it after the event.
               </p>
             </div>
           </div>
@@ -881,21 +899,19 @@ export default function HeroExperience() {
 
         <section id="experience" ref={(node) => { sectionRefs.current[0] = node; }} className={`${styles.section} ${styles.splitSection}`}>
           <div className={styles.sectionCopy} data-section-reveal>
-            <p className={styles.sectionLabel}>Experience</p>
-            <h2>What makes it different</h2>
+            <p className={styles.sectionLabel}>The Experience</p>
+            <h2>The impossible, happening inside the event.</h2>
             <p>
-              No props. No distance. No visible method.
+              At receptions and social events, I move among the guests and perform for a few people at a time. Nothing
+              needs to stop. One group reacts, another notices, and the experience begins to travel.
             </p>
             <p>
-              Everything happens in the hands, in the moment, and inside the conversation.
-              What guests remember is not just what happened, but how the room felt while it was happening.
+              For seated dinners and more focused gatherings, the performance can bring everyone together around one
+              shared moment.
             </p>
             <div className={styles.sectionActions}>
               <a href="/design" className={styles.secondaryLink}>
-                Explore Experiences
-              </a>
-              <a href="#booking" className={styles.secondaryLink}>
-                Contact
+                Explore the Experiences
               </a>
             </div>
           </div>
@@ -908,54 +924,10 @@ export default function HeroExperience() {
           </div>
         </section>
 
-        <section id="events" ref={(node) => { sectionRefs.current[1] = node; }} className={styles.section}>
-          <div className={styles.sectionHeading} data-section-reveal>
-            <p className={styles.sectionLabel}>Where It Belongs</p>
-            <h2>For rooms where atmosphere is part of the occasion.</h2>
-            <p>
-              Best suited to spaces where intimacy, tone, and attention can shape the room.
-            </p>
-          </div>
-          <div className={styles.eventGrid} data-section-reveal>
-            <article className={styles.eventCard}>
-              <h3>Private Evenings</h3>
-              <p>For dinners, homes, and private gatherings where the atmosphere matters as much as the conversation.</p>
-            </article>
-            <article className={styles.eventCard}>
-              <h3>Corporate Gatherings</h3>
-              <p>For receptions, client events, and leadership evenings that should feel elevated without interruption.</p>
-            </article>
-            <article className={styles.eventCard}>
-              <h3>Exceptional Venues</h3>
-              <p>For hotels, lounges, and destination spaces where discretion and atmosphere already matter.</p>
-            </article>
-          </div>
-        </section>
-
-        <section id="begin" ref={(node) => { sectionRefs.current[4] = node; }} className={`${styles.section} ${styles.beginSection}`}>
-          <div className={styles.beginLayout}>
-            <div className={styles.beginInner} data-section-reveal>
-              <p className={styles.sectionLabel}>Begin</p>
-              <h2>
-                Start with the event.
-                <span>I’ll guide the rest.</span>
-              </h2>
-              <p>
-                Every room asks for something different. Share a few details, and I’ll recommend the experience I would begin with.
-              </p>
-              <div className={styles.beginActions}>
-                <a href="/design" className={styles.primaryLink}>
-                  Book Artifice
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section id="clients" ref={(node) => { sectionRefs.current[5] = node; }} className={`${styles.section} ${styles.clientsSection}`}>
           <div className={styles.clientsHeader} data-section-reveal>
             <p className={styles.sectionLabel}>Selected Clients</p>
-            <h2>Trusted in rooms where the standard is already high.</h2>
+            <h2>Trusted by organizations, venues, and event professionals.</h2>
           </div>
 
           <div className={styles.clientLogoGrid} data-section-reveal aria-label="Selected Artifice clients">
@@ -976,12 +948,37 @@ export default function HeroExperience() {
           </div>
         </section>
 
+        <section id="events" ref={(node) => { sectionRefs.current[1] = node; }} className={styles.section}>
+          <div className={styles.sectionHeading} data-section-reveal>
+            <p className={styles.sectionLabel}>Where It Works</p>
+            <h2>Built for events where people are meant to connect.</h2>
+            <p>
+              Artifice is shaped around the event already happening. The format changes with the guest count, setting,
+              and energy you want to create.
+            </p>
+          </div>
+          <div className={styles.eventGrid} data-section-reveal>
+            <article className={styles.eventCard}>
+              <h3>Weddings &amp; Receptions</h3>
+              <p>A natural way to bring guests together during cocktail hour, between formal moments, or throughout the reception.</p>
+            </article>
+            <article className={styles.eventCard}>
+              <h3>Corporate &amp; Client Events</h3>
+              <p>Close-up magic breaks through professional distance and gives people something real to talk about—without turning the event into a show.</p>
+            </article>
+            <article className={styles.eventCard}>
+              <h3>Private Celebrations</h3>
+              <p>Personal, astonishing moments for dinners, milestone events, and gatherings where every guest matters.</p>
+            </article>
+          </div>
+        </section>
+
         <section id="press" ref={(node) => { sectionRefs.current[6] = node; }} className={`${styles.section} ${styles.pressSection}`}>
           <div className={styles.pressIntro} data-section-reveal>
-            <p className={styles.sectionLabel}>Press</p>
-            <h2>Recognized for work that feels impossible up close.</h2>
+            <p className={styles.sectionLabel}>Selected Press</p>
+            <h2>Twenty years of work, recognized in print, radio, and television.</h2>
             <p>
-              Features, interviews, and appearances documenting the work behind Artifice.
+              Features and appearances from Chattanooga Pulse, WUTC/NPR, Inside Magic, and local television.
             </p>
           </div>
 
@@ -1017,24 +1014,28 @@ export default function HeroExperience() {
         >
           <div className={styles.invitationStage} data-section-reveal>
             <div className={styles.invitationPrelude}>
-              <p className={styles.sectionLabel} data-invitation-label>Private Invitation</p>
+              <p className={styles.sectionLabel} data-invitation-label>Availability</p>
               <p
                 className={`${styles.invitationLine} ${styles.invitationSpecialLine}`}
                 data-invitation-special
-                aria-label="Private performances are limited."
+                aria-label="Tell me about the event."
               >
                 <span className={styles.invitationGoldLine} data-invitation-gold-line aria-hidden="true" />
                 <span className={styles.invitationWordWrap} aria-hidden="true">
-                  {["Private", "performances", "are", "limited."].map((word, index) => (
+                  {["Tell", "me", "about", "the", "event."].map((word, index) => (
                     <span className={styles.invitationWord} data-invitation-word key={word}>
                       {word}
-                      {index < 3 ? "\u00A0" : ""}
+                      {index < 4 ? "\u00A0" : ""}
                     </span>
                   ))}
                 </span>
               </p>
+              <p className={styles.invitationDetail} data-invitation-detail>
+                Share the date, location, guest count, and what you want the experience to do for the room. I review
+                every inquiry personally and will recommend the format that best fits the event.
+              </p>
               <button type="button" className={styles.invitationTrigger} data-invitation-contact onClick={handleInvitationActivate}>
-                Contact
+                Request Availability
               </button>
             </div>
 
@@ -1073,11 +1074,11 @@ export default function HeroExperience() {
               />
               {invitationError ? <p className={styles.invitationError}>{invitationError}</p> : null}
               <button type="submit" className={styles.invitationSubmit}>
-                Send invitation request
+                Request Availability
               </button>
             </form>
 
-            <p className={styles.invitationConfirmation}>We’ll be in touch.</p>
+            <p className={styles.invitationConfirmation}>Thank you. I’ll be in touch personally.</p>
           </div>
         </section>
       </div>

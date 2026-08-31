@@ -1,11 +1,12 @@
 import "./globals.css";
 
-const siteDescription = "Close-up sleight of hand, designed as atmosphere for refined private events.";
+const siteTitle = "Artifice | Close-Up Magic by Chase Ellsworth";
+const siteDescription = "Close-up magic by Chase Ellsworth, a Chattanooga magician with more than twenty years devoted to the craft. Available for private events, weddings, and corporate gatherings.";
 const previewImage = "/assets/images/experience-performance.jpg";
 
 export const metadata = {
   metadataBase: new URL("https://artificefx.com"),
-  title: "Artifice",
+  title: siteTitle,
   applicationName: "Artifice",
   description: siteDescription,
   appleWebApp: {
@@ -14,7 +15,7 @@ export const metadata = {
     statusBarStyle: "black-translucent",
   },
   openGraph: {
-    title: "Artifice",
+    title: siteTitle,
     siteName: "Artifice",
     description: siteDescription,
     url: "https://artificefx.com",
@@ -30,7 +31,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Artifice",
+    title: siteTitle,
     description: siteDescription,
     images: [previewImage],
   },
